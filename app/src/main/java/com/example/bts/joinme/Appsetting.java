@@ -51,7 +51,7 @@ public class Appsetting extends Fragment{
     public Appsetting() {
         // Required empty public constructor
     }
-
+// testing git checkin checkout
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
