@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="newcolor">#00659b</color>
+    <color name="prgrs">#095E7C</color>
+    <color name="progrs1">#82ADBD</color>
+    <color name="ratingbar">#F5AF48</color>
+</resources>

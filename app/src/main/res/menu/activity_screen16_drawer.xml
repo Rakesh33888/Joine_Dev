@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/my_search"
+            android:icon="@drawable/search"
+            android:checked="true"
+            android:title="My Search Preferences" />
+        <item
+            android:id="@+id/group_activites"
+            android:icon="@drawable/people"
+            android:checked="true"
+            android:title="My group activites" />
+        <item
+            android:id="@+id/app_setting"
+            android:checked="true"
+            android:icon="@drawable/setting"
+            android:title="App Setting" />
+    </group>
+
+
+
+</menu>

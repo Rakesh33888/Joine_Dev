@@ -1,0 +1,9 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="My_Search_preferences" type="drawable">@drawable/search</item>
+    <item name="My_group_activites" type="drawable">@drawable/people</item>
+    <item name="app_setting" type="drawable">@drawable/setting</item>
+    <item name="message" type="drawable">@drawable/speechbtn</item>
+    <item name="createrprofile" type="id"></item>
+    
+
+</resources>

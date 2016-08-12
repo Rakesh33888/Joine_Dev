@@ -1,0 +1,92 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screenbg"
+    tools:context="com.example.bts.joinme.Mygroup">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#6e080000"
+        android:orientation="horizontal"
+        android:id="@+id/linearlayout_group">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/backbtn"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/backtogroupsetting"
+            android:layout_gravity="left|center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Group Activity"
+            android:textColor="#c5fdfdfd"
+            android:textSize="15dp"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/mygroupactivity"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="155dp"
+        android:layout_height="161dp"
+        android:background="@drawable/createalbum"
+        android:id="@+id/createnewactivity"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="right"/>
+    <RelativeLayout
+        android:layout_width="168dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/relativelayout_group">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/hitlar"
+            android:id="@+id/groupinfoscreen"
+            android:layout_alignParentStart="true" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/imageinfo"
+            android:id="@+id/framelayoutinfo"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+            <TextView
+                android:layout_width="58dp"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:id="@+id/imgaeinfotxt"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:text="Ski"
+                android:textSize="14dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:layout_marginTop="5dp"
+                android:id="@+id/timeinotext"
+                android:textSize="13dp"
+                android:paddingStart="5dp"
+                android:paddingTop="4dp"
+                android:layout_gravity="center_vertical"
+                android:text="04.08.2016 at 6pm"/>
+
+        </FrameLayout>
+
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>

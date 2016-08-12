@@ -1,0 +1,147 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#DAD7D7"
+    tools:context="com.example.bts.joinme.Appsetting">
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#fff"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/grayback"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/imageback" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="App Setting"
+            android:textSize="18dp"
+            android:textColor="#b1b0b0"
+            android:paddingStart="8dp"
+            android:id="@+id/textView10"
+            android:layout_gravity="center"
+            android:layout_weight="0.58" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="330dp"
+        android:layout_height="55dp"
+        android:background="@drawable/bigbox"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal|top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show distance in"
+            android:id="@+id/textView11"
+            android:textSize="20dp"
+            android:textColor="#BDBDBD"
+            android:paddingStart="15dp"
+            android:layout_gravity="center"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:id="@+id/radiogroup1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+                android:gravity="center"
+                style="@style/RadioButtonStyle2"
+            android:id="@+id/radioButton3" />
+            <RadioButton
+                android:layout_width="45dp"
+                android:layout_height="30dp"
+                style="@style/RadioButtonStyle3"
+                android:id="@+id/radioButton4"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="330dp"
+        android:layout_height="184dp"
+        android:background="@drawable/bigbox"
+        android:id="@+id/frameLayout_notification"
+        android:layout_marginTop="109dp"
+        android:layout_gravity="center_horizontal">
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="330dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="293dp"
+        android:id="@+id/linearlayout_term"
+        android:background="@drawable/bigbox"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms of service"
+            android:textSize="18dp"
+            android:textColor="#C3C3C3"
+            android:layout_gravity="center"
+            android:paddingStart="10dp"
+            android:id="@+id/textView12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="330dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="351dp"
+        android:background="@drawable/bigbox"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:textColor="#B6B6B6"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:paddingStart="10dp"
+            android:id="@+id/textView13" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/report"
+        android:layout_marginTop="175dp"
+        android:id="@+id/button11"/>
+
+    <Button
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button12"
+        android:background="@drawable/delete"
+        android:layout_marginTop="230dp"
+        android:layout_gravity="center"/>
+
+
+</FrameLayout>
