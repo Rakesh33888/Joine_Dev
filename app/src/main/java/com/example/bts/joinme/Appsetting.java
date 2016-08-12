@@ -1,6 +1,5 @@
 package com.example.bts.joinme;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -53,6 +51,7 @@ public class Appsetting extends Fragment{
     }
 // testing git checkin checkout
 //Added Comment by Rakesh Sharma
+    //Added Coment BY Ajay
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
