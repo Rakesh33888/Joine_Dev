@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -87,6 +88,10 @@ public class Appsetting extends Fragment{
 
         View v=inflater.inflate(R.layout.fragment_appsetting, container, false);
 
+        /*final NumberPicker numberPK1 = (NumberPicker) v.findViewById(R.id.numberPicker1);
+        numberPK1.setMaxValue(100);
+        numberPK1.setMinValue(0);
+        numberPK1.setWrapSelectorWheel(false);*/
 
         dis = (SegmentedGroup) v.findViewById(R.id.distance);
         miles = (RadioButton) v.findViewById(R.id.miles);

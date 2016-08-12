@@ -26,19 +26,6 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
-    <string-array name="years">
-        <item>1910</item>
-        <item>1911</item>
-        <item>1912</item>
-        <item>1913</item>
-        <item>1914</item>
-        <item>1915</item>
-        <item>1916</item>
-        <item>1917</item>
-        <item>1918</item>
-        <item>1919</item>
-        <item>1920</item>
-        <item>1921</item>
-    </string-array>
+
 
 </resources>

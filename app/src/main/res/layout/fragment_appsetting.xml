@@ -35,13 +35,17 @@
             android:layout_gravity="center"
             android:layout_weight="0.58" />
     </LinearLayout>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="60dp">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="330dp"
         android:layout_height="55dp"
         android:background="@drawable/bigbox"
-        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal|top">
 
         <TextView
@@ -88,11 +92,11 @@
 
     <LinearLayout
         android:layout_width="330dp"
-        android:layout_height="190dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         android:background="@drawable/bigbox"
         android:id="@+id/frameLayout_notification"
-        android:layout_marginTop="109dp"
+
         android:layout_gravity="center_horizontal">
 
         <TextView
@@ -117,7 +121,7 @@
                 android:id="@+id/message" />
             <Spinner
                 android:id="@+id/spinner1"
-                android:layout_width="133dp"
+                android:layout_width="155dp"
                 android:layout_height="33dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
@@ -160,6 +164,10 @@
                 android:layout_marginLeft="10dp"
                 android:text="Activity reminder"
                 android:id="@+id/reminder" />
+
+
+
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -193,10 +201,10 @@
         android:orientation="horizontal"
         android:layout_width="330dp"
         android:layout_height="52dp"
-        android:layout_marginTop="293dp"
         android:id="@+id/linearlayout_term"
         android:background="@drawable/bigbox"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -213,9 +221,10 @@
         android:orientation="horizontal"
         android:layout_width="330dp"
         android:layout_height="52dp"
-        android:layout_marginTop="351dp"
+
         android:background="@drawable/bigbox"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -233,16 +242,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/report"
-        android:layout_marginTop="175dp"
-        android:id="@+id/button11"/>
+
+        android:id="@+id/button11"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="153dp"
         android:layout_height="wrap_content"
         android:id="@+id/button12"
         android:background="@drawable/delete"
-        android:layout_marginTop="230dp"
-        android:layout_gravity="center"/>
 
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
 
+</LinearLayout>
 </FrameLayout>

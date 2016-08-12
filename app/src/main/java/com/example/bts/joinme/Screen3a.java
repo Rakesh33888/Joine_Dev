@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -59,13 +61,26 @@ public class Screen3a extends AppCompatActivity  {
         month = (Spinner) findViewById(R.id.spinner2);
         year = (Spinner) findViewById(R.id.spinner3);
 
-        String[] items = new String[]{"1", "2", "3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20",
-                            "21","22","23","24","25","26","27","28","29","30","31"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        day.setAdapter(adapter);
+        List day_list = new ArrayList<Integer>();
+        for (int i = 1; i <= 31; i++)
+        {
+            day_list.add(Integer.toString(i));
+        }
+        ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, day_list);
+        spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+       day.setAdapter(spinnerArrayAdapter);
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.month_names));
         month.setAdapter(adapter1);
+
+        List year_list = new ArrayList<Integer>();
+        for (int i = 1910; i <= 2010; i++)
+        {
+            year_list.add(Integer.toString(i));
+        }
+        ArrayAdapter<Integer> spinnerArrayAdapter1 = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, year_list);
+        spinnerArrayAdapter1.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        year.setAdapter(spinnerArrayAdapter1);
 
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -99,6 +114,8 @@ public class Screen3a extends AppCompatActivity  {
             public void onClick(View v) {
                 Intent a = new Intent(getApplicationContext(), Screen16.class);
                 startActivity(a);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
             }
         });
 
