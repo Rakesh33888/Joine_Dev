@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screen2bg"
+    android:background="@mipmap/screen2bg"
     tools:context="com.example.bts.joinme.MainActivity">
 
 
@@ -38,25 +38,25 @@
         android:id="@+id/frameLayout"
         android:layout_alignParentEnd="true">
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
             android:text="Already a Member"
             android:textColor="#f1e4e4e4"
             android:textSize="17sp"
-            android:gravity="center"
+            android:background="@null"
+            android:textAllCaps="false"
             android:id="@+id/btn3"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewarrow"
-            android:layout_marginLeft="84dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="90dp"
             android:src="@drawable/arrowright"
-            android:layout_gravity="center" />
+            android:layout_gravity="right|center_vertical" />
 
     </FrameLayout>
 
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/facebook"
-        android:id="@+id/button"
+        android:id="@+id/facebook"
         android:layout_marginTop="45dp"
         android:layout_alignTop="@+id/textView2"
         android:layout_alignEnd="@+id/textView2" />
@@ -75,8 +75,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/mail"
-        android:id="@+id/button2"
-        android:layout_alignTop="@+id/button"
+        android:id="@+id/mail"
+        android:layout_alignTop="@+id/facebook"
         android:layout_alignStart="@+id/textView2" />
 
 </RelativeLayout>

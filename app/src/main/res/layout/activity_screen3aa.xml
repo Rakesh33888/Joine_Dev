@@ -111,33 +111,35 @@
             android:layout_above="@+id/textView5"
             android:layout_alignParentStart="true"></TextView>
 
-        <RadioGroup
-            android:layout_width="169dp"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:layout_alignParentEnd="true"
-            android:backgroundTint="#FFFFFF"
+
+        <info.hoang8f.android.segmented.SegmentedGroup
             android:id="@+id/radioGroup"
-            android:weightSum="0.5"
-            android:layout_gravity="right|top">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                style="@style/RadioButtonStyle"
-                android:id="@+id/radioButton"
-                android:layout_marginLeft="25dp"
-                android:layout_gravity="center"
-                android:layout_weight="0.22" />
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="right|center"
+            android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/male"
                 android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                style="@style/RadioButtonStyle1"
-                android:id="@+id/radioButton2"
-                android:checked="false"
-                android:layout_gravity="center"
-                android:layout_weight="0.22" />
-        </RadioGroup>
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:layout_weight="1"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:layout_weight="1"
+                style="@style/RadioButton" />
+
+
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
     </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
@@ -158,23 +160,36 @@
             android:paddingLeft="15dp"
             android:backgroundTint="#FFFFFF"
             android:background="@drawable/smallbox"
-            android:inputType="date"
+
             android:focusable="true"
             android:clickable="true"
             android:cursorVisible="true"
             android:id="@+id/textView5"/>
+<LinearLayout
+    android:layout_width="190dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="right" >
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="50dp"
+        android:layout_height="33dp"
 
-        <TextView
-            android:layout_width="159dp"
-            android:layout_height="match_parent"
-            android:id="@+id/editText9"
-            android:gravity="center"
-            android:hint="dd/mm/yy"
-            android:cursorVisible="true"
-            android:textColorHint="#C1C1C1"
-            android:textSize="20dp"
-            android:backgroundTint="#ffffff"
-            android:layout_gravity="right|center_vertical" />
+        android:spinnerMode="dropdown" />
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="70dp"
+        android:layout_height="33dp"
+
+
+        android:spinnerMode="dropdown" />
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="50dp"
+        android:layout_height="33dp"
+
+        android:spinnerMode="dropdown" />
+</LinearLayout>
 
     </FrameLayout>
     <EditText

@@ -6,7 +6,7 @@
             android:state_checked="false"
             android:state_pressed="true" />
         <item
-            android:drawable="@drawable/femalegray"
+
             android:state_checked="false"
             android:state_pressed="true" />
 

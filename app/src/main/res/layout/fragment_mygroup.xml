@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screenbg"
+    android:background="@mipmap/screenbg"
     tools:context="com.example.bts.joinme.Mygroup">
 
     <!-- TODO: Update blank fragment layout -->
@@ -50,7 +50,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/hitlar"
+            android:src="@mipmap/screen2bg"
             android:id="@+id/groupinfoscreen"
             android:layout_alignParentStart="true" />
 

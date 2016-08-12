@@ -1,6 +1,7 @@
 package com.example.bts.joinme;
 
 import android.app.ActionBar;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,15 +10,21 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
 
-public class Screen3a extends AppCompatActivity {
+import info.hoang8f.android.segmented.SegmentedGroup;
+
+public class Screen3a extends AppCompatActivity  {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView imageView;
     Button btn6;
@@ -25,9 +32,10 @@ public class Screen3a extends AppCompatActivity {
     EditText editText1, editText2, editText3, editText4;
     Bitmap bitmap;
     android.support.v7.app.ActionBar actionBar;
-
+    SegmentedGroup  rgroup;
+    RadioButton male,female;
      TextView textView5;
-
+    Spinner day,month,year;
 
 
     @Override
@@ -39,11 +47,26 @@ public class Screen3a extends AppCompatActivity {
         editText3 = (EditText) findViewById(R.id.editText7);
         editText4 = (EditText) findViewById(R.id.editText8);
         imageView = (ImageView) findViewById(R.id.imageView2);
-        textView5 = (TextView) findViewById(R.id.editText9);
+       // textView5 = (TextView) findViewById(R.id.editText9);
+        rgroup = (SegmentedGroup) findViewById(R.id.radioGroup);
+        male = (RadioButton) findViewById(R.id.male);
+        female = (RadioButton) findViewById(R.id.female);
 
 
+        male.setChecked(true);
 
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        day = (Spinner) findViewById(R.id.spinner1);
+        month = (Spinner) findViewById(R.id.spinner2);
+        year = (Spinner) findViewById(R.id.spinner3);
+
+        String[] items = new String[]{"1", "2", "3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20",
+                            "21","22","23","24","25","26","27","28","29","30","31"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        day.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.month_names));
+        month.setAdapter(adapter1);
+
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
@@ -81,6 +104,8 @@ public class Screen3a extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -101,4 +126,6 @@ public class Screen3a extends AppCompatActivity {
             }
         }
 
-    }}
+    }
+
+}

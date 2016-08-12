@@ -1,5 +1,6 @@
 package com.example.bts.joinme;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,17 +11,29 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
+
+import info.hoang8f.android.segmented.SegmentedGroup;
 
 
 public class Appsetting extends Fragment{
     Button btnbck,btnreport,btndelt;
     ImageView imageback;
+     private ListView customlistview;
+    SegmentedGroup dis;
+    RadioButton miles,km;
+    Spinner dropdown;
+    ArrayList customarraylist;
 
-
-
+    private String [] prgmNameList={"Notification","Message","New activities near by","Activity reminder","New level"};
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +46,7 @@ public class Appsetting extends Fragment{
 
     private OnFragmentInteractionListener mListener;
     private FragmentManager supportFragmentManager;
+    public String LAYOUT_INFLATER_SERVICE;
 
     public Appsetting() {
         // Required empty public constructor
@@ -71,8 +85,23 @@ public class Appsetting extends Fragment{
 
 
         View v=inflater.inflate(R.layout.fragment_appsetting, container, false);
+
+
+        dis = (SegmentedGroup) v.findViewById(R.id.distance);
+        miles = (RadioButton) v.findViewById(R.id.miles);
+        km = (RadioButton) v.findViewById(R.id.km);
+
+          dropdown = (Spinner) v.findViewById(R.id.spinner1);
+        String[] items = new String[]{"All messages", "Only from travelers", "Only from groups"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
+        miles.setChecked(true);
+
+
         imageback = (ImageView) v.findViewById(R.id.imageback);
-        btnbck.setOnClickListener(new View.OnClickListener() {
+        imageback.setClickable(true);
+        imageback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(getContext(),Screen16.class);
@@ -139,24 +168,15 @@ public class Appsetting extends Fragment{
         return supportFragmentManager;
     }
 
-//    @Override
-//    public void onFragmentInteraction(Uri uri) {
-//
-//    }
+    public void getSystemService(String layoutInflaterService) {
 
+    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
 }

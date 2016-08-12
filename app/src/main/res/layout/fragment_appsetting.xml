@@ -54,39 +54,140 @@
             android:paddingStart="15dp"
             android:layout_gravity="center"/>
 
-        <RadioGroup
+
+
+        <info.hoang8f.android.segmented.SegmentedGroup
+            android:id="@+id/distance"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:id="@+id/radiogroup1"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            >
+            android:layout_height="25dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="right|center"
+            android:orientation="horizontal">
+
             <RadioButton
-            android:layout_width="45dp"
-            android:layout_height="30dp"
-                android:gravity="center"
-                style="@style/RadioButtonStyle2"
-            android:id="@+id/radioButton3" />
+                android:id="@+id/miles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Miles"
+                android:layout_weight="1"
+                style="@style/RadioButton" />
+
             <RadioButton
-                android:layout_width="45dp"
-                android:layout_height="30dp"
-                style="@style/RadioButtonStyle3"
-                android:id="@+id/radioButton4"/>
-        </RadioGroup>
+                android:id="@+id/km"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Km"
+                android:layout_weight="1"
+                style="@style/RadioButton" />
+
+
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="330dp"
-        android:layout_height="184dp"
+        android:layout_height="190dp"
+        android:orientation="vertical"
         android:background="@drawable/bigbox"
         android:id="@+id/frameLayout_notification"
         android:layout_marginTop="109dp"
         android:layout_gravity="center_horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notification"
+            android:layout_margin="10dp"
+            android:id="@+id/textView8" />
 
-    </FrameLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Message"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/message" />
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="133dp"
+                android:layout_height="33dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:spinnerMode="dropdown" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New activity near by"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/near_by" />
+
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/near"
+                style="@style/SwitchButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                app:kswTintColor="#076c3c"
+                 />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Activity reminder"
+                android:id="@+id/reminder" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New level"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/textView21" />
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/new_level"
+                style="@style/SwitchButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                app:kswTintColor="#076c3c"
+                />
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"

@@ -2,6 +2,7 @@ package com.example.bts.joinme;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -57,7 +58,11 @@ public class Screen16 extends AppCompatActivity implements
         mData = new ArrayList<>();
         mAdapter = new SwipeStackAdapter(mData);
         mSwipeStack.setAdapter(mAdapter);
+
         fillWithTestData();
+
+
+
     }
 
     private void fillWithTestData() {
@@ -68,13 +73,14 @@ public class Screen16 extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.flContent);
-        FrameLayout frameLayoutimagebtn = (FrameLayout) findViewById(R.id.imageButton_swipe);
+        RelativeLayout frameLayoutimagebtn = (RelativeLayout) findViewById(R.id.imageButton_swipe);
         FrameLayout frameLayout2 = (FrameLayout) findViewById(R.id.frameLayout2);
         ImageView activityimage = (ImageView) findViewById(R.id.imageView4);
         TextView textViewactivity = (TextView) findViewById(R.id.textView14);
@@ -82,15 +88,17 @@ public class Screen16 extends AppCompatActivity implements
         TextView textViewactivity2 = (TextView) findViewById(R.id.textView16);
         Button btninfo = (Button)findViewById(R.id.infobutton);
         btninfo.setClickable(true);
+
+
         btninfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                fragmentManager=getSupportFragmentManager();
-//                Screen17 screen17=new Screen17();
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.flContent,screen17)
-//                            .addToBackStack(null)
-//                            .commit();
+                fragmentManager=getSupportFragmentManager();
+                Screen17 screen17=new Screen17();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.flContent,screen17)
+                            .addToBackStack(null)
+                            .commit();
 
 
 
@@ -104,12 +112,11 @@ public class Screen16 extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 fragmentManager=getSupportFragmentManager();
-
-//                    Screen19 screen19=new Screen19();
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.flContent,screen19)
-//                            .addToBackStack(null)
-//                            .commit();
+                Screen19 screen19=new Screen19();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.flContent,screen19)
+                            .addToBackStack(null)
+                            .commit();
 
 
             }
@@ -122,11 +129,12 @@ public class Screen16 extends AppCompatActivity implements
         msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Messagescreen messagescreen=new Messagescreen();
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.flContent,messagescreen)
-//                        .addToBackStack(null)
-//                        .commit();
+//                               fragmentManager=getSupportFragmentManager();
+//                               Messagescreen messagescreen=new Messagescreen();
+//                               fragmentManager.beginTransaction()
+//                                       .replace(R.id.flContent,messagescreen)
+//                                .addToBackStack(null)
+//                                .commit();
 
 
 
@@ -136,6 +144,7 @@ public class Screen16 extends AppCompatActivity implements
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
         navtextview = (TextView) header.findViewById(R.id.navtextview);
+
         navtextview.setText("Ajay");
         navigationView.setNavigationItemSelectedListener(this);
         navimage.setClickable(true);
@@ -148,6 +157,9 @@ public class Screen16 extends AppCompatActivity implements
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
+
+
+
 
     }
 
@@ -198,12 +210,14 @@ public class Screen16 extends AppCompatActivity implements
             fragmentClass = Mysearch.class;
 
 
+
         } else if (id == R.id.group_activites) {
             fragmentClass = Mygroup.class;
 
 
         } else if (id == R.id.app_setting) {
             fragmentClass = Appsetting.class;
+
 
         }
         try {

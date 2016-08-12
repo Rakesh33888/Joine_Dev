@@ -14,43 +14,51 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
-    Button b1, b2,b4,b5;
-    TextView tv1, tv2, b3;
+    Button facebook, mail,b4,b5;
+    TextView tv1, tv2, already_member;
 
-
+     SessionManager session;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        b1 = (Button) findViewById(R.id.button);
-        b2 = (Button) findViewById(R.id.button2);
+        facebook = (Button) findViewById(R.id.facebook);
+        mail = (Button) findViewById(R.id.mail);
+
         tv1 = (TextView) findViewById(R.id.textView);
         tv2 = (TextView) findViewById(R.id.textView2);
-        b3 = (TextView) findViewById(R.id.btn3);
-        b3.setClickable(true);
-        b3.setOnClickListener(new View.OnClickListener() {
+        session = new SessionManager(getApplicationContext());
+
+
+
+        already_member = (TextView) findViewById(R.id.btn3);
+        already_member.setClickable(true);
+        already_member.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v == b3) {
+                if (v == already_member) {
                     final Dialog dialog = new Dialog(MainActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.setContentView(R.layout.layout_xml);
                     b4 = (Button)dialog. findViewById(R.id.button4);
                     final EditText  email= (EditText)dialog.findViewById(R.id.editText);
+                    final EditText  pass= (EditText)dialog. findViewById(R.id.editText2);
 
-                   final EditText  pass= (EditText)dialog. findViewById(R.id.editText2);
 
-
-                    b4.setOnClickListener(new View.OnClickListener() {
+                   b4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (email.getText().toString().trim().length()> 0 && pass.getText().toString().trim().length() > 0){
+                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")){
+
                                 Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                    startActivity(i);
+                                startActivity(i);
                                 Toast toast = Toast.makeText(getApplicationContext(),"Login Succesfull", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
@@ -81,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        b2.setOnClickListener(new View.OnClickListener() {
+        mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v == b2) {
+                if (v == mail) {
                     final Dialog dialog = new Dialog(MainActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -92,17 +100,36 @@ public class MainActivity extends AppCompatActivity {
                     b5 = (Button) dialog.findViewById(R.id.button5);
                     final EditText email = (EditText) dialog.findViewById(R.id.editText3);
                     final EditText pass = (EditText) dialog.findViewById(R.id.editText4);
+
+
+
                     b5.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+                            CharSequence inputStr = email.getText().toString();
+                            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = pattern.matcher(inputStr);
 
-                            if (email.getText().toString().trim().length() > 0 && pass.getText().toString().trim().length() > 0) {
-                                Intent i1 = new Intent(getApplicationContext(), Screen3a.class);
-                                startActivity(i1);
-                                Toast toast = Toast.makeText(getApplicationContext(),"Login Succesfull", Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                toast.show();
-                                dialog.dismiss();
+                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
+                                if (matcher.matches()) {
+                                    if (pass.getText().toString().trim().length()>=4) {
+                                        Intent i1 = new Intent(getApplicationContext(), Screen3a.class);
+                                        startActivity(i1);
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                        toast.show();
+                                        dialog.dismiss();
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(MainActivity.this, "Password must be at least 4 characters. ", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else
+                                {
+                                    Toast.makeText(getApplicationContext(), "Invalid Mail Id.", Toast.LENGTH_SHORT).show();
+                                }
 
                             } else {
                                 Toast toast = Toast.makeText(getApplicationContext(),"Invalid connection", Toast.LENGTH_SHORT);
