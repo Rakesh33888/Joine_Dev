@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_gravity="center"
+    android:layout_height="220dp"
+    android:background="@drawable/signupbg"
+    >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:maxLength="25"
+        android:drawableLeft="@drawable/emailicon"
+        android:layout_marginTop="50dp"
+        android:textColor="#fff"
+        android:backgroundTint="#d5ffffff"
+        android:drawablePadding="18dp"
+        android:paddingStart="10dp"
+        android:textColorHint="#85e2e2e2"
+        android:hint="Email Address"
+        android:id="@+id/editText3" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:backgroundTint="#d5ffffff"
+        android:maxLength="10"
+        android:textColor="#fff"
+        android:drawablePadding="25dp"
+        android:paddingStart="10dp"
+        android:textColorHint="#85e2e2e2"
+        android:hint="Password"
+        android:password="true"
+        android:drawableLeft="@drawable/password"
+        android:id="@+id/editText4" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/joinbtn"
+        android:id="@+id/button5"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

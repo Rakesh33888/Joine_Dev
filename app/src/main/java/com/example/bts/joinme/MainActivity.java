@@ -36,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
 
 
+        if (session.isLoggedIn()) {
+            // User is already logged in. Take him to main activity
+            Intent intent = new Intent(MainActivity.this,Screen16.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+            finish();
+        }
 
         already_member = (TextView) findViewById(R.id.btn3);
         already_member.setClickable(true);
@@ -61,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(i);
                                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                                 finish();
-
+                                session.setLogin(true);
                                 Toast toast = Toast.makeText(getApplicationContext(),"Login Succesfull", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
@@ -119,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
                                     if (pass.getText().toString().trim().length()>=4) {
                                         Intent i1 = new Intent(getApplicationContext(), Screen3a.class);
                                         startActivity(i1);
+                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                        finish();
                                         Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();

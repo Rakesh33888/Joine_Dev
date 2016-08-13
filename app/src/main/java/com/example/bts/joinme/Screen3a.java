@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -144,5 +145,18 @@ public class Screen3a extends AppCompatActivity  {
         }
 
     }
+
+    public boolean onKeyDown(int Keycode, KeyEvent event) {
+        if (Keycode == KeyEvent.KEYCODE_BACK) {
+
+            Intent i = new Intent(Screen3a.this, MainActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+            finish();
+
+
+        } return super.onKeyDown(Keycode,event);
+    }
+
 
 }

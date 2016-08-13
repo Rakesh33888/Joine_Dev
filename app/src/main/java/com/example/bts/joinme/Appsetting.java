@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -31,7 +32,8 @@ public class Appsetting extends Fragment{
     RadioButton miles,km;
     Spinner dropdown;
     ArrayList customarraylist;
-
+    LinearLayout logout;
+    SessionManager session;
     private String [] prgmNameList={"Notification","Message","New activities near by","Activity reminder","New level"};
 
     // TODO: Rename parameter arguments, choose names that match
@@ -91,10 +93,23 @@ public class Appsetting extends Fragment{
         numberPK1.setMaxValue(100);
         numberPK1.setMinValue(0);
         numberPK1.setWrapSelectorWheel(false);*/
-
+        session = new SessionManager(getActivity());
         dis = (SegmentedGroup) v.findViewById(R.id.distance);
         miles = (RadioButton) v.findViewById(R.id.miles);
         km = (RadioButton) v.findViewById(R.id.km);
+        logout = (LinearLayout) v.findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                session.setLogin(false);
+                // Launching the login activity
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
 
           dropdown = (Spinner) v.findViewById(R.id.spinner1);
         String[] items = new String[]{"All messages", "Only from travelers", "Only from groups"};
