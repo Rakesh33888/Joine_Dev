@@ -4,10 +4,12 @@ import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,6 +22,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.siyamed.shapeimageview.CircularImageView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,32 +35,32 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 public class Screen3a extends AppCompatActivity  {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView imageView;
-    Button btn6;
-    TextView textView3, textView4;
-    EditText editText1, editText2, editText3, editText4;
-    Bitmap bitmap;
+    Button continue_btn;
+    CircularImageView circle_image;
+    EditText firstname, lastname, conformation_code,share;
     android.support.v7.app.ActionBar actionBar;
     SegmentedGroup  rgroup;
     RadioButton male,female;
      TextView textView5;
     Spinner day,month,year;
-
+    String gender;
+    int select_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen3aa);
-        editText1 = (EditText) findViewById(R.id.editText5);
-        editText2 = (EditText) findViewById(R.id.editText6);
-        editText3 = (EditText) findViewById(R.id.editText7);
-        editText4 = (EditText) findViewById(R.id.editText8);
-        imageView = (ImageView) findViewById(R.id.imageView2);
-       // textView5 = (TextView) findViewById(R.id.editText9);
+
+        firstname = (EditText) findViewById(R.id.firstname);
+        lastname = (EditText) findViewById(R.id.lastname);
+        conformation_code = (EditText) findViewById(R.id.conformation_code);
+        share = (EditText) findViewById(R.id.share);
+
         rgroup = (SegmentedGroup) findViewById(R.id.radioGroup);
         male = (RadioButton) findViewById(R.id.male);
         female = (RadioButton) findViewById(R.id.female);
-
-
+        continue_btn = (Button) findViewById(R.id.continue_btn);
+        circle_image = (CircularImageView) findViewById(R.id.imageView0);
         male.setChecked(true);
 
         day = (Spinner) findViewById(R.id.spinner1);
@@ -80,7 +85,7 @@ public class Screen3a extends AppCompatActivity  {
             year_list.add(Integer.toString(i));
         }
         ArrayAdapter<Integer> spinnerArrayAdapter1 = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, year_list);
-        spinnerArrayAdapter1.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        spinnerArrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         year.setAdapter(spinnerArrayAdapter1);
 
 
@@ -98,8 +103,8 @@ public class Screen3a extends AppCompatActivity  {
         layoutParams.rightMargin = 40;
         imageView4.setLayoutParams(layoutParams);
         actionBar.setCustomView(imageView4);
-        imageView.setClickable(true);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        circle_image.setClickable(true);
+        circle_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -109,14 +114,46 @@ public class Screen3a extends AppCompatActivity  {
 
             }
         });
-        btn6 = (Button) findViewById(R.id.button3);
-        btn6.setOnClickListener(new View.OnClickListener() {
+
+        continue_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(getApplicationContext(), Screen16.class);
-                startActivity(a);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                finish();
+                if (select_image == 1) {
+                    if (firstname.getText().toString().length() >= 2) {
+
+                        if (male.isChecked()) {
+                            gender = "male";
+                        } else {
+                            gender = "female";
+                        }
+                        String ye = (String) year.getSelectedItem();
+                        String mon = (String) month.getSelectedItem();
+                        String da = (String) day.getSelectedItem();
+                        String birth = da + "/" + mon + "/" + ye;
+
+                        Intent a = new Intent(getApplicationContext(), Screen16.class);
+                        startActivity(a);
+                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                        finish();
+                        Log.w("myApp", firstname.getText().toString() + "\n" + lastname.getText().toString() + "\n" + conformation_code.getText().toString() + "\n" + gender + "\n" + birth);
+                        Toast.makeText(Screen3a.this, firstname.getText().toString() + "\n" + lastname.getText().toString() + "\n" + conformation_code.getText().toString() + "\n" + gender + "\n" + birth, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters", Toast.LENGTH_SHORT);
+                        View view = toast.getView();
+                        view.setBackgroundResource(R.drawable.smallbox1);
+                        TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
+                        col.setTextColor(Color.RED);
+                        toast.show();
+                    }
+                }else
+                {
+                    Toast toast = Toast.makeText(Screen3a.this, "Please choose a photo", Toast.LENGTH_SHORT);
+                    View view = toast.getView();
+                    view.setBackgroundResource(R.drawable.smallbox1);
+                    TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
+                    col.setTextColor(Color.RED);
+                    toast.show();
+                }
             }
         });
 
@@ -136,9 +173,10 @@ public class Screen3a extends AppCompatActivity  {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
 
 
-                ImageView imageView = (ImageView) findViewById(R.id.imageView2);
+              //  CircularImageView imageView = (CircularImageView) findViewById(R.id.imageView2);
 
-                imageView.setImageBitmap(bitmap);
+                circle_image.setImageBitmap(bitmap);
+                select_image =1;
             } catch (IOException e) {
 
             }

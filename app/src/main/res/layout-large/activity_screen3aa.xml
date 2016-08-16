@@ -15,34 +15,24 @@
         android:layout_height="75dp"
         android:clickable="false"
         android:id="@+id/imageView0"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/picture"
-        android:layout_above="@+id/textView3"
+        android:background="@drawable/picture"
+
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="75dp"
-        android:id="@+id/imageView2"
-        android:layout_marginBottom="8dp"
-        android:clickable="false"
-        android:src="@drawable/picture"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="In few moments you'll recive a conformation code on your mail."
         android:id="@+id/textView3"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+        android:layout_below="@+id/imageView0"
+        android:layout_alignParentStart="true" />
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:inputType="textPersonName"
+        android:layout_height="50dp"
+        android:inputType="text|textNoSuggestions"
         android:hint="First Name"
         android:ems="10"
         android:textColorHint="#C1C1C1"
@@ -51,13 +41,13 @@
         android:paddingLeft="15dp"
         android:cursorVisible="true"
         android:background="@drawable/smallbox"
-        android:id="@+id/editText5"
+        android:id="@+id/firstname"
         android:layout_below="@+id/textView3"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:inputType="textPersonName"
         android:hint="Last Name"
         android:minEms="2"
@@ -68,14 +58,14 @@
         android:cursorVisible="true"
         android:textSize="16dp"
         android:ems="10"
-        android:id="@+id/editText6"
+        android:id="@+id/lastname"
         android:layout_marginTop="1dp"
-        android:layout_below="@+id/editText5"
+        android:layout_below="@+id/firstname"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:inputType="number"
         android:paddingLeft="15sp"
         android:background="@drawable/smallbox"
@@ -85,16 +75,16 @@
         android:hint="Conformation code"
         android:textSize="16dp"
         android:numeric="integer"
-        android:id="@+id/editText7"
+        android:id="@+id/conformation_code"
         android:layout_marginTop="1dp"
-        android:layout_below="@+id/editText6"
-        android:layout_alignStart="@+id/editText6"
-        android:layout_alignEnd="@+id/editText6" />
+        android:layout_below="@+id/lastname"
+        android:layout_alignStart="@+id/lastname"
+        android:layout_alignEnd="@+id/lastname" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@+id/editText7"
+        android:layout_height="50dp"
+        android:layout_below="@+id/conformation_code"
         android:layout_marginTop="1dp"
         android:background="@drawable/smallbox"
         android:layout_alignParentEnd="true"
@@ -166,37 +156,37 @@
             android:clickable="true"
             android:cursorVisible="true"
             android:id="@+id/textView5"/>
-<LinearLayout
-    android:layout_width="207dp"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_gravity="right" >
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="50dp"
-        android:layout_height="33dp"
+        <LinearLayout
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right" >
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="50dp"
+                android:layout_height="33dp"
+                android:spinnerMode="dropdown"
+                />
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="70dp"
+                android:layout_height="33dp"
 
-        android:spinnerMode="dropdown" />
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="70dp"
-        android:layout_height="33dp"
 
+                android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/spinner3"
+                android:layout_width="70dp"
+                android:layout_height="33dp"
 
-        android:spinnerMode="dropdown" />
-    <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="70dp"
-        android:layout_height="33dp"
-
-        android:spinnerMode="dropdown" />
-</LinearLayout>
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
 
     </FrameLayout>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText8"
+        android:id="@+id/share"
         android:background="@drawable/bigbox"
         android:gravity="center|left|top"
         android:paddingLeft="15dp"
@@ -208,11 +198,11 @@
         android:layout_below="@+id/frameLayout4"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/frameLayout4"
-        android:layout_above="@+id/button3" />
+        android:layout_above="@+id/continue_btn" />
     <Button
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:id="@+id/button3"
+        android:id="@+id/continue_btn"
         android:layout_marginTop="10dp"
         android:background="@drawable/continuebtn"
         android:layout_alignParentBottom="true"

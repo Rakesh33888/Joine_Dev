@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,17 +127,18 @@ public class Screen16 extends AppCompatActivity implements
         relativeLayoutmsg = (RelativeLayout) findViewById(R.id.msssg);
         msg = (ImageView) findViewById(R.id.msg);
         msg.setClickable(true);
+
         msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                               fragmentManager=getSupportFragmentManager();
-//                               Messagescreen messagescreen=new Messagescreen();
-//                               fragmentManager.beginTransaction()
-//                                       .replace(R.id.flContent,messagescreen)
-//                                .addToBackStack(null)
-//                                .commit();
 
-
+                fragmentManager=getSupportFragmentManager();
+                Messagescreen messagescreen=new Messagescreen();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent,messagescreen)
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });
@@ -174,33 +176,6 @@ public class Screen16 extends AppCompatActivity implements
         }
     }
 
-//
-//    @Override
-//    public View onCreateView(String name, Context context, AttributeSet attrs) {
-//        View v=onCreateView(name, context, attrs);
-//
-//        return v;
-//
-//
-//    }
-
-    //
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.msg) {
-//
-//
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//   }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();

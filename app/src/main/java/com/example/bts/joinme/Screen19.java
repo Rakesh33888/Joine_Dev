@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
-import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 
 import java.io.IOException;
@@ -46,7 +48,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
             checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
-
+    TextView age1,age2;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,10 +83,23 @@ public class Screen19 extends android.support.v4.app.Fragment {
         textViewforage = (TextView) v.findViewById(R.id.textviewforage);
         checkBoxformen = (CheckBox) v.findViewById(R.id.checkBoxformen);
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
-        textViewageshowing = (TextView) v.findViewById(R.id.ageshowing_text);
+       // textViewageshowing = (TextView) v.findViewById(R.id.ageshowing_text);
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
         firstimage =(ImageView) v.findViewById(R.id.firstimage);
         firstimage.setClickable(true);
+        age1 = (TextView) v.findViewById(R.id.age1);
+        age2 = (TextView) v.findViewById(R.id.age2);
+
+
+
+
+        seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                age1.setText(String.valueOf(minValue));
+                age2.setText(String.valueOf(maxValue));
+            }
+        });
 
         firstimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +165,28 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
     public ContentResolver getContentResolver() {
         return contentResolver;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    Intent i = new Intent(getActivity(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }
 

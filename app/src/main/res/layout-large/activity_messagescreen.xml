@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
     tools:context="com.example.bts.joinme.Messagescreen">
 
     <FrameLayout
@@ -15,6 +17,20 @@
             android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/grayback"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Groups"
+            android:id="@+id/textView24"
+            android:textColor="#0a6ef1"
+            android:textSize="35dp"
+            android:layout_gravity="center"/>
+
 
     </FrameLayout>
+
+
+
+
 </LinearLayout>

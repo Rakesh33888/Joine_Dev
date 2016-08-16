@@ -40,7 +40,7 @@
             android:label="@string/title_activity_screen16"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Screen3a" />
-
+      <activity android:name=".Single_group_Message"></activity>
 
 
     </application>

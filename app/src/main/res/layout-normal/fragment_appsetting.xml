@@ -149,7 +149,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 app:kswTintColor="#076c3c"
-                 />
+                app:kswThumbColor="#939393" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -165,6 +165,8 @@
                 android:text="Activity reminder"
                 android:id="@+id/reminder" />
 
+
+                 />
 
 
 
@@ -190,6 +192,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 app:kswTintColor="#076c3c"
+                app:kswThumbColor="#939393"
+
                 />
         </RelativeLayout>
 

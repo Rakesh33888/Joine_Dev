@@ -1,10 +1,12 @@
 package com.example.bts.joinme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,23 +38,10 @@ public class Screen17 extends android.support.v4.app.Fragment  {
         imageViewbck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager=getFragmentManager();
-                if (savedInstanceState==null){
-                    Mygroup mygroup=new Mygroup();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.flContent,mygroup)
-                            .addToBackStack(null)
-                            .commit();
-
-//                }
-                Fragment fragment = null;
-                switch (v.getId()) {
-                    case R.id.backbtnimage:
-                        fragment = new Fragment();
-                        replaceFragment(fragment);
-                        break;
-                }
-            }}
+                Intent i = new Intent(getActivity(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();}
         });
         reporttext.setClickable(true);
         reporttext.setOnClickListener(new View.OnClickListener() {
@@ -132,5 +121,25 @@ public class Screen17 extends android.support.v4.app.Fragment  {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    Intent i = new Intent(getActivity(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
 }
