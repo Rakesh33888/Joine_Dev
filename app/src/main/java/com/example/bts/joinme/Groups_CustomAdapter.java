@@ -1,8 +1,10 @@
 package com.example.bts.joinme;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +26,10 @@ class Groups_CustomAdapter extends BaseAdapter {
     String [] message;
     FragmentManager fragmentManager;
    Context context;
+    Fragment fragment = null;
+    Class fragmentClass = null;
    int [] imageId;
+
    private static LayoutInflater inflater=null;
    public Groups_CustomAdapter(FragmentActivity mainActivity, String[] prgmNameList, int[] prgmImages,String[] messageList ) {
        // TODO Auto-generated constructor stub
@@ -76,17 +81,21 @@ class Groups_CustomAdapter extends BaseAdapter {
        holder.img.setImageResource(imageId[position]);
        holder.message.setText(message[position]);
 
-
+       fragmentClass = Single_group_Message.class;
        rowView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                // TODO Auto-generated method stub
               // Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_LONG).show();
                //Toast.makeText(context, "Under Process" , Toast.LENGTH_LONG).show();
-                Intent i = new Intent(context,Single_group_Message.class);
-                context.startActivity(i);
+                //Intent i = new Intent(context,Single_group_Message.class);
+                //context.startActivity(i);
 
-
+               Single_group_Message fragment2 = new Single_group_Message();
+               FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+               FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+               fragmentTransaction.replace(R.id.flContent, fragment2);
+               fragmentTransaction.commit();
 
            }
        });

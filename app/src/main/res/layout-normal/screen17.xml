@@ -11,12 +11,14 @@
         android:background="@mipmap/screenbg"
         android:layout_height="match_parent">
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.example.bts.joinme.Screen17">
+
         <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="29dp"
@@ -36,34 +38,40 @@
             android:layout_height="match_parent"
             android:text="@string/underlinedText"
             android:id="@+id/reportactitytext"
-            android:textSize="18dp"
             android:clickable="true"
-            android:textColor="#de212121"
-            android:layout_marginLeft="100dp"
+
+            android:layout_marginLeft="120dp"
             android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/underlinedText1"
-            android:textSize="18dp"
             android:clickable="true"
             android:gravity="center"
             android:layout_marginLeft="230dp"
             android:textColorLink="#de212121"
-            android:textColor="#de212121"
+
             android:id="@+id/updateactivitytext"/>
          </FrameLayout>
-
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_margin="20dp"
+            android:layout_below="@+id/frameLayoutbck"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            tools:context="com.example.bts.joinme.Screen17">
         <android.support.v7.widget.CardView
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="300dp"
-            android:layout_height="230dp"
+            android:layout_width="fill_parent"
+            android:layout_height="220dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_weight="0.20"
             android:id="@+id/frameLayout5"
-            android:layout_below="@+id/frameLayoutbck"
+
             android:layout_centerHorizontal="true">
 
             <ImageView
@@ -79,7 +87,7 @@
 
 
     <FrameLayout
-        android:layout_width="308dp"
+        android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:id="@+id/frameLayoutactity"
         android:background="@drawable/smallbox1"
@@ -91,7 +99,7 @@
         android:layout_alignStart="@+id/frameLayout5">
 
         <ImageView
-            android:layout_width="48dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewrfting"
             android:foregroundGravity="center|left"
@@ -132,11 +140,10 @@
 
             </FrameLayout>
             <FrameLayout
-                android:layout_width="340dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="#24ededed"
                 android:id="@+id/createrprlfram"
-                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_weight="0.06"
@@ -190,11 +197,10 @@
             </FrameLayout>
 
         <FrameLayout
-            android:layout_width="340dp"
+            android:layout_width="fill_parent"
             android:layout_height="120dp"
             android:background="#24ededed"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/listactivityframe"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.25"
@@ -293,6 +299,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_below="@+id/listactivityframe"
             android:layout_centerHorizontal="true" />
+            </RelativeLayout>
             </RelativeLayout>
             </LinearLayout>
             </ScrollView>

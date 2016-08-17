@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Splashscreen"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +29,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,10 +39,12 @@
         </activity>
         <activity
             android:name=".Screen16"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_screen16"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Screen3a" />
-      <activity android:name=".Single_group_Message"></activity>
+        <activity android:name=".Screen3a"
+            android:screenOrientation="portrait"/>
+
 
 
     </application>

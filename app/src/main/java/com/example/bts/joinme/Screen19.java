@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,62 +29,51 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Screen19 extends android.support.v4.app.Fragment {
     private static final int PICK_IMAGE_REQUEST = 3;
     private static final int RESULT_OK = 3;
 
     ScrollView scrollViewscreen19;
-    LinearLayout linearLayoutscreen19, linearLayoutforicon, linearLayoutfor_time,
-            linearLayoutforparticipationcost, numberlimit;
+
     ImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname, edittextforaddress, enterdiscription;
     Button create, delete;
-    TextView icontype, texttime, textday, textmonth, textyear, texthour, textforlocation,
-            textViewavailblefor, textViewgender, textViewforage, textViewageshowing,
-            participtioncost, participationnumberlimit;
-    Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour;
-    FrameLayout frameLayoutforlocation, frameLayoutavailblefor;
-    CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone,
-            checkBoxformen, checkBoxforwomen;
+    Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
+    FrameLayout frameLayoutforlocation;
+    CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
     TextView age1,age2;
+    String[] currency = new String[]{"$", "€"};
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_screen19, container, false);
         scrollViewscreen19 = (ScrollView) v.findViewById(R.id.ScrollViewscreen19);
-        linearLayoutscreen19 = (LinearLayout) v.findViewById(R.id.linearlayoutscreen19);
         edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
-        linearLayoutforicon = (LinearLayout) v.findViewById(R.id.linearLayout_forIcon);
-        icontype = (TextView) v.findViewById(R.id.icontype);
+
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
-        linearLayoutfor_time = (LinearLayout) v.findViewById(R.id.linearLayoutfor_time);
-        texttime = (TextView) v.findViewById(R.id.timetext);
-        textday = (TextView) v.findViewById(R.id.textview_for_day);
-        textmonth = (TextView) v.findViewById(R.id.textfor_month);
-        textyear = (TextView) v.findViewById(R.id.textfor_year);
-        texthour = (TextView) v.findViewById(R.id.textfor_hour);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
         spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
         spinnerforyear = (Spinner) v.findViewById(R.id.spinner_year);
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
+
+        currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
+
         frameLayoutforlocation = (FrameLayout) v.findViewById(R.id.framelayoutfor_location);
-        textforlocation = (TextView) v.findViewById(R.id.textforlocation);
         edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
+
         checkboxcurrent = (CheckBox) v.findViewById(R.id.checkBoxfor_current);
         checkBoxaddress = (CheckBox) v.findViewById(R.id.checkboxfor_address);
-//        frameLayoutavailblefor = (FrameLayout) v.findViewById(R.id.frameLayoutfor_availble);
-        textViewavailblefor = (TextView) v.findViewById(R.id.textViewfor_availblefor);
         checkBoxforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_everyone);
         checkBoxnotforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_noteveryone);
-        textViewgender = (TextView) v.findViewById(R.id.textViewfor_gender);
-        textViewforage = (TextView) v.findViewById(R.id.textviewforage);
         checkBoxformen = (CheckBox) v.findViewById(R.id.checkBoxformen);
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
-       // textViewageshowing = (TextView) v.findViewById(R.id.ageshowing_text);
+
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
         firstimage =(ImageView) v.findViewById(R.id.firstimage);
         firstimage.setClickable(true);
@@ -91,7 +81,72 @@ public class Screen19 extends android.support.v4.app.Fragment {
         age2 = (TextView) v.findViewById(R.id.age2);
 
 
+        /******************** CheckBox Functionality Start*******************/
+        checkboxcurrent.setChecked(true);
+        checkboxcurrent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v==checkboxcurrent){
+                    checkBoxaddress.setChecked(false);
 
+                }
+
+            }
+        });
+        checkBoxaddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == checkBoxaddress) {
+                    checkboxcurrent.setChecked(false);
+
+                }
+
+            }
+        });
+        checkBoxforeveryone.setChecked(true);
+        checkBoxforeveryone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v==checkBoxforeveryone){
+                    checkBoxnotforeveryone.setChecked(false);
+
+                }
+
+            }
+        });
+        checkBoxnotforeveryone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == checkBoxnotforeveryone) {
+                    checkBoxforeveryone.setChecked(false);
+
+                }
+
+            }
+        });
+
+        checkBoxforwomen.setChecked(true);
+        checkBoxforwomen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v==checkBoxforwomen){
+                    checkBoxformen.setChecked(false);
+
+                }
+
+            }
+        });
+        checkBoxformen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == checkBoxformen) {
+                    checkBoxforwomen.setChecked(false);
+
+                }
+
+            }
+        });
+        /******************** CheckBox Functionality End*******************/
 
         seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
@@ -100,6 +155,8 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 age2.setText(String.valueOf(maxValue));
             }
         });
+
+
 
         firstimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,10 +191,46 @@ public class Screen19 extends android.support.v4.app.Fragment {
         });
 
 
-        participationnumberlimit = (TextView) v.findViewById(R.id.textforparticipantlimit);
+
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
         create = (Button) v.findViewById(R.id.createbutton);
         delete = (Button) v.findViewById(R.id.deletebutton);
+
+
+    /*************************** Spinner Functionality Start ***********************/
+        List day_list = new ArrayList<Integer>();
+        for (int i = 1; i <= 31; i++)
+        {
+            day_list.add(Integer.toString(i));
+        }
+        ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
+        spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        spinnerforday.setAdapter(spinnerArrayAdapter);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.month_names));
+        spinnerformonth.setAdapter(adapter1);
+
+        List year_list = new ArrayList<Integer>();
+        for (int i = 2015; i <= 2020; i++)
+        {
+            year_list.add(Integer.toString(i));
+        }
+        ArrayAdapter<Integer> spinnerArrayAdapter1 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, year_list);
+        spinnerArrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerforyear.setAdapter(spinnerArrayAdapter1);
+
+        List hours = new ArrayList<Integer>();
+        for (int i = 0; i <= 23; i++)
+        {
+            hours.add(Integer.toString(i));
+        }
+        ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+        spinnerArrayAdapter4.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+        spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
+        currency_symbol.setAdapter(adapter_currency);
+    /**************************Spinner functionality Ends *****************************/
 
         return v;
 

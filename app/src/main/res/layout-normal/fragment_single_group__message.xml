@@ -1,0 +1,172 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/single_group"
+    android:background="#ffffff"
+    tools:context="com.example.bts.joinme.Single_group_Message">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:id="@+id/header"
+        android:background="@drawable/group_header_bg">
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/createrimage"
+            android:layout_margin="10dp"
+            android:src="@drawable/butterfly"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Rafting"
+            android:textColor="#ffffff"
+            android:id="@+id/textView25"
+            android:layout_alignTop="@+id/createrimage"
+            android:layout_toEndOf="@+id/createrimage" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today at: 17:00"
+            android:textColor="#ffffff"
+            android:id="@+id/textView26"
+            android:layout_below="@+id/textView25"
+            android:layout_alignStart="@+id/textView25"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2Km away:5th avenue 170"
+            android:id="@+id/textView27"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/textView26"
+            android:layout_alignStart="@+id/textView26"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leave Chat"
+            android:id="@+id/leave_chat"
+            android:layout_alignTop="@+id/textView25"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="23dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/createrimage"
+            android:layout_alignParentStart="true">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="220dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Participents"
+                    android:layout_gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textView29"
+                    android:layout_marginLeft="10dp" />
+                <com.devsmart.android.ui.HorizontalListView
+                    android:id="@+id/maps_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hosted by"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
+                    android:id="@+id/textView30" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Leo"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
+                    android:id="@+id/name"
+                    android:layout_marginLeft="3dp" />
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/hosted"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/butterfly"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/linearLayout">
+
+            <EditText
+                android:layout_width="306dp"
+                android:layout_height="match_parent"
+                android:id="@+id/editText5"
+
+                android:hint="Type here"
+                android:layout_marginLeft="10dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:id="@+id/imageView2"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/send_btn"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/editText5"
+                  />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="162dp"
+            android:layout_above="@+id/linearLayout" />
+    </RelativeLayout>
+
+
+</FrameLayout>
