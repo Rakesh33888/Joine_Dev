@@ -13,36 +13,27 @@
     tools:showIn="@layout/app_bar_screen16">
 
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/imageButton_swipe"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:clipChildren="true">
-
         <link.fls.swipestack.SwipeStack
             android:id="@+id/swipeStack"
-            android:layout_width="350dp"
-            android:layout_height="250dp"
-            app:stack_rotation="3"
-            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:stack_rotation="0"
+            android:clipChildren="true"
             app:stack_size="3"
-            android:layout_gravity="center"
-           />
+            app:disable_hw_acceleration="false"
+            android:layout_gravity="center" />
 
-    </RelativeLayout>
+
 
     <FrameLayout
         android:layout_width="310dp"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/smallbox1"
-        android:layout_below="@+id/imageButton_swipe"
+        android:layout_below="@+id/swipeStack"
         android:id="@+id/frameLayout2"
-        android:layout_alignEnd="@+id/imageButton_swipe"
-        android:layout_alignStart="@+id/imageButton_swipe">
+        android:layout_alignEnd="@+id/swipeStack"
+        android:layout_alignStart="@+id/swipeStack">
 
 
         <ImageView
@@ -90,40 +81,41 @@
 
     </FrameLayout>
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button13"
+        android:id="@+id/dislike"
         android:background="@drawable/dislike"
         android:layout_below="@+id/frameLayout2"
         android:layout_marginTop="25dp" />
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/message"
-        android:id="@+id/button14"
-        android:layout_alignTop="@+id/button13"
+        android:id="@+id/like"
+        android:layout_alignTop="@+id/dislike"
         android:layout_alignEnd="@+id/frameLayout2" />
 
-    <Button
+    <ImageView
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/info"
         android:id="@+id/infobutton"
-        android:layout_marginTop="18dp"
-        android:layout_alignTop="@+id/button14"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/like"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
-    <Button
-        android:layout_width="170dp"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/create"
         android:id="@+id/createnewactivity"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/button13"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/dislike"
         android:layout_centerHorizontal="true" />
+
 
 
 </RelativeLayout>

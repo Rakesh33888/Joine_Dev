@@ -41,14 +41,17 @@ public class Screen16 extends AppCompatActivity implements
     private SwipeStack mSwipeStack;
     private SwipeStackAdapter mAdapter;
     Integer s[]={R.drawable.army1,R.drawable.army2,R.drawable.army3};
-
     Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
-    ImageView navimage, logo, msg;
+    ImageView navimage, logo, msg,back_nav;
     TextView navtextview;
-    Button create;
+    ImageView create,like,dislike,btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
     FragmentManager fragmentManager;
+
+
+
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class Screen16 extends AppCompatActivity implements
         mData = new ArrayList<>();
         mAdapter = new SwipeStackAdapter(mData);
         mSwipeStack.setAdapter(mAdapter);
+
+
 
         fillWithTestData();
 
@@ -80,35 +85,33 @@ public class Screen16 extends AppCompatActivity implements
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.flContent);
-        RelativeLayout frameLayoutimagebtn = (RelativeLayout) findViewById(R.id.imageButton_swipe);
-        FrameLayout frameLayout2 = (FrameLayout) findViewById(R.id.frameLayout2);
-        ImageView activityimage = (ImageView) findViewById(R.id.imageView4);
-        TextView textViewactivity = (TextView) findViewById(R.id.textView14);
-        TextView textViewactivity1 = (TextView) findViewById(R.id.textView15);
-        TextView textViewactivity2 = (TextView) findViewById(R.id.textView16);
-        Button btninfo = (Button)findViewById(R.id.infobutton);
+
+
+
+
+        like = (ImageView) findViewById(R.id.like);
+        dislike = (ImageView) findViewById(R.id.dislike);
+
+
+
+        btninfo = (ImageView)findViewById(R.id.infobutton);
         btninfo.setClickable(true);
-
-
         btninfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager=getSupportFragmentManager();
-                Screen17 screen17=new Screen17();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.flContent,screen17)
-                            .addToBackStack(null)
-                            .commit();
-
+                fragmentManager = getSupportFragmentManager();
+                Screen17 screen17 = new Screen17();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, screen17)
+                        .addToBackStack(null)
+                        .commit();
 
 
             }
         });
-        Button userchatadd = (Button) findViewById(R.id.button14);
-        Button notintrested = (Button) findViewById(R.id.button13);
+
         logo = (ImageView) findViewById(R.id.logo);
-        create= (Button)findViewById(R.id.createnewactivity);
+        create= (ImageView)findViewById(R.id.createnewactivity);
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +149,7 @@ public class Screen16 extends AppCompatActivity implements
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
         navtextview = (TextView) header.findViewById(R.id.navtextview);
-
+        back_nav = (ImageView) header.findViewById(R.id.back_nav);
         navtextview.setText("Ajay");
         navigationView.setNavigationItemSelectedListener(this);
         navimage.setClickable(true);
@@ -160,7 +163,12 @@ public class Screen16 extends AppCompatActivity implements
             }
         });
 
-
+        back_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawers();
+            }
+        });
 
 
     }

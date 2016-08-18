@@ -1,13 +1,11 @@
 <android.support.v7.widget.CardView
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    card_view:cardElevation="12dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <ImageView android:id="@+id/textViewCard"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:fitsSystemWindows="true"
-        android:gravity="center"
-        />
+        android:layout_height="fill_parent"
+         android:gravity="center"/>
+
     </android.support.v7.widget.CardView>

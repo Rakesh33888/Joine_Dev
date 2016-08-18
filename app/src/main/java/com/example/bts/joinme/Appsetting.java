@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,18 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 
 public class Appsetting extends Fragment{
+
+    int max_range = 23;
+    int min_range = 0;
+    int initialvalues = 0;
+
+    int max_range1 = 60;
+    int min_range1= 0;
+    int initialvalues1 = 0;
+    private Button incButton,incButton1;
+    private Button decButton,decButton1;
+    private TextView editText,editText1;
+
     Button btnbck,btnreport,btndelt;
     ImageView imageback;
      private ListView customlistview;
@@ -90,10 +103,69 @@ public class Appsetting extends Fragment{
 
         View v=inflater.inflate(R.layout.fragment_appsetting, container, false);
 
-        /*final NumberPicker numberPK1 = (NumberPicker) v.findViewById(R.id.numberPicker1);
-        numberPK1.setMaxValue(100);
-        numberPK1.setMinValue(0);
-        numberPK1.setWrapSelectorWheel(false);*/
+
+
+        incButton = (Button) v.findViewById(R.id.incButton);
+        decButton = (Button) v.findViewById(R.id.decButton);
+        editText = (TextView) v.findViewById(R.id.numberEditText);
+        incButton1 = (Button) v.findViewById(R.id.incButton1);
+        decButton1 = (Button) v.findViewById(R.id.decButton1);
+        editText1 = (TextView) v.findViewById(R.id.numberEditText1);
+
+        incButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (initialvalues >= min_range && initialvalues <= max_range) initialvalues++;
+                if (initialvalues > max_range)
+                    initialvalues = min_range;
+                editText.setText("" + initialvalues);
+
+            }
+        });
+
+        decButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                if (initialvalues >= min_range && initialvalues <= max_range)
+                    initialvalues--;
+
+                if (initialvalues < min_range)
+                    initialvalues = max_range;
+
+                editText.setText(initialvalues + "");
+            }
+        });
+
+
+        incButton1.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (initialvalues1 >= min_range1 && initialvalues1 <= max_range1) initialvalues1++;
+                if (initialvalues1 > max_range1)
+                    initialvalues1 = min_range1;
+                editText1.setText("" + initialvalues1);
+
+            }
+        });
+
+        decButton1.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                if (initialvalues1 >= min_range1 && initialvalues1 <= max_range1)
+                    initialvalues1--;
+
+                if (initialvalues1 < min_range1)
+                    initialvalues1 = max_range1;
+
+                editText1.setText(initialvalues1 + "");
+            }
+        });
+
+
+
+
         session = new SessionManager(getActivity());
         dis = (SegmentedGroup) v.findViewById(R.id.distance);
         miles = (RadioButton) v.findViewById(R.id.miles);
