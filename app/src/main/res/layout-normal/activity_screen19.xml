@@ -180,7 +180,7 @@
 
                 <CheckBox
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/checkBoxfor_current"
                     android:text="Current"
                     android:scaleX="0.60"
@@ -203,7 +203,7 @@
 
                 <CheckBox
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/checkboxfor_address"
                     android:text="Address"
                     android:scaleX="0.60"
@@ -239,7 +239,7 @@
 
                 <CheckBox
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
                     android:text="Everyone"
                     android:scaleX="0.65"
                     android:layout_marginLeft="6dp"
@@ -252,7 +252,7 @@
 
                 <CheckBox
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
                     android:text="Not everyone"
                     android:scaleX="0.65"
                     android:textSize="21dp"
@@ -266,7 +266,7 @@
                      android:orientation="horizontal">
                         <TextView
                            android:layout_width="wrap_content"
-                           android:layout_height="25dp"
+                           android:layout_height="wrap_content"
                            android:textAppearance="?android:attr/textAppearanceSmall"
                            android:text="Gender"
                            android:layout_marginTop="12dp"
@@ -278,7 +278,7 @@
                              />
                         <CheckBox
                             android:layout_width="wrap_content"
-                            android:layout_height="25dp"
+                            android:layout_height="wrap_content"
                             android:text="Women"
                             android:scaleX="0.65"
                             android:textSize="21dp"
@@ -309,7 +309,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="Age"
                         android:id="@+id/textviewforage"
                         android:textColor="#AFAFAF"
@@ -319,7 +319,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="0"
                         android:id="@+id/age1"
                         android:textColor="#AFAFAF"
@@ -329,7 +329,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="-"
                         android:textColor="#AFAFAF"
                         android:textSize="16dp"
@@ -337,7 +337,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="100"
                         android:id="@+id/age2"
                         android:textColor="#AFAFAF"

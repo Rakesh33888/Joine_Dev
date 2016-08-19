@@ -26,7 +26,7 @@
 
 
     <FrameLayout
-        android:layout_width="310dp"
+        android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/smallbox1"
@@ -92,7 +92,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/message"
+        android:background="@drawable/message1"
         android:id="@+id/like"
         android:layout_alignTop="@+id/dislike"
         android:layout_alignEnd="@+id/frameLayout2" />

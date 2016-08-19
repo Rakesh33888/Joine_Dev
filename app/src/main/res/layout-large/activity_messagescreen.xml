@@ -3,34 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical"
+    android:background="#ffffff"
     tools:context="com.example.bts.joinme.Messagescreen">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:background="#dedede"
-        android:layout_height="80dp">
+        android:layout_height="70dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:id="@+id/back"
             android:layout_gravity="center_vertical"
             android:src="@drawable/grayback"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Groups"
+            android:textSize="40dp"
             android:id="@+id/textView24"
             android:textColor="#0a6ef1"
-            android:textSize="35dp"
             android:layout_gravity="center"/>
-
 
     </FrameLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listView"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 </LinearLayout>

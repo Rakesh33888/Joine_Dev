@@ -26,7 +26,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="310dp"
+        android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/smallbox1"
@@ -108,7 +108,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/create"
         android:id="@+id/button16"

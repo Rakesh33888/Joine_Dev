@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:text="@string/underlinedText"
             android:id="@+id/reportactitytext"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:clickable="true"
             android:textColor="#de212121"
             android:layout_marginLeft="160dp"
@@ -51,10 +51,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/underlinedText1"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:clickable="true"
             android:gravity="center"
-            android:layout_marginLeft="290dp"
+            android:layout_marginLeft="320dp"
             android:textColorLink="#de212121"
             android:textColor="#de212121"
             android:id="@+id/updateactivitytext"/>
@@ -103,7 +103,7 @@
         android:layout_marginTop="20dp">
 
         <ImageView
-            android:layout_width="48dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewrfting"
             android:foregroundGravity="center|left"
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Today at 17:00"
-            android:textSize="16dp"
+            android:textSize="20dp"
             android:id="@+id/timetextview"
             android:textColor="#F0DFD6"
             android:layout_marginTop="4dp"
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/acitvityname"
             android:layout_marginLeft="75dp"
-            android:textSize="18dp"
+            android:textSize="25dp"
             android:layout_marginTop="4dp"
             android:textColor="#F0DFD6"
             android:text="Rafting"/>
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/distancefromnearby"
             android:layout_marginTop="30dp"
-            android:textSize="12dp"
+            android:textSize="20dp"
             android:textColor="#F0DFD6"
             android:layout_marginLeft="75dp"
             android:text="1 Km away at River Mersey,England"
@@ -155,8 +155,8 @@
                 android:layout_marginTop="20dp">
 
                 <com.github.siyamed.shapeimageview.CircularImageView
-                    android:layout_width="65dp"
-                    android:layout_height="66dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:id="@+id/createrimage"
                     android:clickable="true"
                     android:layout_marginTop="7dp"
@@ -167,10 +167,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Created by Ajay"
-                    android:layout_marginLeft="79dp"
+                    android:layout_marginLeft="130dp"
                     android:layout_marginTop="15dp"
                     android:textColor="#F0DFD6"
-                    android:textSize="16dp"
+                    android:textSize="20dp"
                     android:id="@+id/textView9"
                     android:layout_gravity="left|top" />
 
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/myRatingBar"
-                    android:layout_marginLeft="78dp"
+                    android:layout_marginLeft="130dp"
                     android:progressTint="@color/ratingbar"
                     android:layout_marginTop="10dp"
                     android:stepSize="0.5"
@@ -191,11 +191,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="13 reviews"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:textColor="#D8CEC5"
                     android:id="@+id/reviews"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:textSize="20dp" />
 
 
             </FrameLayout>
@@ -213,8 +214,8 @@
             android:layout_centerHorizontal="true">
 
             <ImageView
-                android:layout_width="21dp"
-                android:layout_height="19dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/peoples"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="14dp"
@@ -226,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:text="Up to 6 People:"
                 android:id="@+id/uptopeoples"
-                android:textSize="14dp"
+                android:textSize="20dp"
                 android:textColor="#FFFBFB"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="40dp"
@@ -237,15 +238,15 @@
                 android:layout_height="wrap_content"
                 android:text="Currently have 3"
                 android:textColor="#FFFBFB"
-                android:textSize="14dp"
+                android:textSize="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="35dp"
                 android:id="@+id/currentpeoples"
                 android:layout_gravity="center_horizontal|top" />
 
             <ImageView
-                android:layout_width="21dp"
-                android:layout_height="19dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/moneyicon"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="42dp"
@@ -257,15 +258,15 @@
                 android:layout_height="wrap_content"
                 android:text="Cost $67"
                 android:textColor="#FFFBFB"
-                android:textSize="14dp"
+                android:textSize="20dp"
                 android:layout_marginTop="42dp"
                 android:layout_marginLeft="40dp"
                 android:id="@+id/costtext"
                 android:layout_gravity="left|top" />
 
             <ImageView
-                android:layout_width="21dp"
-                android:layout_height="19dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/clockicon"
                 android:src="@drawable/clock"
                 android:layout_marginLeft="12dp"
@@ -277,7 +278,7 @@
                 android:layout_height="wrap_content"
                 android:text="Takes 2 hours,"
                 android:id="@+id/timetext"
-                android:textSize="14dp"
+                android:textSize="20dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="75dp"
                 android:textColor="#FFFBFB"
@@ -288,15 +289,15 @@
                 android:layout_height="wrap_content"
                 android:text="United fans are not allowed!"
                 android:textColor="#FFFBFB"
-                android:textSize="14dp"
+                android:textSize="20dp"
                 android:layout_marginTop="75dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="90dp"
                 android:id="@+id/fanstext"
                 android:layout_gravity="center_horizontal|top" />
         </FrameLayout>
 
         <Button
-            android:layout_width="180dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/joinactivity"
             android:id="@+id/button6"

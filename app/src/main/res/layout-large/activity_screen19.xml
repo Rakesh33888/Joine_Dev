@@ -3,23 +3,22 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:id="@+id/linearlayoutscreen19"
-    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#F9F9F9"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:rsb="http://schemas.android.com/apk/res-auto"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ScrollViewscreen19"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:background="#F9F9F9"
             android:layout_height="819dp"
+            android:layout_marginBottom="20dp"
             tools:context="com.example.bts.joinme.Screen19">
 
 
@@ -29,10 +28,9 @@
                 android:id="@+id/firstimage"
                 android:visibility="visible"
                 android:src="@drawable/picture"
-                android:layout_marginTop="15dp"
-
-             android:layout_marginLeft="130dp"
-                android:layout_alignParentTop="true"/>
+                android:layout_marginLeft="45dp"
+                android:layout_alignTop="@+id/secondimage"
+                android:layout_toStartOf="@+id/secondimage" />
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="80dp"
                 android:layout_height="75dp"
@@ -41,34 +39,36 @@
                 android:src="@drawable/picture"
                 android:layout_marginTop="15dp"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="15dp" />
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="80dp"
                 android:layout_height="75dp"
                 android:id="@+id/thrdimage"
                 android:visibility="visible"
                 android:src="@drawable/picture"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:layout_alignTop="@+id/secondimage"
                 android:layout_toEndOf="@+id/secondimage"/>
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="90dp"
                 android:background="@drawable/smallbox"
                 android:id="@+id/edittextactivityname"
-                android:hint="Activity"
+                android:hint="Activity Name"
                 android:textColorHint="#CFCFCF"
-                android:textSize="25dp"
+                android:textSize="19dp"
                 android:paddingStart="13dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="25dp"
                 android:layout_below="@+id/firstimage"
                 android:layout_centerHorizontal="true" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="90dp"
+                android:orientation="horizontal"
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/edittextactivityname"
                 android:layout_alignStart="@+id/edittextactivityname"
@@ -83,21 +83,22 @@
                     android:textColor="#CFCFCF"
                     android:paddingStart="15dp"
                     android:layout_gravity="center_vertical"
-                    android:textSize="25dp"
+                    android:textSize="19dp"
                     android:text="Icon"
                     />
 
                 <Spinner
                     android:id="@+id/spinnericon"
-                    android:layout_width="49dp"
-                    android:layout_marginLeft="230dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|right"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/linearLayout_forIcon"
                 android:background="@drawable/smallbox"
                 android:layout_alignStart="@+id/linearLayout_forIcon"
@@ -111,81 +112,67 @@
                     android:textColor="#CFCFCF"
                     android:gravity="center"
                     android:paddingStart="15dp"
-                    android:textSize="25dp"
+                    android:textSize="19dp"
                     android:layout_gravity="center_vertical"
                     android:layout_height="match_parent" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textview_for_day"
-                    android:hint="Day"
-                    android:textColor="#B5B5B5"
-                    android:textSize="20dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:gravity="center"
-                    />
-                <Spinner
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/spinner_day">
-                </Spinner>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textfor_month"
-                    android:hint="Month"
-                    android:textColor="#B5B5B5"
-                    android:textSize="20dp"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"/>
-                <Spinner
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/spinner_month"
-                    android:gravity="center"
-                    android:layout_gravity="center">
 
-                </Spinner>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textfor_year"
-                    android:hint="Year"
-                    android:textColor="#B5B5B5"
-                    android:textSize="20dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"/>
-                <Spinner
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:id="@+id/spinner_year">
-                </Spinner>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:hint="Hour"
-                    android:textSize="20dp"
-                    android:textColor="#B5B5B5"
-                    android:gravity="center"
-                    android:id="@+id/textfor_hour"/>
-                <Spinner
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/spinner_hour"
-                    >
-                </Spinner>
-            </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@+id/timetext">
+                    <Spinner
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/spinner_day"
+                        android:spinnerMode="dropdown"
+                        android:layout_marginStart="33dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true">
+                    </Spinner>
 
-            <FrameLayout
+                    <Spinner
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/spinner_month"
+                        android:spinnerMode="dropdown"
+                        android:layout_gravity="center"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/spinner_day">
+
+                    </Spinner>
+
+                    <Spinner
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:spinnerMode="dropdown"
+                        android:id="@+id/spinner_year"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/spinner_month">
+                    </Spinner>
+
+                    <Spinner
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/spinner_hour"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="19dp"
+                        android:layout_toEndOf="@+id/spinner_year">
+                    </Spinner>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearLayoutfor_time"
                 android:id="@+id/framelayoutfor_location"
                 android:background="@drawable/bigbox"
+                android:orientation="vertical"
                 android:layout_alignStart="@+id/linearLayoutfor_time"
                 android:layout_alignEnd="@+id/linearLayoutfor_time">
                 <TextView
@@ -203,42 +190,46 @@
                     android:layout_height="25dp"
                     android:id="@+id/checkBoxfor_current"
                     android:text="Current"
-                    android:scaleX="0.60"
-                    android:textSize="25dp"
-                    android:layout_marginLeft="8dp"
-                    android:scaleY="0.60"
+                    android:scaleX="0.90"
+                    android:textSize="21dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleY="0.90"
+                    android:textColor="#AEAEAE"
+                    android:layout_gravity="center_vertical|left"
+                    android:checked="false"
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkboxfor_address"
+                    android:text="Address"
+                    android:scaleX="0.90"
+                    android:textSize="21dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleY="0.90"
                     android:textColor="#AEAEAE"
                     android:layout_gravity="left|center_vertical"
                     android:checked="false" />
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="59dp"
                     android:paddingStart="10dp"
                     android:id="@+id/textfor_address"
-                    android:background="@drawable/addresbox"
-                    android:layout_marginLeft="50dp"
-                    android:layout_gravity="center_horizontal" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:id="@+id/checkboxfor_address"
-                    android:text="Address"
-                    android:scaleX="0.60"
-                    android:textSize="25dp"
-                    android:layout_marginLeft="6dp"
-                    android:scaleY="0.60"
-                    android:textColor="#AEAEAE"
-                    android:layout_marginTop="55dp"
-                    android:layout_gravity="left"
-                    android:checked="false" />
-            </FrameLayout>
+                    android:background="@drawable/edittext_style"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="310dp"
                 android:background="@drawable/bigbox"
                 android:orientation="vertical"
                 android:layout_below="@+id/framelayoutfor_location"
@@ -251,7 +242,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Available for"
-                    android:textSize="19dp"
+                    android:textSize="28dp"
                     android:textColor="#AFAFAF"
                     android:layout_marginTop="8dp"
                     android:paddingStart="15dp"
@@ -259,79 +250,79 @@
 
                 <CheckBox
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
                     android:text="Everyone"
-                    android:scaleX="0.65"
-                    android:layout_marginLeft="6dp"
+                    android:scaleX="0.90"
+                    android:layout_marginLeft="15dp"
                     android:checked="true"
 
-                    android:textSize="25dp"
-                    android:scaleY="0.65"
+                    android:textSize="21dp"
+                    android:scaleY="0.90"
                     android:textColor="#AFAFAF"
                     android:id="@+id/checkBoxfor_everyone" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
                     android:text="Not everyone"
-                    android:scaleX="0.65"
-                    android:textSize="25dp"
+                    android:scaleX="0.90"
+                    android:textSize="21dp"
 
                     android:textColor="#AFAFAF"
-                    android:scaleY="0.65"
+                    android:scaleY="0.90"
                     android:id="@+id/checkBoxfor_noteveryone"
-                    />
+                    android:layout_marginLeft="15dp" />
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="Gender"
                         android:layout_marginTop="12dp"
                         android:layout_marginLeft="32dp"
-                        android:textSize="20dp"
+                        android:textSize="25dp"
                         android:textColor="#AFAFAF"
 
                         android:id="@+id/textViewfor_gender"
                         />
                     <CheckBox
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="Women"
-
-                        android:scaleX="0.65"
-                        android:textSize="25dp"
+                        android:scaleX="0.90"
+                        android:textSize="21dp"
                         android:layout_marginTop="12dp"
                         android:textColor="#AFAFAF"
-                        android:scaleY="0.65"
-                        android:id="@+id/checkBoxformen"
+                        android:scaleY="0.90"
+                        android:id="@+id/checkBoxforwomen"
                         />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Men"
-                        android:scaleX="0.65"
-                        android:textSize="25dp"
+                        android:scaleX="0.90"
+                        android:textSize="21dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="12dp"
                         android:textColor="#AFAFAF"
-                        android:scaleY="0.65"
-                        android:id="@+id/checkBoxforwomen"
+                        android:scaleY="0.90"
+                        android:id="@+id/checkBoxformen"
                         />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="Age"
                         android:id="@+id/textviewforage"
                         android:textColor="#AFAFAF"
@@ -341,7 +332,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="0"
                         android:id="@+id/age1"
                         android:textColor="#AFAFAF"
@@ -351,7 +342,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
+                        android:layout_height="wrap_content"
                         android:text="-"
                         android:textColor="#AFAFAF"
                         android:textSize="20dp"
@@ -369,29 +360,13 @@
 
 
 
-                <!--  <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
-                    android:id="@+id/rangeSeekbar"
-                    android:layout_width="274dp"
-                    android:layout_height="wrap_content"
-                    app:corner_radius="10"
-                    app:left_thumb_image="@drawable/icon1"
-                    app:right_thumb_image="@drawable/icon2"
-                    app:left_thumb_image_pressed="@drawable/icon1"
-                    app:right_thumb_image_pressed="@drawable/icon2"
-                    app:min_value="0"
-                    app:max_value="100"
-                    android:layout_marginTop="50dp"
-                    app:steps="5"
-                    app:bar_color="#F7BB88"
-                    app:bar_highlight_color="#E07416"
-                    app:data_type="_integer"
-                    android:layout_gravity="center" /> -->
-
-
                 <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
                     android:id="@+id/rangeSeekbar"
-                    android:layout_width="311dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="20dp"
                     app:min_value="0"
                     app:max_value="100"
                     app:corner_radius="10"
@@ -407,10 +382,10 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:orientation="vertical"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="90dp"
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/frameLayoutfor_availble"
                 android:layout_alignStart="@+id/frameLayoutfor_availble"
@@ -420,54 +395,44 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="15dp"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:id="@+id/textfor_participationcost"
                     android:textColor="#AFAFAF"
                     android:layout_gravity="center_vertical"
                     android:text="Participation cost"/>
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="0"
+                    android:hint="cost"
+                    android:inputType="number"
                     android:paddingStart="7dp"
-                    android:background="@drawable/amountbox"
-                    android:layout_marginLeft="260dp"
-                    android:id="@+id/forcost"/>
+                    android:background="@drawable/edittext_style"
+                    android:id="@+id/forcost"
+                    android:maxLength="8"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical|center"
+                    android:layout_marginLeft="20dp" />
 
-                <RelativeLayout
-                    android:layout_width="41dp"
+
+                <Spinner
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="135dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/amountbg"
-                    android:layout_gravity="center_horizontal|top">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="4dp"
-                        android:gravity="center"
-                        android:id="@+id/textView8" />
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:layout_alignParentRight="true"
-                        android:layout_toEndOf="@+id/textView8">
+                    android:spinnerMode="dropdown"
+                    android:id="@+id/currency_symbol"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical">
 
-                    </Spinner>
-
-                </RelativeLayout>
+                </Spinner>
 
 
-            </FrameLayout>
 
-            <FrameLayout
-                android:orientation="vertical"
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="90dp"
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/linearLayoutforparticipationcost"
                 android:layout_alignStart="@+id/linearLayoutforparticipationcost"
@@ -484,18 +449,22 @@
                     android:text="Participants number limit"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg"
-                    android:layout_marginLeft="130dp"
+                    android:background="@drawable/edittext_style"
+                    android:layout_marginLeft="15dp"
+                    android:hint="-"
+                    android:gravity="center"
                     android:id="@+id/numbrlimitbtn"
-                    android:layout_gravity="center" />
+                    android:inputType="number"
+                    android:maxLength="8"
+                    android:layout_gravity="center_horizontal|center"/>
 
-            </FrameLayout>
+            </LinearLayout>
 
             <EditText
                 android:layout_width="wrap_content"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:id="@+id/enter_discription"
                 android:background="@drawable/bigbox"
                 android:hint="Enter Description"
@@ -507,25 +476,34 @@
                 android:layout_alignStart="@+id/linearLayoutforlimit"
                 android:layout_alignEnd="@+id/linearLayoutforlimit" />
 
-            <Button
-                android:layout_width="150dp"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/createbutton"
+                android:orientation="horizontal"
+                android:layout_margin="15dp"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/enter_discription">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/createbutton"
+                    android:layout_weight="1"
+                    android:background="@drawable/create19"
+                    />
 
-                android:background="@drawable/create19"
-                android:layout_alignTop="@+id/deletebutton"
-                android:layout_alignEnd="@+id/enter_discription" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/deletebutton"
+                    android:layout_marginLeft="15dp"
 
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/deletebutton"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/delete19"
-                android:layout_below="@+id/enter_discription"
-                android:layout_alignStart="@+id/enter_discription" />
+                    android:layout_weight="1"
+                    android:background="@drawable/delete19"
+                    />
+            </LinearLayout>
+
         </RelativeLayout>
     </ScrollView>
-    </LinearLayout>
+</LinearLayout>
 
 

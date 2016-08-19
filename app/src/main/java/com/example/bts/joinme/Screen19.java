@@ -64,7 +64,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
 
-        frameLayoutforlocation = (FrameLayout) v.findViewById(R.id.framelayoutfor_location);
+
         edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
 
         checkboxcurrent = (CheckBox) v.findViewById(R.id.checkBoxfor_current);

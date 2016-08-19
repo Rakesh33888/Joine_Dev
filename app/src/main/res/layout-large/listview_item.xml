@@ -7,12 +7,12 @@
         android:layout_width="320dp"
         android:layout_height="34dp"
         android:id="@+id/itemtext"
-        android:textSize="19dp"
-        android:paddingTop="4dp"
+        android:textSize="25dp"
+        android:paddingTop="10dp"
         android:layout_gravity="center"
         android:textColor="#BDBDBD"
         android:layout_row="0"
-        android:paddingStart="15dp"
+        android:paddingStart="20dp"
         android:gravity="left"/>
     <TextView />
 

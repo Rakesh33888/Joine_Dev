@@ -47,11 +47,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="60dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
     android:layout_marginBottom="30dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
-        android:layout_width="330dp"
+        android:layout_width="fill_parent"
         android:layout_height="55dp"
         android:background="@drawable/bigbox"
         android:layout_gravity="center_horizontal|top">
@@ -64,7 +66,8 @@
             android:textSize="20dp"
             android:textColor="#BDBDBD"
             android:paddingStart="15dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_centerVertical="true" />
 
 
 
@@ -75,7 +78,9 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="right|center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true">
 
             <RadioButton
                 android:id="@+id/miles"
@@ -96,10 +101,10 @@
 
         </info.hoang8f.android.segmented.SegmentedGroup>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="330dp"
+        android:layout_width="fill_parent"
         android:layout_height="216dp"
         android:orientation="vertical"
         android:background="@drawable/bigbox"
@@ -303,7 +308,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="330dp"
+        android:layout_width="fill_parent"
         android:layout_height="52dp"
         android:id="@+id/linearlayout_term"
         android:background="@drawable/bigbox"
@@ -323,7 +328,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="330dp"
+        android:layout_width="fill_parent"
         android:layout_height="52dp"
         android:id="@+id/logout"
         android:background="@drawable/bigbox"

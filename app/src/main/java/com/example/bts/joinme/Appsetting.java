@@ -111,7 +111,17 @@ public class Appsetting extends Fragment{
         incButton1 = (Button) v.findViewById(R.id.incButton1);
         decButton1 = (Button) v.findViewById(R.id.decButton1);
         editText1 = (TextView) v.findViewById(R.id.numberEditText1);
-
+        imageback = (ImageView) v.findViewById(R.id.imageback);
+        imageback.setClickable(true);
+        imageback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
         incButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -192,17 +202,8 @@ public class Appsetting extends Fragment{
         miles.setChecked(true);
 
 
-        imageback = (ImageView) v.findViewById(R.id.imageback);
-        imageback.setClickable(true);
-        imageback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getContext(),Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
-            }
-        });
+
+
         btnreport= (Button) v.findViewById(R.id.button11);
         btnreport.setOnClickListener(new View.OnClickListener() {
             @Override
