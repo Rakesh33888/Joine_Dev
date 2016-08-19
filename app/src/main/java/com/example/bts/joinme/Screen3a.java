@@ -3,11 +3,14 @@ package com.example.bts.joinme;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,12 +48,21 @@ public class Screen3a extends AppCompatActivity  {
     Spinner day,month,year;
     String gender;
     int select_image;
-
+    String deviceuid,device_type="android",registration_type;
+    SharedPreferences user_id;
+    SharedPreferences.Editor edit_userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen3aa);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        deviceuid = Settings.Secure.getString(Screen3a.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        user_id =getSharedPreferences("userid",MODE_PRIVATE);
+        edit_userid = user_id.edit();
         firstname = (EditText) findViewById(R.id.firstname);
         lastname = (EditText) findViewById(R.id.lastname);
         conformation_code = (EditText) findViewById(R.id.conformation_code);
@@ -130,6 +142,7 @@ public class Screen3a extends AppCompatActivity  {
                         String mon = (String) month.getSelectedItem();
                         String da = (String) day.getSelectedItem();
                         String birth = da + "/" + mon + "/" + ye;
+
 
                         Intent a = new Intent(getApplicationContext(), Screen16.class);
                         startActivity(a);
