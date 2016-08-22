@@ -35,11 +35,16 @@ public class MainActivity extends AppCompatActivity {
      SessionManager session;
     private static final String TAG = "SignUp";
     private static final String URL = "http://52.37.136.238/JoinMe/User.svc/SignUp";
+
+    private static final String TAG1 = "Login";
+    private static final String URL1 = "http://52.37.136.238/JoinMe/User.svc/Login";
+
+
     String deviceuid,device_type="android";
     public static final String USERID = "userid";
     SharedPreferences user_id;
     SharedPreferences.Editor edit_userid;
-    String userid;
+    String userid,social_id=" ",login_type="normal";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         tv2 = (TextView) findViewById(R.id.textView2);
         session = new SessionManager(getApplicationContext());
 
-        user_id =getSharedPreferences(USERID,MODE_PRIVATE);
+        user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -71,6 +76,17 @@ public class MainActivity extends AppCompatActivity {
 
         already_member = (TextView) findViewById(R.id.btn3);
         already_member.setClickable(true);
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
         already_member.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,29 +100,97 @@ public class MainActivity extends AppCompatActivity {
                     final EditText  pass= (EditText)dialog. findViewById(R.id.editText2);
 
 
-                   b4.setOnClickListener(new View.OnClickListener() {
+                    b4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")){
+                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
 
-                                Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                startActivity(i);
-                                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                finish();
-                                session.setLogin(true);
-                                Toast toast = Toast.makeText(getApplicationContext(),"Login Succesfull", Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                toast.show();
-                                dialog.dismiss();
 
-                                } else {
-                                Toast toast = Toast.makeText(getApplicationContext(),"Invalid connection", Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                toast.show();
+                                JSONObject jsonObjSend = new JSONObject();
+                                try {
+                                    // Add key/value pairs
+                                    jsonObjSend.put("device_token", "");
+                                    jsonObjSend.put("device_type", device_type);
+                                    jsonObjSend.put("deviceid", deviceuid);
+                                    jsonObjSend.put("login_type",login_type);
+                                    jsonObjSend.put("social_id",social_id);
+                                    jsonObjSend.put("lat"," ");
+                                    jsonObjSend.put("lon","");
+                                    jsonObjSend.put("email", email.getText().toString());
+                                    jsonObjSend.put("password", pass.getText().toString());
+                                    //  hideDialog();
+                                    Log.i(TAG, jsonObjSend.toString(5));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            }
+                                JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
 
-                    });
+
+                                JSONObject json = null;
+                                try {
+                                    json = new JSONObject(String.valueOf(jsonObjRecv));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                JSONObject json_LL = null;
+                                try {
+                                    json_LL = json.getJSONObject("response");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                try {
+                                    String str_value = json_LL.getString("message");
+                                    userid = json_LL.getString("userid");
+
+                                    Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
+
+                                    if (str_value.equals("Registered Successfully")) {
+
+
+                                        edit_userid.putString("userid", userid);
+                                        edit_userid.commit();
+                                        Intent i1 = new Intent(getApplicationContext(), Screen3a.class);
+                                        startActivity(i1);
+                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                        finish();
+                                        // Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+
+
+
+                            Intent i = new Intent(getApplicationContext(), Screen16.class);
+                            startActivity(i);
+                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                            finish();
+                            session.setLogin(true);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            dialog.dismiss();
+
+                        }
+
+                        else
+
+                        {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Invalid connection", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    }
+
+                });
                     dialog.show();
 
 
@@ -129,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
                     final EditText pass = (EditText) dialog.findViewById(R.id.editText4);
 
 
-
                     b5.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -140,13 +223,11 @@ public class MainActivity extends AppCompatActivity {
 
                             if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
                                 if (matcher.matches()) {
-                                    if (pass.getText().toString().trim().length()>=4) {
-
-
+                                    if (pass.getText().toString().trim().length() >= 4) {
 
 
                                         AsyncHttpClient client = new AsyncHttpClient();
-                                        client.get("http://52.37.136.238/JoinMe/User.svc/CheckUserEmailAvailability/" +email.getText().toString(),
+                                        client.get("http://52.37.136.238/JoinMe/User.svc/CheckUserEmailAvailability/" + email.getText().toString(),
                                                 new AsyncHttpResponseHandler() {
                                                     // When the response returned by REST has Http response code '200'
 
@@ -157,18 +238,18 @@ public class MainActivity extends AppCompatActivity {
                                                             // Extract JSON Object from JSON returned by REST WS
                                                             JSONObject obj = new JSONObject(response);
                                                             String query = obj.getString("message");
-                                                           // Toast.makeText(getApplicationContext(), query, Toast.LENGTH_LONG).show();
+                                                            // Toast.makeText(getApplicationContext(), query, Toast.LENGTH_LONG).show();
                                                             if (query.equals("Available")) {
 
 
                                                                 JSONObject jsonObjSend = new JSONObject();
                                                                 try {
                                                                     // Add key/value pairs
-                                                                    jsonObjSend.put("device_token","xyz");
-                                                                    jsonObjSend.put("device_type",device_type);
-                                                                    jsonObjSend.put("deviceid",deviceuid);
-                                                                    jsonObjSend.put("email",email.getText().toString());
-                                                                    jsonObjSend.put("password",pass.getText().toString());
+                                                                    jsonObjSend.put("device_token", "");
+                                                                    jsonObjSend.put("device_type", device_type);
+                                                                    jsonObjSend.put("deviceid", deviceuid);
+                                                                    jsonObjSend.put("email", email.getText().toString());
+                                                                    jsonObjSend.put("password", pass.getText().toString());
                                                                     //  hideDialog();
                                                                     Log.i(TAG, jsonObjSend.toString(5));
 
@@ -178,8 +259,7 @@ public class MainActivity extends AppCompatActivity {
                                                                 JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
 
 
-
-                                                                 JSONObject json = null;
+                                                                JSONObject json = null;
                                                                 try {
                                                                     json = new JSONObject(String.valueOf(jsonObjRecv));
                                                                 } catch (JSONException e) {
@@ -195,29 +275,27 @@ public class MainActivity extends AppCompatActivity {
 
 
                                                                 try {
-                                                                String str_value = json_LL.getString("message");
-                                                                userid  = json_LL.getString("userid");
+                                                                    String str_value = json_LL.getString("message");
+                                                                    userid = json_LL.getString("userid");
 
-                                                                   Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
+                                                                    Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
 
-                                                                  if (str_value.equals("Registered Successfully")) {
+                                                                    if (str_value.equals("Registered Successfully")) {
 
 
-                                                                      edit_userid.putString("PetId",userid);
-                                                                      edit_userid.commit();
+                                                                        edit_userid.putString("userid", userid);
+                                                                        edit_userid.commit();
                                                                         Intent i1 = new Intent(getApplicationContext(), Screen3a.class);
                                                                         startActivity(i1);
                                                                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                                                                         finish();
-                                                                       // Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+                                                                        // Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
                                                                         dialog.dismiss();
 
                                                                     }
-                                                                }catch (JSONException e)
-                                                                {
+                                                                } catch (JSONException e) {
                                                                     e.printStackTrace();
                                                                 }
-
 
 
                                                             } else {
@@ -254,20 +332,15 @@ public class MainActivity extends AppCompatActivity {
                                                 });
 
 
-
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         Toast.makeText(MainActivity.this, "Password must be at least 4 characters. ", Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                                else
-                                {
+                                } else {
                                     Toast.makeText(getApplicationContext(), "Invalid Mail Id.", Toast.LENGTH_SHORT).show();
                                 }
 
                             } else {
-                                Toast toast = Toast.makeText(getApplicationContext(),"Invalid connection", Toast.LENGTH_SHORT);
+                                Toast toast = Toast.makeText(getApplicationContext(), "Invalid connection", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
                             }
@@ -276,28 +349,12 @@ public class MainActivity extends AppCompatActivity {
                     });
                     dialog.show();
 
-                }}
+                }
+            }
         });
 
 
-
     }
-
-//    private boolean isValidPassword(String pass) {
-//        if (pass != null && pass.length() > 4) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    private boolean isValidEmail(String email) {
-//        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-//                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-//
-//        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-//        Matcher matcher = pattern.matcher(email);
-//        return matcher.matches();
-    //}
 }
 
 
