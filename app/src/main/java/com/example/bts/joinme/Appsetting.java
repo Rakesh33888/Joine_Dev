@@ -70,6 +70,8 @@ public class Appsetting extends Fragment{
 //Added Comment by Rakesh Sharma
     //Added Coment BY Ajay
     //added Comment by Rakesh 22AUGUST 2016
+	//added Comment by Rakesh 22AUGUST 2016
+	//added Comment by Rakesh 22AUGUST 2016
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
