@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -69,6 +68,7 @@ public class Appsetting extends Fragment{
 // testing git checkin checkout
 //Added Comment by Rakesh Sharma
     //Added Coment BY Ajay
+    //added Comment by Rakesh 22AUGUST 2016
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
