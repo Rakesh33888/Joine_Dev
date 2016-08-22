@@ -48,7 +48,7 @@ public class Appsetting extends Fragment{
     LinearLayout logout;
     SessionManager session;
     private String [] prgmNameList={"Notification","Message","New activities near by","Activity reminder","New level"};
-
+//Add a Comment On 22 AUGUSR 2016
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
