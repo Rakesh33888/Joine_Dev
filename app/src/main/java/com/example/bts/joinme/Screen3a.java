@@ -2,6 +2,7 @@ package com.example.bts.joinme;
 
 import android.app.ActionBar;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,6 +16,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -145,6 +147,9 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
 
 
 
+
+
+
         List day_list = new ArrayList<Integer>();
         for (int i = 1; i <= 31; i++)
         {
@@ -193,6 +198,7 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
 
 
     }
+
 
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();

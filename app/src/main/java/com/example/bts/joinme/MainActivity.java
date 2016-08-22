@@ -1,6 +1,7 @@
 package com.example.bts.joinme;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,10 +33,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,8 +56,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     String deviceuid,device_type="android";
     public static final String USERID = "userid";
-    SharedPreferences user_id;
-    SharedPreferences.Editor edit_userid;
+    public static final String DETAILS = "user_details";
+    public static final String USER_PIC = "user_pic";
+
+    SharedPreferences user_id,user_Details,user_pic;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
     String userid,social_id=" ",login_type="regular";
 
 
@@ -62,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     Double lat  ;
     Double lon  ;
     double lat1,lon1;
+    int refresh=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
+        user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
+        edit_user_detals = user_Details.edit();
+        user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
+        edit_user_pic = user_pic.edit();
+
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -104,9 +118,61 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         onConnected(savedInstanceState);
         onConnected(new Bundle());
 
+
+
+
+
+
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+
+
+
+        }else{
+
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Please enable GPS to use this application..")
+                    .setCancelable(false)
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent callGPSSettingIntent = new Intent(
+                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivity(callGPSSettingIntent);
+
+                                    refresh = 1;
+                                }
+                            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+
+
+
+        }
+for (int i = 0;i<refresh;i++)
+{
+    finish();
+    overridePendingTransition(0, 0);
+    startActivity(getIntent());
+    overridePendingTransition( 0, 0);
+}
+
+    }
+
+
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
+
 
     }
     @Override
@@ -124,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             this.lon = mLastLocation.getLongitude();
             this.lat1 = lat;
             this.lon1 = lon;
+
 
 
 
@@ -189,24 +256,108 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         String str_value = json_LL.getString("message");
                                         userid = json_LL.getString("userid");
 
-                                        Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
+
 
 
                                          if (str_value.equals("User Login Successful")) {
 
                                             edit_userid.putString("userid", userid);
                                             edit_userid.commit();
-                                            Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                            startActivity(i);
-                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                            finish();
-                                            session.setLogin(true);
-                                            Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
-                                            toast.setGravity(Gravity.CENTER, 0, 0);
-                                            toast.show();
-                                            dialog.dismiss();
 
+                                             AsyncHttpClient client = new AsyncHttpClient();
+                                             client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+                                                     new AsyncHttpResponseHandler() {
+                                                         // When the response returned by REST has Http response code '200'
+
+                                                         public void onSuccess(String response) {
+                                                             // Hide Progress Dialog
+                                                             //  prgDialog.hide();
+                                                             try {
+                                                                 // Extract JSON Object from JSON returned by REST WS
+                                                                 JSONObject obj = new JSONObject(response);
+
+
+                                                                 JSONObject json = null;
+                                                                 try {
+                                                                     json = new JSONObject(String.valueOf(obj));
+                                                                 } catch (JSONException e) {
+                                                                     e.printStackTrace();
+                                                                 }
+
+
+                                                                 /************************* UserDetails start **************************/
+                                                                 JSONObject userdetails = null;
+                                                                 try {
+                                                                     userdetails = json.getJSONObject("details");
+                                                                 } catch (JSONException e) {
+                                                                     e.printStackTrace();
+                                                                 }
+
+                                                                 try {
+                                                                     //Getting information form the Json Response object
+                                                                     String firstname_user = userdetails.getString("fname");
+                                                                     String lastname_user = userdetails.getString("lname");
+
+                                                                     //Save the data in sharedPreference
+                                                                     edit_user_detals.putString("firstname", firstname_user);
+                                                                     edit_user_detals.putString("lastname", lastname_user);
+                                                                     edit_user_detals.commit();
+
+
+                                                                 } catch (JSONException e) {
+                                                                     e.printStackTrace();
+                                                                 }
+
+                                                                 JSONArray cast = userdetails.getJSONArray("user_pic");
+                                                                 edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                                                                 edit_user_pic.commit();
+
+                                                                 //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                                                 List<String> allid = new ArrayList<String>();
+                                                                 List<String> allurl = new ArrayList<String>();
+
+                                                                 for (int i = 0; i<cast.length(); i++) {
+                                                                     JSONObject actor = cast.getJSONObject(i);
+                                                                     String id = actor.getString("id");
+                                                                     String url = actor.getString("url");
+                                                                     allid.add(id);
+                                                                     allurl.add(url);
+                                                                     //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                                                     Log.d("Type", cast.getString(i));
+                                                                 }
+                                                                 for (int j = 0; j <allid.size(); j++) {
+                                                                     edit_user_pic.putString("id_" + j, allid.get(j));
+                                                                     edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                                                                 }
+                                                                 edit_user_pic.commit();
+                                                                 edit_user_pic.commit();
+
+
+
+                                                             } catch (JSONException e) {
+                                                                 e.printStackTrace();
+                                                             }
+                                                         }
+                                                     });
+
+
+
+                                             Intent i = new Intent(getApplicationContext(), Screen16.class);
+                                             startActivity(i);
+                                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                             finish();
+                                             session.setLogin(true);
+                                             Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                                             toast.setGravity(Gravity.CENTER, 0, 0);
+                                             toast.show();
+                                             dialog.dismiss();
                                         }
+                                        else
+                                         {
+                                             Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
+                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -217,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 else
 
                                 {
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Invalid connection", Toast.LENGTH_SHORT);
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Enter Credentials...! ", Toast.LENGTH_SHORT);
                                     toast.setGravity(Gravity.CENTER, 0, 0);
                                     toast.show();
                                 }
@@ -410,13 +561,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-
-
-    }
 }
 
 

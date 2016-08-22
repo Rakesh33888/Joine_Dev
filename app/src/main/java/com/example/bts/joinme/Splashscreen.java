@@ -23,13 +23,15 @@ public class Splashscreen extends Activity{
                     if (session.isLoggedIn())
                     {
 
-                        Intent home = new Intent(Splashscreen.this, MainActivity.class);
+                        Intent home = new Intent(Splashscreen.this, Screen16.class);
                         startActivity(home);
                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                         finish();
                     }
                     else
                     {
+
+
                         Intent intent = new Intent(Splashscreen.this,MainActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);

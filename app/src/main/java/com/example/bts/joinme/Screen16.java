@@ -1,9 +1,12 @@
 package com.example.bts.joinme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
@@ -15,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +28,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +57,12 @@ public class Screen16 extends AppCompatActivity implements
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
     FragmentManager fragmentManager;
 
+    public static final String USERID = "userid";
+    public static final String DETAILS = "user_details";
+    public static final String USER_PIC = "user_pic";
 
+    SharedPreferences user_id,user_Details,user_pic;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
 
 
 
@@ -62,6 +75,14 @@ public class Screen16 extends AppCompatActivity implements
         mData = new ArrayList<>();
         mAdapter = new SwipeStackAdapter(mData);
         mSwipeStack.setAdapter(mAdapter);
+
+        user_id =getSharedPreferences(USERID, MODE_PRIVATE);
+        edit_userid = user_id.edit();
+        user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
+        edit_user_detals = user_Details.edit();
+        user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
+        edit_user_pic = user_pic.edit();
+
 
 
 
@@ -150,7 +171,33 @@ public class Screen16 extends AppCompatActivity implements
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
         navtextview = (TextView) header.findViewById(R.id.navtextview);
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
-        navtextview.setText("Ajay");
+        navtextview.setText(user_Details.getString("firstname","")+"\t"+user_Details.getString("lastname","null"));
+
+        int pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size",""));
+        List<String> allid = new ArrayList<String>();
+        List<String> allurl = new ArrayList<String>();
+
+        for (int j = 0; j < pic_list_size; j++)
+        {
+           String id= user_pic.getString("id_" + j, "");
+           String url= user_pic.getString("url_" + j, "");
+
+            allid.add(id);
+            allurl.add(url);
+        }
+
+
+        for (int i = 0; i< allid.size(); i++) {
+
+
+            if (i==allurl.size()-1)
+            {
+                //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
+
+                new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
+
+            }
+        }
         navigationView.setNavigationItemSelectedListener(this);
         navimage.setClickable(true);
         navimage.setOnClickListener(new View.OnClickListener() {
@@ -171,9 +218,40 @@ public class Screen16 extends AppCompatActivity implements
         });
 
 
+
+
     }
 
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
 
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+
+            bmImage.setImageBitmap(result);
+
+        }
+
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
