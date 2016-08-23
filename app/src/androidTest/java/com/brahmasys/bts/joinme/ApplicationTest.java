@@ -1,4 +1,4 @@
-package com.example.bts.joinme;
+package com.brahmasys.bts.joinme;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

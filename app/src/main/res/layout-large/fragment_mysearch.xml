@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#dbd7d8"
     android:orientation="vertical"
-    tools:context="com.example.bts.joinme.Mysearch">
+    tools:context="com.brahmasys.bts.joinme.Mysearch">
 
     <LinearLayout
         android:layout_width="match_parent"

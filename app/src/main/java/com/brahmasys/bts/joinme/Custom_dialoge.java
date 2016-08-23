@@ -1,4 +1,4 @@
-package com.example.bts.joinme;
+package com.brahmasys.bts.joinme;
 
 /**
  * Created by apple on 17/08/16.
@@ -8,13 +8,11 @@ import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 
 public class Custom_dialoge extends DialogFragment {
     Button yes,no;

@@ -1,8 +1,7 @@
-package com.example.bts.joinme;
+package com.brahmasys.bts.joinme;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class Splashscreen extends Activity{

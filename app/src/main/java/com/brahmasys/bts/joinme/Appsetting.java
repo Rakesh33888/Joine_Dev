@@ -1,4 +1,4 @@
-package com.example.bts.joinme;
+package com.brahmasys.bts.joinme;
 
 import android.content.Context;
 import android.content.Intent;

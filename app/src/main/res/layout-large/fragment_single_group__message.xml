@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:id="@+id/single_group"
     android:background="#ffffff"
-    tools:context="com.example.bts.joinme.Single_group_Message">
+    tools:context="com.brahmasys.bts.joinme.Single_group_Message">
 
 
     <RelativeLayout

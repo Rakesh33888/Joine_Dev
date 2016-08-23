@@ -1,41 +1,39 @@
-package com.example.bts.joinme;
+package com.brahmasys.bts.joinme;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Mysearch.OnFragmentInteractionListener} interface
+ * {@link Mygroup.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Mysearch#newInstance} factory method to
+ * Use the {@link Mygroup#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Mysearch extends android.support.v4.app.Fragment {
-    LinearLayout linearLayout;
-    RelativeLayout relativeLayout1,relativeLayout2;
-    ImageView back;
-    TextView mysearch,textView7,Maxdistance,distance;
-    CheckBox c1,c2,c3;
-    SeekBar seekBar;
-
+public class Mygroup extends Fragment{
+    LinearLayout linearLayoutgroup;
+    Button  createalbum;
+    RelativeLayout relativeLayoutgroup;
+    ImageView image,imageback1;
+    TextView mygroupactivity,imageinfotxt,timeinfotext;
+    FrameLayout frameLayoutinfo;
+    FragmentManager fragmentManager;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -44,10 +42,9 @@ public class Mysearch extends android.support.v4.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
-    public Mysearch() {
+    public Mygroup() {
         // Required empty public constructor
     }
 
@@ -57,11 +54,11 @@ public class Mysearch extends android.support.v4.app.Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Mysearch.
+     * @return A new instance of fragment Mygroup.
      */
     // TODO: Rename and change types and number of parameters
-    public static Mysearch newInstance(String param1, String param2) {
-        Mysearch fragment = new Mysearch();
+    public static Mygroup newInstance(String param1, String param2) {
+        Mygroup fragment = new Mygroup();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,86 +76,67 @@ public class Mysearch extends android.support.v4.app.Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_mysearch, container, false);
-        linearLayout = (LinearLayout) v.findViewById(R.id.linearlayout);
-        relativeLayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout_seek);
-        relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
-        textView7 = (TextView) v.findViewById(R.id.textView7);
-        mysearch = (TextView) v.findViewById(R.id.textView6);
-        back = (ImageView) v.findViewById(R.id.button7);
-        back.setOnClickListener(new View.OnClickListener() {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
+     View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
+        linearLayoutgroup= (LinearLayout) v.findViewById(R.id.linearlayout_group);
+        relativeLayoutgroup= (RelativeLayout) v.findViewById(R.id.relativelayout_group);
+        frameLayoutinfo= (FrameLayout) v.findViewById(R.id.framelayoutinfo);
+        mygroupactivity= (TextView) v.findViewById(R.id.mygroupactivity);
+        imageinfotxt= (TextView) v.findViewById(R.id.imgaeinfotxt);
+        timeinfotext= (TextView) v.findViewById(R.id.timeinotext);
+        image= (ImageView) v.findViewById(R.id.groupinfoscreen);
+        image.setClickable(true);
+        image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), Screen16.class);
+//                fragmentManager=getFragmentManager();
+//
+//                    Screen17 screen17=new Screen17();
+//                    fragmentManager.beginTransaction()
+//                            .replace(R.id.flContent,screen17)
+//                            .addToBackStack(null)
+//                            .commit();
+
+
+
+            }
+        });
+        imageback1= (ImageView) v.findViewById(R.id.backtogroupsetting);
+        imageback1.setClickable(true);
+        imageback1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getContext(),Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
             }
         });
-        c1 = (CheckBox) v.findViewById(R.id.checkBox);
-        c2 = (CheckBox) v.findViewById(R.id.checkBox2);
-        c3 = (CheckBox) v.findViewById(R.id.checkBox3);
-
-
-        c1.setOnClickListener(new View.OnClickListener() {
+        createalbum= (Button) v.findViewById(R.id.createnewactivity);
+        createalbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v==c1){
-                    c2.setChecked(false);
-                    c3.setChecked(false);
+                fragmentManager=getFragmentManager();
+
+                    Screen19 screen19=new Screen19();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.flContent,screen19)
+                            .addToBackStack(null)
+                            .commit();
+
+
+
+
                 }
-
-            }
         });
-        c2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v==c2){
-                    c1.setChecked(false);
-                    c3.setChecked(false);
-                }
-
-            }
-        });
-        c3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v==c3){
-                    c2.setChecked(false);
-                    c1.setChecked(false);
-                }
-
-            }
-        });
-        Maxdistance= (TextView) v.findViewById(R.id.Maxdistance);
-        distance= (TextView) v.findViewById(R.id.distance);
-        seekBar= (SeekBar) v.findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                distance.setText(progress + "km");
-
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-
-
         return v;
     }
-    // TODO: Rename method, update argument and hook method into UI event
+
+
+
+
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -188,9 +166,6 @@ public class Mysearch extends android.support.v4.app.Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -212,7 +187,4 @@ public class Mysearch extends android.support.v4.app.Fragment {
             }
         });
     }
-
-
-
 }

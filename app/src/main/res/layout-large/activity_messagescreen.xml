@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffffff"
-    tools:context="com.example.bts.joinme.Messagescreen">
+    tools:context="com.brahmasys.bts.joinme.Messagescreen">
 
     <FrameLayout
         android:layout_width="match_parent"

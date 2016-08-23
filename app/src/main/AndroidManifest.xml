@@ -23,7 +23,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Splashscreen"
+            android:name="com.brahmasys.bts.joinme.Splashscreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.brahmasys.bts.joinme.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -43,11 +43,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Screen16"
+            android:name="com.brahmasys.bts.joinme.Screen16"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_screen16"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Screen3a"
+        <activity android:name="com.brahmasys.bts.joinme.Screen3a"
             android:screenOrientation="portrait"/>
 
 

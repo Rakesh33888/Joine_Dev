@@ -19,7 +19,7 @@
             android:background="#F9F9F9"
             android:layout_height="819dp"
             android:layout_marginBottom="20dp"
-            tools:context="com.example.bts.joinme.Screen19">
+            tools:context="com.brahmasys.bts.joinme.Screen19">
 
 
             <com.github.siyamed.shapeimageview.CircularImageView

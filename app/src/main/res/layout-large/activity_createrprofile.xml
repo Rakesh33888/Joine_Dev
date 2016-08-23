@@ -8,6 +8,6 @@
     android:background="@mipmap/screenbg"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.bts.joinme.Createrprofile">
+    tools:context="com.brahmasys.bts.joinme.Createrprofile">
 
 </RelativeLayout>

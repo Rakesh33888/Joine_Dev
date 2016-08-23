@@ -14,7 +14,7 @@
 	limitations under the License.
  */
 
-package com.example.bts.joinme;
+package com.brahmasys.bts.joinme;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.example.bts.joinme;
+package com.brahmasys.bts.joinme;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -250,6 +248,7 @@ for (int i = 0;i<refresh;i++)
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+
 
 
                                     try {
