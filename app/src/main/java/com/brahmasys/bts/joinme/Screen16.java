@@ -2,6 +2,7 @@ package com.brahmasys.bts.joinme;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,6 +26,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bts.joinme.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.*;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -41,7 +60,7 @@ public class Screen16 extends AppCompatActivity implements
     private ArrayList<Integer> mData;
     private SwipeStack mSwipeStack;
     private SwipeStackAdapter mAdapter;
-    Integer s[]={R.drawable.army1,R.drawable.army2,R.drawable.army3};
+    Integer s[]={R.drawable.army1, R.drawable.army2,R.drawable.army3};
     Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
@@ -56,7 +75,9 @@ public class Screen16 extends AppCompatActivity implements
 
     SharedPreferences user_id,user_Details,user_pic;
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
-
+    private static final int SELECT_FILE1 = 1;
+    String selectedPath1 = "NONE";
+    HttpEntity resEntity;
 
 
     @Override
@@ -79,9 +100,98 @@ public class Screen16 extends AppCompatActivity implements
 
 
 
+
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + user_id.getString("userid", ""),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+
+
+                            JSONObject json = null;
+                            try {
+                                json = new JSONObject(String.valueOf(obj));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            /************************* UserDetails start **************************/
+                            JSONObject userdetails = null;
+                            try {
+                                userdetails = json.getJSONObject("details");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                //Getting information form the Json Response object
+                                String firstname_user = userdetails.getString("fname");
+                                String lastname_user = userdetails.getString("lname");
+
+                                //Save the data in sharedPreference
+                                edit_user_detals.putString("firstname", firstname_user);
+                                edit_user_detals.putString("lastname", lastname_user);
+                                edit_user_detals.commit();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            JSONArray cast = userdetails.getJSONArray("user_pic");
+                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                            edit_user_pic.commit();
+
+                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                            List<String> allid = new ArrayList<String>();
+                            List<String> allurl = new ArrayList<String>();
+
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String id = actor.getString("id");
+                                String url = actor.getString("url");
+                                allid.add(id);
+                                allurl.add(url);
+                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                Log.d("Type", cast.getString(i));
+                            }
+                            for (int j = 0; j < allid.size(); j++) {
+                                edit_user_pic.putString("id_" + j, allid.get(j));
+                                edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                            }
+                            edit_user_pic.commit();
+                            edit_user_pic.commit();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         fillWithTestData();
-
-
 
     }
 
@@ -196,10 +306,7 @@ public class Screen16 extends AppCompatActivity implements
         navimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                openGallery(SELECT_FILE1);
             }
         });
 
@@ -297,24 +404,7 @@ public class Screen16 extends AppCompatActivity implements
     }
 
 
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
-                    data != null && data.getData() != null) {
 
-                Uri uri = data.getData();
-
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    navimage = (ImageView) findViewById(R.id.imageViewab);
-                    navimage.setImageBitmap(bitmap);
-                } catch (IOException e) {
-
-                }
-            }
-
-        }
 
     @Override
     public void onViewSwipedToLeft(int position) {
@@ -375,4 +465,98 @@ public class SwipeStackAdapter extends BaseAdapter {
 
 }
 }
+
+    public void openGallery(int req_code){
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+            if (requestCode == SELECT_FILE1)
+            {
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                    navimage.setImageBitmap(bitmap);
+                    navimage.setImageBitmap(bitmap);
+                } catch (IOException e) {
+
+                }
+
+                selectedPath1 = getPath(selectedImageUri);
+                System.out.println("selectedPath1 : " + selectedPath1);
+            }
+
+            Thread thread=new Thread(new Runnable(){
+                public void run(){
+                    doFileUpload();
+                    runOnUiThread(new Runnable(){
+                        public void run() {
+
+                        }
+                    });
+                }
+            });
+            thread.start();
+
+        }
+    }
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+
+
+    private void doFileUpload(){
+
+        File file1 = new File(selectedPath1);
+
+        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/"+user_id.getString("userid","null");
+        try
+        {
+            org.apache.http.client.HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(urlString);
+            FileBody bin1 = new FileBody(file1);
+
+            MultipartEntity reqEntity = new MultipartEntity();
+            reqEntity.addPart("uploadedfile1", bin1);
+
+            reqEntity.addPart("user", new StringBody("User"));
+            post.setEntity(reqEntity);
+            HttpResponse response = client.execute(post);
+            resEntity = response.getEntity();
+            final String response_str = EntityUtils.toString(resEntity);
+            if (resEntity != null) {
+                Log.i("RESPONSE",response_str);
+                runOnUiThread(new Runnable(){
+                    public void run() {
+                        try {
+
+
+                            //    res.setTextColor(Color.GREEN);
+                            //    res.setText("n Response from server : n " + response_str);
+                            //Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }
+        catch (Exception ex){
+            Log.e("Debug", "error: " + ex.getMessage(), ex);
+        }
+    }
+
 }

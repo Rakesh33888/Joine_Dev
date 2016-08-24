@@ -14,6 +14,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.bts.joinme.R;
+
 public class Custom_dialoge extends DialogFragment {
     Button yes,no;
 

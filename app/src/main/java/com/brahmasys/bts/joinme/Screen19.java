@@ -2,11 +2,14 @@ package com.brahmasys.bts.joinme;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,42 +20,62 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
+import com.example.bts.joinme.R;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Screen19 extends android.support.v4.app.Fragment {
     private static final int PICK_IMAGE_REQUEST = 3;
     private static final int RESULT_OK = 3;
+    public static final String LAT_LNG = "lat_lng";
 
+    SharedPreferences lat_lng;
+    SharedPreferences.Editor edit_lat_lng;
     ScrollView scrollViewscreen19;
 
     ImageView firstimage, secondimage, thirdimage;
-    EditText edittextactivityname, edittextforaddress, enterdiscription;
-    Button create, delete;
+    EditText edittextactivityname, edittextforaddress, enterdiscription,edit_cost,edit_limit;
+    Button create;
     Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
-    FrameLayout frameLayoutforlocation;
+    LinearLayout not_everyone;
     CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
     TextView age1,age2;
     String[] currency = new String[]{"$", "€"};
+
+    String year,month,day,hour,minute;
+    String availability;
+    String gender="";
+    String duration="0",title,address,age_start,age_end,cost,limit,description;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_screen19, container, false);
-        scrollViewscreen19 = (ScrollView) v.findViewById(R.id.ScrollViewscreen19);
-        edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
+
+        lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
+        edit_lat_lng = lat_lng.edit();
+
+
 
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
@@ -61,9 +84,13 @@ public class Screen19 extends android.support.v4.app.Fragment {
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
 
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
-
+        not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
 
         edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
+        enterdiscription  = (EditText) v.findViewById(R.id.enter_discription);
+        edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
+        edit_cost = (EditText) v.findViewById(R.id.forcost);
+        edit_limit = (EditText) v.findViewById(R.id.numbrlimitbtn);
 
         checkboxcurrent = (CheckBox) v.findViewById(R.id.checkBoxfor_current);
         checkBoxaddress = (CheckBox) v.findViewById(R.id.checkboxfor_address);
@@ -78,15 +105,21 @@ public class Screen19 extends android.support.v4.app.Fragment {
         age1 = (TextView) v.findViewById(R.id.age1);
         age2 = (TextView) v.findViewById(R.id.age2);
 
-
+        create  = (Button) v.findViewById(R.id.createbutton);
         /******************** CheckBox Functionality Start*******************/
         checkboxcurrent.setChecked(true);
         checkboxcurrent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v==checkboxcurrent){
+                if (v == checkboxcurrent) {
                     checkBoxaddress.setChecked(false);
 
+
+                    edittextforaddress.setFocusable(false);
+                    edittextforaddress.setEnabled(false);
+                    edittextforaddress.setCursorVisible(false);
+                    edittextforaddress.setKeyListener(null);
+                    edittextforaddress.setBackgroundColor(Color.TRANSPARENT);
                 }
 
             }
@@ -97,6 +130,11 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 if (v == checkBoxaddress) {
                     checkboxcurrent.setChecked(false);
 
+
+                    edittextforaddress.setFocusable(true);
+                    edittextforaddress.setEnabled(true);
+                    edittextforaddress.setCursorVisible(true);
+
                 }
 
             }
@@ -105,18 +143,25 @@ public class Screen19 extends android.support.v4.app.Fragment {
         checkBoxforeveryone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v==checkBoxforeveryone){
+                if (v == checkBoxforeveryone) {
                     checkBoxnotforeveryone.setChecked(false);
+                    not_everyone.setVisibility(View.GONE);
+
+
+
 
                 }
 
             }
         });
+
         checkBoxnotforeveryone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v == checkBoxnotforeveryone) {
                     checkBoxforeveryone.setChecked(false);
+                    not_everyone.setVisibility(View.VISIBLE);
+
 
                 }
 
@@ -127,7 +172,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
         checkBoxforwomen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v==checkBoxforwomen){
+                if (v == checkBoxforwomen) {
                     checkBoxformen.setChecked(false);
 
                 }
@@ -192,7 +237,6 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
         create = (Button) v.findViewById(R.id.createbutton);
-        delete = (Button) v.findViewById(R.id.deletebutton);
 
 
     /*************************** Spinner Functionality Start ***********************/
@@ -229,9 +273,140 @@ public class Screen19 extends android.support.v4.app.Fragment {
         ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
         currency_symbol.setAdapter(adapter_currency);
     /**************************Spinner functionality Ends *****************************/
+        TimeZone tz = TimeZone.getDefault();
+        System.out.println("TimeZone   " + tz.getDisplayName(false, TimeZone.SHORT));
 
+
+
+
+
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int int_month=0;
+                year = (String) spinnerforyear.getSelectedItem();
+                month= (String) spinnerformonth.getSelectedItem();
+                day  = (String) spinnerforday.getSelectedItem();
+                hour = (String) spinnerforhour.getSelectedItem();
+
+                if (month.equals("Jan"))
+                {
+                    int_month=1;
+                }
+                else  if (month.equals("Feb"))
+                {
+                    int_month=2;
+                }
+                else  if (month.equals("Mar"))
+                {
+                    int_month=3;
+                }
+                else  if (month.equals("Apr"))
+                {
+                    int_month=4;
+                }
+                else  if (month.equals("May"))
+                {
+                    int_month=5;
+                }
+                else  if (month.equals("Jun"))
+                {
+                    int_month=6;
+                }
+                else  if (month.equals("Jul"))
+                {
+                    int_month=7;
+                }
+                else  if (month.equals("Aug"))
+                {
+                    int_month=8;
+                }else  if (month.equals("Sept"))
+                {
+                    int_month=9;
+                }
+                else  if (month.equals("Oct"))
+                {
+                    int_month=10;
+                }
+                else  if (month.equals("Nov"))
+                {
+                    int_month=11;
+                }
+                else  if (month.equals("Dec"))
+                {
+                    int_month=12;
+                }
+
+                /*************** Time Stamp Start********************/
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR, Integer.parseInt(year));
+                c.set(Calendar.MONTH, int_month);
+                c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+                c.set(Calendar.HOUR, Integer.parseInt(hour));
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
+                long result = (c.getTimeInMillis() / 1000L);
+                /********************* Time Stamp End ***************/
+                /********************* TimeZone Start ***************/
+                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
+                        Locale.getDefault());
+                Date currentLocalTime = calendar.getTime();
+                DateFormat date = new SimpleDateFormat("Z");
+                String localTime = date.format(currentLocalTime);
+
+                String sign = localTime.substring(0, 1);
+                String hr = localTime.substring(1, 3);
+                String min = localTime.substring(3, 5);
+
+                int res = (Integer.parseInt(hr)*60)+Integer.parseInt(min);
+                if (sign.equals("+"))
+                {
+                    res = -res;
+                }
+                else
+                {
+                    res = +res;
+                }
+                /********************* TimeZone End ***************/
+                String lat = lat_lng.getString("lat","");
+                String lng = lat_lng.getString("lng","");
+
+                if (checkBoxforeveryone.isChecked())
+                {
+                    availability = "public";
+
+                }
+                else
+                {
+                    availability = "private";
+                    if (checkBoxformen.isChecked())
+                    {
+                        gender = "male";
+                    }
+                    else
+                    {
+                        gender = "female";
+                    }
+                }
+
+                address = edittextforaddress.getText().toString();
+                title   = edittextactivityname.getText().toString();
+                description = enterdiscription.getText().toString();
+                cost  = edit_cost.getText().toString();
+                limit = edit_limit.getText().toString();
+                age_start = age1.getText().toString();
+                age_end   = age2.getText().toString();
+
+                Log.w("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + address + "\n" + lat
+                        + "\n" + lng + "\n" + age_start + "\n" + age_end+"\n"+cost+"\n"+limit+"\n"+gender);
+
+
+                //Toast.makeText(getActivity(), String.valueOf(result)+"\n"+ String.valueOf(res)+"\n"+lat+"\n"+lng, Toast.LENGTH_SHORT).show();
+            }
+        });
         return v;
-
     }
 
     @Override

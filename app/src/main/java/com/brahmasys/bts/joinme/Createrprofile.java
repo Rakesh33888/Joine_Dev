@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bts.joinme.R;
+
 public class Createrprofile extends Fragment{
 
     @Nullable

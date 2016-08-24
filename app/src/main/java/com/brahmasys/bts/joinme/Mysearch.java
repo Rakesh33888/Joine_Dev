@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.bts.joinme.R;
+
 
 /**
  * A simple {@link Fragment} subclass.

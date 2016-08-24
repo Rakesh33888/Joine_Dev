@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.bts.joinme.R;
+
 public class Screen17 extends android.support.v4.app.Fragment  {
     FrameLayout frameLayoutbck,frameLayoutacity;
     ImageView imageView6;
@@ -60,10 +62,11 @@ public class Screen17 extends android.support.v4.app.Fragment  {
         updatetext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 fragmentManager=getFragmentManager();
-                Screen19 screen19=new Screen19();
+                Update_Activity update_activity =new Update_Activity();
                     fragmentManager.beginTransaction()
-                            .replace(R.id.flContent,screen19)
+                            .replace(R.id.flContent,update_activity)
                             .addToBackStack(null)
                             .commit();
 

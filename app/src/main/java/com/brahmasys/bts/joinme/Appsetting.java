@@ -1,16 +1,28 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,8 +31,18 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.bts.joinme.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -47,6 +69,15 @@ public class Appsetting extends Fragment{
     ArrayList customarraylist;
     LinearLayout logout;
     SessionManager session;
+    Button yes,no;
+    String deviceuid;
+    public static final String USERID = "userid";
+    public static final String DETAILS = "user_details";
+    public static final String USER_PIC = "user_pic";
+
+    SharedPreferences user_id,user_Details,user_pic;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
+
     private String [] prgmNameList={"Notification","Message","New activities near by","Activity reminder","New level"};
 //Add a Comment On 22 AUGUSR 2016
 //Add a Comment On 22 AUGUSR 2016 2
@@ -116,6 +147,24 @@ public class Appsetting extends Fragment{
         editText1 = (TextView) v.findViewById(R.id.numberEditText1);
         imageback = (ImageView) v.findViewById(R.id.imageback);
         imageback.setClickable(true);
+
+
+        user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
+        edit_userid = user_id.edit();
+        user_Details = getActivity().getSharedPreferences(DETAILS, getActivity().MODE_PRIVATE);
+        edit_user_detals = user_Details.edit();
+        user_pic = getActivity().getSharedPreferences(USER_PIC, getActivity().MODE_PRIVATE);
+        edit_user_pic = user_pic.edit();
+
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+
+        deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,12 +237,39 @@ public class Appsetting extends Fragment{
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                session.setLogin(false);
-                // Launching the login activity
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
+
+
+
+
+
+
+
+
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                dialog.setContentView(R.layout.logout_custom);
+                dialog.getWindow().setBackgroundDrawable(
+                        new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                yes = (Button) dialog.findViewById(R.id.yes);
+                no = (Button) dialog.findViewById(R.id.no);
+                yes.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        logoutUser();
+                        dialog.dismiss();
+                    }
+                });
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -229,6 +305,43 @@ public class Appsetting extends Fragment{
             }
         });
         return v;
+    }
+
+    private void logoutUser() {
+
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/User.svc/LogOut/" + user_id.getString("userid", "") + "/" + deviceuid,
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+                            String out = obj.getString("message");
+                            if (out.equals("Logged Out Successfully")) {
+
+                                session.setLogin(false);
+                                // Launching the login activity
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+                                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                                getActivity().finish();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                });
+
+
+
     }
 
     private void replaceFragment(Fragment frg) {

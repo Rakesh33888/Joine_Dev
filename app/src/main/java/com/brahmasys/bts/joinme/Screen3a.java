@@ -45,6 +45,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 
+import com.example.bts.joinme.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -72,12 +73,15 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
     String gender;
     int select_image;
     String deviceuid,device_type="android",registration_type="normal",device_token="";
-    SharedPreferences user_id;
-    SharedPreferences.Editor edit_userid;
+    public static final String LAT_LNG = "lat_lng";
+    SharedPreferences user_id,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_lat_lng;
 
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
+
+
 
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -100,6 +104,9 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
         deviceuid = Settings.Secure.getString(Screen3a.this.getContentResolver(), Settings.Secure.ANDROID_ID);
         user_id =getSharedPreferences("userid",MODE_PRIVATE);
         edit_userid = user_id.edit();
+        lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
+        edit_lat_lng = lat_lng.edit();
+
 
         firstname = (EditText) findViewById(R.id.firstname);
         lastname = (EditText) findViewById(R.id.lastname);
@@ -202,6 +209,10 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
             this.lon = mLastLocation.getLongitude();
             this.lat1 = lat;
             this.lon1 = lon;
+
+            edit_lat_lng.putString("lat", String.valueOf(lat));
+            edit_lat_lng.putString("lng",String.valueOf(lon));
+            edit_lat_lng.commit();
 
             continue_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

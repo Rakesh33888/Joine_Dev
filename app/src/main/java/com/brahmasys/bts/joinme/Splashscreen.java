@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.bts.joinme.R;
+
 public class Splashscreen extends Activity{
     private SessionManager session;
     @Override

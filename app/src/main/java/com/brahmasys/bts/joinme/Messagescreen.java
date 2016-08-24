@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.example.bts.joinme.R;
+
 public class Messagescreen extends Fragment{
     ListView groups_listView;
     ImageView back;
 
-    public static int [] prgmImages={R.drawable.army3,R.drawable.army2,R.drawable.army1};
+    public static int [] prgmImages={R.drawable.army3, R.drawable.army2,R.drawable.army1};
     public static String [] prgmNameList={"Swimmer fish","Lake swimming","River swimming"};
     public static String [] messageList = {"I don't know how to swim","I am a good swimmer","Hi"};
     @Nullable

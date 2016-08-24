@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.bts.joinme.R;
+
 public class Screen13 extends android.support.v4.app.Fragment {
 
     TextView report_text;

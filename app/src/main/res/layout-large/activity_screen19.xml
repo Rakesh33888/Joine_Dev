@@ -275,7 +275,9 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/not_everyone"
+                      android:visibility="gone">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -408,7 +410,7 @@
                     android:paddingStart="7dp"
                     android:background="@drawable/edittext_style"
                     android:id="@+id/forcost"
-                    android:maxLength="8"
+                    android:maxLength="5"
                     android:gravity="center"
                     android:layout_gravity="center_vertical|center"
                     android:layout_marginLeft="20dp" />
@@ -457,7 +459,7 @@
                     android:gravity="center"
                     android:id="@+id/numbrlimitbtn"
                     android:inputType="number"
-                    android:maxLength="8"
+                    android:maxLength="4"
                     android:layout_gravity="center_horizontal|center"/>
 
             </LinearLayout>
@@ -476,31 +478,26 @@
                 android:layout_alignStart="@+id/linearLayoutforlimit"
                 android:layout_alignEnd="@+id/linearLayoutforlimit" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="15dp"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="20dp"
+                android:layout_marginBottom="30dp"
                 android:layout_below="@+id/enter_discription">
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/createbutton"
-                    android:layout_weight="1"
-                    android:background="@drawable/create19"
+                    android:text="Create"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:background="@drawable/custom_button1"
+                    android:layout_alignParentEnd="false"
+                    android:layout_centerHorizontal="true"
                     />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/deletebutton"
-                    android:layout_marginLeft="15dp"
-
-                    android:layout_weight="1"
-                    android:background="@drawable/delete19"
-                    />
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>

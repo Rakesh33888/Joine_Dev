@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bts.joinme.R;
+
 /**
  * Created by ajay on 7/23/2016.
  */

@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bts.joinme.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
-
-    SharedPreferences user_id,user_Details,user_pic;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
+    public static final String LAT_LNG = "lat_lng";
+    SharedPreferences user_id,user_Details,user_pic,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
     String userid,social_id=" ",login_type="regular";
 
 
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         edit_user_detals = user_Details.edit();
         user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
         edit_user_pic = user_pic.edit();
+        lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
+        edit_lat_lng = lat_lng.edit();
 
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -124,9 +127,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
+
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -147,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                             android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                     startActivity(callGPSSettingIntent);
 
-                                    refresh = 1;
+
                                 }
                             });
 
@@ -156,17 +162,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+
         }
-for (int i = 0;i<refresh;i++)
-{
-    finish();
-    overridePendingTransition(0, 0);
-    startActivity(getIntent());
-    overridePendingTransition( 0, 0);
-}
+
 
     }
 
+
+
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
 
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
@@ -189,7 +204,9 @@ for (int i = 0;i<refresh;i++)
             this.lat1 = lat;
             this.lon1 = lon;
 
-
+           edit_lat_lng.putString("lat", String.valueOf(lat));
+           edit_lat_lng.putString("lng",String.valueOf(lon));
+           edit_lat_lng.commit();
 
 
             already_member.setOnClickListener(new View.OnClickListener() {
@@ -250,8 +267,17 @@ for (int i = 0;i<refresh;i++)
                                     }
 
 
+                                    JSONObject response = null;
+                                    try {
+                                        response = json.getJSONObject("data");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
 
                                     try {
+
+                                        String verify = response.getString("isverified");
                                         String str_value = json_LL.getString("message");
                                         userid = json_LL.getString("userid");
 
@@ -259,100 +285,108 @@ for (int i = 0;i<refresh;i++)
 
 
                                          if (str_value.equals("User Login Successful")) {
+                                             if (verify.equals("true")) {
 
-                                            edit_userid.putString("userid", userid);
-                                            edit_userid.commit();
+                                                 edit_userid.putString("userid", userid);
+                                                 edit_userid.commit();
 
-                                             AsyncHttpClient client = new AsyncHttpClient();
-                                             client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
-                                                     new AsyncHttpResponseHandler() {
-                                                         // When the response returned by REST has Http response code '200'
+                                                 AsyncHttpClient client = new AsyncHttpClient();
+                                                 client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+                                                         new AsyncHttpResponseHandler() {
+                                                             // When the response returned by REST has Http response code '200'
 
-                                                         public void onSuccess(String response) {
-                                                             // Hide Progress Dialog
-                                                             //  prgDialog.hide();
-                                                             try {
-                                                                 // Extract JSON Object from JSON returned by REST WS
-                                                                 JSONObject obj = new JSONObject(response);
-
-
-                                                                 JSONObject json = null;
+                                                             public void onSuccess(String response) {
+                                                                 // Hide Progress Dialog
+                                                                 //  prgDialog.hide();
                                                                  try {
-                                                                     json = new JSONObject(String.valueOf(obj));
+                                                                     // Extract JSON Object from JSON returned by REST WS
+                                                                     JSONObject obj = new JSONObject(response);
+
+
+                                                                     JSONObject json = null;
+                                                                     try {
+                                                                         json = new JSONObject(String.valueOf(obj));
+                                                                     } catch (JSONException e) {
+                                                                         e.printStackTrace();
+                                                                     }
+
+
+                                                                     /************************* UserDetails start **************************/
+                                                                     JSONObject userdetails = null;
+                                                                     try {
+                                                                         userdetails = json.getJSONObject("details");
+                                                                     } catch (JSONException e) {
+                                                                         e.printStackTrace();
+                                                                     }
+
+                                                                     try {
+                                                                         //Getting information form the Json Response object
+                                                                         String firstname_user = userdetails.getString("fname");
+                                                                         String lastname_user = userdetails.getString("lname");
+
+                                                                         //Save the data in sharedPreference
+                                                                         edit_user_detals.putString("firstname", firstname_user);
+                                                                         edit_user_detals.putString("lastname", lastname_user);
+                                                                         edit_user_detals.commit();
+
+
+                                                                     } catch (JSONException e) {
+                                                                         e.printStackTrace();
+                                                                     }
+
+                                                                     JSONArray cast = userdetails.getJSONArray("user_pic");
+                                                                     edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                                                                     edit_user_pic.commit();
+
+                                                                     //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                                                     List<String> allid = new ArrayList<String>();
+                                                                     List<String> allurl = new ArrayList<String>();
+
+                                                                     for (int i = 0; i < cast.length(); i++) {
+                                                                         JSONObject actor = cast.getJSONObject(i);
+                                                                         String id = actor.getString("id");
+                                                                         String url = actor.getString("url");
+                                                                         allid.add(id);
+                                                                         allurl.add(url);
+                                                                         //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                                                         Log.d("Type", cast.getString(i));
+                                                                     }
+                                                                     for (int j = 0; j < allid.size(); j++) {
+                                                                         edit_user_pic.putString("id_" + j, allid.get(j));
+                                                                         edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                                                                     }
+                                                                     edit_user_pic.commit();
+                                                                     edit_user_pic.commit();
+
+
                                                                  } catch (JSONException e) {
                                                                      e.printStackTrace();
                                                                  }
-
-
-                                                                 /************************* UserDetails start **************************/
-                                                                 JSONObject userdetails = null;
-                                                                 try {
-                                                                     userdetails = json.getJSONObject("details");
-                                                                 } catch (JSONException e) {
-                                                                     e.printStackTrace();
-                                                                 }
-
-                                                                 try {
-                                                                     //Getting information form the Json Response object
-                                                                     String firstname_user = userdetails.getString("fname");
-                                                                     String lastname_user = userdetails.getString("lname");
-
-                                                                     //Save the data in sharedPreference
-                                                                     edit_user_detals.putString("firstname", firstname_user);
-                                                                     edit_user_detals.putString("lastname", lastname_user);
-                                                                     edit_user_detals.commit();
-
-
-                                                                 } catch (JSONException e) {
-                                                                     e.printStackTrace();
-                                                                 }
-
-                                                                 JSONArray cast = userdetails.getJSONArray("user_pic");
-                                                                 edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                                                                 edit_user_pic.commit();
-
-                                                                 //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                                                 List<String> allid = new ArrayList<String>();
-                                                                 List<String> allurl = new ArrayList<String>();
-
-                                                                 for (int i = 0; i<cast.length(); i++) {
-                                                                     JSONObject actor = cast.getJSONObject(i);
-                                                                     String id = actor.getString("id");
-                                                                     String url = actor.getString("url");
-                                                                     allid.add(id);
-                                                                     allurl.add(url);
-                                                                     //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                                                     Log.d("Type", cast.getString(i));
-                                                                 }
-                                                                 for (int j = 0; j <allid.size(); j++) {
-                                                                     edit_user_pic.putString("id_" + j, allid.get(j));
-                                                                     edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                                                                 }
-                                                                 edit_user_pic.commit();
-                                                                 edit_user_pic.commit();
-
-
-
-                                                             } catch (JSONException e) {
-                                                                 e.printStackTrace();
                                                              }
-                                                         }
-                                                     });
+                                                         });
 
 
+                                                 Intent i = new Intent(getApplicationContext(), Screen16.class);
+                                                 startActivity(i);
+                                                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                 finish();
+                                                 session.setLogin(true);
+                                                 Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                                                 toast.setGravity(Gravity.CENTER, 0, 0);
+                                                 toast.show();
+                                                 dialog.dismiss();
+                                             }
+                                             else
+                                             {
+                                                 Intent i = new Intent(getApplicationContext(), Screen3a.class);
+                                                 startActivity(i);
+                                                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                 Toast.makeText(MainActivity.this, "Please verify your account...!", Toast.LENGTH_LONG).show();
 
-                                             Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                             startActivity(i);
-                                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                             finish();
-                                             session.setLogin(true);
-                                             Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
-                                             toast.setGravity(Gravity.CENTER, 0, 0);
-                                             toast.show();
-                                             dialog.dismiss();
-                                        }
+                                             }
+                                         }
                                         else
                                          {
                                              Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
