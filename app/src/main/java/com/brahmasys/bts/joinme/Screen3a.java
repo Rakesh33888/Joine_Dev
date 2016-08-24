@@ -1,9 +1,12 @@
 package com.brahmasys.bts.joinme;
 
+import android.Manifest;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -27,39 +30,32 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.database.Cursor;
 
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-
-import com.example.bts.joinme.R;
-import com.github.siyamed.shapeimageview.CircularImageView;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
-public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class Screen3a extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView imageView;
     Button continue_btn;
@@ -73,25 +69,24 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
     String gender;
     int select_image;
     String deviceuid,device_type="android",registration_type="normal",device_token="";
-    public static final String LAT_LNG = "lat_lng";
-    SharedPreferences user_id,lat_lng;
-    SharedPreferences.Editor edit_userid,edit_lat_lng;
+
+
 
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
 
+    Double latitude=0.0,longitude=0.0;
+    public static final String USERID = "userid";
+    public static final String DETAILS = "user_details";
+    public static final String USER_PIC = "user_pic";
 
+    SharedPreferences user_id,user_Details,user_pic;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
 
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-    LocationManager locmgr;
-    Double lat  ;
-    Double lon  ;
-    double lat1,lon1;
     private static final String TAG = "UserRegister";
     private static final String URL = "http://52.37.136.238/JoinMe/User.svc/UserRegister";
-
+    String userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,10 +97,13 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
             StrictMode.setThreadPolicy(policy);
         }
         deviceuid = Settings.Secure.getString(Screen3a.this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        user_id =getSharedPreferences("userid",MODE_PRIVATE);
+
+        user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
-        lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
-        edit_lat_lng = lat_lng.edit();
+        user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
+        edit_user_detals = user_Details.edit();
+        user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
+        edit_user_pic = user_pic.edit();
 
 
         firstname = (EditText) findViewById(R.id.firstname);
@@ -124,16 +122,6 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
         month = (Spinner) findViewById(R.id.spinner2);
         year = (Spinner) findViewById(R.id.spinner3);
 
-
-        buildGoogleApiClient();
-
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.connect();
-        } else
-            Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
-
-        onConnected(savedInstanceState);
-        onConnected(new Bundle());
 
 
 
@@ -186,164 +174,225 @@ public class Screen3a extends AppCompatActivity implements OnMapReadyCallback,Go
         });
 
 
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-    }
-
-
-    public void onConnectionFailed(ConnectionResult arg0) {
-        Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
-
-    }
-    @Override
-    public void onConnected(Bundle arg0) {
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        if (mLastLocation != null) {
+        if(location != null){
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
 
-            this.lat = mLastLocation.getLatitude();
-            this.lon = mLastLocation.getLongitude();
-            this.lat1 = lat;
-            this.lon1 = lon;
-
-            edit_lat_lng.putString("lat", String.valueOf(lat));
-            edit_lat_lng.putString("lng",String.valueOf(lon));
-            edit_lat_lng.commit();
-
-            continue_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (select_image == 1) {
-                        if (firstname.getText().toString().length() >= 2) {
-
-                            if (male.isChecked()) {
-                                gender = "male";
-                            } else {
-                                gender = "female";
-                            }
-                            String ye = (String) year.getSelectedItem();
-                            String mon = (String) month.getSelectedItem();
-                            String da = (String) day.getSelectedItem();
-                            String birth = da + "/" + mon + "/" + ye;
-
-
-                            JSONObject jsonObjSend = new JSONObject();
-                            try {
-                                // Add key/value pairs
-                                jsonObjSend.put("confermationcode",conformation_code.getText().toString());
-                                jsonObjSend.put("deviceid", deviceuid);
-                                jsonObjSend.put("device_token", device_token);
-                                jsonObjSend.put("device_type", device_type);
-                                jsonObjSend.put("discription",share.getText().toString());
-                                jsonObjSend.put("dob",birth);
-                                jsonObjSend.put("fname",firstname.getText().toString());
-                                jsonObjSend.put("gender",gender);
-                                jsonObjSend.put("lat",lat);
-                                jsonObjSend.put("lname",lastname.getText().toString());
-                                jsonObjSend.put("lon",lon);
-                                jsonObjSend.put("registration_type",registration_type);
-                                jsonObjSend.put("userid",user_id.getString("userid","null"));
-                                //  hideDialog();
-                                Log.i(TAG, jsonObjSend.toString(13));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
-
-
-                            JSONObject json = null;
-                            try {
-                                json = new JSONObject(String.valueOf(jsonObjRecv));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            JSONObject json_LL = null;
-                            try {
-                                json_LL = json.getJSONObject("response");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            try {
-                                String str_value = json_LL.getString("message");
+            //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
+        }
 
 
 
+        continue_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (select_image == 1) {
+                    if (firstname.getText().toString().length() >= 2) {
 
-                                if (str_value.equals("Updated Successfully")) {
-
-
-
-                                    Intent i1 = new Intent(getApplicationContext(), Screen16.class);
-                                    startActivity(i1);
-                                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                    finish();
-
-
-
-                                }
-                                else
-                                {
-                                    Toast.makeText(Screen3a.this, str_value, Toast.LENGTH_LONG).show();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-
-
-
-
+                        if (male.isChecked()) {
+                            gender = "male";
                         } else {
-                            Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters", Toast.LENGTH_SHORT);
-                            View view = toast.getView();
-                            view.setBackgroundResource(R.drawable.smallbox1);
-                            TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
-                            col.setTextColor(Color.RED);
-                            toast.show();
+                            gender = "female";
                         }
-                    }else
-                    {
-                        Toast toast = Toast.makeText(Screen3a.this, "Please choose a photo", Toast.LENGTH_SHORT);
+                        String ye = (String) year.getSelectedItem();
+                        String mon = (String) month.getSelectedItem();
+                        String da = (String) day.getSelectedItem();
+                        String birth = da + "/" + mon + "/" + ye;
+
+                        if (android.os.Build.VERSION.SDK_INT > 9) {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                            StrictMode.setThreadPolicy(policy);
+                        }
+
+                        JSONObject jsonObjSend = new JSONObject();
+                        try {
+                            // Add key/value pairs
+                            jsonObjSend.put("confermationcode",conformation_code.getText().toString());
+                            jsonObjSend.put("deviceid", deviceuid);
+                            jsonObjSend.put("device_token", device_token);
+                            jsonObjSend.put("device_type", device_type);
+                            jsonObjSend.put("discription",share.getText().toString());
+                            jsonObjSend.put("dob",birth);
+                            jsonObjSend.put("fname",firstname.getText().toString());
+                            jsonObjSend.put("gender",gender);
+                            jsonObjSend.put("lat",latitude);
+                            jsonObjSend.put("lname",lastname.getText().toString());
+                            jsonObjSend.put("lon",longitude);
+                            jsonObjSend.put("registration_type",registration_type);
+                            jsonObjSend.put("userid",user_id.getString("userid","null"));
+                            //  hideDialog();
+                            Log.i(TAG, jsonObjSend.toString(13));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
+
+
+                        JSONObject json = null;
+                        try {
+                            json = new JSONObject(String.valueOf(jsonObjRecv));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        JSONObject json_LL = null;
+                        try {
+                            json_LL = json.getJSONObject("response");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        try {
+                            String str_value = json_LL.getString("message");
+
+                            userid = json_LL.getString("userid");
+
+
+                            if (str_value.equals("Updated Successfully")) {
+
+                                edit_userid.putString("userid", userid);
+                                edit_userid.commit();
+
+                                AsyncHttpClient client = new AsyncHttpClient();
+                                client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+                                        new AsyncHttpResponseHandler() {
+                                            // When the response returned by REST has Http response code '200'
+
+                                            public void onSuccess(String response) {
+                                                // Hide Progress Dialog
+                                                //  prgDialog.hide();
+                                                try {
+                                                    // Extract JSON Object from JSON returned by REST WS
+                                                    JSONObject obj = new JSONObject(response);
+
+
+                                                    JSONObject json = null;
+                                                    try {
+                                                        json = new JSONObject(String.valueOf(obj));
+
+                                                        Log.w("GetDetails",String.valueOf(json));
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+
+                                                    /************************* UserDetails start **************************/
+                                                    JSONObject userdetails = null;
+                                                    try {
+                                                        userdetails = json.getJSONObject("details");
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    try {
+                                                        //Getting information form the Json Response object
+                                                        String firstname_user = userdetails.getString("fname");
+                                                        String lastname_user = userdetails.getString("lname");
+
+                                                        //Save the data in sharedPreference
+                                                        edit_user_detals.putString("firstname", firstname_user);
+                                                        edit_user_detals.putString("lastname", lastname_user);
+                                                        edit_user_detals.commit();
+
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    JSONArray cast = userdetails.getJSONArray("user_pic");
+                                                    edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                                                    edit_user_pic.commit();
+
+                                                    //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                                    List<String> allid = new ArrayList<String>();
+                                                    List<String> allurl = new ArrayList<String>();
+
+                                                    for (int i = 0; i < cast.length(); i++) {
+                                                        JSONObject actor = cast.getJSONObject(i);
+                                                        String id = actor.getString("id");
+                                                        String url = actor.getString("url");
+                                                        allid.add(id);
+                                                        allurl.add(url);
+                                                        //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                                        Log.d("Type", cast.getString(i));
+                                                    }
+                                                    for (int j = 0; j < allid.size(); j++) {
+                                                        edit_user_pic.putString("id_" + j, allid.get(j));
+                                                        edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                                                    }
+                                                    edit_user_pic.commit();
+                                                    edit_user_pic.commit();
+
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+
+
+
+
+                                Intent i1 = new Intent(getApplicationContext(), Screen16.class);
+                                startActivity(i1);
+                                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                finish();
+
+
+
+                            }
+                            else
+                            {
+                                Toast.makeText(Screen3a.this, str_value, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
+
+
+                    } else {
+                        Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters", Toast.LENGTH_SHORT);
                         View view = toast.getView();
                         view.setBackgroundResource(R.drawable.smallbox1);
                         TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                         col.setTextColor(Color.RED);
                         toast.show();
                     }
+                }else
+                {
+                    Toast toast = Toast.makeText(Screen3a.this, "Please choose a photo", Toast.LENGTH_SHORT);
+                    View view = toast.getView();
+                    view.setBackgroundResource(R.drawable.smallbox1);
+                    TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
+                    col.setTextColor(Color.RED);
+                    toast.show();
                 }
-            });
-
-
-
-        }
-    }
-    @Override
-    public void onConnectionSuspended(int arg0) {
-        Toast.makeText(this, "Connection suspended...", Toast.LENGTH_SHORT).show();
-
+            }
+        });
     }
 
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-    }
 
     public void openGallery(int req_code){
 

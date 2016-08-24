@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.bts.joinme.R;
+import com.brahmasys.bts.joinme.R;
 
 public class Screen17 extends android.support.v4.app.Fragment  {
     FrameLayout frameLayoutbck,frameLayoutacity;

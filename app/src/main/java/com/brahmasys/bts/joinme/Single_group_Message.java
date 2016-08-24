@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bts.joinme.R;
+import com.brahmasys.bts.joinme.R;
 
 
 public class Single_group_Message extends Fragment    {

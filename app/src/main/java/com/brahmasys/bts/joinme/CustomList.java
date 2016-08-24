@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.bts.joinme.R;
+import com.brahmasys.bts.joinme.R;
 
 /**
  * Created by ajay on 8/10/2016.

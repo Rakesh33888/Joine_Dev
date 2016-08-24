@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.bts.joinme.R;
+import com.brahmasys.bts.joinme.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -78,6 +78,7 @@ public class Screen16 extends AppCompatActivity implements
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
+    int pic_list_size =0;
 
 
     @Override
@@ -276,7 +277,7 @@ public class Screen16 extends AppCompatActivity implements
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
         navtextview.setText(user_Details.getString("firstname","")+"\t"+user_Details.getString("lastname","null"));
 
-        int pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size",""));
+         pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size","0"));
         List<String> allid = new ArrayList<String>();
         List<String> allurl = new ArrayList<String>();
 

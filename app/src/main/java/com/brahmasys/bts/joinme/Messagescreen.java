@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.bts.joinme.R;
+import com.brahmasys.bts.joinme.R;
 
 public class Messagescreen extends Fragment{
     ListView groups_listView;

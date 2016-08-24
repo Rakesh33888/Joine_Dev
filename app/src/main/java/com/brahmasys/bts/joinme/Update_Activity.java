@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
-import com.example.bts.joinme.R;
+import com.brahmasys.bts.joinme.R;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bts.joinme.R;
+import com.brahmasys.bts.joinme.R;
 
 /**
  * Created by ajay on 7/23/2016.
@@ -24,10 +25,18 @@ public class ReportFragment extends android.support.v4.app.Fragment {
     TextView textproblm;
     EditText editTextproblem;
     Button buttoncncl,buttonsnd;
+    public static final String ACTIVITYID = "activity_id";
+
+    SharedPreferences user_id,activity_id;
+    SharedPreferences.Editor edit_userid,edit_activity_id;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.reportfragment,container,false);
+
+        activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
+        edit_activity_id = activity_id.edit();
+
         textproblm= (TextView) v.findViewById(R.id.textView17);
         editTextproblem= (EditText) v.findViewById(R.id.editText10);
         buttoncncl= (Button) v.findViewById(R.id.buttoncancel);
@@ -57,7 +66,7 @@ public class ReportFragment extends android.support.v4.app.Fragment {
                         break;
 
                 }
-                    Toast toast = Toast.makeText(getContext(),"Thank you for your feedback!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getContext(),activity_id.getString("activity_id",""), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
 
