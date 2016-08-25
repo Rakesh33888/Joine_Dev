@@ -2,22 +2,37 @@ package com.brahmasys.bts.joinme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.brahmasys.bts.joinme.R;
+import com.devsmart.android.ui.HorizontalListView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -29,13 +44,18 @@ import com.brahmasys.bts.joinme.R;
  * create an instance of this fragment.
  */
 public class Mygroup extends Fragment{
-    LinearLayout linearLayoutgroup;
+    Expandable_GridView groups_list;
     Button  createalbum;
-    RelativeLayout relativeLayoutgroup;
     ImageView image,imageback1;
-    TextView mygroupactivity,imageinfotxt,timeinfotext;
-    FrameLayout frameLayoutinfo;
     FragmentManager fragmentManager;
+
+    private ArrayList<Book> books;
+    private ArrayAdapter<Book> adapter;
+    Context context;
+    public static final String USERID = "userid";
+    SharedPreferences user_id,user_Details,user_pic,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -81,13 +101,16 @@ public class Mygroup extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
      View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
-        linearLayoutgroup= (LinearLayout) v.findViewById(R.id.linearlayout_group);
-        relativeLayoutgroup= (RelativeLayout) v.findViewById(R.id.relativelayout_group);
-        frameLayoutinfo= (FrameLayout) v.findViewById(R.id.framelayoutinfo);
-        mygroupactivity= (TextView) v.findViewById(R.id.mygroupactivity);
-        imageinfotxt= (TextView) v.findViewById(R.id.imgaeinfotxt);
-        timeinfotext= (TextView) v.findViewById(R.id.timeinotext);
-        image= (ImageView) v.findViewById(R.id.groupinfoscreen);
+        user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
+        edit_userid = user_id.edit();
+
+        context=getActivity();
+        groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
+        groups_list.setExpanded(true);
+       setListViewAdapter();
+
+
+       /* image= (ImageView) v.findViewById(R.id.groupinfoscreen);
         image.setClickable(true);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,15 +124,14 @@ public class Mygroup extends Fragment{
 //                            .commit();
 
 
-
             }
-        });
+        });*/
         imageback1= (ImageView) v.findViewById(R.id.backtogroupsetting);
         imageback1.setClickable(true);
         imageback1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(getContext(),Screen16.class);
+                Intent i = new Intent(getContext(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
@@ -126,15 +148,78 @@ public class Mygroup extends Fragment{
                             .replace(R.id.flContent,screen19)
                             .addToBackStack(null)
                             .commit();
-
-
-
-
                 }
         });
+
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserGroups/" + user_id.getString("userid","0"),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+
+                            //Log.w("details", String.valueOf(obj));
+                            JSONObject json = null;
+                            try {
+                                json = new JSONObject(String.valueOf(obj));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            List<String> allid = new ArrayList<String>();
+                            List<String> allurl = new ArrayList<String>();
+
+
+                            JSONArray userdetails = null;
+                            try {
+                                userdetails = json.getJSONArray("groups");
+
+                                for (int i = 0; i < userdetails.length(); i++) {
+                                    JSONObject actor = userdetails.getJSONObject(i);
+                                    String id = actor.getString("activity_title");
+                                    String url = actor.getString("activity_pic");
+                                    allid.add(id);
+                                    allurl.add(url);
+                                    Book book = new Book();
+                                    book.setName(actor.getString("activity_title"));
+                                    book.setImageUrl(actor.getString("activity_pic"));
+                                    books.add(book);
+                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+                                    Log.d("Type", actor.getString("activity_pic"));
+                                   // Log.d("Type", userdetails.getString(i));
+                                }
+                                adapter.notifyDataSetChanged();
+
+                                //Log.w("details",String.valueOf(userdetails));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
         return v;
     }
 
+    private void setListViewAdapter() {
+        books = new ArrayList<Book>();
+        adapter = new CustomListViewAdapter(getActivity(), R.layout.groups_list, books);
+        groups_list.setAdapter(adapter);
+
+    }
 
 
 

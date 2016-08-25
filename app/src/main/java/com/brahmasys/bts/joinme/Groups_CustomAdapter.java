@@ -96,4 +96,5 @@ class Groups_CustomAdapter extends BaseAdapter {
        return rowView;
    }
 
+
 }
