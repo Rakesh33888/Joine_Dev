@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity  {
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
-
-    SharedPreferences user_id,user_Details,user_pic;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
+    private static final String LAT_LNG = "lat_lng";
+    SharedPreferences user_id,user_Details,user_pic,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
     String userid,social_id=" ",login_type="regular";
     Double latitude=0.0,longitude=0.0;
 
@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity  {
         edit_user_detals = user_Details.edit();
         user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
         edit_user_pic = user_pic.edit();
+        lat_lng = getSharedPreferences(LAT_LNG,MODE_PRIVATE);
+        edit_lat_lng = lat_lng.edit();
 
 
 
@@ -172,7 +174,9 @@ public class MainActivity extends AppCompatActivity  {
 
             //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
         }
-
+            edit_lat_lng.putString("lat",String.valueOf(latitude));
+            edit_lat_lng.putString("lng",String.valueOf(longitude));
+            edit_lat_lng.commit();
 
         already_member.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,10 +4,13 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -18,15 +21,20 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -35,10 +43,20 @@ import android.widget.Toast;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
+import com.github.siyamed.shapeimageview.CircularImageView;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,10 +70,11 @@ import java.util.TimeZone;
 public class Screen19 extends android.support.v4.app.Fragment {
     private static final int PICK_IMAGE_REQUEST = 3;
     private static final int RESULT_OK = 3;
-
-    ImageView firstimage, secondimage, thirdimage;
-    EditText edittextactivityname, edittextforaddress, enterdiscription,edit_cost,edit_limit;
+    private static int RESULT_LOAD_IMAGE = 1;
+    CircularImageView firstimage, secondimage, thirdimage;
+    EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
     Button create;
+    FrameLayout address_search;
     Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
     LinearLayout not_everyone;
     CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
@@ -63,22 +82,27 @@ public class Screen19 extends android.support.v4.app.Fragment {
     private ContentResolver contentResolver;
     TextView age1,age2;
     String[] currency = new String[]{"$", "€"};
-
     String year,month,day,hour,minute;
     String availability;
     String gender="";
-    String duration="0",icon = "0",title,address,age_start,age_end,cost,limit,description;
-    Double latitude=0.0,longitude=0.0,latitude1,longitude1;
+    String duration="0",icon = "0",title,address,age_start,age_end,cost="0",limit="0",description;
+    Double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
     String complete_address,city,state,zip,country,total_address;
-
     private static final String TAG = "CreateActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/CreateActivity";
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
-
-    SharedPreferences user_id,activity_id;
-    SharedPreferences.Editor edit_userid,edit_activity_id;
+    private static final String LAT_LNG = "lat_lng";
+    SharedPreferences user_id,activity_id,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
     ProgressDialog pd;
+    private Integer THRESHOLD = 2;
+    private DelayAutoCompleteTextView geo_autocomplete;
+    private ImageView geo_autocomplete_clear;
+    private static final int SELECT_FILE3 = 1,SELECT_FILE4=2,SELECT_FILE5=3;
+    String selectedPath3 = "NONE",selectedPath4 = "NONE",selectedPath5 = "NONE";
+    HttpEntity resEntity;
+    String activity_id1 ="0", str_value="0";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +114,11 @@ public class Screen19 extends android.support.v4.app.Fragment {
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
 
+        lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
+        edit_lat_lng = lat_lng.edit();
+
+            latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
+            longitude2 = Double.parseDouble(lat_lng.getString("lng","0.0"));
           pd = new ProgressDialog(getActivity());
           pd.setMessage("loading");
 
@@ -101,8 +130,8 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
-
-        edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
+        address_search = (FrameLayout) v.findViewById(R.id.address_search);
+     //   edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
         enterdiscription  = (EditText) v.findViewById(R.id.enter_discription);
         edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
         edit_cost = (EditText) v.findViewById(R.id.forcost);
@@ -116,13 +145,15 @@ public class Screen19 extends android.support.v4.app.Fragment {
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
 
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
-        firstimage =(ImageView) v.findViewById(R.id.firstimage);
-        firstimage.setClickable(true);
+        firstimage =(CircularImageView) v.findViewById(R.id.firstimage);
+        secondimage = (CircularImageView) v.findViewById(R.id.secondimage);
+        thirdimage = (CircularImageView) v.findViewById(R.id.thrdimage);
         age1 = (TextView) v.findViewById(R.id.age1);
         age2 = (TextView) v.findViewById(R.id.age2);
 
         create  = (Button) v.findViewById(R.id.createbutton);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
+
 
 
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -147,6 +178,95 @@ public class Screen19 extends android.support.v4.app.Fragment {
         }
 
 
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+
+        latitude = latitude;
+            longitude = longitude;
+
+        }
+        else
+        {
+           latitude = latitude2;
+            longitude = longitude2;
+        }
+
+        geo_autocomplete_clear = (ImageView) v.findViewById(R.id.geo_autocomplete_clear);
+
+        geo_autocomplete = (DelayAutoCompleteTextView) v.findViewById(R.id.geo_autocomplete);
+        geo_autocomplete.setThreshold(THRESHOLD);
+        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(getContext())); // 'this' is Activity instance
+
+        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
+                geo_autocomplete.setText(result.getAddress());
+
+
+                Geocoder coder = new Geocoder(getActivity());
+                try {
+                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 1);
+                    for (Address add : adresses) {
+                        //Controls to ensure it is right address such as country etc.
+                        longitude1 = add.getLongitude();
+                        latitude1 = add.getLatitude();
+                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                double earthRadius = 3958.75;
+                double dLat = Math.toRadians(latitude - latitude1);
+                double dLng = Math.toRadians(longitude - longitude1);
+                double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude)) *
+                                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                double c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                double dist = earthRadius * c1;
+                if (dist > 100) {
+                    Toast.makeText(getActivity(), "Address is higher than 100 km from your current location", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        geo_autocomplete.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
+                } else {
+                    geo_autocomplete_clear.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                geo_autocomplete.setText("");
+            }
+        });
+
+
+
+
+
         /******************** CheckBox Functionality Start*******************/
         checkboxcurrent.setChecked(true);
 
@@ -155,8 +275,8 @@ public class Screen19 extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 if (v == checkboxcurrent) {
                     checkBoxaddress.setChecked(false);
-                    edittextforaddress.setVisibility(View.GONE);
-
+                    //edittextforaddress.setVisibility(View.GONE);
+                    address_search.setVisibility(View.GONE);
                 }
 
             }
@@ -170,7 +290,8 @@ public class Screen19 extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 if (v == checkBoxaddress) {
                     checkboxcurrent.setChecked(false);
-                    edittextforaddress.setVisibility(View.VISIBLE);
+                    //edittextforaddress.setVisibility(View.VISIBLE);
+                    address_search.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -238,32 +359,20 @@ public class Screen19 extends android.support.v4.app.Fragment {
         firstimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                openGallery1(SELECT_FILE3);
+
             }
         });
-        secondimage = (ImageView) v.findViewById(R.id.secondimage);
-        secondimage.setClickable(true);
         secondimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                openGallery1(SELECT_FILE4);
             }
         });
-        thirdimage = (ImageView) v.findViewById(R.id.thrdimage);
-        thirdimage.setClickable(true);
         thirdimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                openGallery1(SELECT_FILE5);
             }
         });
 
@@ -318,6 +427,10 @@ public class Screen19 extends android.support.v4.app.Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (edittextactivityname.getText().toString().length()>=2){
+                    if (enterdiscription.getText().toString().length()>=10)
+                    {
                 pd.show();
                 int int_month=0;
                 year = (String) spinnerforyear.getSelectedItem();
@@ -445,7 +558,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 }
                 else {
 
-                        total_address = edittextforaddress.getText().toString();
+                      total_address = geo_autocomplete.getText().toString();
                     /************** Calculating Distance *************************
                      Geocoder coder = new Geocoder(getActivity());
                      try {
@@ -478,7 +591,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 }
 
 
-                address = edittextforaddress.getText().toString();
+              //  address = edittextforaddress.getText().toString();
                 title   = edittextactivityname.getText().toString();
                 description = enterdiscription.getText().toString();
                 cost  = edit_cost.getText().toString();
@@ -527,7 +640,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 JSONObject json = null;
                 try {
                     json = new JSONObject(String.valueOf(jsonObjRecv));
-                    String activity_id1 = json.getString("activityid");
+                     activity_id1 = json.getString("activityid");
                     edit_activity_id.putString("activity_id",activity_id1);
                     edit_activity_id.commit();
 
@@ -542,15 +655,15 @@ public class Screen19 extends android.support.v4.app.Fragment {
                     e.printStackTrace();
                 }
                 try {
-                    String str_value = json_LL.getString("message");
+                     str_value = json_LL.getString("message");
 
 
-                    Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
 
                     if (str_value.equals("Added Successfully")) {
 
-                        pd.hide();
-                        Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+
+
 
 
                     }
@@ -560,11 +673,31 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
 
 
-
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
+                    }
+            }
+                else
+                {
+                    Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
+                }
             }
         });
         return v;
     }
+
+
+    public void openGallery1(int req_code){
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select file to upload "), req_code);
+    }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -575,9 +708,9 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                firstimage = (ImageView) getActivity().findViewById(R.id.firstimage);
+                firstimage = (CircularImageView) getActivity().findViewById(R.id.firstimage);
                 firstimage.setImageBitmap(bitmap);
-//
+                firstimage.setImageBitmap(bitmap);
             } catch (IOException e) {
 
             }
@@ -590,9 +723,12 @@ public class Screen19 extends android.support.v4.app.Fragment {
         return contentResolver;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
+
+
 
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();

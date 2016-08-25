@@ -23,7 +23,6 @@
         android:clickable="false"
         android:id="@+id/imageView0"
         android:background="@drawable/picture"
-
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
