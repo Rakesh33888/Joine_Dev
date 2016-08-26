@@ -155,6 +155,7 @@
                         android:layout_marginLeft="10dp"
                         android:id="@+id/near_by" />
 
+<<<<<<< HEAD
                     <com.kyleduo.switchbutton.SwitchButton
                         android:id="@+id/near"
                         style="@style/SwitchButtonStyle"
@@ -171,6 +172,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.36">
+=======
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/near"
+                style="@style/SwitchButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                app:kswTintColor="#076c3c"
+                app:kswThumbColor="#939393" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.36">
+>>>>>>> origin/master
 
                     <TextView
                         android:layout_width="wrap_content"

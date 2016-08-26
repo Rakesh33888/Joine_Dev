@@ -179,100 +179,51 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/textforlocation"
-                    android:textSize="19dp"
+                    android:textSize="25dp"
                     android:textColor="#AFAFAF"
                     android:text="Location"
                     android:paddingStart="15dp"
                     android:layout_marginTop="8dp"/>
 
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/checkBoxfor_current"
+                    android:text="Current"
+                    android:scaleX="0.90"
+                    android:textSize="21dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleY="0.90"
+                    android:textColor="#AEAEAE"
+                    android:layout_gravity="center_vertical|left"
+                    android:checked="false"
+                    android:layout_marginTop="10dp" />
+
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="fill_parent"
+                    <CheckBox
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/checkBoxfor_current"
-                            android:text="Current"
-                            android:scaleX="0.60"
-                            android:textSize="21dp"
-                            android:layout_marginLeft="8dp"
-                            android:scaleY="0.60"
-                            android:textColor="#AEAEAE"
-                            android:layout_gravity="left"
-                            android:checked="false" />
+                        android:id="@+id/checkboxfor_address"
+                        android:text="Address"
+                        android:scaleX="0.90"
+                        android:textSize="21dp"
+                        android:layout_marginLeft="15dp"
+                        android:scaleY="0.90"
+                        android:textColor="#AEAEAE"
+                        android:layout_gravity="left|center_vertical"
+                        android:checked="false" />
 
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/checkboxfor_address"
-                            android:text="Address"
-                            android:scaleX="0.60"
-                            android:textSize="21dp"
-                            android:layout_marginLeft="6dp"
-                            android:scaleY="0.60"
-                            android:textColor="#AEAEAE"
-
-                            android:layout_gravity="left"
-                            android:checked="false" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="300dp"
+                    <EditText
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginRight="5dp"
-                        android:layout_gravity="center">
-                        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/address_search"
-                            android:visibility="gone"
-                            android:background="@drawable/edittext_style"
-                            android:layout_gravity="center_horizontal" >
-
-                            <com.brahmasys.bts.joinme.DelayAutoCompleteTextView
-                                android:id="@+id/geo_autocomplete"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:imeOptions="flagNoExtractUi|actionSearch"
-                                android:inputType="textCapSentences"
-                                android:textColor="#ff32"
-                                android:background="@null"
-                                android:hint="Search"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginEnd="35dp"
-                                android:layout_marginRight="35dp"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginBottom="4dp"
-                                android:padding="10dp"
-                                android:dropDownWidth="fill_parent"
-                                />
-
-                            <ImageView
-                                android:id="@+id/geo_autocomplete_clear"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/circle_close"
-                                android:contentDescription="Hello"
-                                android:layout_gravity="center_vertical|end"
-                                android:visibility="gone"
-                                android:layout_marginEnd="12dp"
-                                android:layout_marginRight="12dp"
-                                />
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-
-
-
+                        android:paddingStart="10dp"
+                        android:id="@+id/textfor_address"
+                        android:background="@drawable/edittext_style"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center" />
                 </LinearLayout>
             </LinearLayout>
 

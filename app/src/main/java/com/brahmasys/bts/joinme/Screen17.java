@@ -1,10 +1,15 @@
 package com.brahmasys.bts.joinme;
 
 import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,9 +25,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.brahmasys.bts.joinme.R;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -32,6 +40,10 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.InputStream;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
 public class Screen17 extends android.support.v4.app.Fragment  {
     FrameLayout frameLayoutbck,frameLayoutacity;
@@ -42,12 +54,16 @@ public class Screen17 extends android.support.v4.app.Fragment  {
     TextView reporttext,updatetext;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
     FragmentManager fragmentManager;
+<<<<<<< HEAD
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     String lat="0",lon="0";
     RatingBar minimumRating;
+=======
+
+>>>>>>> origin/master
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
@@ -69,6 +85,17 @@ public class Screen17 extends android.support.v4.app.Fragment  {
         timetextview = (TextView) v.findViewById(R.id.timetextview);
         reviews     = (TextView) v.findViewById(R.id.reviews);
         minimumRating = (RatingBar)v.findViewById(R.id.myRatingBar);
+
+        acitvityname = (TextView) v.findViewById(R.id.acitvityname);
+        distancefromnearby = (TextView) v.findViewById(R.id.distancefromnearby);
+        owner_name1 = (TextView) v.findViewById(R.id.owner_name);
+        uptopeoples = (TextView) v.findViewById(R.id.uptopeoples);
+        currentpeoples = (TextView) v.findViewById(R.id.currentpeoples);
+        costtext = (TextView) v.findViewById(R.id.costtext);
+        timetext = (TextView) v.findViewById(R.id.timetext);
+        createrimage = (CircularImageView) v.findViewById(R.id.createrimage);
+        timetextview = (TextView) v.findViewById(R.id.timetextview);
+        reviews     = (TextView) v.findViewById(R.id.reviews);
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -137,6 +164,7 @@ public class Screen17 extends android.support.v4.app.Fragment  {
 
                                 acitvityname.setText(activity_name);
                                 distancefromnearby.setText(distance);
+<<<<<<< HEAD
                                 owner_name1.setText("Created by " + owner_name);
                                 uptopeoples.setText("Up to " + limit + " peoples:");
                                 currentpeoples.setText("Currently have " + joined);
@@ -145,12 +173,26 @@ public class Screen17 extends android.support.v4.app.Fragment  {
                                 new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
 
                                 long timestampString = Long.parseLong(time);
+=======
+                                owner_name1.setText("Created by "+ owner_name);
+                                uptopeoples.setText("Up to "+limit+" peoples:");
+                                currentpeoples.setText("Currently have "+joined);
+                                costtext.setText("Cost "+cost);
+                                timetext.setText("Takes "+duration+"  hours");
+                                new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
+
+                                long timestampString =  Long.parseLong(time);
+>>>>>>> origin/master
                                 String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
                                         format(new java.util.Date(timestampString * 1000));
 
                                 timetextview.setText(value);
+<<<<<<< HEAD
                                 reviews.setText(review + " reviews");
                                 minimumRating.setRating(Float.parseFloat(rating));
+=======
+                                reviews.setText("");
+>>>>>>> origin/master
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -159,6 +201,7 @@ public class Screen17 extends android.support.v4.app.Fragment  {
                         }
                     }
                 });
+
 
 
         imageViewbck.setClickable(true);

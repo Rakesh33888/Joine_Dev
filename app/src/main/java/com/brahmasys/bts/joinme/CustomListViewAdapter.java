@@ -53,8 +53,8 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
         Book book = getItem(position);
 
         holder.name.setText(book.getName());
-        holder.authorName.setText(book.getAuthorName());
-
+      //  holder.authorName.setText(book.getAuthorName());
+       // Picasso.with(activity).load("http://52.26.55.225/devwoof/"+book.getImageUrl()).into(holder.image);
         new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
         return convertView;
     }
@@ -91,13 +91,13 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
 
     private static class ViewHolder {
         private TextView name;
-         private TextView authorName;
+       // private TextView authorName;
         private ImageView image;
 
         public ViewHolder(View v) {
             name = (TextView) v.findViewById(R.id.imgaeinfotxt);
             image = (ImageView) v.findViewById(R.id.thumbnail);
-            authorName = (TextView) v.findViewById(R.id.timeinotext);
+           // authorName = (TextView) v.findViewById(R.id.author);
         }
     }
 

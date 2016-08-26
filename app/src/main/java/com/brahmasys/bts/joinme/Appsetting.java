@@ -429,10 +429,17 @@ public class Appsetting extends Fragment{
     //@Added By Ajay
     private void FnSaveUserSettings(){
 
+<<<<<<< HEAD
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+=======
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+>>>>>>> origin/master
 
         //Here we are getting values from the UI elements
 
@@ -449,6 +456,7 @@ public class Appsetting extends Fragment{
             distance="K";
         }
 
+<<<<<<< HEAD
         JSONObject jsonObjSend = new JSONObject();
         try {
             String userid = user_id.getString("userid", "");
@@ -485,6 +493,44 @@ public class Appsetting extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+=======
+            JSONObject jsonObjSend = new JSONObject();
+            try {
+                String userid = user_id.getString("userid", "");
+
+                // Add key/value pairs
+                jsonObjSend.put("activity_nearby",String.valueOf(activity_nearby));
+                jsonObjSend.put("activity_reminder_hours", activity_reminder_hours);
+                jsonObjSend.put("activity_reminder_mins", activity_reminder_mins);
+                jsonObjSend.put("distance_km", distance);
+                jsonObjSend.put("new_level", true);
+                jsonObjSend.put("notification_by", "");
+                jsonObjSend.put("userid",userid);
+                Log.i("UserSettings_Request", jsonObjSend.toString(3));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL_UpdateSettings, jsonObjSend);
+
+            JSONObject json = null;
+
+            try {
+                json = new JSONObject(String.valueOf(jsonObjRecv));
+                String result = json.getString("message");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject json_LL = null;
+            try {
+                json_LL = json.getJSONObject("message");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+>>>>>>> origin/master
 
     }
 
