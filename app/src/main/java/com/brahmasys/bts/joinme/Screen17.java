@@ -148,7 +148,7 @@ public class Screen17 extends android.support.v4.app.Fragment  {
                                         format(new java.util.Date(timestampString * 1000));
 
                                 timetextview.setText(value);
-                                reviews.setText("");
+                                reviews.setText(review+" reviews");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
