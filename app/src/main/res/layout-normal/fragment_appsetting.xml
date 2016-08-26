@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#fff"
-        android:weightSum="1">
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/grayback"
             android:layout_marginLeft="10dp"
-            android:id="@+id/imageback" />
+            android:id="@+id/imageback_App_Sett" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,6 +39,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginTop="60dp"
         >
 
 
@@ -46,7 +47,7 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="60dp"
+
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
     android:layout_marginBottom="30dp">
