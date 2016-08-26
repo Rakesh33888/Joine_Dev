@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -31,7 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -48,6 +52,8 @@ public class Mygroup extends Fragment{
     Button  createalbum;
     ImageView image,imageback1;
     FragmentManager fragmentManager;
+    private static final String TAG = "GetMyGroupActivity";
+    private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
 
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
@@ -55,6 +61,9 @@ public class Mygroup extends Fragment{
     public static final String USERID = "userid";
     SharedPreferences user_id,user_Details,user_pic,lat_lng;
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
+
+    List<String> allactivityid;
+    List<String> alluserid;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,29 +112,17 @@ public class Mygroup extends Fragment{
      View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
-
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         context=getActivity();
         groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
         groups_list.setExpanded(true);
        setListViewAdapter();
 
 
-       /* image= (ImageView) v.findViewById(R.id.groupinfoscreen);
-        image.setClickable(true);
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                fragmentManager=getFragmentManager();
-//
-//                    Screen17 screen17=new Screen17();
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.flContent,screen17)
-//                            .addToBackStack(null)
-//                            .commit();
 
-
-            }
-        });*/
         imageback1= (ImageView) v.findViewById(R.id.backtogroupsetting);
         imageback1.setClickable(true);
         imageback1.setOnClickListener(new View.OnClickListener() {
@@ -152,64 +149,84 @@ public class Mygroup extends Fragment{
         });
 
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserGroups/" + user_id.getString("userid","0"),
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
 
-                    public void onSuccess(String response) {
-                        // Hide Progress Dialog
-                        //  prgDialog.hide();
-                        try {
-                            // Extract JSON Object from JSON returned by REST WS
-                            JSONObject obj = new JSONObject(response);
+        JSONObject jsonObjSend = new JSONObject();
+        try {
+            // Add key/value pairs
+            jsonObjSend.put("lat", "0");
+            jsonObjSend.put("lon", "0");
+            jsonObjSend.put("userid",user_id.getString("userid","0"));
+            Log.i(TAG, jsonObjSend.toString(3));
 
-                            //Log.w("details", String.valueOf(obj));
-                            JSONObject json = null;
-                            try {
-                                json = new JSONObject(String.valueOf(obj));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
 
-                            List<String> allid = new ArrayList<String>();
-                            List<String> allurl = new ArrayList<String>();
-
-
-                            JSONArray userdetails = null;
-                            try {
-                                userdetails = json.getJSONArray("groups");
-
-                                for (int i = 0; i < userdetails.length(); i++) {
-                                    JSONObject actor = userdetails.getJSONObject(i);
-                                    String id = actor.getString("activity_title");
-                                    String url = actor.getString("activity_pic");
-                                    allid.add(id);
-                                    allurl.add(url);
-                                    Book book = new Book();
-                                    book.setName(actor.getString("activity_title"));
-                                    book.setImageUrl(actor.getString("activity_pic"));
-                                    books.add(book);
-                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-                                    Log.d("Type", actor.getString("activity_pic"));
-                                   // Log.d("Type", userdetails.getString(i));
-                                }
-                                adapter.notifyDataSetChanged();
-
-                                //Log.w("details",String.valueOf(userdetails));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+            //Log.w("RESULT",String.valueOf(jsonObjRecv));
+       JSONObject json = null;
+        try {
+            json = new JSONObject(String.valueOf(jsonObjRecv));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+         alluserid = new ArrayList<String>();
+         allactivityid = new ArrayList<String>();
 
 
+        JSONArray userdetails = null;
+        try {
+            userdetails = json.getJSONArray("data");
+
+            for (int i = 0; i < userdetails.length(); i++) {
+                JSONObject actor = userdetails.getJSONObject(i);
+                String activity_id = actor.getString("activity_id");
+                String user_id = actor.getString("userid");
+                allactivityid.add(activity_id);
+                alluserid.add(user_id);
+                Book book = new Book();
+                book.setName(actor.getString("activity_name"));
+                book.setImageUrl(actor.getString("activity_url"));
 
 
+                long timestampString =  Long.parseLong(actor.getString("activity_time"));
+                String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
+                        format(new java.util.Date(timestampString * 1000));
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                book.setAuthorName(value);
+
+                books.add(book);
+
+            }
+            adapter.notifyDataSetChanged();
+
+            //Log.w("details",String.valueOf(userdetails));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        groups_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+               ;
+                fragmentManager=getFragmentManager();
+
+                Screen17 screen17 = new Screen17();
+                Fragment fragment = new Fragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("userid", alluserid.get(position));
+                bundle.putString("activityid",allactivityid.get(position));
+                screen17.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, screen17)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
 
         return v;
     }

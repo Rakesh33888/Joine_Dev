@@ -610,26 +610,25 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
                 JSONObject jsonObjSend = new JSONObject();
                 try {
-                    // Add key/value pairs
-                    jsonObjSend.put("activity_availability",availability);
-                    jsonObjSend.put("activity_description", description);
-                    jsonObjSend.put("activity_duration", duration);
-                    jsonObjSend.put("activity_icon", icon);
-                    jsonObjSend.put("activity_time",result);
-                    jsonObjSend.put("activity_timezoneoffset",res);
-                    jsonObjSend.put("activity_title",title);
-                    jsonObjSend.put("gender",gender);
-                    jsonObjSend.put("address",total_address);
-                    jsonObjSend.put("lat",latitude);
-                    jsonObjSend.put("lon",longitude);
-                    jsonObjSend.put("participant_age_end",age_end);
-                    jsonObjSend.put("participant_age_start",age_start);
-                    jsonObjSend.put("participant_cost",cost);
-                    jsonObjSend.put("participant_gender",gender);
-                    jsonObjSend.put("participant_limit",limit);
-                    jsonObjSend.put("userid",user_id.getString("userid","null"));
-                    //  hideDialog();
-                    Log.i(TAG, jsonObjSend.toString(13));
+                    jsonObjSend.put("activity_availability",availability);//1
+                    jsonObjSend.put("activity_description", description); //2
+                    jsonObjSend.put("activity_duration", duration);       //3
+                    jsonObjSend.put("activity_icon", icon);               //4
+                    jsonObjSend.put("activity_time",result);              //5
+                    jsonObjSend.put("activity_timezoneoffset",res);       //6
+                    jsonObjSend.put("activity_title",title);              //7
+                    jsonObjSend.put("address",total_address);             //8
+                    jsonObjSend.put("lat",latitude);                      //9
+                    jsonObjSend.put("lon",longitude);                     //10
+                    jsonObjSend.put("participant_age_end",age_end);       //11
+                    jsonObjSend.put("participant_age_start",age_start);   //12
+                    jsonObjSend.put("participant_cost",cost);             //13
+                    jsonObjSend.put("participant_gender",gender);         //14
+                    jsonObjSend.put("participant_limit",limit);           //15
+                    jsonObjSend.put("userid",user_id.getString("userid","null")); //16
+
+                    Log.i(TAG, jsonObjSend.toString(16));
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

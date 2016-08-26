@@ -39,14 +39,14 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        >
+        android:layout_marginTop="60dp" >
 
 
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="60dp"
+
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
     android:layout_marginBottom="30dp">
@@ -162,7 +162,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 app:kswTintColor="#076c3c"
-                app:kswThumbColor="#939393" />
+                app:kswThumbColor="#939393"
+                android:checked="false" />
         </RelativeLayout>
 
         <RelativeLayout

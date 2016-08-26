@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brahmasys.bts.joinme.R;
+import com.kyleduo.switchbutton.SwitchButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -66,6 +67,7 @@ public class Appsetting extends Fragment{
     SegmentedGroup dis;
     RadioButton miles,km;
     Spinner dropdown;
+    SwitchButton near;
     ArrayList customarraylist;
     LinearLayout logout;
     SessionManager session;
@@ -138,7 +140,7 @@ public class Appsetting extends Fragment{
         View v=inflater.inflate(R.layout.fragment_appsetting, container, false);
 
 
-
+        near = (SwitchButton) v.findViewById(R.id.near);
         incButton = (Button) v.findViewById(R.id.incButton);
         decButton = (Button) v.findViewById(R.id.decButton);
         editText = (TextView) v.findViewById(R.id.numberEditText);
@@ -171,6 +173,7 @@ public class Appsetting extends Fragment{
                 Intent i = new Intent(getContext(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                add();
                 getActivity().finish();
             }
         });
@@ -305,6 +308,18 @@ public class Appsetting extends Fragment{
             }
         });
         return v;
+    }
+
+    public void add()
+    {
+        if (near.isChecked())
+        {
+            Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "narendra", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void logoutUser() {
