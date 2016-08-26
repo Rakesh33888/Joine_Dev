@@ -35,31 +35,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="797ec21e-aa26-47f5-8af5-90ca391ec65e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout-large/custom_delete_msg.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/custom_delete_msg.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout-large/geo_search_result.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout-large/groups_list.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/CustomListViewAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/CustomListViewAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Mygroup.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Mygroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen17.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen17.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen19.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen19.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Update_Activity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Update_Activity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/fragment_appsetting.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/fragment_appsetting.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-large/fragment_mygroup.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-large/fragment_mygroup.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/groups_list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/groups_list.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-large/update_activity.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-large/update_activity.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/update_activity.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/update_activity.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Mysearch.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Mysearch.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
     </list>
     <ignored path="Joine_Dev.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,10 +67,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Screen17.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Screen17.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen17.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52579033">
+            <state vertical-scroll-proportion="0.0">
               <caret line="87" column="52" selection-start-line="87" selection-start-column="52" selection-end-line="87" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -113,12 +91,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Appsetting.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Appsetting.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="175" column="22" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
-              <folding />
+            <state vertical-scroll-proportion="9.833611">
+              <caret line="394" column="29" selection-start-line="394" selection-start-column="29" selection-end-line="394" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5693#6067#0" expanded="true" />
+                <element signature="e#6066#6067#0" expanded="true" />
+                <element signature="e#6107#6447#0" expanded="true" />
+                <element signature="e#6446#6447#0" expanded="true" />
+                <element signature="e#6488#6848#0" expanded="true" />
+                <element signature="e#6847#6848#0" expanded="true" />
+                <element signature="e#6891#7242#0" expanded="true" />
+                <element signature="e#7241#7242#0" expanded="true" />
+                <element signature="e#7284#7655#0" expanded="true" />
+                <element signature="e#7654#7655#0" expanded="true" />
+                <element signature="e#7983#9245#0" expanded="true" />
+                <element signature="e#8758#8987#0" expanded="true" />
+                <element signature="e#8986#8987#0" expanded="true" />
+                <element signature="e#9028#9218#0" expanded="true" />
+                <element signature="e#9217#9218#0" expanded="true" />
+                <element signature="e#9244#9245#0" expanded="true" />
+                <element signature="e#9464#9472#0" expanded="true" />
+                <element signature="e#9714#10106#0" expanded="true" />
+                <element signature="e#10105#10106#0" expanded="true" />
+                <element signature="e#10201#11593#0" expanded="true" />
+                <element signature="e#10494#11567#0" expanded="true" />
+                <element signature="e#11566#11567#0" expanded="true" />
+                <element signature="e#11592#11593#0" expanded="true" />
+                <element signature="e#11883#13138#0" expanded="true" />
+                <element signature="e#13137#13138#0" expanded="true" />
+                <element signature="e#13380#15776#0" expanded="true" />
+                <element signature="e#15775#15776#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2314,8 +2321,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Mygroup.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Update_Activity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-normal/fragment_appsetting.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen17.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java" />
       </list>
     </option>
   </component>
@@ -3383,17 +3390,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="175" column="22" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen17.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52579033">
+        <state vertical-scroll-proportion="0.0">
           <caret line="87" column="52" selection-start-line="87" selection-start-column="52" selection-end-line="87" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -3409,6 +3408,43 @@
             <element signature="e#6556#6557#0" expanded="true" />
             <element signature="e#6720#7151#0" expanded="true" />
             <element signature="e#7150#7151#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="9.833611">
+          <caret line="394" column="29" selection-start-line="394" selection-start-column="29" selection-end-line="394" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5693#6067#0" expanded="true" />
+            <element signature="e#6066#6067#0" expanded="true" />
+            <element signature="e#6107#6447#0" expanded="true" />
+            <element signature="e#6446#6447#0" expanded="true" />
+            <element signature="e#6488#6848#0" expanded="true" />
+            <element signature="e#6847#6848#0" expanded="true" />
+            <element signature="e#6891#7242#0" expanded="true" />
+            <element signature="e#7241#7242#0" expanded="true" />
+            <element signature="e#7284#7655#0" expanded="true" />
+            <element signature="e#7654#7655#0" expanded="true" />
+            <element signature="e#7983#9245#0" expanded="true" />
+            <element signature="e#8758#8987#0" expanded="true" />
+            <element signature="e#8986#8987#0" expanded="true" />
+            <element signature="e#9028#9218#0" expanded="true" />
+            <element signature="e#9217#9218#0" expanded="true" />
+            <element signature="e#9244#9245#0" expanded="true" />
+            <element signature="e#9464#9472#0" expanded="true" />
+            <element signature="e#9714#10106#0" expanded="true" />
+            <element signature="e#10105#10106#0" expanded="true" />
+            <element signature="e#10201#11593#0" expanded="true" />
+            <element signature="e#10494#11567#0" expanded="true" />
+            <element signature="e#11566#11567#0" expanded="true" />
+            <element signature="e#11592#11593#0" expanded="true" />
+            <element signature="e#11883#13138#0" expanded="true" />
+            <element signature="e#13137#13138#0" expanded="true" />
+            <element signature="e#13380#15776#0" expanded="true" />
+            <element signature="e#15775#15776#0" expanded="true" />
           </folding>
         </state>
       </provider>

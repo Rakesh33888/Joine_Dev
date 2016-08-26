@@ -1,9 +1,7 @@
 package com.brahmasys.bts.joinme;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,8 +13,6 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,17 +29,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.brahmasys.bts.joinme.R;
+
 import com.kyleduo.switchbutton.SwitchButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -67,7 +61,7 @@ public class Appsetting extends Fragment{
     SegmentedGroup dis;
     RadioButton miles,km;
     Spinner dropdown;
-    SwitchButton near;
+
     ArrayList customarraylist;
     LinearLayout logout;
     SessionManager session;
@@ -87,7 +81,7 @@ public class Appsetting extends Fragment{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    public  static  final  String URL_GetUserSettings ="http://52.37.136.238/JoinMe/User.svc/GetUserSettings/";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -137,10 +131,10 @@ public class Appsetting extends Fragment{
                              Bundle savedInstanceState) {
 
 
-        View v=inflater.inflate(R.layout.fragment_appsetting, container, false);
+        View v = inflater.inflate(R.layout.fragment_appsetting, container, false);
 
 
-        near = (SwitchButton) v.findViewById(R.id.near);
+
         incButton = (Button) v.findViewById(R.id.incButton);
         decButton = (Button) v.findViewById(R.id.decButton);
         editText = (TextView) v.findViewById(R.id.numberEditText);
@@ -165,6 +159,8 @@ public class Appsetting extends Fragment{
         }
 
 
+
+
         deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         imageback.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +169,7 @@ public class Appsetting extends Fragment{
                 Intent i = new Intent(getContext(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                add();
+
                 getActivity().finish();
             }
         });
@@ -303,24 +299,35 @@ public class Appsetting extends Fragment{
         btndelt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i2=new Intent(getContext(),Splashscreen.class);
-                startActivity(i2);
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("user_id",""),
+                        new AsyncHttpResponseHandler() {
+                            // When the response returned by REST has Http response code '200'
+
+                            public void onSuccess(String response) {
+                                // Hide Progress Dialog
+                                //  prgDialog.hide();
+                                try {
+                                    // Extract JSON Object from JSON returned by REST WS
+                                    JSONObject obj = new JSONObject(response);
+                                    String result=obj.getString("message");
+                                    Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(getContext(),Splashscreen.class);
+                                    startActivity(intent);
+                                   onFinish();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }});
             }
         });
+        FnPopulateUserSettings(v);
         return v;
     }
 
-    public void add()
-    {
-        if (near.isChecked())
-        {
-            Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(getActivity(), "narendra", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     private void logoutUser() {
 
@@ -357,6 +364,63 @@ public class Appsetting extends Fragment{
 
 
 
+    }
+
+
+    protected void FnPopulateUserSettings(final View v ){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String id = user_id.getString("userid", "");
+        client.get(URL_GetUserSettings + id,
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String jsonResult) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject dataObj = new JSONObject(jsonResult).getJSONObject("user_setting");
+                            String activity_nearby = dataObj.getString("activity_nearby");
+                            String activity_reminder_hour = dataObj.getString("activity_reminder_hour");
+                            String activity_reminder_min = dataObj.getString("activity_reminder_min");
+                            String distance_km = dataObj.getString("distance_km");
+                            String new_level = dataObj.getString("new_level");
+                            String notification_by = dataObj.getString("notification_by");
+                            String userid = dataObj.getString("userid");
+
+                            dis = (SegmentedGroup) v.findViewById(R.id.distance);
+
+                            if(distance_km =="K"){
+                                dis.check(R.id.km);
+                            }
+                            else if(distance_km=="M")
+                            {
+                                dis.check(R.id.miles);
+                            }
+
+                            
+                            SwitchButton switchButton = (SwitchButton)v.findViewById(R.id.near);
+
+                            if( true == Boolean.valueOf(activity_nearby) ){
+                                switchButton.setChecked(true);
+                            }else {
+                                switchButton.setChecked(false);
+                            }
+                            TextView hour = (TextView)v.findViewById(R.id.numberEditText);
+
+                            hour.setText(activity_reminder_hour);
+                            TextView minutes = (TextView)v.findViewById(R.id.numberEditText1);
+
+                            minutes.setText(activity_reminder_min);
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                });
     }
 
     private void replaceFragment(Fragment frg) {

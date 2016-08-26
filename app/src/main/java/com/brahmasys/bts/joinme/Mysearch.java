@@ -2,9 +2,12 @@ package com.brahmasys.bts.joinme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.brahmasys.bts.joinme.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -28,12 +36,31 @@ import com.brahmasys.bts.joinme.R;
  * create an instance of this fragment.
  */
 public class Mysearch extends android.support.v4.app.Fragment {
+
+    //static
+    public static final String USERID = "userid";
+
+
+    public static String dateSelection = "";
+
+    private static final String TAG = "SaveUserPreference";
+    public  static final String URL_SaveUserPreference ="http://52.37.136.238/JoinMe/User.svc/SaveUserPreference";
+
+
     LinearLayout linearLayout;
     RelativeLayout relativeLayout1,relativeLayout2;
     ImageView back;
     TextView mysearch,textView7,Maxdistance,distance;
     CheckBox c1,c2,c3;
     SeekBar seekBar;
+    String search_distance;
+    String select_date;
+
+    SharedPreferences searchdistance,selectdate;
+    SharedPreferences.Editor edit_searchdistance,edit_selectdate;
+    SharedPreferences user_id,user_Details,user_pic,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +112,73 @@ public class Mysearch extends android.support.v4.app.Fragment {
         relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
         textView7 = (TextView) v.findViewById(R.id.textView7);
         mysearch = (TextView) v.findViewById(R.id.textView6);
+
+
+        searchdistance =getActivity().getSharedPreferences(search_distance, getActivity().MODE_PRIVATE);
+        edit_searchdistance = searchdistance.edit();
+        selectdate=getActivity().getSharedPreferences(select_date,getActivity().MODE_PRIVATE);
+        edit_selectdate=selectdate.edit();
+
+        user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
+        edit_userid = user_id.edit();
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserPreference/"+ user_id.getString("userid",""),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject dataObj = new JSONObject(response).getJSONObject("data");
+                            String distanceStr = dataObj.getString("search_distance");
+                            String date = dataObj.getString("select_date");
+                            Toast.makeText(getContext(), distanceStr, Toast.LENGTH_SHORT).show();
+                            distance.setText(distanceStr + "km");
+                            seekBar.setProgress(Integer.parseInt(distanceStr));
+                            if (date == "0") {
+                                c1.setChecked(true);
+                                c2.setChecked(false);
+                                c3.setChecked(false);
+
+                            }else if (date == "1") {
+                                c1.setChecked(false);
+                                c2.setChecked(true);
+                                c3.setChecked(false);
+
+                            }else
+                            if (date == "2") {
+                                c1.setChecked(false);
+                                c2.setChecked(false);
+                                c3.setChecked(true);
+
+                            }else
+                            {
+                                c1.setChecked(true);
+                                c2.setChecked(false);
+                                c3.setChecked(false);
+
+                            }
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }});
+
+
+
+
         back = (ImageView) v.findViewById(R.id.button7);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +187,15 @@ public class Mysearch extends android.support.v4.app.Fragment {
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
+
+
+                String seekBarValue = Integer.toString(seekBar.getProgress());
+                //I need user id here to pass in the function
+
+                //This line can get you the userid for Logged in User
+                //String userid = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE).getString("userid","");
+
+                FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
             }
         });
         c1 = (CheckBox) v.findViewById(R.id.checkBox);
@@ -106,6 +209,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                 if (v==c1){
                     c2.setChecked(false);
                     c3.setChecked(false);
+                    dateSelection = "0";
                 }
 
             }
@@ -116,6 +220,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                 if (v==c2){
                     c1.setChecked(false);
                     c3.setChecked(false);
+                    dateSelection = "1";
                 }
 
             }
@@ -126,6 +231,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                 if (v==c3){
                     c2.setChecked(false);
                     c1.setChecked(false);
+                    dateSelection = "3";
                 }
 
             }
@@ -157,6 +263,53 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
         return v;
     }
+
+
+    //Calling API in this fn to save the User Preference
+    public  void FnPostRequest(String distanceStr,String select_date,String user_id){
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        JSONObject jsonObjSend = new JSONObject();
+
+
+        try {
+            // Add key/value pairs
+            jsonObjSend.put("search_distance",distanceStr);
+            jsonObjSend.put("select_date", select_date);
+            jsonObjSend.put("userid", user_id);
+
+            //  hideDialog();
+            Log.i(TAG, jsonObjSend.toString(3));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL_SaveUserPreference, jsonObjSend);
+
+        JSONObject json = null;
+
+        try {
+            json = new JSONObject(String.valueOf(jsonObjRecv));
+            String result = json.getString("message");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject json_LL = null;
+        try {
+            json_LL = json.getJSONObject("message");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
