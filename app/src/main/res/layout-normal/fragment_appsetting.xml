@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#fff"
-        android:weightSum="1">
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/grayback"
             android:layout_marginLeft="10dp"
-            android:id="@+id/imageback" />
+            android:id="@+id/imageback_App_Sett" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,332 +39,332 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="60dp" >
+        android:layout_marginTop="60dp"
+        >
 
 
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
 
-    android:layout_marginRight="15dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginBottom="30dp">
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="30dp">
 
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="55dp"
-        android:background="@drawable/bigbox"
-        android:layout_gravity="center_horizontal|top">
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/bigbox"
+                android:layout_gravity="center_horizontal|top">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show distance in"
-            android:id="@+id/textView11"
-            android:textSize="20dp"
-            android:textColor="#BDBDBD"
-            android:paddingStart="15dp"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true" />
-
-
-
-        <info.hoang8f.android.segmented.SegmentedGroup
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="right|center"
-            android:orientation="horizontal"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true">
-
-            <RadioButton
-                android:id="@+id/miles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Miles"
-                android:layout_weight="1"
-                style="@style/RadioButton" />
-
-            <RadioButton
-                android:id="@+id/km"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Km"
-                android:layout_weight="1"
-                style="@style/RadioButton" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show distance in"
+                    android:id="@+id/textView11"
+                    android:textSize="20dp"
+                    android:textColor="#BDBDBD"
+                    android:paddingStart="15dp"
+                    android:layout_gravity="center"
+                    android:layout_centerVertical="true" />
 
 
-        </info.hoang8f.android.segmented.SegmentedGroup>
 
-    </RelativeLayout>
+                <info.hoang8f.android.segmented.SegmentedGroup
+                    android:id="@+id/distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="right|center"
+                    android:orientation="horizontal"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="216dp"
-        android:orientation="vertical"
-        android:background="@drawable/bigbox"
-        android:id="@+id/frameLayout_notification"
+                    <RadioButton
+                        android:id="@+id/miles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Miles"
+                        android:layout_weight="1"
+                        style="@style/RadioButton" />
 
-        android:layout_gravity="center_horizontal">
+                    <RadioButton
+                        android:id="@+id/km"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Km"
+                        android:layout_weight="1"
+                        style="@style/RadioButton" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Notifications"
-            android:layout_margin="10dp"
-            android:id="@+id/textView8" />
 
+                </info.hoang8f.android.segmented.SegmentedGroup>
 
-        <RelativeLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Message"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/message" />
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="155dp"
-                android:layout_height="33dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:spinnerMode="dropdown" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New activity near by"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/near_by" />
-
-            <com.kyleduo.switchbutton.SwitchButton
-                android:id="@+id/near"
-                style="@style/SwitchButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                app:kswTintColor="#076c3c"
-                app:kswThumbColor="#939393"
-                android:checked="false" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.36">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="Activity reminder"
-                android:id="@+id/reminder"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="17dp">
-                <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="216dp"
+                android:orientation="vertical"
+                android:background="@drawable/bigbox"
+                android:id="@+id/frameLayout_notification"
+
+                android:layout_gravity="center_horizontal">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="Notifications"
+                    android:layout_margin="10dp"
+                    android:id="@+id/textView8" />
+
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Message"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/message" />
+                    <Spinner
+                        android:id="@+id/spinner1"
+                        android:layout_width="155dp"
+                        android:layout_height="33dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:spinnerMode="dropdown" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New activity near by"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/near_by" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/near"
+                        style="@style/SwitchButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        app:kswTintColor="#076c3c"
+                        app:kswThumbColor="#939393" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.36">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Activity reminder"
+                        android:id="@+id/reminder"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical" >
-
-                        <Button
-                            android:id="@+id/incButton"
-                            android:layout_width="15dp"
-                            android:gravity="center"
-                            android:background="@drawable/up_arrow"
-                            android:layout_height="10dp"
-                            android:clickable="true"/>
+                        android:orientation="horizontal"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="17dp">
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:id="@+id/numberEditText"
+                            android:orientation="vertical">
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:layout_marginLeft="10dp"
-                                android:inputType="number"
-                                android:padding="10dp"
-                                android:text="0"
-                                android:textColor="#111" >
-                                <requestFocus />
-                            </TextView>
+                                android:orientation="vertical" >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="h"
-                                android:id="@+id/textView" />
+                                <Button
+                                    android:id="@+id/incButton"
+                                    android:layout_width="15dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/up_arrow"
+                                    android:layout_height="10dp"
+                                    android:clickable="true"/>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/numberEditText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:layout_marginLeft="10dp"
+                                        android:inputType="number"
+                                        android:padding="10dp"
+                                        android:text="0"
+                                        android:textColor="#111" >
+                                        <requestFocus />
+                                    </TextView>
 
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="h"
+                                        android:id="@+id/textView" />
+
+                                </LinearLayout>
+
+
+
+                                <Button
+                                    android:id="@+id/decButton"
+                                    android:layout_width="15dp"
+                                    android:layout_height="10dp"
+                                    android:gravity="center"
+                                    android:background="@drawable/down_arrow"
+                                    android:clickable="true"/>
+                            </LinearLayout>
                         </LinearLayout>
 
-
-
-                        <Button
-                            android:id="@+id/decButton"
-                            android:layout_width="15dp"
-                            android:layout_height="10dp"
-                            android:gravity="center"
-                            android:background="@drawable/down_arrow"
-                            android:clickable="true"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical" >
-
-                        <Button
-                            android:id="@+id/incButton1"
-                            android:layout_width="15dp"
-                            android:background="@drawable/up_arrow"
-                            android:layout_height="10dp"
-                            android:gravity="center"
-                            android:clickable="true"/>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginLeft="18dp">
-                            <TextView
-                                android:id="@+id/numberEditText1"
+                            android:orientation="vertical">
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:inputType="number"
-                                android:padding="10dp"
-                                android:text="0"
-                                android:textColor="#111" >
-                                <requestFocus />
-                            </TextView>
+                                android:orientation="vertical" >
 
-                            <TextView
-                                android:layout_width="35dp"
-                                android:layout_height="wrap_content"
-                                android:text="min"
-                                android:id="@+id/textView1" />
+                                <Button
+                                    android:id="@+id/incButton1"
+                                    android:layout_width="15dp"
+                                    android:background="@drawable/up_arrow"
+                                    android:layout_height="10dp"
+                                    android:gravity="center"
+                                    android:clickable="true"/>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="18dp">
+                                    <TextView
+                                        android:id="@+id/numberEditText1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:padding="10dp"
+                                        android:text="0"
+                                        android:textColor="#111" >
+                                        <requestFocus />
+                                    </TextView>
 
+                                    <TextView
+                                        android:layout_width="35dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="min"
+                                        android:id="@+id/textView1" />
+
+                                </LinearLayout>
+
+
+
+                                <Button
+                                    android:id="@+id/decButton1"
+                                    android:layout_width="15dp"
+                                    android:layout_height="10dp"
+                                    android:clickable="true"
+                                    android:gravity="center"
+                                    android:background="@drawable/down_arrow"
+                                    />
+                            </LinearLayout>
                         </LinearLayout>
-
-
-
-                        <Button
-                            android:id="@+id/decButton1"
-                            android:layout_width="15dp"
-                            android:layout_height="10dp"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:background="@drawable/down_arrow"
-                            />
                     </LinearLayout>
-                </LinearLayout>
+
+                    />
+
+
+
+                </RelativeLayout>
+
+
             </LinearLayout>
 
-            />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="52dp"
+                android:id="@+id/linearlayout_term"
+                android:background="@drawable/bigbox"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terms of service"
+                    android:textSize="18dp"
+                    android:textColor="#C3C3C3"
+                    android:layout_gravity="center"
+                    android:paddingStart="10dp"
+                    android:id="@+id/textView12" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="52dp"
+                android:id="@+id/logout"
+                android:background="@drawable/bigbox"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Log out"
+                    android:textColor="#B6B6B6"
+                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:paddingStart="10dp"
+                    android:id="@+id/textView13" />
+            </LinearLayout>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/report"
 
-    </LinearLayout>
+                android:id="@+id/button11"
+                android:layout_marginTop="20dp" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="52dp"
-        android:id="@+id/linearlayout_term"
-        android:background="@drawable/bigbox"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button12"
+                android:background="@drawable/delete"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Terms of service"
-            android:textSize="18dp"
-            android:textColor="#C3C3C3"
-            android:layout_gravity="center"
-            android:paddingStart="10dp"
-            android:id="@+id/textView12" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="52dp"
-        android:id="@+id/logout"
-        android:background="@drawable/bigbox"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Log out"
-            android:textColor="#B6B6B6"
-            android:textSize="18dp"
-            android:layout_gravity="center"
-            android:paddingStart="10dp"
-            android:id="@+id/textView13" />
-    </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/report"
-
-        android:id="@+id/button11"
-        android:layout_marginTop="20dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button12"
-        android:background="@drawable/delete"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-       />
-
-</LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </FrameLayout>

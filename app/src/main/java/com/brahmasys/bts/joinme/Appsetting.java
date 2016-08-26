@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,6 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.kyleduo.switchbutton.SwitchButton;
 import com.loopj.android.http.AsyncHttpClient;
@@ -53,20 +53,20 @@ public class Appsetting extends Fragment{
     int initialvalues1 = 0;
     private Button incButton,incButton1;
     private Button decButton,decButton1;
-    private TextView editText,editText1;
+    private TextView hours,mins;
 
     Button btnbck,btnreport,btndelt;
     ImageView imageback;
-     private ListView customlistview;
+    private ListView customlistview;
     SegmentedGroup dis;
     RadioButton miles,km;
     Spinner dropdown;
-
     ArrayList customarraylist;
     LinearLayout logout;
     SessionManager session;
     Button yes,no;
     String deviceuid;
+    SwitchButton switchNear;
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
@@ -75,13 +75,16 @@ public class Appsetting extends Fragment{
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
 
     private String [] prgmNameList={"Notification","Message","New activities near by","Activity reminder","New level"};
-//Add a Comment On 22 AUGUSR 2016
+    //Add a Comment On 22 AUGUSR 2016
 //Add a Comment On 22 AUGUSR 2016 2
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public  static  final  String URL_GetUserSettings ="http://52.37.136.238/JoinMe/User.svc/GetUserSettings/";
+    public  static  final  String URL_UpdateSettings ="http://52.37.136.238/JoinMe/User.svc/UpdateSettings";
+
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -97,8 +100,8 @@ public class Appsetting extends Fragment{
 //Added Comment by Rakesh Sharma
     //Added Coment BY Ajay
     //added Comment by Rakesh 22AUGUST 2016
-	//added Comment by Rakesh 22AUGUST 2016
-	//added Comment by Rakesh 22AUGUST 2016
+    //added Comment by Rakesh 22AUGUST 2016
+    //added Comment by Rakesh 22AUGUST 2016
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -137,11 +140,13 @@ public class Appsetting extends Fragment{
 
         incButton = (Button) v.findViewById(R.id.incButton);
         decButton = (Button) v.findViewById(R.id.decButton);
-        editText = (TextView) v.findViewById(R.id.numberEditText);
+        hours = (TextView) v.findViewById(R.id.numberEditText);
         incButton1 = (Button) v.findViewById(R.id.incButton1);
         decButton1 = (Button) v.findViewById(R.id.decButton1);
-        editText1 = (TextView) v.findViewById(R.id.numberEditText1);
-        imageback = (ImageView) v.findViewById(R.id.imageback);
+        mins = (TextView) v.findViewById(R.id.numberEditText1);
+        switchNear = (SwitchButton)v.findViewById(R.id.near);
+
+        imageback = (ImageView) v.findViewById(R.id.imageback_App_Sett);
         imageback.setClickable(true);
 
 
@@ -166,11 +171,12 @@ public class Appsetting extends Fragment{
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), Screen16.class);
+                Intent i = new Intent(getActivity(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-
+                FnSaveUserSettings();
                 getActivity().finish();
+
             }
         });
         incButton.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +186,7 @@ public class Appsetting extends Fragment{
                 if (initialvalues >= min_range && initialvalues <= max_range) initialvalues++;
                 if (initialvalues > max_range)
                     initialvalues = min_range;
-                editText.setText("" + initialvalues);
+                hours.setText("" + initialvalues);
 
             }
         });
@@ -194,7 +200,7 @@ public class Appsetting extends Fragment{
                 if (initialvalues < min_range)
                     initialvalues = max_range;
 
-                editText.setText(initialvalues + "");
+                hours.setText(initialvalues + "");
             }
         });
 
@@ -206,7 +212,7 @@ public class Appsetting extends Fragment{
                 if (initialvalues1 >= min_range1 && initialvalues1 <= max_range1) initialvalues1++;
                 if (initialvalues1 > max_range1)
                     initialvalues1 = min_range1;
-                editText1.setText("" + initialvalues1);
+                mins.setText("" + initialvalues1);
 
             }
         });
@@ -220,7 +226,7 @@ public class Appsetting extends Fragment{
                 if (initialvalues1 < min_range1)
                     initialvalues1 = max_range1;
 
-                editText1.setText(initialvalues1 + "");
+                mins.setText(initialvalues1 + "");
             }
         });
 
@@ -272,7 +278,7 @@ public class Appsetting extends Fragment{
             }
         });
 
-          dropdown = (Spinner) v.findViewById(R.id.spinner1);
+        dropdown = (Spinner) v.findViewById(R.id.spinner1);
         String[] items = new String[]{"All messages", "Only from travelers", "Only from groups"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
@@ -314,7 +320,7 @@ public class Appsetting extends Fragment{
                                     Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
                                     Intent intent=new Intent(getContext(),Splashscreen.class);
                                     startActivity(intent);
-                                   onFinish();
+                                    onFinish();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -326,8 +332,6 @@ public class Appsetting extends Fragment{
         FnPopulateUserSettings(v);
         return v;
     }
-
-
 
     private void logoutUser() {
 
@@ -392,13 +396,11 @@ public class Appsetting extends Fragment{
 
                             if(distance_km =="K"){
                                 dis.check(R.id.km);
-                            }
-                            else if(distance_km=="M")
-                            {
+                            }else{
                                 dis.check(R.id.miles);
                             }
 
-                            
+
                             SwitchButton switchButton = (SwitchButton)v.findViewById(R.id.near);
 
                             if( true == Boolean.valueOf(activity_nearby) ){
@@ -422,6 +424,71 @@ public class Appsetting extends Fragment{
 
                 });
     }
+
+    //Calling API in this fn to save the User Settings
+    //@Added By Ajay
+    private void FnSaveUserSettings(){
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        //Here we are getting values from the UI elements
+
+        Boolean activity_nearby = switchNear.isChecked();
+
+        String activity_reminder_hours = hours.getText().toString();
+        String activity_reminder_mins = mins.getText().toString();
+
+        String distance = "";
+        if(miles.isChecked()){
+            distance ="M";
+        }
+        if(km.isChecked()){
+            distance="K";
+        }
+
+        JSONObject jsonObjSend = new JSONObject();
+        try {
+            String userid = user_id.getString("userid", "");
+
+            // Add key/value pairs
+            jsonObjSend.put("activity_nearby",String.valueOf(activity_nearby));
+            jsonObjSend.put("activity_reminder_hours", activity_reminder_hours);
+            jsonObjSend.put("activity_reminder_mins", activity_reminder_mins);
+            jsonObjSend.put("distance_km", distance);
+            jsonObjSend.put("new_level", true);
+            jsonObjSend.put("notification_by", "");
+            jsonObjSend.put("userid",userid);
+            Log.i("UserSettings_Request", jsonObjSend.toString(3));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL_UpdateSettings, jsonObjSend);
+
+        JSONObject json = null;
+
+        try {
+            json = new JSONObject(String.valueOf(jsonObjRecv));
+            String result = json.getString("message");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject json_LL = null;
+        try {
+            json_LL = json.getJSONObject("message");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     private void replaceFragment(Fragment frg) {
         Fragment reportfragment=new ReportFragment();
