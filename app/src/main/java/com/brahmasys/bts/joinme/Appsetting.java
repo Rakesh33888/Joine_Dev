@@ -1,9 +1,7 @@
 package com.brahmasys.bts.joinme;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,8 +13,6 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,16 +29,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.brahmasys.bts.joinme.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -161,6 +154,8 @@ public class Appsetting extends Fragment{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+
 
 
         deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -300,8 +295,28 @@ public class Appsetting extends Fragment{
         btndelt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i2=new Intent(getContext(),Splashscreen.class);
-                startActivity(i2);
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("user_id",""),
+                        new AsyncHttpResponseHandler() {
+                            // When the response returned by REST has Http response code '200'
+
+                            public void onSuccess(String response) {
+                                // Hide Progress Dialog
+                                //  prgDialog.hide();
+                                try {
+                                    // Extract JSON Object from JSON returned by REST WS
+                                    JSONObject obj = new JSONObject(response);
+                                    String result=obj.getString("message");
+                                    Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(getContext(),Splashscreen.class);
+                                    startActivity(intent);
+                                   onFinish();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }});
             }
         });
         return v;

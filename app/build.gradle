@@ -8,6 +8,7 @@ android {
         applicationId "com.brahmasys.bts.joinme"
         minSdkVersion 17
         targetSdkVersion 23
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
     }
@@ -44,5 +45,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.google.android.gms:play-services-identity:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.android.support:multidex:1.0.0'
     compile files('libs/httpmime-4.0.1.jar')
 }
