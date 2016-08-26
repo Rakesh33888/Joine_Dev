@@ -167,7 +167,7 @@
                     android:layout_marginTop="15dp"
                     android:textColor="#F0DFD6"
                     android:textSize="16dp"
-                    android:id="@+id/textView9"
+                    android:id="@+id/owner_name"
                     android:layout_gravity="left|top" />
 
                 <RatingBar
@@ -216,6 +216,11 @@
                 android:src="@drawable/peoples"
                 android:layout_gravity="left|top" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -223,9 +228,9 @@
                 android:id="@+id/uptopeoples"
                 android:textSize="14dp"
                 android:textColor="#FFFBFB"
-                android:layout_marginTop="15dp"
+
                 android:layout_marginLeft="40dp"
-                android:layout_gravity="left|top" />
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -233,11 +238,10 @@
                 android:text="Currently have 3"
                 android:textColor="#FFFBFB"
                 android:textSize="14dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="12dp"
+                 android:layout_marginLeft="5dp"
                 android:id="@+id/currentpeoples"
-                android:layout_gravity="center_horizontal|top" />
-
+                android:layout_gravity="center_vertical|right" />
+            </LinearLayout>
             <ImageView
                 android:layout_width="21dp"
                 android:layout_height="19dp"
@@ -278,16 +282,7 @@
                 android:textColor="#FFFBFB"
                 android:layout_gravity="left|top" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="United fans are not allowed!"
-                android:textColor="#FFFBFB"
-                android:textSize="14dp"
-                android:layout_marginTop="75dp"
-                android:layout_marginLeft="50dp"
-                android:id="@+id/fanstext"
-                android:layout_gravity="center_horizontal|top" />
+
         </FrameLayout>
 
         <Button
