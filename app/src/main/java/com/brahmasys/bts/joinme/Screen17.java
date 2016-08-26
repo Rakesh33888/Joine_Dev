@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -58,7 +59,7 @@ public class Screen17 extends android.support.v4.app.Fragment  {
         Bundle bundle = this.getArguments();
         String uid = bundle.getString("userid", "0");
         String aid  = bundle.getString("activityid","0");
-        Toast.makeText(getActivity(), uid+"\n"+aid, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), uid+"\n"+aid, Toast.LENGTH_SHORT).show();
 
         edit_activity_id.putString("activity_id", aid);
         edit_activity_id.commit();
@@ -69,7 +70,7 @@ public class Screen17 extends android.support.v4.app.Fragment  {
 
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + "",
+        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/"+uid+"/"+aid+"/"+0+"/"+0,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -92,7 +93,9 @@ public class Screen17 extends android.support.v4.app.Fragment  {
                             /************************* UserDetails start **************************/
                             JSONObject userdetails = null;
                             try {
-                                userdetails = json.getJSONObject("details");
+                                userdetails = json.getJSONObject("act_details");
+
+                                Log.w("ACTIVITY DETAILS",String.valueOf(userdetails));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -112,7 +115,6 @@ public class Screen17 extends android.support.v4.app.Fragment  {
                         }
                     }
                 });
-
 
 
         imageViewbck.setClickable(true);
