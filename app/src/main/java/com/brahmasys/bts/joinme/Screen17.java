@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -39,11 +40,15 @@ public class Screen17 extends android.support.v4.app.Fragment  {
     ImageView imageViewbck;
     CircularImageView createrimage;
     RatingBar myratingBar;
+    Button btnJoineActivity;
     TextView reporttext,updatetext;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
     FragmentManager fragmentManager;
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
+    public static final String URL_AddMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/";
+
+
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     String lat="0",lon="0";
@@ -56,6 +61,7 @@ public class Screen17 extends android.support.v4.app.Fragment  {
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
+        btnJoineActivity= (Button) v.findViewById(R.id.button6);
         reporttext= (TextView) v.findViewById(R.id.reportactitytext);
         updatetext= (TextView) v.findViewById(R.id.updateactivitytext);
         acitvityname = (TextView) v.findViewById(R.id.acitvityname);
@@ -181,6 +187,17 @@ public class Screen17 extends android.support.v4.app.Fragment  {
                 }
             }
         });
+
+        btnJoineActivity.setClickable(true);
+        btnJoineActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FnJoinActivvity();
+                getActivity().finish();}
+        });
+
+
+
         updatetext.setClickable(true);
         updatetext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,6 +255,30 @@ public class Screen17 extends android.support.v4.app.Fragment  {
         transaction.replace(R.id.flContent,reportfrgmnt);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+    private void FnJoinActivvity(){
+        String userid = user_id.getString("userid", "");
+        String act_id = activity_id.getString("activity_id", "");
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(URL_AddMemberToGroup +userid  + "/" + act_id,
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+
+                        fragmentManager=getFragmentManager();
+                        Single_group_Message update_activity =new Single_group_Message();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.flContent,update_activity)
+                                .addToBackStack(null)
+                                .commit();
+
+                    }
+                });
+
+
+
     }
 
     private void replaceFragment(Fragment fr) {
