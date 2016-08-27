@@ -107,16 +107,7 @@ public class MainActivity extends AppCompatActivity  {
         already_member = (TextView) findViewById(R.id.btn3);
         already_member.setClickable(true);
 
-
-
-
-
-
-
     }
-
-
-
 
     @Override
     protected void onResume() {
@@ -127,10 +118,7 @@ public class MainActivity extends AppCompatActivity  {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
 
-
-
         }else{
-
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setMessage("Please enable GPS to use this application..")
@@ -148,9 +136,6 @@ public class MainActivity extends AppCompatActivity  {
 
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
-
-
-
 
         }
 

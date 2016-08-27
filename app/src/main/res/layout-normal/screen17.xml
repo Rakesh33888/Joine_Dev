@@ -137,26 +137,35 @@
             android:background="@drawable/rafting"
             android:layout_marginLeft="10dp"
             android:layout_gravity="left|center_vertical" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Today at 17:00"
-            android:textSize="16dp"
-            android:id="@+id/timetextview"
-            android:textColor="#F0DFD6"
-            android:layout_marginTop="4dp"
-            android:paddingRight="15dp"
-            android:layout_gravity="right|top" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/acitvityname"
             android:layout_marginLeft="75dp"
-            android:textSize="18dp"
             android:layout_marginTop="4dp"
-            android:textColor="#F0DFD6"
-            android:text="Rafting"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/acitvityname"
+                android:layout_gravity="center_vertical"
+                android:textSize="18dp"
+               android:layout_weight="1"
+                android:textColor="#F0DFD6"
+                android:text="Rafting"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today at 17:00"
+                android:textSize="16dp"
+                android:layout_weight="1"
+                android:id="@+id/timetextview"
+                android:textColor="#F0DFD6"
+                android:layout_gravity="center_vertical"
+
+                />
+        </LinearLayout>
+
+
 
         <TextView
             android:layout_width="wrap_content"
