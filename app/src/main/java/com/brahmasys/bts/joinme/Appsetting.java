@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,14 +48,13 @@ public class Appsetting extends Fragment{
     int max_range = 23;
     int min_range = 0;
     int initialvalues = 0;
-
     int max_range1 = 60;
     int min_range1= 0;
     int initialvalues1 = 0;
     private Button incButton,incButton1;
     private Button decButton,decButton1;
     private TextView hours,mins;
-
+    ProgressDialog pd;
     Button btnbck,btnreport,btndelt;
     ImageView imageback;
      private ListView customlistview;
@@ -67,6 +67,7 @@ public class Appsetting extends Fragment{
     Button yes,no;
     String deviceuid;
     SwitchButton switchNear;
+
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
@@ -96,20 +97,7 @@ public class Appsetting extends Fragment{
     public Appsetting() {
         // Required empty public constructor
     }
-// testing git checkin checkout
-//Added Comment by Rakesh Sharma
-    //Added Coment BY Ajay
-    //added Comment by Rakesh 22AUGUST 2016
-	//added Comment by Rakesh 22AUGUST 2016
-	//added Comment by Rakesh 22AUGUST 2016
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Appsetting.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static Appsetting newInstance(String param1, String param2) {
         Appsetting fragment = new Appsetting();
@@ -136,8 +124,9 @@ public class Appsetting extends Fragment{
 
         View v = inflater.inflate(R.layout.fragment_appsetting, container, false);
 
-
-
+        pd = new ProgressDialog(getActivity());
+        pd.setMessage("Updating...");
+        pd.show();
         incButton = (Button) v.findViewById(R.id.incButton);
         decButton = (Button) v.findViewById(R.id.decButton);
         hours = (TextView) v.findViewById(R.id.numberEditText);
@@ -145,6 +134,8 @@ public class Appsetting extends Fragment{
         decButton1 = (Button) v.findViewById(R.id.decButton1);
         mins = (TextView) v.findViewById(R.id.numberEditText1);
         switchNear = (SwitchButton)v.findViewById(R.id.near);
+
+        km = (RadioButton) v.findViewById(R.id.km);
 
         imageback = (ImageView) v.findViewById(R.id.imageback_App_Sett);
         imageback.setClickable(true);
@@ -171,11 +162,13 @@ public class Appsetting extends Fragment{
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pd.show();
+                FnSaveUserSettings();
                 Intent i = new Intent(getActivity(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                FnSaveUserSettings();
                 getActivity().finish();
+                pd.hide();
 
             }
         });
@@ -242,14 +235,6 @@ public class Appsetting extends Fragment{
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
-
-
-
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                 dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -302,35 +287,68 @@ public class Appsetting extends Fragment{
             }
         });
         btndelt= (Button) v.findViewById(R.id.button12);
+
         btndelt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AsyncHttpClient client = new AsyncHttpClient();
-                client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("user_id",""),
-                        new AsyncHttpResponseHandler() {
-                            // When the response returned by REST has Http response code '200'
 
-                            public void onSuccess(String response) {
-                                // Hide Progress Dialog
-                                //  prgDialog.hide();
-                                try {
-                                    // Extract JSON Object from JSON returned by REST WS
-                                    JSONObject obj = new JSONObject(response);
-                                    String result=obj.getString("message");
-                                    Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
-                                    Intent intent=new Intent(getContext(),Splashscreen.class);
-                                    startActivity(intent);
-                                   onFinish();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                dialog.setContentView(R.layout.custom_delete_account);
+                dialog.getWindow().setBackgroundDrawable(
+                        new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                yes = (Button) dialog.findViewById(R.id.yes);
+                no = (Button) dialog.findViewById(R.id.no);
+                yes.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Delete_Account();
+                        dialog.dismiss();
+                    }
+                });
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
 
-                            }});
+
             }
         });
         FnPopulateUserSettings(v);
         return v;
+    }
+    public  void Delete_Account()
+    {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("userid",""),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+                            String result=obj.getString("message");
+                            logoutUser();
+                            Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getActivity(),MainActivity.class);
+                            startActivity(intent);
+                            onFinish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }});
     }
 
     private void logoutUser() {
@@ -379,8 +397,7 @@ public class Appsetting extends Fragment{
                     // When the response returned by REST has Http response code '200'
 
                     public void onSuccess(String jsonResult) {
-                        // Hide Progress Dialog
-                        //  prgDialog.hide();
+
                         try {
                             // Extract JSON Object from JSON returned by REST WS
                             JSONObject dataObj = new JSONObject(jsonResult).getJSONObject("user_setting");
@@ -392,12 +409,11 @@ public class Appsetting extends Fragment{
                             String notification_by = dataObj.getString("notification_by");
                             String userid = dataObj.getString("userid");
 
-                            dis = (SegmentedGroup) v.findViewById(R.id.distance);
 
-                            if(distance_km =="K"){
-                                dis.check(R.id.km);
+                            if(distance_km.equals("K")||distance_km.equals("k")){
+                                km.setChecked(true);
                             }else{
-                                dis.check(R.id.miles);
+                                miles.setChecked(true);
                             }
 
 
@@ -415,7 +431,7 @@ public class Appsetting extends Fragment{
 
                             minutes.setText(activity_reminder_min);
 
-
+                        pd.hide();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -486,6 +502,8 @@ public class Appsetting extends Fragment{
                 e.printStackTrace();
             }
 
+        pd.hide();
+
     }
 
 
@@ -537,7 +555,7 @@ public class Appsetting extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-
+        pd.show();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -545,10 +563,12 @@ public class Appsetting extends Fragment{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    FnSaveUserSettings();
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                     getActivity().finish();
+                    pd.hide();
                     return true;
                 }
                 return false;

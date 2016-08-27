@@ -53,6 +53,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
 
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading...");
+        pd.show();
 
         mDemoSlider = (SliderLayout) v.findViewById(R.id.slider);
 
@@ -105,7 +106,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
                                 about = userdetails.getString("about");
                                 name.setText(firstname + " " + lastname);
                                 description.setText(about);
-                                pd.hide();
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -136,9 +137,10 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
                                                                   }
                                         );
                                 mDemoSlider.addSlider(textSliderView);
+
                             }
 
-
+                            pd.hide();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
