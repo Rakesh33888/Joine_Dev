@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.brahmasys.bts.joinme.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -297,8 +298,8 @@ public class Screen16 extends AppCompatActivity implements
             if (i==allurl.size()-1)
             {
                 //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
-
-                new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
+                Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
+               // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
 
             }
         }

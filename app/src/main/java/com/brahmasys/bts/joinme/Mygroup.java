@@ -1,5 +1,6 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,7 +55,7 @@ public class Mygroup extends Fragment{
     FragmentManager fragmentManager;
     private static final String TAG = "GetMyGroupActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
-
+    ProgressDialog pd;
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
@@ -110,6 +111,11 @@ public class Mygroup extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
      View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
+
+        pd = new ProgressDialog(getActivity());
+        pd.setMessage("loading...");
+        pd.show();
+
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -199,7 +205,7 @@ public class Mygroup extends Fragment{
 
             }
             adapter.notifyDataSetChanged();
-
+            pd.hide();
             //Log.w("details",String.valueOf(userdetails));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -214,7 +220,6 @@ public class Mygroup extends Fragment{
                 fragmentManager=getFragmentManager();
 
                 Screen17 screen17 = new Screen17();
-                Fragment fragment = new Fragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("userid", alluserid.get(position));
                 bundle.putString("activityid",allactivityid.get(position));

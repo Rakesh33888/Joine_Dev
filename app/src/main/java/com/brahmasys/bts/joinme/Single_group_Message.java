@@ -22,6 +22,7 @@ import com.brahmasys.bts.joinme.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -134,8 +135,8 @@ public class Single_group_Message extends Fragment    {
                                     String txtActivityName = json.getString("activity_title");
                                     Integer txtActivityTime = json.getInt("activity_time");
                                     String txtAddress = json.getString("activity_address");
-
-                                    new DownloadImageTask(createrimage).execute(IMAGE_BASE_URL + activutyImage);
+                                    Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).into(createrimage);
+                                  //  new DownloadImageTask(createrimage).execute(IMAGE_BASE_URL + activutyImage);
                                     tvActivityName.setText(txtActivityName);
                                     long timestampString =  Long.parseLong(String.valueOf(txtActivityTime));
                                     String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").

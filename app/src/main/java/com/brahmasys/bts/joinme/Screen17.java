@@ -33,6 +33,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,7 +69,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     RatingBar minimumRating;
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
-    String uid,aid;
+    String uid,aid,owner_id;
 
     @Nullable
     @Override
@@ -95,6 +96,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading...");
+        pd.show();
+
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -195,10 +198,16 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             public void onClick(View v) {
                 fragmentManager = getFragmentManager();
                 Screen13 screen13 = new Screen13();
+                Bundle bundle = new Bundle();
+                bundle.putString("owner_id", owner_id);
+                screen13.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.flContent, screen13)
                         .addToBackStack(null)
                         .commit();
+
+
+
 
             }
         });
@@ -209,7 +218,6 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                     // When the response returned by REST has Http response code '200'
 
                     public void onSuccess(String response) {
-                        pd.show();
                         // Hide Progress Dialog
                         //  prgDialog.hide();
                         try {
@@ -248,6 +256,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 String review = userdetails.getString("activity_review");
                                 String time = userdetails.getString("activity_time");
                                 String joined = userdetails.getString("participant_joined");
+                                       owner_id = userdetails.getString("activity_owner_id");
                                 String activity_id = userdetails.getString("activity_id");
 
                                 acitvityname.setText(activity_name);
@@ -258,7 +267,9 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 costtext.setText("Cost " + cost);
                                 timetext.setText("Takes " + duration + "  hours");
 
-                                new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
+                              //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
+
+                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).into(createrimage);
 
                                 long timestampString = Long.parseLong(time);
                                 String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
