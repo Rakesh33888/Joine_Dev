@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -25,15 +24,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.brahmasys.bts.joinme.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.*;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
@@ -46,7 +44,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +58,7 @@ public class Screen16 extends AppCompatActivity implements
     private ArrayList<Integer> mData;
     private SwipeStack mSwipeStack;
     private SwipeStackAdapter mAdapter;
-    Integer s[]={R.drawable.army1, R.drawable.army2,R.drawable.army3};
+    Integer s[]={R.drawable.army2,R.drawable.army3};
     Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
@@ -69,19 +66,21 @@ public class Screen16 extends AppCompatActivity implements
     ImageView create,like,dislike,btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
     FragmentManager fragmentManager;
+    private static final String TAG1 = "GetUserActivity";
+    private static final String URL1 = "http://52.37.136.238/JoinMe/Activity.svc/GetUserActivity";
 
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
-
-    SharedPreferences user_id,user_Details,user_pic;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
+    private static final String LAT_LNG = "lat_lng";
+    SharedPreferences user_id,user_Details,user_pic,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
     int pic_list_size =0;
-
-
+    String lat,lon;
+    List<String> activity_url;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +97,12 @@ public class Screen16 extends AppCompatActivity implements
         edit_user_detals = user_Details.edit();
         user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
         edit_user_pic = user_pic.edit();
+        lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
+        edit_lat_lng = lat_lng.edit();
+        lat = lat_lng.getString("lat", "0000");
+        lon = lat_lng.getString("lng","0000");
+
+
 
 
 
@@ -195,6 +200,10 @@ public class Screen16 extends AppCompatActivity implements
         super.onResume();
         fillWithTestData();
 
+
+
+
+
     }
 
     private void fillWithTestData() {
@@ -212,13 +221,8 @@ public class Screen16 extends AppCompatActivity implements
         toggle.syncState();
 
 
-
-
-
         like = (ImageView) findViewById(R.id.like);
         dislike = (ImageView) findViewById(R.id.dislike);
-
-
 
         btninfo = (ImageView)findViewById(R.id.infobutton);
         btninfo.setClickable(true);
@@ -278,6 +282,10 @@ public class Screen16 extends AppCompatActivity implements
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
         navtextview.setText(user_Details.getString("firstname","")+"\t"+user_Details.getString("lastname","null"));
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
          pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size","0"));
         List<String> allid = new ArrayList<String>();
         List<String> allurl = new ArrayList<String>();
@@ -319,6 +327,53 @@ public class Screen16 extends AppCompatActivity implements
             }
         });
 
+
+        JSONObject jsonObjSend = new JSONObject();
+        try {
+            // Add key/value pairs
+
+            jsonObjSend.put("lat",lat);
+            jsonObjSend.put("lon",lon);
+            jsonObjSend.put("userid", user_id.getString("userid","00"));
+            //  hideDialog();
+            Log.i(TAG1, jsonObjSend.toString(3));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
+
+
+        JSONObject json = null;
+        try {
+            json = new JSONObject(String.valueOf(jsonObjRecv));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        try {
+
+
+            JSONArray cast = json.getJSONArray("data");
+
+            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+            //List<String> allid = new ArrayList<String>();
+             activity_url = new ArrayList<String>();
+
+            for (int i = 0; i < cast.length(); i++) {
+                JSONObject actor = cast.getJSONObject(i);
+                String id = actor.getString("activity_url");
+             //   String url = actor.getString("url");
+                  activity_url.add(id);
+                 // Toast.makeText(Screen16.this, id, Toast.LENGTH_SHORT).show();
+
+                Log.d("Type", cast.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -431,7 +486,9 @@ public class SwipeStackAdapter extends BaseAdapter {
         textViewCard = (ImageView) convertView.findViewById(R.id.textViewCard);
         // textViewCard.setText(mData.get(position));
         textViewCard.setImageResource(s[position]);
-
+      /*  for(int i=0;i<position;i++) {
+            Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + activity_url.get(i)).into(textViewCard);
+        }*/
         return convertView;
 
 

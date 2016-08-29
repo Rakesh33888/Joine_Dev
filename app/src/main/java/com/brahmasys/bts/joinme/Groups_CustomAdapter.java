@@ -1,5 +1,7 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,93 +10,73 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brahmasys.bts.joinme.R;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 
-class Groups_CustomAdapter extends BaseAdapter {
-   String [] result;
-    String [] message;
-    FragmentManager fragmentManager;
-   Context context;
-    Fragment fragment = null;
-    Class fragmentClass = null;
-   int [] imageId;
+public class Groups_CustomAdapter extends ArrayAdapter<Book> {
 
-   private static LayoutInflater inflater=null;
-   public Groups_CustomAdapter(FragmentActivity mainActivity, String[] prgmNameList, int[] prgmImages,String[] messageList ) {
-       // TODO Auto-generated constructor stub
-       result=prgmNameList;
-       context=mainActivity;
-       message = messageList;
-       imageId=prgmImages;
-       inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public Mygroup activity;
+    ProgressDialog pd;
+    public Groups_CustomAdapter(Activity activity, int resource, List<Book> books) {
+        super(activity, resource, books);
+        activity = activity;
 
-   }
-
-   public int getCount() {
-       // TODO Auto-generated method stub
-       return result.length;
-   }
-
-
-   public Object getItem(int position) {
-       // TODO Auto-generated method stub
-       return position;
-   }
-
-
-   public long getItemId(int position) {
-       // TODO Auto-generated method stub
-       return position;
-   }
+    }
 
 
 
-   public class Holder
-   {
-       TextView tv,message ;
-       ImageView img;
-   }
-   @Override
-   public View getView(final int position, View convertView, ViewGroup parent) {
-       // TODO Auto-generated method stub
-       Holder holder=new Holder();
-       View rowView;
-       rowView = inflater.inflate(R.layout.custom_message, null);
-       holder.tv=(TextView) rowView.findViewById(R.id.textView1);
-       holder.img=(ImageView) rowView.findViewById(R.id.imageView1);
-       holder.message =(TextView) rowView.findViewById(R.id.message);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        pd = new ProgressDialog(getContext());
+        pd.setMessage("loading...");
+        pd.show();
 
+        ViewHolder holder = null;
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        // If holder not exist then locate all view from UI file.
+        if (convertView == null) {
+            // inflate UI from XML file
+            convertView = inflater.inflate(R.layout.custom_message, parent, false);
+            // get all UI view
+            holder = new ViewHolder(convertView);
+            // set tag for holder
+            convertView.setTag(holder);
+        } else {
+            // if holder created, get tag from view
+            holder = (ViewHolder) convertView.getTag();
+        }
 
+        Book book = getItem(position);
 
-       holder.tv.setText(result[position]);
-       holder.img.setImageResource(imageId[position]);
-       holder.message.setText(message[position]);
+        holder.name.setText(book.getName());
+        holder.authorName.setText(book.getAuthorName());
 
-       fragmentClass = Single_group_Message.class;
-       rowView.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               // TODO Auto-generated method stub
-              // Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_LONG).show();
-               //Toast.makeText(context, "Under Process" , Toast.LENGTH_LONG).show();
-                //Intent i = new Intent(context,Single_group_Message.class);
-                //context.startActivity(i);
+        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).into(holder.image);
+        //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
+        pd.hide();
+        return convertView;
+    }
 
-               Single_group_Message fragment2 = new Single_group_Message();
-               FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-               FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-               fragmentTransaction.replace(R.id.flContent, fragment2);
-               fragmentTransaction.commit();
+    private static class ViewHolder {
+        private TextView name;
+        private TextView authorName;
+        private ImageView image;
 
-           }
-       });
-       return rowView;
-   }
-
+        public ViewHolder(View v) {
+            name = (TextView) v.findViewById(R.id.textView1);
+            image = (ImageView) v.findViewById(R.id.imageView1);
+            authorName = (TextView) v.findViewById(R.id.message);
+        }
+    }
 
 }
+
+

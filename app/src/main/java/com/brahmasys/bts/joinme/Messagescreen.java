@@ -1,25 +1,44 @@
 package com.brahmasys.bts.joinme;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.brahmasys.bts.joinme.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Messagescreen extends Fragment{
     ListView groups_listView;
     ImageView back;
+    FragmentManager fragmentManager;
+    public static final String USERID = "userid";
+    SharedPreferences user_id,user_Details,user_pic,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
 
-    public static int [] prgmImages={R.drawable.army3, R.drawable.army2,R.drawable.army1};
-    public static String [] prgmNameList={"Swimmer fish","Lake swimming","River swimming"};
-    public static String [] messageList = {"I don't know how to swim","I am a good swimmer","Hi"};
+    private ArrayList<Book> books;
+    private ArrayAdapter<Book> adapter;
+    Context context;
+    List<String> allid;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -28,7 +47,8 @@ public class Messagescreen extends Fragment{
 
         groups_listView = (ListView) v.findViewById(R.id.listView);
         back = (ImageView) v.findViewById(R.id.back);
-
+        user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
+        edit_userid = user_id.edit();
          back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,13 +59,94 @@ public class Messagescreen extends Fragment{
             }
         });
 
-        groups_listView.setAdapter(new Groups_CustomAdapter(getActivity(), prgmNameList, prgmImages, messageList));
+        context=getActivity();
+         setListViewAdapter();
 
 
 
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserGroups/" + user_id.getString("userid","000"),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+
+
+                            JSONObject json = null;
+                            try {
+                                json = new JSONObject(String.valueOf(obj));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                            JSONArray cast = json.getJSONArray("groups");
+
+
+                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                              allid = new ArrayList<String>();
+                           // List<String> allurl = new ArrayList<String>();
+
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String ac_id = actor.getString("activityid");
+                              //  String url = actor.getString("url");
+                                  allid.add(ac_id);
+                               // allurl.add(url);
+
+                                Book book = new Book();
+                                book.setName(actor.getString("activity_title"));
+                                book.setImageUrl(actor.getString("activity_pic"));
+                                book.setAuthorName(actor.getString("activity_massege"));
+                                books.add(book);
+
+                                Log.d("Type", cast.getString(i));
+                            }
+                            adapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+        groups_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+                fragmentManager = getFragmentManager();
+
+                Single_group_Message single_group_message = new Single_group_Message();
+                Bundle bundle = new Bundle();
+               // bundle.putString("userid", alluserid.get(position));
+                bundle.putString("activityid", allid.get(position));
+                single_group_message.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, single_group_message)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
 
             return v;
     }
+    private void setListViewAdapter() {
+        books = new ArrayList<Book>();
+        adapter = new Groups_CustomAdapter(getActivity(), R.layout.custom_message, books);
+        groups_listView.setAdapter(adapter);
+
+    }
+
 
     @Override
     public void onResume() {

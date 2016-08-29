@@ -216,7 +216,7 @@ public class Mygroup extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-               ;
+
                 fragmentManager=getFragmentManager();
 
                 Screen17 screen17 = new Screen17();

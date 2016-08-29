@@ -25,6 +25,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,9 +46,9 @@ public class Single_group_Message extends Fragment    {
     private static final String IMAGE_BASE_URL = "http://52.37.136.238/JoinMe/";
 
 
-    CircularImageView createrimage;
+    CircularImageView createrimage,owner;
     Button yes,no;
-
+    String act_id;
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     TextView tvActivityName,tvActivityTime,tvActivityAddress,tvHostedByName,tvleave_chat;
@@ -77,7 +78,7 @@ public class Single_group_Message extends Fragment    {
 
         View v = inflater.inflate(R.layout.fragment_single_group__message, container, false);
 
-
+        owner   = (CircularImageView) v.findViewById(R.id.hosted);
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage);
         tvActivityName= (TextView) v.findViewById(R.id.textView25);
         tvActivityTime= (TextView) v.findViewById(R.id.textView26);
@@ -85,7 +86,9 @@ public class Single_group_Message extends Fragment    {
         tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
         tvHostedByName = (TextView) v.findViewById(R.id.name);
 
+        Bundle bundle = this.getArguments();
 
+        act_id  = bundle.getString("activityid","0");
 
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
@@ -133,7 +136,7 @@ public class Single_group_Message extends Fragment    {
         });
 
       //  String userid = user_id.getString("userid", "");
-        String act_id = activity_id.getString("activity_id", "");
+      //  String act_id = activity_id.getString("activity_id", "");
       //  String act_id ="5762432ed72fc30d6853e39b";
         //populate the date from the activity
         AsyncHttpClient client = new AsyncHttpClient();
@@ -170,8 +173,9 @@ public class Single_group_Message extends Fragment    {
                                     String txtActivityName = json.getString("activity_title");
                                     Integer txtActivityTime = json.getInt("activity_time");
                                     String txtAddress = json.getString("activity_address");
+
                                     Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).into(createrimage);
-                                  //  new DownloadImageTask(createrimage).execute(IMAGE_BASE_URL + activutyImage);
+
                                     tvActivityName.setText(txtActivityName);
                                     long timestampString =  Long.parseLong(String.valueOf(txtActivityTime));
                                     String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
@@ -188,6 +192,11 @@ public class Single_group_Message extends Fragment    {
                                         JSONObject row = arrGroup.getJSONObject(i);
                                         if(row.getBoolean("isowner")){
                                             tvHostedByName.setText(row.getString("user_name"));
+                                            Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).into(owner);
+                                        }
+                                        else
+                                        {
+
                                         }
 
                                     }
@@ -211,7 +220,7 @@ public class Single_group_Message extends Fragment    {
     }
     private void FnLeaveChat() {
         String userid = user_id.getString("userid", "");
-        String act_id = activity_id.getString("activity_id", "");
+      //  String act_id = activity_id.getString("activity_id", "");
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(URL_RemoveMemberToGroup + userid + "/" + act_id,
