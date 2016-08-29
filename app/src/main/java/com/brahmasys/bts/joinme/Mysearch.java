@@ -140,26 +140,28 @@ public class Mysearch extends android.support.v4.app.Fragment {
                             JSONObject dataObj = new JSONObject(response).getJSONObject("data");
                             String distanceStr = dataObj.getString("search_distance");
                             String date = dataObj.getString("select_date");
-                            Toast.makeText(getContext(), distanceStr, Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getContext(), distanceStr, Toast.LENGTH_SHORT).show();
                             distance.setText(distanceStr + "km");
                             seekBar.setProgress(Integer.parseInt(distanceStr));
-                            if (date == "0") {
+                            if (date.equals("0")) {
                                 c1.setChecked(true);
                                 c2.setChecked(false);
                                 c3.setChecked(false);
 
-                            }else if (date == "1") {
+                            }
+                            else if (date.equals("1")) {
                                 c1.setChecked(false);
                                 c2.setChecked(true);
                                 c3.setChecked(false);
 
-                            }else
-                            if (date == "2") {
+                            }
+                            else if (date.equals("2")) {
                                 c1.setChecked(false);
                                 c2.setChecked(false);
                                 c3.setChecked(true);
 
-                            }else
+                            }
+                            else
                             {
                                 c1.setChecked(true);
                                 c2.setChecked(false);
@@ -183,19 +185,21 @@ public class Mysearch extends android.support.v4.app.Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String seekBarValue = Integer.toString(seekBar.getProgress());
+                FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
                 Intent i = new Intent(getContext(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
 
 
-                String seekBarValue = Integer.toString(seekBar.getProgress());
+
                 //I need user id here to pass in the function
 
                 //This line can get you the userid for Logged in User
                 //String userid = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE).getString("userid","");
 
-                FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
+
             }
         });
         c1 = (CheckBox) v.findViewById(R.id.checkBox);
@@ -354,6 +358,9 @@ public class Mysearch extends android.support.v4.app.Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+                    String seekBarValue = Integer.toString(seekBar.getProgress());
+                    FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);

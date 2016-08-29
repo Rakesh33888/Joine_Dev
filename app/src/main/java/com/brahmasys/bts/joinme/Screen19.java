@@ -662,7 +662,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
                     if (str_value.equals("Added Successfully")) {
 
 
-
+                    pd.hide();
 
 
                     }
