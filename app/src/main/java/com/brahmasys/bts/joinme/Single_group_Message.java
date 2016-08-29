@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,9 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.devsmart.android.ui.HorizontalListView;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -29,6 +32,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class Single_group_Message extends Fragment    {
@@ -47,6 +52,7 @@ public class Single_group_Message extends Fragment    {
 
 
     CircularImageView createrimage,owner;
+    HorizontalListView participants_list;
     Button yes,no;
     String act_id;
     SharedPreferences user_id,activity_id;
@@ -54,7 +60,9 @@ public class Single_group_Message extends Fragment    {
     TextView tvActivityName,tvActivityTime,tvActivityAddress,tvHostedByName,tvleave_chat;
     private String mParam1;
     private String mParam2;
-
+    private ArrayList<Book> books;
+    private ArrayAdapter<Book> adapter;
+    Context context;
     private OnFragmentInteractionListener mListener;
 
     public Single_group_Message() {
@@ -85,7 +93,7 @@ public class Single_group_Message extends Fragment    {
         tvleave_chat= (TextView) v.findViewById(R.id.leave_chat);
         tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
         tvHostedByName = (TextView) v.findViewById(R.id.name);
-
+        participants_list = (HorizontalListView) v. findViewById(R.id.participants_list);
         Bundle bundle = this.getArguments();
 
         act_id  = bundle.getString("activityid","0");
@@ -134,6 +142,8 @@ public class Single_group_Message extends Fragment    {
 
             }
         });
+        context=getActivity();
+        setListViewAdapter();
 
       //  String userid = user_id.getString("userid", "");
       //  String act_id = activity_id.getString("activity_id", "");
@@ -184,7 +194,7 @@ public class Single_group_Message extends Fragment    {
                                     tvActivityTime.setText(String.valueOf(value));
 
 
-                                    tvActivityAddress.setText(txtActivityName);
+                                    tvActivityAddress.setText(txtAddress);
 
                                     for(int i=0; i<arrGroup.length(); i++) {
 
@@ -196,10 +206,14 @@ public class Single_group_Message extends Fragment    {
                                         }
                                         else
                                         {
+                                            Book book = new Book();
+                                            book.setImageUrl(row.getString("profile_pic"));
+                                            books.add(book);
 
                                         }
 
                                     }
+                                    adapter.notifyDataSetChanged();
 
                                 }
 
@@ -218,6 +232,14 @@ public class Single_group_Message extends Fragment    {
 
         return v;
     }
+
+    private void setListViewAdapter() {
+        books = new ArrayList<Book>();
+        adapter = new custom_listview_participants(getActivity(), R.layout.participants, books);
+        participants_list.setAdapter(adapter);
+
+    }
+
     private void FnLeaveChat() {
         String userid = user_id.getString("userid", "");
       //  String act_id = activity_id.getString("activity_id", "");

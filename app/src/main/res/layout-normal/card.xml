@@ -6,6 +6,7 @@
     <ImageView android:id="@+id/textViewCard"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-         android:gravity="center"/>
+         android:gravity="center"
+        android:background="@drawable/butterfly"/>
 
     </android.support.v7.widget.CardView>

@@ -485,10 +485,10 @@ public class SwipeStackAdapter extends BaseAdapter {
 
         textViewCard = (ImageView) convertView.findViewById(R.id.textViewCard);
         // textViewCard.setText(mData.get(position));
-        textViewCard.setImageResource(s[position]);
-      /*  for(int i=0;i<position;i++) {
+      //  textViewCard.setImageResource(s[position]);
+       for(int i=0;i<position;i++) {
             Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + activity_url.get(i)).into(textViewCard);
-        }*/
+        }
         return convertView;
 
 

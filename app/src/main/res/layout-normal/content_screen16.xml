@@ -20,7 +20,7 @@
             app:stack_rotation="0"
             android:clipChildren="true"
             app:stack_size="4"
-            android:background="@drawable/butterfly"
+
             app:disable_hw_acceleration="false"
             android:layout_gravity="center" />
 
