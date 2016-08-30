@@ -1,5 +1,6 @@
 package com.brahmasys.bts.joinme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -55,10 +57,13 @@ public class Screen16 extends AppCompatActivity implements
         Mygroup.OnFragmentInteractionListener,
         Appsetting.OnFragmentInteractionListener,SwipeStack.SwipeStackListener {
     private static final int PICK_IMAGE_REQUEST = 2;
-    private ArrayList<Integer> mData;
+
     private SwipeStack mSwipeStack;
+    private ArrayList<Book> books;
     private SwipeStackAdapter mAdapter;
-    Integer s[]={R.drawable.army2,R.drawable.army3};
+    private ArrayAdapter<Book> adapter;
+    Context context;
+
     Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
@@ -81,15 +86,16 @@ public class Screen16 extends AppCompatActivity implements
     int pic_list_size =0;
     String lat,lon;
     List<String> activity_url;
+
+    TextView name_activity,time_activity,distance_activity;
+    List<String> activity_name,distance,time,activity_id,userid_other;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen16);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
-        mData = new ArrayList<>();
-        mAdapter = new SwipeStackAdapter(mData);
-        mSwipeStack.setAdapter(mAdapter);
+
 
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -100,11 +106,20 @@ public class Screen16 extends AppCompatActivity implements
         lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
         lat = lat_lng.getString("lat", "0000");
-        lon = lat_lng.getString("lng","0000");
+        lon = lat_lng.getString("lng", "0000");
+        name_activity = (TextView) findViewById(R.id.textView14);
+        time_activity = (TextView) findViewById(R.id.textView15);
+        distance_activity = (TextView) findViewById(R.id.textView16);
 
+        activity_url = new ArrayList<String>();
+        activity_name= new ArrayList<String>();
+        distance= new ArrayList<String>();
+        time= new ArrayList<String>();
+        activity_id= new ArrayList<String>();
+        userid_other= new ArrayList<String>();
 
-
-
+        context=this;
+        setListViewAdapter();
 
 
 
@@ -112,6 +127,7 @@ public class Screen16 extends AppCompatActivity implements
 
 
     }
+
 
     @Override
     protected void onStart() {
@@ -200,16 +216,10 @@ public class Screen16 extends AppCompatActivity implements
         super.onResume();
         fillWithTestData();
 
-
-
-
-
     }
 
     private void fillWithTestData() {
-        for (int x = 0; x < s.length; x++) {
-            mData.add(s[x]);
-        }
+
 
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -223,6 +233,11 @@ public class Screen16 extends AppCompatActivity implements
 
         like = (ImageView) findViewById(R.id.like);
         dislike = (ImageView) findViewById(R.id.dislike);
+
+
+
+
+
 
         btninfo = (ImageView)findViewById(R.id.infobutton);
         btninfo.setClickable(true);
@@ -360,22 +375,63 @@ public class Screen16 extends AppCompatActivity implements
 
             //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
             //List<String> allid = new ArrayList<String>();
-             activity_url = new ArrayList<String>();
+
 
             for (int i = 0; i < cast.length(); i++) {
                 JSONObject actor = cast.getJSONObject(i);
                 String id = actor.getString("activity_url");
-             //   String url = actor.getString("url");
-                  activity_url.add(id);
-                 // Toast.makeText(Screen16.this, id, Toast.LENGTH_SHORT).show();
 
+                activity_name.add(actor.getString("activity_name"));
+                distance.add(actor.getString("activity_distance"));
+                time .add(actor.getString("activity_time"));
+                activity_id.add(actor.getString("activity_id"));
+                userid_other.add(actor.getString("userid"));
+                activity_url.add(id);
+
+                Book book = new Book();
+              // book.setName(actor.getString("activity_name"));
+                book.setImageUrl(actor.getString("activity_url"));
+                // book.setAuthorName(jobj.getString("pet_breed"));
+                books.add(book);
                 Log.d("Type", cast.getString(i));
             }
+
+            adapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        name_activity.setText(activity_name.get(0));
+
+        dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeStack.onViewSwipedToLeft();
+
+                for (int i = 0; i < activity_name.size(); i++) {
+                    if (mSwipeStack.getCurrentPosition() == activity_name.indexOf(i)) {
+                        name_activity.setText(activity_name.get(i));
+
+                    }
+                }
+            }
+        });
+
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeStack.onViewSwipedToRight();
+                Log.w("position", String.valueOf(mSwipeStack.getCurrentPosition()));
+            }
+        });
 
 
+
+
+    }
+    private void setListViewAdapter() {
+        books = new ArrayList<Book>();
+        adapter = new SwipeStackAdapter(this, R.layout.card, books);
+        mSwipeStack.setAdapter(adapter);
 
     }
 
@@ -435,66 +491,27 @@ public class Screen16 extends AppCompatActivity implements
 
 
     @Override
-    public void onViewSwipedToLeft(int position) {
-        Integer swipedElement = mAdapter.getItem(position);
-
-
+    public void onViewSwipedToRight(int position) {
+        Book swipedElement = mAdapter.getItem(position);
+        Toast.makeText(this, getString(R.string.view_swiped_right, swipedElement),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onViewSwipedToRight(int position) {
-        Integer swipedElement = mAdapter.getItem(position);
+    public void onViewSwipedToLeft(int position) {
+        Book swipedElement = mAdapter.getItem(position);
+        Toast.makeText(this, getString(R.string.view_swiped_left, swipedElement),
+                Toast.LENGTH_SHORT).show();
+
+
 
     }
-
-
 
     @Override
     public void onStackEmpty() {
-
-    }
-public class SwipeStackAdapter extends BaseAdapter {
-    ImageView textViewCard ;
-
-    private List<Integer> mData;
-
-    public SwipeStackAdapter(List<Integer> data) {
-        this.mData = data;
+        Toast.makeText(this, R.string.stack_empty, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public int getCount() {
-        return mData.size();
-    }
-
-    @Override
-    public Integer getItem(int position) {
-        return mData.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
-            convertView =getLayoutInflater().inflate(R.layout.card, parent, false);
-
-
-        textViewCard = (ImageView) convertView.findViewById(R.id.textViewCard);
-        // textViewCard.setText(mData.get(position));
-      //  textViewCard.setImageResource(s[position]);
-       for(int i=0;i<position;i++) {
-            Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + activity_url.get(i)).into(textViewCard);
-        }
-        return convertView;
-
-
-
-}
-}
 
     public void openGallery(int req_code){
 

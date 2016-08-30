@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity  {
 
     int refresh=0;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         facebook = (Button) findViewById(R.id.facebook);
@@ -184,7 +184,10 @@ public class MainActivity extends AppCompatActivity  {
                         public void onClick(View v) {
                             if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
 
-
+                                if (android.os.Build.VERSION.SDK_INT > 9) {
+                                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                                    StrictMode.setThreadPolicy(policy);
+                                }
                                 JSONObject jsonObjSend = new JSONObject();
                                 try {
                                     // Add key/value pairs
