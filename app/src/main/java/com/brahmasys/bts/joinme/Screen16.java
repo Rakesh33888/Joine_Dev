@@ -241,19 +241,7 @@ public class Screen16 extends AppCompatActivity implements
 
         btninfo = (ImageView)findViewById(R.id.infobutton);
         btninfo.setClickable(true);
-        btninfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager = getSupportFragmentManager();
-                Screen17 screen17 = new Screen17();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, screen17)
-                        .addToBackStack(null)
-                        .commit();
 
-
-            }
-        });
 
         logo = (ImageView) findViewById(R.id.logo);
         create= (ImageView)findViewById(R.id.createnewactivity);
@@ -421,12 +409,48 @@ public class Screen16 extends AppCompatActivity implements
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSwipeStack.onViewSwipedToRight();
+               // mSwipeStack.onViewSwipedToRight();
                 Log.w("position", String.valueOf(mSwipeStack.getCurrentPosition()));
+
+
+
+                Member_add_to_Group();
+
             }
         });
 
+        btninfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
+
+                    Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                   // Toast.makeText(Screen16.this, userid_other.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
+
+                    fragmentManager = getSupportFragmentManager();
+                    Other_User_Details other_user = new Other_User_Details();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()));
+                    bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
+                    other_user.setArguments(bundle);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.flContent, other_user)
+                            .addToBackStack(null)
+                            .commit();
+
+                }
+
+
+
+
+
+            }
+        });
 
 
     }
@@ -497,6 +521,7 @@ public class Screen16 extends AppCompatActivity implements
         Book swipedElement = mAdapter.getItem(position);
         Toast.makeText(this, getString(R.string.view_swiped_right, swipedElement),
                 Toast.LENGTH_SHORT).show();
+        Member_add_to_Group();
     }
 
     @Override
@@ -524,6 +549,60 @@ public class Screen16 extends AppCompatActivity implements
     }
 
 
+    public  void Member_add_to_Group()
+    {
+
+        if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
+
+            Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
+
+        }
+        else {
+         //   Toast.makeText(Screen16.this, activity_id.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
+
+
+           AsyncHttpClient client = new AsyncHttpClient();
+                client.get("http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/" + user_id.getString("userid","000") + "/" + activity_id.get(mSwipeStack.getCurrentPosition()),
+                        new AsyncHttpResponseHandler() {
+                            // When the response returned by REST has Http response code '200'
+
+                            public void onSuccess(String response) {
+
+                                try {
+                                    // Extract JSON Object from JSON returned by REST WS
+                                    JSONObject obj = new JSONObject(response);
+
+                                    String result = obj.getString("message");
+
+                                    if (result.equals("Updated Successfully")) {
+
+                                        fragmentManager = getSupportFragmentManager();
+                                        Single_group_Message update_activity = new Single_group_Message();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("activityid",activity_id.get(mSwipeStack.getCurrentPosition()));
+                                        update_activity.setArguments(bundle);
+                                        fragmentManager.beginTransaction()
+                                                .replace(R.id.flContent, update_activity)
+                                                .addToBackStack(null)
+                                                .commit();
+
+                                    } else {
+
+                                        Toast.makeText(Screen16.this, "String was not recognized as a valid DateTime.", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+                        });
+        }
+
+
+
+    }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {

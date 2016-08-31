@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="44dp"
         android:background="@drawable/memberbg"
@@ -38,27 +38,32 @@
         android:id="@+id/frameLayout"
         android:layout_alignParentEnd="true">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already a Member"
-            android:textColor="#f1e4e4e4"
-            android:textSize="17sp"
-            android:background="@null"
-            android:textAllCaps="false"
-            android:id="@+id/btn3"
-            android:layout_gravity="center" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewarrow"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="90dp"
+            android:layout_marginRight="80dp"
             android:src="@drawable/arrowright"
-            android:layout_gravity="right|center_vertical" />
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/show" />
 
-    </FrameLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already a Member"
+            android:id="@+id/show"
+            android:background="@null"
+            android:textColor="#f1e4e4e4"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/btn3" />
+
+
+    </RelativeLayout>
 
     <Button
         style="?android:attr/buttonStyleSmall"
