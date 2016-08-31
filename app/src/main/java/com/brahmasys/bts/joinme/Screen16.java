@@ -389,9 +389,16 @@ public class Screen16 extends AppCompatActivity implements
                 activity_url.add(id);
 
                 Book book = new Book();
-              // book.setName(actor.getString("activity_name"));
+                book.setName(actor.getString("activity_name"));
                 book.setImageUrl(actor.getString("activity_url"));
-                // book.setAuthorName(jobj.getString("pet_breed"));
+                book.setAuthorName(actor.getString("activity_distance"));
+
+                long timestampString = Long.parseLong(actor.getString("activity_time"));
+                String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
+                        format(new java.util.Date(timestampString * 1000));
+
+                book.setTime(value);
+
                 books.add(book);
                 Log.d("Type", cast.getString(i));
             }
@@ -400,19 +407,14 @@ public class Screen16 extends AppCompatActivity implements
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        name_activity.setText(activity_name.get(0));
+
 
         dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mSwipeStack.onViewSwipedToLeft();
 
-                for (int i = 0; i < activity_name.size(); i++) {
-                    if (mSwipeStack.getCurrentPosition() == activity_name.indexOf(i)) {
-                        name_activity.setText(activity_name.get(i));
 
-                    }
-                }
             }
         });
 

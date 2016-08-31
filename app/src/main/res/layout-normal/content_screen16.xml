@@ -16,9 +16,9 @@
         <link.fls.swipestack.SwipeStack
             android:id="@+id/swipeStack"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="300dp"
             app:stack_rotation="0"
-
+            app:stack_spacing="0dp"
             android:clipChildren="false"
             app:disable_hw_acceleration="false"
             android:layout_gravity="center" />
@@ -27,16 +27,16 @@
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/smallbox1"
+
         android:layout_below="@+id/swipeStack"
         android:id="@+id/frameLayout2"
         android:layout_alignEnd="@+id/swipeStack"
         android:layout_alignStart="@+id/swipeStack">
 
 
-        <ImageView
+       <!-- <ImageView
             android:layout_width="67dp"
             android:layout_height="36dp"
             android:id="@+id/imageView4"
@@ -77,7 +77,7 @@
             android:paddingTop="7dp"
             android:textColor="#fff"
             android:id="@+id/textView16"
-            android:layout_gravity="right|center_vertical" />
+            android:layout_gravity="right|center_vertical" /> -->
 
     </FrameLayout>
 

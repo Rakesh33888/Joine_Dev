@@ -8,6 +8,7 @@ public class Book {
     private String name;
     private String imageUrl;
     private String authorName;
+    private String time;
 
     public String getName() {
         return name;
@@ -26,6 +27,14 @@ public class Book {
     }
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
+    }
+    public   String getTime()
+    {
+        return time;
+    }
+    public  void setTime(String time)
+    {
+        this.time = time;
     }
 
 }
