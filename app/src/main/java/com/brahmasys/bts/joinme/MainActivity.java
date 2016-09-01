@@ -3,9 +3,11 @@ package com.brahmasys.bts.joinme;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,15 +29,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.brahmasys.bts.joinme.R;
+
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -47,7 +46,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends Activity  {
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     Button facebook, mail,b4,b5;
     Button already_member,show;
     SessionManager session;
@@ -57,16 +57,18 @@ public class MainActivity extends AppCompatActivity  {
 
     private static final String TAG1 = "Login";
     private static final String URL1 = "http://52.37.136.238/JoinMe/User.svc/Login";
-
+   public  static final String TOKEN_ID = "token";
 
     String deviceuid,device_type="android";
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
     private static final String LAT_LNG = "lat_lng";
-    SharedPreferences user_id,user_Details,user_pic,lat_lng;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
-    String userid,social_id=" ",login_type="regular";
+    public  static final String PROFILE_PIC = "profile_pic";
+
+    SharedPreferences user_id,user_Details,user_pic,lat_lng,token_id,profile_pic;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng,edit_token_id,edit_profile_pic;
+    String userid,social_id=" ",login_type="regular",device_token;
     Double latitude=0.0,longitude=0.0;
 
 
@@ -86,6 +88,11 @@ public class MainActivity extends AppCompatActivity  {
         edit_user_pic = user_pic.edit();
         lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
+        token_id = getSharedPreferences(TOKEN_ID, MODE_PRIVATE);
+        edit_token_id = token_id.edit();
+        profile_pic = getSharedPreferences(PROFILE_PIC, MODE_PRIVATE);
+        edit_profile_pic = profile_pic.edit();
+
         already_member = (Button) findViewById(R.id.show);
 
 
@@ -112,6 +119,48 @@ public class MainActivity extends AppCompatActivity  {
         {
             requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, PERMISSION_REQUEST_CODE_LOCATION, getApplicationContext(), MainActivity.this);
         }
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //Check type of intent filter
+                if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCCESS)){
+                    //Registration success
+                    String token = intent.getStringExtra("token");
+
+                    edit_token_id.putString("token",token);
+                    edit_token_id.commit();
+                    //Toast.makeText(getApplicationContext(), "GCM Token:" + token, Toast.LENGTH_LONG).show();
+
+                   // token1.setText(token);
+                } else if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)){
+                    //Registration error
+                    Toast.makeText(getApplicationContext(), "GCM registration error!!!", Toast.LENGTH_LONG).show();
+                } else {
+                    //Tobe define
+                }
+            }
+        };
+
+        //Check status of Google play service in device
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+        if(ConnectionResult.SUCCESS != resultCode) {
+            //Check type of error
+            if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
+                //So notification
+                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
+            } else {
+                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            //Start service
+            Intent itent = new Intent(this, GCMRegistrationIntentService.class);
+            startService(itent);
+        }
+
+
     }
 
     public void requestPermission(String strPermission, int perCode, Context _c, Activity _a){
@@ -163,8 +212,15 @@ public class MainActivity extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
 
+
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+      //  Toast.makeText(MainActivity.this, token_id.getString("token","null"), Toast.LENGTH_SHORT).show();
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
 
@@ -246,7 +302,7 @@ public class MainActivity extends AppCompatActivity  {
                             JSONObject jsonObjSend = new JSONObject();
                             try {
                                 // Add key/value pairs
-                                jsonObjSend.put("device_token", "");
+                                jsonObjSend.put("device_token",token_id.getString("token","null"));
                                 jsonObjSend.put("device_type", device_type);
                                 jsonObjSend.put("deviceid", deviceuid);
                                 jsonObjSend.put("login_type", login_type);
@@ -291,6 +347,10 @@ public class MainActivity extends AppCompatActivity  {
 
                                 String verify = response.getString("isverified");
                                 String str_value = json_LL.getString("message");
+                                String profile_pic = response.getString("profile_pic");
+
+                                edit_profile_pic.putString("profile_pic",profile_pic);
+                                edit_profile_pic.commit();
                                 userid = json_LL.getString("userid");
 
 
@@ -462,7 +522,7 @@ public class MainActivity extends AppCompatActivity  {
                                                                 JSONObject jsonObjSend = new JSONObject();
                                                                 try {
                                                                     // Add key/value pairs
-                                                                    jsonObjSend.put("device_token", "");
+                                                                    jsonObjSend.put("device_token", token_id.getString("token","null"));
                                                                     jsonObjSend.put("device_type", device_type);
                                                                     jsonObjSend.put("deviceid", deviceuid);
                                                                     jsonObjSend.put("email", email.getText().toString());
@@ -573,7 +633,12 @@ public class MainActivity extends AppCompatActivity  {
         });
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.w("MainActivity", "onPause");
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+    }
 
 
     @Override

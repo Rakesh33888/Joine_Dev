@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "255912131870",
+    "project_id": "firebase-joinme"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255912131870:android:b7b6cc84a9566826",
+        "android_client_info": {
+          "package_name": "com.brahmasys.bts.joinme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhpG4X38bellA0wjP5oyNKp8Lu58D2dPs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

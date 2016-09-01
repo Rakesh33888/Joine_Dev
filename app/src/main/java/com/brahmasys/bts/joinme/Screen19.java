@@ -21,6 +21,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -70,6 +71,7 @@ import java.util.TimeZone;
 public class Screen19 extends android.support.v4.app.Fragment {
     private static final int PICK_IMAGE_REQUEST = 3;
     private static final int RESULT_OK = 3;
+    FragmentManager fragmentManager;
     private static int RESULT_LOAD_IMAGE = 1;
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
@@ -661,8 +663,15 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
                     if (str_value.equals("Added Successfully")) {
 
+                        fragmentManager=getFragmentManager();
 
-                    pd.hide();
+                        Mygroup mygroup = new Mygroup();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.flContent, mygroup)
+                                .addToBackStack(null)
+                                .commit();
+                        Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+                         pd.hide();
 
 
                     }
