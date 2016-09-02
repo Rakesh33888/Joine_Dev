@@ -45,7 +45,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     CircularImageView createrimage;
     ProgressDialog pd;
     RatingBar myratingBar;
-    Button btnJoineActivity;
+    //Button btnJoineActivity;
     TextView reporttext,updatetext;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
     FragmentManager fragmentManager;
@@ -70,7 +70,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
-        btnJoineActivity= (Button) v.findViewById(R.id.button6);
+       // btnJoineActivity= (Button) v.findViewById(R.id.button6);
         reporttext= (TextView) v.findViewById(R.id.reportactitytext);
         updatetext= (TextView) v.findViewById(R.id.updateactivitytext);
         acitvityname = (TextView) v.findViewById(R.id.acitvityname);
@@ -143,14 +143,14 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             }
         });
 
-        btnJoineActivity.setClickable(true);
-        btnJoineActivity.setOnClickListener(new View.OnClickListener() {
+      //  btnJoineActivity.setClickable(true);
+       /* btnJoineActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FnJoinActivvity();
                 getActivity().finish();}
         });
-
+*/
 
 
         updatetext.setClickable(true);

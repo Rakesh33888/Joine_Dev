@@ -124,7 +124,7 @@
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:id="@+id/frameLayoutactity"
         android:background="@drawable/smallbox1"
         android:layout_gravity="center_horizontal"
@@ -135,8 +135,8 @@
         android:layout_marginTop="20dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:id="@+id/imageViewrfting"
             android:foregroundGravity="center|left"
 
@@ -149,7 +149,7 @@
             android:text="Today at 17:00"
             android:textSize="20dp"
             android:id="@+id/timetextview"
-            android:textColor="#F0DFD6"
+            android:textColor="#FFFBFB"
             android:layout_marginTop="4dp"
             android:paddingRight="15dp"
             android:layout_gravity="right|top" />
@@ -157,10 +157,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/acitvityname"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="90dp"
             android:textSize="25dp"
             android:layout_marginTop="4dp"
-            android:textColor="#F0DFD6"
+            android:textColor="#FFFBFB"
             android:text="Rafting"/>
 
         <TextView
@@ -169,8 +169,8 @@
             android:id="@+id/distancefromnearby"
             android:layout_marginTop="30dp"
             android:textSize="20dp"
-            android:textColor="#F0DFD6"
-            android:layout_marginLeft="75dp"
+            android:textColor="#FFFBFB"
+            android:layout_marginLeft="90dp"
             android:text="1 Km away at River Mersey,England"
             android:layout_gravity="left" />
 
@@ -201,7 +201,7 @@
                     android:text="Created by Ajay"
                     android:layout_marginLeft="130dp"
                     android:layout_marginTop="15dp"
-                    android:textColor="#F0DFD6"
+                    android:textColor="#FFFBFB"
                     android:textSize="20dp"
                     android:id="@+id/textView9"
                     android:layout_gravity="left|top" />
@@ -328,7 +328,7 @@
                 android:layout_gravity="center_horizontal|top" />
         </FrameLayout>
 
-        <Button
+     <!--   <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/joinactivity"
@@ -336,7 +336,7 @@
             android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
             android:layout_below="@+id/listactivityframe"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true" /> -->
    </LinearLayout>
     </RelativeLayout>
 

@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,16 +37,19 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     String firstname="join",lastname="me",about="null",owner_id;
-    TextView report_text,name,age,description;
+    TextView report_text,name,age,description,owner_name;
     ProgressDialog pd;
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
+    FragmentManager fragmentManager;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.activity_screen13,container,false);
         report_text = (TextView) v.findViewById(R.id.report_text);
+        age = (TextView) v.findViewById(R.id.textView22);
+        owner_name = (TextView) v.findViewById(R.id.owner_name);
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
@@ -72,6 +76,17 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         name  = (TextView) v.findViewById(R.id.textView19);
         description = (TextView) v.findViewById(R.id.textView18);
 
+        report_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager=getFragmentManager();
+                ReportFragment report =new ReportFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent,report)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + owner_id,
                 new AsyncHttpResponseHandler() {
@@ -104,8 +119,10 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
                                 firstname = userdetails.getString("fname");
                                 lastname = userdetails.getString("lname");
                                 about = userdetails.getString("about");
+                                age.setText(userdetails.getString("age"));
                                 name.setText(firstname + " " + lastname);
                                 description.setText(about);
+                                owner_name.setText("Hello"+" "+userdetails.getString("fname")+"!");
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

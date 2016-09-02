@@ -21,7 +21,7 @@ import java.util.List;
 public class SwipeStackAdapter extends ArrayAdapter<Book> {
 
   public MainActivity activity;
- ProgressDialog pd;
+
     public SwipeStackAdapter(Activity activity, int resource, List<Book> books) {
         super(activity, resource, books);
          activity = activity;

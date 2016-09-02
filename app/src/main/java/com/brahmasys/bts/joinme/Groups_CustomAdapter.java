@@ -1,21 +1,13 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.brahmasys.bts.joinme.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,7 +16,7 @@ import java.util.List;
 public class Groups_CustomAdapter extends ArrayAdapter<Book> {
 
     public Mygroup activity;
-    ProgressDialog pd;
+
     public Groups_CustomAdapter(Activity activity, int resource, List<Book> books) {
         super(activity, resource, books);
         activity = activity;

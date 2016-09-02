@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView2"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -71,7 +77,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_height="90dp"
             android:orientation="horizontal">
 
             <TextView
@@ -80,7 +86,6 @@
                 android:text="Luis"
                 android:layout_marginLeft="10dp"
                 android:textColor="#ffffff"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_gravity="center"
                 android:id="@+id/textView19" />
 
@@ -88,7 +93,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=","
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#ffffff"
                 android:layout_gravity="center"
                 android:id="@+id/textView20" />
@@ -98,7 +102,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
                 android:layout_gravity="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="28"
                 android:id="@+id/textView22" />
             <LinearLayout
@@ -110,15 +113,14 @@
 
                 <ImageView
                     android:layout_width="40dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:id="@+id/imageView"
                     android:background="@drawable/peoples"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="2"
+                    android:text="0"
                     android:textColor="#ffffff"
                     android:layout_gravity="center"
                     android:id="@+id/textView23" />
@@ -129,28 +131,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp">
-                <com.github.siyamed.shapeimageview.CircularImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/imageViewab"
-                    android:visibility="visible"
-                    android:layout_gravity="center"
-                    android:background="@drawable/roundbg"
-                    android:layout_above="@+id/textView3"
-
-                    />
-                <com.github.siyamed.shapeimageview.CircularImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/imageViewab1"
-                    android:visibility="visible"
-                    android:layout_gravity="center"
-                    android:background="@drawable/roundbg"
-                    android:layout_above="@+id/textView3"
-
-
-                   />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp">
+                <com.devsmart.android.ui.HorizontalListView
+                    android:id="@+id/participants_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:layout_gravity="center_vertical|bottom"
+                    android:layout_marginLeft="5dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -161,10 +149,10 @@
         android:layout_width="161dp"
         android:layout_height="50dp"
         android:text="Traveling through Europe La vida es bonita!!"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="13dp"
         android:textColor="#ffffff"
         android:id="@+id/textView18"
-        android:alpha="0.6"/>
+        android:alpha="0.8"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -176,15 +164,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hello Luis!"
+            android:id="@+id/owner_name"
             android:layout_margin="10dp"
             android:textColor="#ffffff"
             />
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
             android:id="@+id/editText9"
 
-            android:gravity="center"
             android:textColorHint="#ffffff"
             android:background="@null"/>
     </LinearLayout>
@@ -196,6 +184,8 @@
         android:id="@+id/button"
         android:layout_gravity="center_horizontal" />
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -204,3 +194,4 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp" />
 </LinearLayout>
+</ScrollView>

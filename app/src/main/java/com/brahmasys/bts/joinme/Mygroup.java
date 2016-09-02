@@ -1,6 +1,5 @@
 package com.brahmasys.bts.joinme;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,26 +16,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.brahmasys.bts.joinme.R;
-import com.devsmart.android.ui.HorizontalListView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -55,7 +41,7 @@ public class Mygroup extends Fragment{
     FragmentManager fragmentManager;
     private static final String TAG = "GetMyGroupActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
-    ProgressDialog pd;
+
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;

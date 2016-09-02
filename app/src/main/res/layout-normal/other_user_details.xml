@@ -111,7 +111,7 @@
 
                 <FrameLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="90dp"
                     android:id="@+id/frameLayoutactity"
                     android:background="@drawable/smallbox1"
                     android:layout_gravity="center_horizontal"
@@ -122,8 +122,8 @@
                     android:layout_alignStart="@+id/frameLayout5">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:id="@+id/imageViewrfting"
                         android:foregroundGravity="center|left"
 
@@ -132,7 +132,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="75dp"
+                        android:layout_marginLeft="80dp"
                         android:layout_marginTop="4dp"
                         android:orientation="horizontal">
                         <TextView
@@ -142,7 +142,7 @@
                             android:layout_gravity="center_vertical"
                             android:textSize="18dp"
                             android:layout_weight="1"
-                            android:textColor="#F0DFD6"
+                            android:textColor="#FFFBFB"
                             android:text="Rafting"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
                             android:textSize="16dp"
                             android:layout_weight="1"
                             android:id="@+id/timetextview"
-                            android:textColor="#F0DFD6"
+                            android:textColor="#FFFBFB"
                             android:layout_gravity="center_vertical"
 
                             />
@@ -163,10 +163,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/distancefromnearby"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="40dp"
                         android:textSize="12dp"
-                        android:textColor="#F0DFD6"
-                        android:layout_marginLeft="75dp"
+                        android:textColor="#FFFBFB"
+                        android:layout_marginLeft="80dp"
                         android:text="1 Km away at River Mersey,England"
                         android:layout_gravity="left" />
 
@@ -197,7 +197,7 @@
                         android:text="Created by Ajay"
                         android:layout_marginLeft="79dp"
                         android:layout_marginTop="15dp"
-                        android:textColor="#F0DFD6"
+                        android:textColor="#FFFBFB"
                         android:textSize="16dp"
                         android:id="@+id/owner_name"
                         android:layout_gravity="left|top" />

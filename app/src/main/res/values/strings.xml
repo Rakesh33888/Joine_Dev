@@ -22,6 +22,7 @@
     <string name="stack_empty">Card stack empty!</string>
     <string name="github">View on GitHub</string>
     <string-array name="month_names">
+        <item>" "</item>
         <item>Jan</item>
         <item>Feb</item>
         <item>Mar</item>

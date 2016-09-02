@@ -22,6 +22,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -111,7 +112,8 @@ public class Update_Activity extends android.support.v4.app.Fragment {
     private ArrayAdapter<Book> adapter;
     Context context;
     List<String> allurl;
-
+    FragmentManager fragmentManager;
+    String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -425,36 +427,222 @@ public class Update_Activity extends android.support.v4.app.Fragment {
             }
         });
 
+
+        /**************** Data & Time Validation **********************/
+        Calendar c11 = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c11.getTime());
+
+        final int current_year = Integer.parseInt(formattedDate.substring(0, 4));
+        final int current_month = Integer.parseInt(formattedDate.substring(5, 7));
+        final int current_day = Integer.parseInt(formattedDate.substring(8, 10));
+        final int current_hour = Integer.parseInt(formattedDate.substring(11, 13));
+
+
         /*************************** Spinner Functionality Start ***********************/
-        List day_list = new ArrayList<Integer>();
-        for (int i = 1; i <= 31; i++)
-        {
-            day_list.add(Integer.toString(i));
-        }
-        ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
-        spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-        spinnerforday.setAdapter(spinnerArrayAdapter);
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.month_names));
-        spinnerformonth.setAdapter(adapter1);
-
         List year_list = new ArrayList<Integer>();
+        year_list.add(0, " ");
         for (int i = 2015; i <= 2020; i++)
         {
-            year_list.add(Integer.toString(i));
+            if (current_year<=i) {
+                year_list.add(Integer.toString(i));
+            }
         }
         ArrayAdapter<Integer> spinnerArrayAdapter1 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, year_list);
         spinnerArrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerforyear.setAdapter(spinnerArrayAdapter1);
 
-        List hours = new ArrayList<Integer>();
-        for (int i = 0; i <= 23; i++)
-        {
-            hours.add(Integer.toString(i));
-        }
-        ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
-        spinnerArrayAdapter4.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-        spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+        spinnerforyear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
+                                       long arg3) {
+                // TODO Auto-generated method stub
+                String sp1 = String.valueOf(spinnerforyear.getSelectedItem());
+                if (sp1.equals(String.valueOf(current_year))) {
+                    List<String> wordList = new ArrayList<String>();
+                    wordList.add(0, " ");
+                    for (int i = 0; i < 12; i++) {
+
+                        if (current_month - 1 <= i) {
+                            wordList.add(months[i]);
+                        }
+                    }
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, wordList);
+                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    adapter1.notifyDataSetChanged();
+                    spinnerformonth.setAdapter(adapter1);
+
+                } else {
+                    List<String> wordList = new ArrayList<String>();
+                    wordList.add(0, " ");
+                    for (int i = 0; i < 12; i++) {
+                        wordList.add(months[i]);
+                    }
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, wordList);
+                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    adapter1.notifyDataSetChanged();
+                    spinnerformonth.setAdapter(adapter1);
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                List<String> wordList = new ArrayList<String>();
+                wordList.add(0, " ");
+                // TODO Auto-generated method stub
+                wordList.add("");
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, wordList);
+                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                adapter1.notifyDataSetChanged();
+                spinnerformonth.setAdapter(adapter1);
+
+            }
+        });
+
+
+
+
+
+
+        spinnerformonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
+                                       long arg3) {
+                // TODO Auto-generated method stub
+                String sp1 = String.valueOf(spinnerformonth.getSelectedItem());
+                int month_position=0;
+                if (sp1.equals("Jan")) {
+                    month_position = 01;
+                } else if (sp1.equals("Feb")) {
+                    month_position = 02;
+                } else if (sp1.equals("Mar")) {
+                    month_position = 03;
+                } else if (sp1.equals("Apr")) {
+                    month_position = 04;
+                } else if (sp1.equals("May")) {
+                    month_position = 05;
+                } else if (sp1.equals("Jun")) {
+                    month_position = 06;
+                } else if (sp1.equals("Jul")) {
+                    month_position = 07;
+                } else if (sp1.equals("Aug")) {
+                    month_position = 8;
+                } else if (sp1.equals("Sept")) {
+                    month_position = 9;
+                } else if (sp1.equals("Oct")) {
+                    month_position = 10;
+                } else if (sp1.equals("Nov")) {
+                    month_position = 11;
+                } else if (sp1.equals("Dec")) {
+                    month_position = 12;
+                }
+
+
+
+                if (month_position==current_month) {
+                    List day_list = new ArrayList<Integer>();
+                    day_list.add(0, " ");
+                    for (int i = 1; i < 31; i++) {
+
+                        if (current_day <= i) {
+                            day_list.add(Integer.toString(i));
+                        }
+                    }
+                    ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
+                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerArrayAdapter.notifyDataSetChanged();
+                    spinnerforday.setAdapter(spinnerArrayAdapter);
+
+                } else {
+                    List day_list = new ArrayList<Integer>();
+                    day_list.add(0, " ");
+                    for (int i = 1; i < 31; i++) {
+                        day_list.add(Integer.toString(i));
+                    }
+                    ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
+                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerArrayAdapter.notifyDataSetChanged();
+                    spinnerforday.setAdapter(spinnerArrayAdapter);
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                List day_list = new ArrayList<Integer>();
+                day_list.add(0, " ");
+                // TODO Auto-generated method stub
+                ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
+                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerArrayAdapter.notifyDataSetChanged();
+                spinnerforday.setAdapter(spinnerArrayAdapter);
+
+
+            }
+        });
+
+
+
+
+        spinnerforday.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
+                                       long arg3) {
+                // TODO Auto-generated method stub
+                String day_position = String.valueOf(spinnerforday.getSelectedItem());
+
+                if (day_position.equals(String.valueOf(current_day))) {
+                    List hours = new ArrayList<Integer>();
+                    hours.add(0, " ");
+                    for (int i = 0; i < 23; i++) {
+
+                        if (current_hour <= i) {
+                            hours.add(Integer.toString(i));
+                        }
+                    }
+                    ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+                    spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerArrayAdapter4.notifyDataSetChanged();
+                    spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+                } else {
+                    List hours = new ArrayList<Integer>();
+                    hours.add(0, " ");
+                    for (int i = 0; i < 23; i++) {
+                        hours.add(Integer.toString(i));
+                    }
+                    ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+                    spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerArrayAdapter4.notifyDataSetChanged();
+                    spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                List hours = new ArrayList<Integer>();
+                hours.add(0, " ");
+                // TODO Auto-generated method stub
+                ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+                spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerArrayAdapter4.notifyDataSetChanged();
+                spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+            }
+        });
+
 
         ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
         currency_symbol.setAdapter(adapter_currency);
@@ -598,7 +786,7 @@ public class Update_Activity extends android.support.v4.app.Fragment {
                             jsonObjSend.put("lon", longitude);                     //10
                             jsonObjSend.put("participant_age_end", age_end);       //11
                             jsonObjSend.put("participant_age_start", age_start);   //12
-                            jsonObjSend.put("participant_cost", cost);             //13
+                            jsonObjSend.put("participant_cost", cost+currency_symbol.getSelectedItem().toString());             //13
                             jsonObjSend.put("participant_gender", gender);         //14
                             jsonObjSend.put("participant_limit", limit);           //15
                             jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
@@ -616,6 +804,18 @@ public class Update_Activity extends android.support.v4.app.Fragment {
                             json = new JSONObject(String.valueOf(jsonObjRecv));
                             String message = json.getString("message");
                             if (message.equals("Updated Successfully")) {
+
+
+
+                                fragmentManager=getFragmentManager();
+
+                                Mygroup mygroup = new Mygroup();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.flContent, mygroup)
+                                        .addToBackStack(null)
+                                        .commit();
+
+
                                 pd.hide();
                                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                             } else {
