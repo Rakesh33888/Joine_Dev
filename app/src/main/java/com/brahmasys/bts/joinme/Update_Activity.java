@@ -57,6 +57,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -106,6 +107,10 @@ public class Update_Activity extends android.support.v4.app.Fragment {
     String selectedPath3 = "NONE",selectedPath4 = "NONE",selectedPath5 = "NONE";
     HttpEntity resEntity1;
     String activity_id1 ="0", str_value="0";
+    private ArrayList<Book> books;
+    private ArrayAdapter<Book> adapter;
+    Context context;
+    List<String> allurl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -121,7 +126,7 @@ public class Update_Activity extends android.support.v4.app.Fragment {
         edit_lat_lng = lat_lng.edit();
 
         latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
-        longitude2 = Double.parseDouble(lat_lng.getString("lng","0.0"));
+        longitude2 = Double.parseDouble(lat_lng.getString("lng", "0.0"));
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading");
 
@@ -157,6 +162,73 @@ public class Update_Activity extends android.support.v4.app.Fragment {
         update_activity  = (Button) v.findViewById(R.id.update_activity);
         delet_activity = (Button) v.findViewById(R.id.delete_activity);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
+
+
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetActivityIconList/" + user_id.getString("userid", "null"),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+
+                            JSONArray cast = obj.getJSONArray("data");
+
+                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                            List<String> allid = new ArrayList<String>();
+                            allurl = new ArrayList<String>();
+
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String id = actor.getString("icon_id");
+                                String url = actor.getString("icon_url");
+                                allid.add(id);
+                                allurl.add(url);
+                                Book book = new Book();
+                                book.setImageUrl(actor.getString("icon_url"));
+                                books.add(book);
+                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                Log.d("Type", cast.getString(i));
+                            }
+                            adapter.notifyDataSetChanged();
+                            Log.d("Type", String.valueOf(allurl));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+        setListViewAdapter();
+
+
+        spinnericon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                for (int i=0;i<allurl.size();i++)
+                {
+                    if (i==spinnericon.getSelectedItemPosition())
+                    {
+
+                        icon = allurl.get(i);
+                    }
+                }
+                //  Toast.makeText(getActivity(),spinnericon.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
 
 
@@ -634,6 +706,14 @@ public class Update_Activity extends android.support.v4.app.Fragment {
         return v;
     }
 
+
+    private void setListViewAdapter() {
+        books = new ArrayList<Book>();
+        adapter = new IconAdapter(getActivity(), R.layout.icon_image, books);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnericon.setAdapter(adapter);
+
+    }
 
    public void openGallery1(int req_code){
 

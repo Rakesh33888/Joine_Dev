@@ -41,7 +41,7 @@ import java.util.List;
 public class Screen17 extends android.support.v4.app.Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener  {
     FrameLayout frameLayoutbck,frameLayoutacity;
     ImageView imageView6;
-    ImageView imageViewbck;
+    ImageView imageViewbck,icon;
     CircularImageView createrimage;
     ProgressDialog pd;
     RatingBar myratingBar;
@@ -84,6 +84,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         timetextview = (TextView) v.findViewById(R.id.timetextview);
         reviews     = (TextView) v.findViewById(R.id.reviews);
         minimumRating = (RatingBar)v.findViewById(R.id.myRatingBar);
+        icon = (ImageView) v.findViewById(R.id.imageViewrfting);
 
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading...");
@@ -247,7 +248,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 String review = userdetails.getString("activity_review");
                                 String time = userdetails.getString("activity_time");
                                 String joined = userdetails.getString("participant_joined");
-                                       owner_id = userdetails.getString("activity_owner_id");
+                                String icon1 = userdetails.getString("acitivity_icon");
+                                owner_id = userdetails.getString("activity_owner_id");
                                 String activity_id = userdetails.getString("activity_id");
 
                                 acitvityname.setText(activity_name);
@@ -259,7 +261,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 timetext.setText("Takes " + duration + "  hours");
 
                               //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
-
+                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).into(icon);
                                 Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).into(createrimage);
 
                                 long timestampString = Long.parseLong(time);

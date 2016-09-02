@@ -86,6 +86,7 @@
                     android:id="@+id/spinnericon"
                     android:layout_width="49dp"
                     android:layout_marginLeft="230dp"
+                    android:spinnerMode="dropdown"
                     android:layout_gravity="right|center_vertical"
                     android:layout_height="match_parent" />
             </LinearLayout>

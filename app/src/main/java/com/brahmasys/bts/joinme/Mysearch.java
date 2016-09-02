@@ -1,5 +1,6 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,7 +46,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
     private static final String TAG = "SaveUserPreference";
     public  static final String URL_SaveUserPreference ="http://52.37.136.238/JoinMe/User.svc/SaveUserPreference";
-
+    ProgressDialog pd;
 
     LinearLayout linearLayout;
     RelativeLayout relativeLayout1,relativeLayout2;
@@ -107,6 +108,11 @@ public class Mysearch extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mysearch, container, false);
+
+        pd = new ProgressDialog(getActivity());
+        pd.setMessage("loading...");
+        pd.show();
+
         linearLayout = (LinearLayout) v.findViewById(R.id.linearlayout);
         relativeLayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout_seek);
         relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
@@ -169,7 +175,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
                             }
 
-
+                            pd.hide();
 
 
                         } catch (JSONException e) {

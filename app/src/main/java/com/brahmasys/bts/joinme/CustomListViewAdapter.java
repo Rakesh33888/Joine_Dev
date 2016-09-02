@@ -30,16 +30,16 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
     public CustomListViewAdapter(Activity activity, int resource, List<Book> books) {
         super(activity, resource, books);
          activity = activity;
-
+        pd = new ProgressDialog(getContext());
+        pd.setMessage("loading...");
+        pd.show();
     }
 
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        pd = new ProgressDialog(getContext());
-        pd.setMessage("loading...");
-        pd.show();
+
 
         ViewHolder holder = null;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -73,6 +73,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
         private ImageView image;
 
         public ViewHolder(View v) {
+
             name = (TextView) v.findViewById(R.id.imgaeinfotxt);
             image = (ImageView) v.findViewById(R.id.thumbnail);
             authorName = (TextView) v.findViewById(R.id.timeinotext);

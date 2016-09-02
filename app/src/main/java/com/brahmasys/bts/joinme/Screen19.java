@@ -45,6 +45,8 @@ import android.widget.Toast;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -54,6 +56,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -87,7 +90,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
     String year,month,day,hour,minute;
     String availability;
     String gender="";
-    String duration="0",icon = "0",title,address,age_start,age_end,cost="0",limit="0",description;
+    String duration="0",icon ="null",title,address,age_start,age_end,cost="0",limit="0",description;
     Double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
     String complete_address,city,state,zip,country,total_address;
     private static final String TAG = "CreateActivity";
@@ -105,6 +108,10 @@ public class Screen19 extends android.support.v4.app.Fragment {
     String selectedPath3 = "NONE",selectedPath4 = "NONE",selectedPath5 = "NONE";
     HttpEntity resEntity;
     String activity_id1 ="0", str_value="0";
+    private ArrayList<Book> books;
+    private ArrayAdapter<Book> adapter;
+    Context context;
+    List<String> allurl;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -123,6 +130,8 @@ public class Screen19 extends android.support.v4.app.Fragment {
             longitude2 = Double.parseDouble(lat_lng.getString("lng","0.0"));
           pd = new ProgressDialog(getActivity());
           pd.setMessage("loading");
+
+
 
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
@@ -156,6 +165,78 @@ public class Screen19 extends android.support.v4.app.Fragment {
         create  = (Button) v.findViewById(R.id.createbutton);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
 
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetActivityIconList/" + user_id.getString("userid", "null"),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+
+                            JSONArray cast = obj.getJSONArray("data");
+
+                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                            List<String> allid = new ArrayList<String>();
+                            allurl = new ArrayList<String>();
+
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String id = actor.getString("icon_id");
+                                String url = actor.getString("icon_url");
+                                allid.add(id);
+                                allurl.add(url);
+                                Book book = new Book();
+                                book.setImageUrl(actor.getString("icon_url"));
+                                books.add(book);
+                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                Log.d("Type", cast.getString(i));
+                            }
+                            adapter.notifyDataSetChanged();
+                            Log.d("Type", String.valueOf(allurl));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+        setListViewAdapter();
+
+
+      /*  spinnericon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), String.valueOf(spinnericon.getItemAtPosition(position)), Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+
+        spinnericon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                for (int i=0;i<allurl.size();i++)
+                {
+                    if (i==spinnericon.getSelectedItemPosition())
+                    {
+
+                        icon = allurl.get(i);
+                    }
+                }
+              //  Toast.makeText(getActivity(),spinnericon.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -696,6 +777,13 @@ public class Screen19 extends android.support.v4.app.Fragment {
         return v;
     }
 
+    private void setListViewAdapter() {
+        books = new ArrayList<Book>();
+        adapter = new IconAdapter(getActivity(), R.layout.icon_image, books);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnericon.setAdapter(adapter);
+
+    }
 
     public void openGallery1(int req_code){
 

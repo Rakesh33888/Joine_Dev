@@ -380,7 +380,7 @@ public class Screen16 extends AppCompatActivity implements
                 book.setName(actor.getString("activity_name"));
                 book.setImageUrl(actor.getString("activity_url"));
                 book.setAuthorName(actor.getString("activity_distance"));
-
+                book.setIcon_image(actor.getString("acitivity_icon"));
                 long timestampString = Long.parseLong(actor.getString("activity_time"));
                 String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
                         format(new java.util.Date(timestampString * 1000));

@@ -6,6 +6,7 @@ package com.brahmasys.bts.joinme;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class SwipeStackAdapter extends ArrayAdapter<Book> {
         holder.name.setText(book.getName());
         holder.authorName.setText(book.getAuthorName());
         holder.time.setText(book.getTime());
+        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getIcon_image()).into(holder.icon);
         Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).into(holder.image);
         //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
        /// pd.hide();
@@ -61,13 +63,15 @@ public class SwipeStackAdapter extends ArrayAdapter<Book> {
     private static class ViewHolder {
         private TextView name,time;
          private TextView authorName;
-        private ImageView image;
+        private ImageView image,icon;
 
         public ViewHolder(View v) {
              name = (TextView) v.findViewById(R.id.textView14);
             image = (ImageView) v.findViewById(R.id.textViewCard);
             authorName = (TextView) v.findViewById(R.id.textView15);
             time = (TextView) v.findViewById(R.id.textView16);
+            icon = (ImageView) v.findViewById(R.id.imageView4);
+
         }
     }
 

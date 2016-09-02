@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/imageViewrfting"
                         android:foregroundGravity="center|left"
-                        android:background="@drawable/rafting"
+
                         android:layout_marginLeft="10dp"
                         android:layout_gravity="left|center_vertical" />
 

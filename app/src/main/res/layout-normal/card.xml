@@ -38,7 +38,6 @@
             android:layout_width="67dp"
             android:layout_height="36dp"
             android:id="@+id/imageView4"
-            android:background="@drawable/rafting1"
             android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"/>
 

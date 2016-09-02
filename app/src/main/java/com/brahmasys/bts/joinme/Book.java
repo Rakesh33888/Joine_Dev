@@ -9,6 +9,7 @@ public class Book {
     private String imageUrl;
     private String authorName;
     private String time;
+    private String icon_image;
 
     public String getName() {
         return name;
@@ -37,4 +38,12 @@ public class Book {
         this.time = time;
     }
 
+    public  String getIcon_image()
+    {
+        return  icon_image;
+    }
+    public  void setIcon_image(String icon_image)
+    {
+        this.icon_image = icon_image;
+    }
 }

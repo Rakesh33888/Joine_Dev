@@ -35,9 +35,6 @@ public class Groups_CustomAdapter extends ArrayAdapter<Book> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        pd = new ProgressDialog(getContext());
-        pd.setMessage("loading...");
-        pd.show();
 
         ViewHolder holder = null;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -61,7 +58,7 @@ public class Groups_CustomAdapter extends ArrayAdapter<Book> {
 
         Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).into(holder.image);
         //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
-        pd.hide();
+
         return convertView;
     }
 

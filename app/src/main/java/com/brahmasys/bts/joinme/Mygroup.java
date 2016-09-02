@@ -112,9 +112,6 @@ public class Mygroup extends Fragment{
                               Bundle savedInstanceState) {
      View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
 
-        pd = new ProgressDialog(getActivity());
-        pd.setMessage("loading...");
-        pd.show();
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -205,7 +202,7 @@ public class Mygroup extends Fragment{
 
             }
             adapter.notifyDataSetChanged();
-            pd.hide();
+
             //Log.w("details",String.valueOf(userdetails));
         } catch (JSONException e) {
             e.printStackTrace();
