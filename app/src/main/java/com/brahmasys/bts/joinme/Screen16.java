@@ -674,7 +674,7 @@ public class Screen16 extends AppCompatActivity implements
 
                             //    res.setTextColor(Color.GREEN);
                             //    res.setText("n Response from server : n " + response_str);
-                            //Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
+                           Toast.makeText(getApplicationContext(),"Updated Successfully", Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

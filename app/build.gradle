@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 android {
+
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     useLibrary 'org.apache.http.legacy'
@@ -8,8 +16,7 @@ android {
         applicationId "com.brahmasys.bts.joinme"
         minSdkVersion 17
         targetSdkVersion 23
-        multiDexEnabled true
-        versionCode 1
+                versionCode 1
         versionName "1.0"
     }
     buildTypes {
@@ -28,6 +35,7 @@ configurations.all {
         force 'com.android.support:appcompat-v7:23.4.0'
     }
 }
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -44,12 +52,12 @@ dependencies {
     compile 'com.crystal:crystalrangeseekbar:1.0.1'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.daprlabs.aaron:cardstack:0.3.0'
-    compile files('libs/android-async-http-1.4.4.jar')
     compile 'com.google.android.gms:play-services:8.3.0'
-
-    compile 'com.android.support:multidex:1.0.0'
-    compile files('libs/httpmime-4.0.1.jar')
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile files('libs/apache-mime4j-0.6.jar')
+
+
+
 }

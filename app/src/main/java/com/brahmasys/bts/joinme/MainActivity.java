@@ -434,19 +434,21 @@ public class MainActivity extends Activity  {
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
+                                                        Intent i = new Intent(getApplicationContext(), Screen16.class);
+                                                        startActivity(i);
+                                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                        finish();
+                                                        session.setLogin(true);
+                                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                                        toast.show();
+                                                        dialog.dismiss();
                                                     }
+
                                                 });
 
 
-                                        Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                        startActivity(i);
-                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                        finish();
-                                        session.setLogin(true);
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
-                                        toast.setGravity(Gravity.CENTER, 0, 0);
-                                        toast.show();
-                                        dialog.dismiss();
+
                                     } else {
                                         Intent i = new Intent(getApplicationContext(), Screen3a.class);
                                         startActivity(i);

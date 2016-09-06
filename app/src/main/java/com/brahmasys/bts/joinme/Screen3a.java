@@ -288,7 +288,7 @@ public class Screen3a extends AppCompatActivity {
                                                     try {
                                                         json = new JSONObject(String.valueOf(obj));
 
-                                                        Log.w("GetDetails",String.valueOf(json));
+                                                        Log.w("GetDetails", String.valueOf(json));
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
                                                     }
@@ -347,16 +347,17 @@ public class Screen3a extends AppCompatActivity {
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
+
+                                                Intent i1 = new Intent(getApplicationContext(), Screen16.class);
+                                                startActivity(i1);
+                                                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                finish();
                                             }
                                         });
 
 
 
 
-                                Intent i1 = new Intent(getApplicationContext(), Screen16.class);
-                                startActivity(i1);
-                                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                finish();
 
 
 

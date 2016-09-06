@@ -828,34 +828,6 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 else {
 
                       total_address = geo_autocomplete.getText().toString();
-                    /************** Calculating Distance *************************
-                     Geocoder coder = new Geocoder(getActivity());
-                     try {
-                     ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(edittextforaddress.getText().toString(), 2);
-                     for (Address add : adresses) {
-                     //Controls to ensure it is right address such as country etc.
-                     longitude1 = add.getLongitude();
-                     latitude1 = add.getLatitude();
-                     Toast.makeText(getActivity(), String.valueOf(longitude) + "\n" + String.valueOf(latitude), Toast.LENGTH_SHORT).show();
-                     }
-                     } catch (IOException e) {
-                     e.printStackTrace();
-                     }
-
-
-
-
-                     double earthRadius = 3958.75;
-                     double dLat = Math.toRadians(latitude - latitude1);
-                     double dLng = Math.toRadians(longitude - longitude1);
-                     double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                     Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude)) *
-                     Math.sin(dLng / 2) * Math.sin(dLng / 2);
-                     double c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                     double dist = earthRadius * c1;
-                     Toast.makeText(getActivity(), String.valueOf(dist), Toast.LENGTH_SHORT).show();
-
-                     *************************************/
 
                 }
 
@@ -930,6 +902,18 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
                     if (str_value.equals("Added Successfully")) {
 
+                        Thread thread=new Thread(new Runnable(){
+                            public void run(){
+                                doFileUpload();
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+
+                                    }
+                                });
+                            }
+                        });
+                        thread.start();
+
                         fragmentManager=getFragmentManager();
 
                         Mygroup mygroup = new Mygroup();
@@ -976,30 +960,113 @@ public class Screen19 extends android.support.v4.app.Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select file to upload "), req_code);
+        startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
     }
 
 
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
-                data != null && data.getData() != null) {
-            Uri uri = data.getData();
 
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                firstimage = (CircularImageView) getActivity().findViewById(R.id.firstimage);
-                firstimage.setImageBitmap(bitmap);
-                firstimage.setImageBitmap(bitmap);
-            } catch (IOException e) {
+        if (resultCode == RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+            if (requestCode == SELECT_FILE3)
+            {
 
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
+                    firstimage.setImageBitmap(bitmap);
+
+                } catch (IOException e) {
+
+                }
+
+                selectedPath3 = getPath(selectedImageUri);
+               Log.w("selectedPath3 : " ,selectedPath3);
             }
+           /* if (requestCode == SELECT_FILE4)
+            {
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                    secondimage.setImageBitmap(bitmap);
+
+                } catch (IOException e) {
+
+                }
+
+                selectedPath4 = getPath(selectedImageUri);
+                //System.out.println("selectedPath1 : " + selectedPath1);
+            }
+            if (requestCode == SELECT_FILE5)
+            {
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                    thirdimage.setImageBitmap(bitmap);
+
+                } catch (IOException e) {
+
+                }
+
+                selectedPath5 = getPath(selectedImageUri);
+                //System.out.println("selectedPath1 : " + selectedPath1);
+            } */
+
 
         }
     }
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
 
+
+
+    private void doFileUpload(){
+
+        File file1 = new File(selectedPath3);
+        File file2 = new File(selectedPath4);
+        File file3 = new File(selectedPath5);
+        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/"+activity_id1;
+        try
+        {
+            org.apache.http.client.HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(urlString);
+            FileBody bin1 = new FileBody(file1);
+            FileBody bin2 = new FileBody(file2);
+            FileBody bin3 = new FileBody(file3);
+
+            MultipartEntity reqEntity = new MultipartEntity();
+            reqEntity.addPart("uploadedfile1", bin1);
+            reqEntity.addPart("uploadedfile2", bin2);
+            reqEntity.addPart("uploadedfile3", bin3);
+            reqEntity.addPart("user", new StringBody("User"));
+            post.setEntity(reqEntity);
+            HttpResponse response = client.execute(post);
+            resEntity = response.getEntity();
+            final String response_str = EntityUtils.toString(resEntity);
+            if (resEntity != null) {
+                Log.i("RESPONSE", response_str);
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        try {
+                            //    res.setTextColor(Color.GREEN);
+                            //    res.setText("n Response from server : n " + response_str);
+                            //Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }
+        catch (Exception ex){
+            Log.e("Debug", "error: " + ex.getMessage(), ex);
+        }
+    }
 
     public ContentResolver getContentResolver() {
         return contentResolver;

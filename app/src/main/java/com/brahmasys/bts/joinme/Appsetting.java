@@ -369,6 +369,14 @@ public class Appsetting extends Fragment{
                             if (out.equals("Logged Out Successfully")) {
 
                                 session.setLogin(false);
+                                edit_user_detals.clear();
+                                edit_user_detals.commit();
+
+                                edit_user_pic.clear();
+                                edit_user_pic.commit();
+
+                                edit_userid.clear();
+                                edit_userid.commit();
                                 // Launching the login activity
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
