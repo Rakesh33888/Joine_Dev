@@ -27,6 +27,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -293,6 +294,10 @@ public class MainActivity extends Activity  {
                 b4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                                .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+
                         if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
 
                             if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -495,6 +500,9 @@ public class MainActivity extends Activity  {
                     b5.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+
                             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
                             CharSequence inputStr = email.getText().toString();
                             Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);

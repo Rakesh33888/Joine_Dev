@@ -16,6 +16,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -78,7 +79,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
     private static int RESULT_LOAD_IMAGE = 1;
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
-    Button create;
+    Button create,pick;
     FrameLayout address_search;
     Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
     LinearLayout not_everyone;
@@ -112,6 +113,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
     private ArrayAdapter<Book> adapter;
     Context context;
     List<String> allurl;
+
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
     @Nullable
     @Override
@@ -133,7 +135,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
           pd.setMessage("loading");
 
 
-
+        pick = (Button) v.findViewById(R.id.pic);
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
         spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
@@ -696,254 +698,223 @@ public class Screen19 extends android.support.v4.app.Fragment {
             public void onClick(View v) {
 
 
+                if (edittextactivityname.getText().toString().length() >= 2) {
+                    if (enterdiscription.getText().toString().length() >= 10) {
+                        pd.show();
+                        int int_month = 0;
+                        year = spinnerforyear.getSelectedItem().toString();
+                        month = spinnerformonth.getSelectedItem().toString();
+                        day = spinnerforday.getSelectedItem().toString();
+                        hour = spinnerforhour.getSelectedItem().toString();
 
-                if (edittextactivityname.getText().toString().length()>=2){
-                    if (enterdiscription.getText().toString().length()>=10)
-                    {
-                pd.show();
-                int int_month=0;
-                year = spinnerforyear.getSelectedItem().toString();
-                month= spinnerformonth.getSelectedItem().toString();
-                day  = spinnerforday.getSelectedItem().toString();
-                hour = spinnerforhour.getSelectedItem().toString();
-
-                if (month.equals("Jan"))
-                {
-                    int_month=1;
-                }
-                else  if (month.equals("Feb"))
-                {
-                    int_month=2;
-                }
-                else  if (month.equals("Mar"))
-                {
-                    int_month=3;
-                }
-                else  if (month.equals("Apr"))
-                {
-                    int_month=4;
-                }
-                else  if (month.equals("May"))
-                {
-                    int_month=5;
-                }
-                else  if (month.equals("Jun"))
-                {
-                    int_month=6;
-                }
-                else  if (month.equals("Jul"))
-                {
-                    int_month=7;
-                }
-                else  if (month.equals("Aug"))
-                {
-                    int_month=8;
-                }else  if (month.equals("Sept"))
-                {
-                    int_month=9;
-                }
-                else  if (month.equals("Oct"))
-                {
-                    int_month=10;
-                }
-                else  if (month.equals("Nov"))
-                {
-                    int_month=11;
-                }
-                else  if (month.equals("Dec"))
-                {
-                    int_month=12;
-                }
+                        if (month.equals("Jan")) {
+                            int_month = 1;
+                        } else if (month.equals("Feb")) {
+                            int_month = 2;
+                        } else if (month.equals("Mar")) {
+                            int_month = 3;
+                        } else if (month.equals("Apr")) {
+                            int_month = 4;
+                        } else if (month.equals("May")) {
+                            int_month = 5;
+                        } else if (month.equals("Jun")) {
+                            int_month = 6;
+                        } else if (month.equals("Jul")) {
+                            int_month = 7;
+                        } else if (month.equals("Aug")) {
+                            int_month = 8;
+                        } else if (month.equals("Sept")) {
+                            int_month = 9;
+                        } else if (month.equals("Oct")) {
+                            int_month = 10;
+                        } else if (month.equals("Nov")) {
+                            int_month = 11;
+                        } else if (month.equals("Dec")) {
+                            int_month = 12;
+                        }
 
 
-                /*************** Time Stamp Start********************/
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.YEAR, Integer.parseInt(year));
-                c.set(Calendar.MONTH, int_month-1);
-                c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-                c.set(Calendar.HOUR, Integer.parseInt(hour));
-                c.set(Calendar.MINUTE, 0);
-                c.set(Calendar.SECOND, 0);
-                c.set(Calendar.MILLISECOND, 0);
-                long result = (c.getTimeInMillis() / 1000L);
-                /********************* Time Stamp End ***************/
-                /********************* TimeZone Start ***************/
-                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
-                        Locale.getDefault());
-                Date currentLocalTime = calendar.getTime();
-                DateFormat date = new SimpleDateFormat("Z");
-                String localTime = date.format(currentLocalTime);
+                        /*************** Time Stamp Start********************/
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.YEAR, Integer.parseInt(year));
+                        c.set(Calendar.MONTH, int_month - 1);
+                        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+                        c.set(Calendar.HOUR, Integer.parseInt(hour));
+                        c.set(Calendar.MINUTE, 0);
+                        c.set(Calendar.SECOND, 0);
+                        c.set(Calendar.MILLISECOND, 0);
+                        long result = (c.getTimeInMillis() / 1000L);
+                        /********************* Time Stamp End ***************/
+                        /********************* TimeZone Start ***************/
+                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
+                                Locale.getDefault());
+                        Date currentLocalTime = calendar.getTime();
+                        DateFormat date = new SimpleDateFormat("Z");
+                        String localTime = date.format(currentLocalTime);
 
-                String sign = localTime.substring(0, 1);
-                String hr = localTime.substring(1, 3);
-                String min = localTime.substring(3, 5);
+                        String sign = localTime.substring(0, 1);
+                        String hr = localTime.substring(1, 3);
+                        String min = localTime.substring(3, 5);
 
-                int res = (Integer.parseInt(hr)*60)+Integer.parseInt(min);
-                if (sign.equals("+"))
-                {
-                    res = -res;
-                }
-                else
-                {
-                    res = +res;
-                }
-                /********************* TimeZone End ***************/
+                        int res = (Integer.parseInt(hr) * 60) + Integer.parseInt(min);
+                        if (sign.equals("+")) {
+                            res = -res;
+                        } else {
+                            res = +res;
+                        }
+                        /********************* TimeZone End ***************/
 
-                if (checkBoxforeveryone.isChecked())
-                {
-                    availability = "public";
-                    gender = "";
+                        if (checkBoxforeveryone.isChecked()) {
+                            availability = "public";
+                            gender = "";
 
-                }
-                else
-                {
-                    availability = "private";
-                    if (checkBoxformen.isChecked())
-                    {
-                        gender = "male";
-                    }
-                    else
-                    {
-                        gender = "female";
-                    }
-                }
-                if (checkboxcurrent.isChecked())
-                {
+                        } else {
+                            availability = "private";
+                            if (checkBoxformen.isChecked()) {
+                                gender = "male";
+                            } else {
+                                gender = "female";
+                            }
+                        }
+                        if (checkboxcurrent.isChecked()) {
 
-                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
-                    List<Address> addresses  = null;
-                    try {
-                        addresses = geocoder.getFromLocation(latitude,longitude, 1);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    complete_address = addresses.get(0).getAddressLine(0);
-                    city = addresses.get(0).getLocality();
-                    state = addresses.get(0).getAdminArea();
-                    zip = addresses.get(0).getPostalCode();
-                    country = addresses.get(0).getCountryName();
-                    total_address = complete_address+","+city+","+state+","+zip+","+country;
-                }
-                else {
+                            List<Address> addresses = null;
+                            try {
+                                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            complete_address = addresses.get(0).getAddressLine(0);
+                            city = addresses.get(0).getLocality();
+                            state = addresses.get(0).getAdminArea();
+                            zip = addresses.get(0).getPostalCode();
+                            country = addresses.get(0).getCountryName();
+                            total_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
+                        } else {
 
-                      total_address = geo_autocomplete.getText().toString();
+                            total_address = geo_autocomplete.getText().toString();
 
-                }
+                        }
 
 
-              //  address = edittextforaddress.getText().toString();
-                title   = edittextactivityname.getText().toString();
-                description = enterdiscription.getText().toString();
-                cost  = edit_cost.getText().toString();
-                limit = edit_limit.getText().toString();
-                age_start = age1.getText().toString();
-                age_end   = age2.getText().toString();
+                        //  address = edittextforaddress.getText().toString();
+                        title = edittextactivityname.getText().toString();
+                        description = enterdiscription.getText().toString();
+                        cost = edit_cost.getText().toString();
+                        limit = edit_limit.getText().toString();
+                        age_start = age1.getText().toString();
+                        age_end = age2.getText().toString();
 
-                Log.w("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
-                        + "\n" + longitude + "\n" + age_start + "\n" + age_end+"\n"+cost+"\n"+limit+"\n"+gender);
-
-
-                if (android.os.Build.VERSION.SDK_INT > 9) {
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                }
-
-                JSONObject jsonObjSend = new JSONObject();
-                try {
-                    jsonObjSend.put("activity_availability",availability);//1
-                    jsonObjSend.put("activity_description", description); //2
-                    jsonObjSend.put("activity_duration", duration);       //3
-                    jsonObjSend.put("activity_icon", icon);               //4
-                    jsonObjSend.put("activity_time",result);              //5
-                    jsonObjSend.put("activity_timezoneoffset",res);       //6
-                    jsonObjSend.put("activity_title",title);              //7
-                    jsonObjSend.put("address",total_address);             //8
-                    jsonObjSend.put("lat",latitude);                      //9
-                    jsonObjSend.put("lon",longitude);                     //10
-                    jsonObjSend.put("participant_age_end",age_end);       //11
-                    jsonObjSend.put("participant_age_start",age_start);   //12
-                    jsonObjSend.put("participant_cost",cost+currency_symbol.getSelectedItem().toString());             //13
-                    jsonObjSend.put("participant_gender",gender);         //14
-                    jsonObjSend.put("participant_limit",limit);           //15
-                    jsonObjSend.put("userid",user_id.getString("userid","null")); //16
-
-                    Log.i(TAG, jsonObjSend.toString(16));
+                        Log.w("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
+                                + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
+                        if (android.os.Build.VERSION.SDK_INT > 9) {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                            StrictMode.setThreadPolicy(policy);
+                        }
+
+                        JSONObject jsonObjSend = new JSONObject();
+                        try {
+                            jsonObjSend.put("activity_availability", availability);//1
+                            jsonObjSend.put("activity_description", description); //2
+                            jsonObjSend.put("activity_duration", duration);       //3
+                            jsonObjSend.put("activity_icon", icon);               //4
+                            jsonObjSend.put("activity_time", result);              //5
+                            jsonObjSend.put("activity_timezoneoffset", res);       //6
+                            jsonObjSend.put("activity_title", title);              //7
+                            jsonObjSend.put("address", total_address);             //8
+                            jsonObjSend.put("lat", latitude);                      //9
+                            jsonObjSend.put("lon", longitude);                     //10
+                            jsonObjSend.put("participant_age_end", age_end);       //11
+                            jsonObjSend.put("participant_age_start", age_start);   //12
+                            jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
+                            jsonObjSend.put("participant_gender", gender);         //14
+                            jsonObjSend.put("participant_limit", limit);           //15
+                            jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
+
+                            Log.i(TAG, jsonObjSend.toString(16));
 
 
-                JSONObject json = null;
-                try {
-                    json = new JSONObject(String.valueOf(jsonObjRecv));
-                     activity_id1 = json.getString("activityid");
-                    edit_activity_id.putString("activity_id",activity_id1);
-                    edit_activity_id.commit();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                JSONObject json_LL = null;
-                try {
-                    json_LL = json.getJSONObject("response");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                     str_value = json_LL.getString("message");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
 
 
-                  //  Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+                        JSONObject json = null;
+                        try {
+                            json = new JSONObject(String.valueOf(jsonObjRecv));
+                            activity_id1 = json.getString("activityid");
+                            edit_activity_id.putString("activity_id", activity_id1);
+                            edit_activity_id.commit();
 
-                    if (str_value.equals("Added Successfully")) {
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                        Thread thread=new Thread(new Runnable(){
-                            public void run(){
-                                doFileUpload();
-                                getActivity().runOnUiThread(new Runnable() {
+                        JSONObject json_LL = null;
+                        try {
+                            json_LL = json.getJSONObject("response");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            str_value = json_LL.getString("message");
+
+
+                            //  Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+
+                            if (str_value.equals("Added Successfully")) {
+
+                                Thread thread = new Thread(new Runnable() {
                                     public void run() {
+                                       // doFileUpload();
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            public void run() {
 
+                                            }
+                                        });
                                     }
                                 });
+                                thread.start();
+
+                                fragmentManager = getFragmentManager();
+
+                                Mygroup mygroup = new Mygroup();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.flContent, mygroup)
+                                        .addToBackStack(null)
+                                        .commit();
+                                Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+                                pd.hide();
+
+
                             }
-                        });
-                        thread.start();
-
-                        fragmentManager=getFragmentManager();
-
-                        Mygroup mygroup = new Mygroup();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.flContent, mygroup)
-                                .addToBackStack(null)
-                                .commit();
-                        Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
-                         pd.hide();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
                     }
-            }
-                else
-                {
+                } else {
                     Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+
+        pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             openGallery1(SELECT_FILE3);
+            }
+        });
+
         return v;
     }
 
@@ -960,12 +931,16 @@ public class Screen19 extends android.support.v4.app.Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
+        getActivity().startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
+
+
+      //  Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+   public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {
             Uri selectedImageUri = data.getData();
@@ -983,7 +958,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 selectedPath3 = getPath(selectedImageUri);
                Log.w("selectedPath3 : " ,selectedPath3);
             }
-           /* if (requestCode == SELECT_FILE4)
+             if (requestCode == SELECT_FILE4)
             {
 
                 try {
@@ -1010,11 +985,37 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
                 selectedPath5 = getPath(selectedImageUri);
                 //System.out.println("selectedPath1 : " + selectedPath1);
-            } */
-
+            }
 
         }
     }
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (resultCode == getActivity().RESULT_OK  && null != data) {
+//            Uri selectedImage = data.getData();
+//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            Log.d("Picture Path", "Picture Path:" + picturePath);
+//
+//            long total_Images_size = 0;
+//
+//            File f = new File(picturePath);
+//            //total_Images_size+=f.length();
+//        /*if(total_Images_size>MAX_IMAGE_FILES_SIZE)
+//        {
+//            Toast.makeText(getActivity(), "Image attachments size cannot exceed 5MB(total).", Toast.LENGTH_LONG).show();
+//            return;
+//        }*/
+//            String selectedFilename = picturePath.substring(picturePath.lastIndexOf("/"));
+//
+//            // addPicture(picturePath,  imageCount);
+//
+//
+//        }
+//    }
     public String getPath(Uri uri) {
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
@@ -1025,48 +1026,48 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
 
 
-    private void doFileUpload(){
-
-        File file1 = new File(selectedPath3);
-        File file2 = new File(selectedPath4);
-        File file3 = new File(selectedPath5);
-        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/"+activity_id1;
-        try
-        {
-            org.apache.http.client.HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(urlString);
-            FileBody bin1 = new FileBody(file1);
-            FileBody bin2 = new FileBody(file2);
-            FileBody bin3 = new FileBody(file3);
-
-            MultipartEntity reqEntity = new MultipartEntity();
-            reqEntity.addPart("uploadedfile1", bin1);
-            reqEntity.addPart("uploadedfile2", bin2);
-            reqEntity.addPart("uploadedfile3", bin3);
-            reqEntity.addPart("user", new StringBody("User"));
-            post.setEntity(reqEntity);
-            HttpResponse response = client.execute(post);
-            resEntity = response.getEntity();
-            final String response_str = EntityUtils.toString(resEntity);
-            if (resEntity != null) {
-                Log.i("RESPONSE", response_str);
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        try {
-                            //    res.setTextColor(Color.GREEN);
-                            //    res.setText("n Response from server : n " + response_str);
-                            //Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        }
-        catch (Exception ex){
-            Log.e("Debug", "error: " + ex.getMessage(), ex);
-        }
-    }
+//    private void doFileUpload(){
+//
+//        File file1 = new File(selectedPath3);
+//        File file2 = new File(selectedPath4);
+//        File file3 = new File(selectedPath5);
+//        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/"+activity_id1;
+//        try
+//        {
+//            org.apache.http.client.HttpClient client = new DefaultHttpClient();
+//            HttpPost post = new HttpPost(urlString);
+//            FileBody bin1 = new FileBody(file1);
+//            FileBody bin2 = new FileBody(file2);
+//            FileBody bin3 = new FileBody(file3);
+//
+//            MultipartEntity reqEntity = new MultipartEntity();
+//            reqEntity.addPart("uploadedfile1", bin1);
+//            reqEntity.addPart("uploadedfile2", bin2);
+//            reqEntity.addPart("uploadedfile3", bin3);
+//            reqEntity.addPart("user", new StringBody("User"));
+//            post.setEntity(reqEntity);
+//            HttpResponse response = client.execute(post);
+//            resEntity = response.getEntity();
+//            final String response_str = EntityUtils.toString(resEntity);
+//            if (resEntity != null) {
+//                Log.i("RESPONSE", response_str);
+//                getActivity().runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        try {
+//                            //    res.setTextColor(Color.GREEN);
+//                            //    res.setText("n Response from server : n " + response_str);
+//                            //    Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
+//        }
+//        catch (Exception ex){
+//            Log.e("Debug", "error: " + ex.getMessage(), ex);
+//        }
+//    }
 
     public ContentResolver getContentResolver() {
         return contentResolver;

@@ -17,7 +17,7 @@
             android:id="@+id/app_setting"
             android:checked="true"
             android:icon="@drawable/setting"
-            android:title="App Setting" />
+            android:title="App Settings" />
     </group>
 
 
