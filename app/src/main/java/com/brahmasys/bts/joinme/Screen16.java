@@ -20,9 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,7 +64,7 @@ public class Screen16 extends AppCompatActivity implements
 
     Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
-    ImageView navimage, logo, msg,back_nav;
+    ImageView navimage, logo, msg,back_nav,shareicon;
     TextView navtextview;
     ImageView create,like,dislike,btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
@@ -110,6 +108,18 @@ public class Screen16 extends AppCompatActivity implements
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
+        shareicon= (ImageView) findViewById(R.id.shareicon);
+        shareicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                finish();
+            }
+        });
 
         activity_url = new ArrayList<String>();
         activity_name= new ArrayList<String>();
