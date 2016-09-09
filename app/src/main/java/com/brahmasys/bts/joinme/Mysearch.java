@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -48,7 +47,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     public  static final String URL_SaveUserPreference ="http://52.37.136.238/JoinMe/User.svc/SaveUserPreference";
     ProgressDialog pd;
 
-    LinearLayout linearLayout;
+    LinearLayout linearLayout,layoutback;
     RelativeLayout relativeLayout1,relativeLayout2;
     ImageView back;
     TextView mysearch,textView7,Maxdistance,distance;
@@ -112,12 +111,24 @@ public class Mysearch extends android.support.v4.app.Fragment {
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading...");
         pd.show();
-
         linearLayout = (LinearLayout) v.findViewById(R.id.linearlayout);
         relativeLayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout_seek);
         relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
         textView7 = (TextView) v.findViewById(R.id.textView7);
         mysearch = (TextView) v.findViewById(R.id.textView6);
+        layoutback= (LinearLayout) v.findViewById(R.id.backlayoutsearch);
+        layoutback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String seekBarValue = Integer.toString(seekBar.getProgress());
+                FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+
+            }
+        });
 
 
         searchdistance =getActivity().getSharedPreferences(search_distance, getActivity().MODE_PRIVATE);
@@ -191,12 +202,6 @@ public class Mysearch extends android.support.v4.app.Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String seekBarValue = Integer.toString(seekBar.getProgress());
-                FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
-                Intent i = new Intent(getContext(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
 
 
 

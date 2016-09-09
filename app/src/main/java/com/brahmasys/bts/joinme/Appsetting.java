@@ -62,7 +62,8 @@ public class Appsetting extends Fragment{
     RadioButton miles,km;
     Spinner dropdown;
     ArrayList customarraylist;
-    LinearLayout logout;
+    LinearLayout logout,linearLayoutterm,backlayoutappsetting;
+
     SessionManager session;
     Button yes,no;
     String deviceuid;
@@ -136,6 +137,20 @@ public class Appsetting extends Fragment{
         switchNear = (SwitchButton)v.findViewById(R.id.near);
 
         km = (RadioButton) v.findViewById(R.id.km);
+        backlayoutappsetting= (LinearLayout) v.findViewById(R.id.backlayoutappsetting);
+        backlayoutappsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pd.show();
+                FnSaveUserSettings();
+                Intent i = new Intent(getActivity(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+                pd.hide();
+
+            }
+        });
 
         imageback = (ImageView) v.findViewById(R.id.imageback_App_Sett);
         imageback.setClickable(true);
@@ -162,13 +177,7 @@ public class Appsetting extends Fragment{
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pd.show();
-                FnSaveUserSettings();
-                Intent i = new Intent(getActivity(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
-                pd.hide();
+
 
             }
         });
@@ -230,6 +239,13 @@ public class Appsetting extends Fragment{
         dis = (SegmentedGroup) v.findViewById(R.id.distance);
         miles = (RadioButton) v.findViewById(R.id.miles);
         km = (RadioButton) v.findViewById(R.id.km);
+        linearLayoutterm= (LinearLayout) v.findViewById(R.id.linearlayoutterm);
+        linearLayoutterm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         logout = (LinearLayout) v.findViewById(R.id.logout);
 
         logout.setOnClickListener(new View.OnClickListener() {

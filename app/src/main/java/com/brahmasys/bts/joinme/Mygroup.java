@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,7 @@ public class Mygroup extends Fragment{
     Button  createalbum;
     ImageView image,imageback1;
     FragmentManager fragmentManager;
+    LinearLayout backlayoutgroup;
     private static final String TAG = "GetMyGroupActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
 
@@ -109,7 +111,17 @@ public class Mygroup extends Fragment{
         groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
         groups_list.setExpanded(true);
        setListViewAdapter();
+       backlayoutgroup= (LinearLayout) v.findViewById(R.id.backlayoutgroup);
+        backlayoutgroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
 
+            }
+        });
 
 
         imageback1= (ImageView) v.findViewById(R.id.backtogroupsetting);
@@ -117,10 +129,7 @@ public class Mygroup extends Fragment{
         imageback1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
+
             }
         });
         createalbum= (Button) v.findViewById(R.id.createnewactivity);

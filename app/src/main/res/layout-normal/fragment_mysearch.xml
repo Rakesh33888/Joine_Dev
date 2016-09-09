@@ -11,6 +11,12 @@
         android:background="#fff"
         android:orientation="horizontal"
         android:id="@+id/linearlayout">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="45dp"
+    android:layout_gravity="center"
+    android:id="@+id/backlayoutsearch">
+
         <ImageView
 
             android:layout_width="wrap_content"
@@ -27,6 +33,8 @@
             android:layout_marginLeft="10dp"
             android:id="@+id/textView6"
             android:layout_gravity="center_vertical" />
+</LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
