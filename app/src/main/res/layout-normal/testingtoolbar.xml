@@ -28,6 +28,7 @@
             android:layout_height="25dp"
             android:src="@drawable/share"
             android:id="@+id/shareicon"
+            android:visibility="gone"
             android:layout_marginRight="10dp"
             android:layout_gravity="right|center" />
     </android.support.v7.widget.Toolbar>

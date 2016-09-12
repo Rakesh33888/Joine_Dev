@@ -68,7 +68,7 @@ public class Screen16 extends AppCompatActivity implements
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
     TextView navtextview;
-    ImageView shareicon;
+     public ImageView shareicon;
     LinearLayout backlayoutdrawer;
     Button editbutton;
     ImageView create,like,dislike,btninfo;
@@ -115,6 +115,8 @@ public class Screen16 extends AppCompatActivity implements
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
         shareicon= (ImageView) findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.VISIBLE);
+
         shareicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

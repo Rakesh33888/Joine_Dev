@@ -6,5 +6,44 @@
     android:orientation="horizontal"
     android:layout_height="match_parent"
     tools:context="com.brahmasys.bts.joinme.Terms_services">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#f1f1f1">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:id="@+id/backlayouthomescreen">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/grayback"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/imageback_terms_services" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terms services"
+                android:textSize="19dp"
+                android:textColor="#b1b0b0"
+                android:paddingStart="8dp"
+                android:id="@+id/terms_services_text"
+                android:layout_gravity="center"
+                android:layout_weight="0.58" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <WebView
+        android:id="@+id/webviewterms_services"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="44dp">
+
+    </WebView>
+
 
 </FrameLayout>

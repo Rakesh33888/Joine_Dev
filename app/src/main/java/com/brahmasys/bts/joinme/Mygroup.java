@@ -43,7 +43,7 @@ public class Mygroup extends Fragment{
     LinearLayout backlayoutgroup;
     private static final String TAG = "GetMyGroupActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
-
+    ImageView shareicon;
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
@@ -122,6 +122,8 @@ public class Mygroup extends Fragment{
 
             }
         });
+
+
 
 
         imageback1= (ImageView) v.findViewById(R.id.backtogroupsetting);

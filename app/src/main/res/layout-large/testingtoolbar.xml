@@ -30,6 +30,7 @@
             android:layout_height="60dp"
             android:id="@+id/shareicon"
             android:src="@drawable/share"
+            android:visibility="gone"
             android:layout_marginRight="10dp"
             android:layout_gravity="right|center" />
 

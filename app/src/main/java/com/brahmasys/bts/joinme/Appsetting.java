@@ -244,20 +244,20 @@ public class Appsetting extends Fragment{
         linearLayoutterm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Fragment fragment = new Terms_services();
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.flContent, fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                //fragmentTransaction.setCustomAnimations(R.anim.trans_left_in, R.anim.trans_left_out);
-//                fragmentTransaction.commit();
-                Fragment fragment = null;
-                switch (v.getId()) {
-                    case R.id.linearlayoutterm:
-                        fragment = new Terms_services();
-                        replaceFragment1(fragment);
-                        break;
-                }
+                Terms_services terms_services = new Terms_services();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent,terms_services);
+                fragmentTransaction.addToBackStack(null);
+                //fragmentTransaction.setCustomAnimations(R.anim.trans_left_in, R.anim.trans_left_out);
+                fragmentTransaction.commit();
+//                Fragment fragment = null;
+//                switch (v.getId()) {
+//                    case R.id.linearlayoutterm:
+//                        fragment = new Terms_services();
+//                        replaceFragment1(fragment);
+//                        break;
+//                }
 
 
             }
@@ -359,14 +359,14 @@ public class Appsetting extends Fragment{
         return v;
     }
 
-    private void replaceFragment1(Fragment f) {
-        Fragment terms_services=new Terms_services();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.flContent,terms_services);
-        transaction.addToBackStack(null);
-        transaction.commit();
-
-    }
+//    private void replaceFragment1(Fragment f) {
+//        Fragment terms_services=new Terms_services();
+//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//        transaction.replace(R.id.flContent,terms_services);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+//
+//    }
 
     public  void Delete_Account()
     {
