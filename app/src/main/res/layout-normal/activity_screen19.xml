@@ -55,6 +55,10 @@
                 android:hint="Activity Name"
                 android:textColorHint="#CFCFCF"
                 android:textSize="19dp"
+                android:singleLine="true"
+                android:maxLength="50"
+                android:paddingEnd="7dp"
+                android:inputType="textCapSentences"
                 android:paddingStart="13dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="25dp"
@@ -116,9 +120,9 @@
                     android:layout_height="wrap_content">
 
                     <Spinner
-                        android:layout_width="70dp"
+                        android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:id="@+id/spinner_year"
+                        android:id="@+id/spinner_day"
                         android:spinnerMode="dropdown"
                         android:layout_marginStart="33dp"
                         android:layout_alignParentTop="true"
@@ -133,17 +137,16 @@
                         android:spinnerMode="dropdown"
                         android:layout_gravity="center"
                         android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/spinner_year">
+                        android:layout_toEndOf="@+id/spinner_day">
 
                     </Spinner>
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/spinner_day"
+                        android:id="@+id/spinner_year"
                         android:spinnerMode="dropdown"
-
                         android:layout_alignParentTop="true"
                         android:layout_toEndOf="@+id/spinner_month">
                     </Spinner>
@@ -155,7 +158,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="19dp"
-                        android:layout_toEndOf="@+id/spinner_day">
+                        android:layout_toEndOf="@+id/spinner_year">
                     </Spinner>
                 </RelativeLayout>
 
@@ -509,6 +512,10 @@
                 android:hint="Enter Description"
                 android:paddingStart="15dp"
                 android:gravity="left|top"
+                android:maxLines="4"
+                android:minLines="1"
+                android:inputType="textCapSentences|text|textMultiLine|"
+                android:paddingEnd="7dp"
                 android:textColorHint="#A5A5A5"
                 android:paddingTop="5dp"
                 android:layout_below="@+id/linearLayoutforlimit"

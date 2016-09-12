@@ -57,7 +57,11 @@
                 android:background="@drawable/smallbox"
                 android:id="@+id/edittextactivityname"
                 android:hint="Activity Name"
+                android:singleLine="true"
+                android:maxLength="50"
+                android:paddingEnd="7dp"
                 android:textColorHint="#CFCFCF"
+                android:inputType="textCapSentences"
                 android:textSize="19dp"
                 android:paddingStart="13dp"
                 android:layout_marginLeft="15dp"
@@ -125,7 +129,7 @@
                     <Spinner
                         android:layout_width="90dp"
                         android:layout_height="match_parent"
-                        android:id="@+id/spinner_year"
+                        android:id="@+id/spinner_day"
                         android:spinnerMode="dropdown"
                         android:layout_marginStart="33dp"
                         android:layout_alignParentTop="true"
@@ -140,7 +144,7 @@
                         android:spinnerMode="dropdown"
                         android:layout_gravity="center"
                         android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/spinner_year">
+                        android:layout_toEndOf="@+id/spinner_day">
 
                     </Spinner>
 
@@ -148,7 +152,7 @@
                         android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/spinner_day"
+                        android:id="@+id/spinner_year"
                         android:spinnerMode="dropdown"
 
                         android:layout_alignParentTop="true"
@@ -162,7 +166,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="19dp"
-                        android:layout_toEndOf="@+id/spinner_day">
+                        android:layout_toEndOf="@+id/spinner_year">
                     </Spinner>
                 </RelativeLayout>
 
@@ -424,11 +428,11 @@
                     app:max_value="100"
                     app:corner_radius="10"
                     android:layout_gravity="center"
-                    app:bar_highlight_color="#2434AD"
-                    app:left_thumb_color="#0e62d7"
-                    app:right_thumb_color="#0e62d7"
-                    app:left_thumb_color_pressed="#0e62d7"
-                    app:right_thumb_color_pressed="#0e62d7"
+                    app:bar_highlight_color="#00426A"
+                    app:left_thumb_color="#00426A"
+                    app:right_thumb_color="#00426A"
+                    app:left_thumb_color_pressed="#00426A"
+                    app:right_thumb_color_pressed="#00426A"
                     app:data_type="_integer"
 
                     />
@@ -457,7 +461,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:hint="cost"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:paddingStart="7dp"
                     android:background="@drawable/edittext_style"
                     android:id="@+id/forcost"
@@ -523,6 +527,10 @@
                 android:hint="Enter Description"
                 android:paddingStart="15dp"
                 android:gravity="left|top"
+                android:maxLines="4"
+                android:minLines="1"
+                android:inputType="textCapSentences|text|textMultiLine|"
+                android:paddingEnd="7dp"
                 android:textColorHint="#A5A5A5"
                 android:paddingTop="5dp"
                 android:layout_below="@+id/linearLayoutforlimit"
