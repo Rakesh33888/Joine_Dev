@@ -21,7 +21,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,8 +66,11 @@ public class Screen16 extends AppCompatActivity implements
 
     Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
-    ImageView navimage, logo, msg,back_nav,shareicon;
+    ImageView navimage, logo, msg,back_nav;
     TextView navtextview;
+    ImageView shareicon;
+    LinearLayout backlayoutdrawer;
+    Button editbutton;
     ImageView create,like,dislike,btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
     FragmentManager fragmentManager;
@@ -95,6 +100,7 @@ public class Screen16 extends AppCompatActivity implements
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
 
 
+
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
         user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
@@ -120,6 +126,7 @@ public class Screen16 extends AppCompatActivity implements
                 finish();
             }
         });
+
 
         activity_url = new ArrayList<String>();
         activity_name= new ArrayList<String>();
@@ -293,6 +300,16 @@ public class Screen16 extends AppCompatActivity implements
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
         navtextview = (TextView) header.findViewById(R.id.navtextview);
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
+        editbutton= (Button) header.findViewById(R.id.editbutton);
+        editbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery(SELECT_FILE1);
+
+
+            }
+        });
+        backlayoutdrawer= (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
         navtextview.setText(user_Details.getString("firstname","")+"\t"+user_Details.getString("lastname","null"));
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -329,11 +346,11 @@ public class Screen16 extends AppCompatActivity implements
         navimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery(SELECT_FILE1);
+
             }
         });
 
-        back_nav.setOnClickListener(new View.OnClickListener() {
+        backlayoutdrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawers();

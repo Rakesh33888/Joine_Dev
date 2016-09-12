@@ -411,11 +411,11 @@
                     app:max_value="100"
                     app:corner_radius="10"
                    android:layout_gravity="center"
-                    app:bar_highlight_color="#2434AD"
-                    app:left_thumb_color="#0e62d7"
-                    app:right_thumb_color="#0e62d7"
-                    app:left_thumb_color_pressed="#0e62d7"
-                    app:right_thumb_color_pressed="#0e62d7"
+                    app:bar_highlight_color="#00426A"
+                    app:left_thumb_color="#00426A"
+                    app:right_thumb_color="#00426A"
+                    app:left_thumb_color_pressed="#00426A"
+                    app:right_thumb_color_pressed="#00426A"
                     app:data_type="_integer"
 
                     />
@@ -444,7 +444,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:hint="cost"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:paddingStart="7dp"
                     android:background="@drawable/edittext_style"
                     android:id="@+id/forcost"
@@ -488,15 +488,15 @@
                     android:text="Participants number limit"/>
 
                 <EditText
-                    android:layout_width="90dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_style"
-
                     android:hint="-"
                     android:gravity="center"
                     android:id="@+id/numbrlimitbtn"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:layout_marginLeft="14dp"
                     android:layout_gravity="center_horizontal|center"/>
 
             </LinearLayout>

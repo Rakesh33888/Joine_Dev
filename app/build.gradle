@@ -15,8 +15,9 @@ android {
     defaultConfig {
         applicationId "com.brahmasys.bts.joinme"
         minSdkVersion 17
+        multiDexEnabled true
         targetSdkVersion 23
-                versionCode 1
+        versionCode 1
         versionName "1.0"
     }
     buildTypes {
@@ -41,7 +42,12 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/android-async-http-1.4.4.jar')
     compile files('libs/devsmartlib.jar')
+    compile files('libs/apache-mime4j-0.6.jar')
+
+
+
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:design:23.4.0'
     compile 'link.fls:swipestack:0.3.0'
     compile 'com.android.support:cardview-v7:23.4.0'
@@ -56,8 +62,4 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
-    compile files('libs/apache-mime4j-0.6.jar')
-
-
-
 }

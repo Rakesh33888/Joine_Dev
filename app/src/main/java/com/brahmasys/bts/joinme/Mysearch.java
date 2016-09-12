@@ -55,6 +55,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     SeekBar seekBar;
     String search_distance;
     String select_date;
+    public static ImageView shareicon;
 
     SharedPreferences searchdistance,selectdate;
     SharedPreferences.Editor edit_searchdistance,edit_selectdate;

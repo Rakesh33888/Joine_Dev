@@ -62,6 +62,7 @@ public class Appsetting extends Fragment{
     RadioButton miles,km;
     Spinner dropdown;
     ArrayList customarraylist;
+    FragmentManager fragmentManager;
     LinearLayout logout,linearLayoutterm,backlayoutappsetting;
 
     SessionManager session;
@@ -243,8 +244,25 @@ public class Appsetting extends Fragment{
         linearLayoutterm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Fragment fragment = new Terms_services();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.flContent, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                //fragmentTransaction.setCustomAnimations(R.anim.trans_left_in, R.anim.trans_left_out);
+//                fragmentTransaction.commit();
+                Fragment fragment = null;
+                switch (v.getId()) {
+                    case R.id.linearlayoutterm:
+                        fragment = new Terms_services();
+                        replaceFragment1(fragment);
+                        break;
+                }
+
 
             }
+
+
         });
         logout = (LinearLayout) v.findViewById(R.id.logout);
 
@@ -340,6 +358,16 @@ public class Appsetting extends Fragment{
         FnPopulateUserSettings(v);
         return v;
     }
+
+    private void replaceFragment1(Fragment f) {
+        Fragment terms_services=new Terms_services();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.flContent,terms_services);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
+
     public  void Delete_Account()
     {
         AsyncHttpClient client = new AsyncHttpClient();

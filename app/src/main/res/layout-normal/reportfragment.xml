@@ -12,9 +12,9 @@
     <TextView
         android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:text="Plese describe the problem"
+        android:text="Please describe the problem"
         android:id="@+id/textView17"
-        android:textSize="19dp"
+        android:textSize="18dp"
         android:textColor="#939393"
         android:layout_marginTop="45dp"
         android:layout_gravity="center_horizontal" />
