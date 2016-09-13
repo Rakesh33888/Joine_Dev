@@ -89,7 +89,7 @@ public class Screen16 extends AppCompatActivity implements
     int pic_list_size =0;
     String lat,lon;
     List<String> activity_url;
-
+Screen19 screen19_fragment;
     TextView name_activity,time_activity,distance_activity;
     List<String> activity_name,distance,time,activity_id,userid_other;
     @Override
@@ -274,6 +274,7 @@ public class Screen16 extends AppCompatActivity implements
                             .replace(R.id.flContent,screen19)
                             .addToBackStack(null)
                             .commit();
+
 
 
             }
@@ -634,36 +635,43 @@ public class Screen16 extends AppCompatActivity implements
 
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            if (requestCode == SELECT_FILE1)
-            {
+        if(screen19_fragment != null) {
 
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    navimage.setImageBitmap(bitmap);
-                    navimage.setImageBitmap(bitmap);
-                } catch (IOException e) {
 
+            screen19_fragment.onActivityResult(requestCode, resultCode, data);
+        }else {
+
+            if (resultCode == RESULT_OK) {
+                Uri selectedImageUri = data.getData();
+                if (requestCode == SELECT_FILE1) {
+
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+                        navimage.setImageBitmap(bitmap);
+
+                    } catch (IOException e) {
+
+                    }
+
+                    selectedPath1 = getPath(selectedImageUri);
+                    System.out.println("selectedPath1 : " + selectedPath1);
                 }
 
-                selectedPath1 = getPath(selectedImageUri);
-                System.out.println("selectedPath1 : " + selectedPath1);
+                Thread thread = new Thread(new Runnable() {
+                    public void run() {
+                        doFileUpload();
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+
+                            }
+                        });
+                    }
+                });
+                thread.start();
+
             }
-
-            Thread thread=new Thread(new Runnable(){
-                public void run(){
-                    doFileUpload();
-                    runOnUiThread(new Runnable(){
-                        public void run() {
-
-                        }
-                    });
-                }
-            });
-            thread.start();
-
         }
     }
     public String getPath(Uri uri) {
@@ -674,47 +682,58 @@ public class Screen16 extends AppCompatActivity implements
         return cursor.getString(column_index);
     }
 
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
 
+        // For each of your Fragments add an if statement here checking for
+        // the class of the Fragment and assign if it to the member variables
+        // if a match is found
+        if (fragment instanceof Screen19) {
+
+            this.screen19_fragment= (Screen19) fragment;
+
+        }
+    }
 
     private void doFileUpload(){
 
-        File file1 = new File(selectedPath1);
-
-        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/"+user_id.getString("userid","null");
-        try
-        {
-            org.apache.http.client.HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(urlString);
-            FileBody bin1 = new FileBody(file1);
-
-            MultipartEntity reqEntity = new MultipartEntity();
-            reqEntity.addPart("uploadedfile1", bin1);
-
-            reqEntity.addPart("user", new StringBody("User"));
-            post.setEntity(reqEntity);
-            HttpResponse response = client.execute(post);
-            resEntity = response.getEntity();
-            final String response_str = EntityUtils.toString(resEntity);
-            if (resEntity != null) {
-                Log.i("RESPONSE",response_str);
-                runOnUiThread(new Runnable(){
-                    public void run() {
-                        try {
-
-
-                            //    res.setTextColor(Color.GREEN);
-                            //    res.setText("n Response from server : n " + response_str);
-                           Toast.makeText(getApplicationContext(),"Updated Successfully", Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        }
-        catch (Exception ex){
-            Log.e("Debug", "error: " + ex.getMessage(), ex);
-        }
+//        File file1 = new File(selectedPath1);
+//
+//        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/"+user_id.getString("userid","null");
+//        try
+//        {
+//            org.apache.http.client.HttpClient client = new DefaultHttpClient();
+//            HttpPost post = new HttpPost(urlString);
+//            FileBody bin1 = new FileBody(file1);
+//
+//            MultipartEntity reqEntity = new MultipartEntity();
+//            reqEntity.addPart("uploadedfile1", bin1);
+//
+//            reqEntity.addPart("user", new StringBody("User"));
+//            post.setEntity(reqEntity);
+//            HttpResponse response = client.execute(post);
+//            resEntity = response.getEntity();
+//            final String response_str = EntityUtils.toString(resEntity);
+//            if (resEntity != null) {
+//                Log.i("RESPONSE",response_str);
+//                runOnUiThread(new Runnable(){
+//                    public void run() {
+//                        try {
+//
+//
+//                            //    res.setTextColor(Color.GREEN);
+//                            //    res.setText("n Response from server : n " + response_str);
+//                           Toast.makeText(getApplicationContext(),"Updated Successfully", Toast.LENGTH_LONG).show();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
+//        }
+//        catch (Exception ex){
+//            Log.e("Debug", "error: " + ex.getMessage(), ex);
+//        }
     }
 
 }
