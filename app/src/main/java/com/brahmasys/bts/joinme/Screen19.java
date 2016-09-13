@@ -1,6 +1,9 @@
 package com.brahmasys.bts.joinme;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -15,9 +18,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -62,6 +67,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -73,13 +79,15 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Screen19 extends android.support.v4.app.Fragment {
-    private static final int PICK_IMAGE_REQUEST = 3;
-    private static final int RESULT_OK = 3;
+
+
+
     FragmentManager fragmentManager;
-    private static int RESULT_LOAD_IMAGE = 1;
+
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
-    Button create,pick;
+    Button create;
+
     FrameLayout address_search;
     Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
     LinearLayout not_everyone;
@@ -101,7 +109,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
     private static final String LAT_LNG = "lat_lng";
     SharedPreferences user_id,activity_id,lat_lng;
     SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
-    ProgressDialog pd;
+  //  ProgressDialog pd;
     private Integer THRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
@@ -115,6 +123,14 @@ public class Screen19 extends android.support.v4.app.Fragment {
     List<String> allurl;
 
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
+
+    private String selectedImagePath = "",selectedImagePath2 = "",selectedImagePath3 = "";
+    public static final int PICK_IMAGE1 = 1;
+    public static final int PICK_IMAGE2 = 2;
+    public static final int PICK_IMAGE3 = 3;
+    String imgPath;
+    ProgressDialog prog;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,11 +147,16 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
             latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
             longitude2 = Double.parseDouble(lat_lng.getString("lng","0.0"));
-          pd = new ProgressDialog(getActivity());
-          pd.setMessage("loading");
+//          pd = new ProgressDialog(getActivity());
+//          pd.setMessage("Creating....");
+
+        prog= new ProgressDialog(getActivity());//Assuming that you are using fragments.
+        prog.setTitle("pleaseWait...");
+        prog.setCancelable(false);
+        prog.setIndeterminate(true);
+        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
 
-        pick = (Button) v.findViewById(R.id.pic);
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
         spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
@@ -209,15 +230,6 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 });
 
         setListViewAdapter();
-
-
-      /*  spinnericon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), String.valueOf(spinnericon.getItemAtPosition(position)), Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
 
         spinnericon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -445,20 +457,30 @@ public class Screen19 extends android.support.v4.app.Fragment {
         firstimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery1(SELECT_FILE3);
-
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, ""), PICK_IMAGE1);
             }
         });
         secondimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery1(SELECT_FILE4);
+                Intent intent1 = new Intent();
+                intent1.setType("image/*");
+                intent1.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent1, ""), PICK_IMAGE2);
+
             }
         });
         thirdimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery1(SELECT_FILE5);
+                Intent intent2 = new Intent();
+                intent2.setType("image/*");
+                intent2.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent2, ""), PICK_IMAGE3);
+
             }
         });
 
@@ -697,10 +719,10 @@ public class Screen19 extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
 
-
+                prog.show();
                 if (edittextactivityname.getText().toString().length() >= 2) {
                     if (enterdiscription.getText().toString().length() >= 10) {
-                        pd.show();
+                        prog.show();
                         int int_month = 0;
                         year = spinnerforyear.getSelectedItem().toString();
                         month = spinnerformonth.getSelectedItem().toString();
@@ -869,27 +891,18 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
                             if (str_value.equals("Added Successfully")) {
 
-                                Thread thread = new Thread(new Runnable() {
-                                    public void run() {
-                                       // doFileUpload();
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            public void run() {
 
-                                            }
-                                        });
-                                    }
-                                });
-                                thread.start();
 
                                 fragmentManager = getFragmentManager();
-
+                                doFileUpload();
                                 Mygroup mygroup = new Mygroup();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.flContent, mygroup)
                                         .addToBackStack(null)
                                         .commit();
                                 Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
-                                pd.hide();
+
+                                prog.dismiss();
 
 
                             }
@@ -908,12 +921,6 @@ public class Screen19 extends android.support.v4.app.Fragment {
         });
 
 
-        pick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             openGallery1(SELECT_FILE3);
-            }
-        });
 
         return v;
     }
@@ -926,148 +933,150 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
     }
 
-    public void openGallery1(int req_code){
-
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        getActivity().startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
-
-
-      //  Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //startActivityForResult(i, RESULT_LOAD_IMAGE);
+    public Uri setImageUri() {
+        // Store image in dcim
+        File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".jpg");
+        Uri imgUri = Uri.fromFile(file);
+        imgPath = file.getAbsolutePath();
+        return imgUri;
     }
 
 
+    public String getImagePath() {
+        return imgPath;
+    }
 
-   public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            if (requestCode == SELECT_FILE3)
-            {
+        if (resultCode != Activity.RESULT_CANCELED) {
 
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
-                    firstimage.setImageBitmap(bitmap);
+            String uri = getAbsolutePath(data.getData());
+            if (requestCode == PICK_IMAGE1) {
+                selectedImagePath = uri;
+                firstimage.setImageBitmap(decodeFile(selectedImagePath));
 
-                } catch (IOException e) {
-
-                }
-
-                selectedPath3 = getPath(selectedImageUri);
-               Log.w("selectedPath3 : " ,selectedPath3);
             }
-             if (requestCode == SELECT_FILE4)
-            {
+//            if (requestCode == PICK_IMAGE2) {
+//                selectedImagePath2 = uri;
+//                secondimage.setImageBitmap(decodeFile(selectedImagePath2));
+//            }
+//            if (requestCode == PICK_IMAGE3) {
+//                selectedImagePath3 = uri;
+//                thirdimage.setImageBitmap(decodeFile(selectedImagePath3));
+//            }
+//            else {
+//                super.onActivityResult(requestCode, resultCode, data);
+//            }
 
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    secondimage.setImageBitmap(bitmap);
 
-                } catch (IOException e) {
+        }
+        if (resultCode != Activity.RESULT_CANCELED) {
 
-                }
-
-                selectedPath4 = getPath(selectedImageUri);
-                //System.out.println("selectedPath1 : " + selectedPath1);
-            }
-            if (requestCode == SELECT_FILE5)
-            {
-
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    thirdimage.setImageBitmap(bitmap);
-
-                } catch (IOException e) {
-
-                }
-
-                selectedPath5 = getPath(selectedImageUri);
-                //System.out.println("selectedPath1 : " + selectedPath1);
+            String uri = getAbsolutePath(data.getData());
+            if (requestCode == PICK_IMAGE2) {
+                selectedImagePath2 = uri;
+                secondimage.setImageBitmap(decodeFile(selectedImagePath2));
             }
 
         }
-    }
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == getActivity().RESULT_OK  && null != data) {
-//            Uri selectedImage = data.getData();
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            cursor.moveToFirst();
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String picturePath = cursor.getString(columnIndex);
-//            Log.d("Picture Path", "Picture Path:" + picturePath);
-//
-//            long total_Images_size = 0;
-//
-//            File f = new File(picturePath);
-//            //total_Images_size+=f.length();
-//        /*if(total_Images_size>MAX_IMAGE_FILES_SIZE)
-//        {
-//            Toast.makeText(getActivity(), "Image attachments size cannot exceed 5MB(total).", Toast.LENGTH_LONG).show();
-//            return;
-//        }*/
-//            String selectedFilename = picturePath.substring(picturePath.lastIndexOf("/"));
-//
-//            // addPicture(picturePath,  imageCount);
-//
-//
-//        }
-//    }
-    public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
 
+        if (resultCode != Activity.RESULT_CANCELED) {
 
-
-//    private void doFileUpload(){
-//
-//        File file1 = new File(selectedPath3);
-//        File file2 = new File(selectedPath4);
-//        File file3 = new File(selectedPath5);
-//        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/"+activity_id1;
-//        try
-//        {
-//            org.apache.http.client.HttpClient client = new DefaultHttpClient();
-//            HttpPost post = new HttpPost(urlString);
-//            FileBody bin1 = new FileBody(file1);
-//            FileBody bin2 = new FileBody(file2);
-//            FileBody bin3 = new FileBody(file3);
-//
-//            MultipartEntity reqEntity = new MultipartEntity();
-//            reqEntity.addPart("uploadedfile1", bin1);
-//            reqEntity.addPart("uploadedfile2", bin2);
-//            reqEntity.addPart("uploadedfile3", bin3);
-//            reqEntity.addPart("user", new StringBody("User"));
-//            post.setEntity(reqEntity);
-//            HttpResponse response = client.execute(post);
-//            resEntity = response.getEntity();
-//            final String response_str = EntityUtils.toString(resEntity);
-//            if (resEntity != null) {
-//                Log.i("RESPONSE", response_str);
-//                getActivity().runOnUiThread(new Runnable() {
-//                    public void run() {
-//                        try {
-//                            //    res.setTextColor(Color.GREEN);
-//                            //    res.setText("n Response from server : n " + response_str);
-//                            //    Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
+            String uri = getAbsolutePath(data.getData());
+            if (requestCode == PICK_IMAGE3) {
+                selectedImagePath3 = uri;
+                thirdimage.setImageBitmap(decodeFile(selectedImagePath3));
+            }
+//            else {
+//                super.onActivityResult(requestCode, resultCode, data);
 //            }
-//        }
-//        catch (Exception ex){
-//            Log.e("Debug", "error: " + ex.getMessage(), ex);
-//        }
-//    }
+        }
+    }
+
+
+    public Bitmap decodeFile(String path) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(path, o);
+            // The new size we want to scale to
+            final int REQUIRED_SIZE = 70;
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE && o.outHeight / scale / 2 >= REQUIRED_SIZE)
+                scale *= 2;
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeFile(path, o2);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public String getAbsolutePath(Uri uri) {
+        String[] projection = { MediaStore.MediaColumns.DATA };
+        @SuppressWarnings("deprecation")
+        Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } else
+            return null;
+    }
+
+
+
+    private void doFileUpload(){
+        prog.show();
+        File file1 = new File(selectedImagePath);
+        File file2 = new File(selectedImagePath2);
+        File file3 = new File(selectedImagePath3);
+        String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
+        for (int i=0;i<3;i++) {
+            String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id1;
+            try {
+                org.apache.http.client.HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(urlString);
+                FileBody bin1 = new FileBody(file1);
+                FileBody bin2 = new FileBody(file2);
+                FileBody bin3 = new FileBody(file3);
+
+                MultipartEntity reqEntity = new MultipartEntity();
+                reqEntity.addPart("uploadedfile1", new FileBody(new File(paths[i])));
+               // reqEntity.addPart("uploadedfile2", new FileBody(file2));
+               // reqEntity.addPart("uploadedfile3", new FileBody(file3));
+
+                post.setEntity(reqEntity);
+                HttpResponse response = client.execute(post);
+                resEntity = response.getEntity();
+                final String response_str = EntityUtils.toString(resEntity);
+                if (resEntity != null) {
+                    Log.i("RESPONSE", response_str);
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            try {
+                                prog.dismiss();
+                                //    res.setTextColor(Color.GREEN);
+                                //    res.setText("n Response from server : n " + response_str);
+                                //    Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            } catch (Exception ex) {
+                Log.e("Debug", "error: " + ex.getMessage(), ex);
+            }
+        }
+    }
 
     public ContentResolver getContentResolver() {
         return contentResolver;
@@ -1097,5 +1106,8 @@ public class Screen19 extends android.support.v4.app.Fragment {
             }
         });
     }
+
+
+
 }
 

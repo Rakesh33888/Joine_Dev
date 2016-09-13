@@ -541,17 +541,7 @@
                     android:layout_centerHorizontal="true"
                    />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/pic"
-                    android:text="PICK"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:background="@drawable/custom_button1"
-                    android:layout_alignParentEnd="true"
 
-                    />
 
             </RelativeLayout>
 
