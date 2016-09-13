@@ -28,14 +28,14 @@
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="90dp"
-
+            android:background="#B8BAB5"
             android:layout_below="@+id/swipeStack"
             android:id="@+id/frameLayout2"
             android:layout_alignEnd="@+id/swipeStack"
             android:layout_alignStart="@+id/swipeStack">
 
             <ImageView
-                android:layout_width="90dp"
+                android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:id="@+id/imageView4"
 
@@ -48,33 +48,36 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Rafting"
                 android:id="@+id/textView14"
-                android:layout_marginLeft="140dp"
-                android:textSize="25dp"
-                android:textColor="#000"
+                android:layout_marginLeft="100dp"
+                android:textSize="23dp"
+                android:textColor="#F9FDFD"
                 android:layout_gravity="left|center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingBottom="15dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:paddingStart="35dp"
-                android:textColor="#000"
+                android:textColor="#F9FDFD"
+
+                android:layout_marginRight="12dp"
                 android:id="@+id/textView15"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="right|center" />
+                android:layout_marginTop="8dp"
+                android:layout_gravity="right|bottom" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text1"
-                android:textSize="25dp"
+                android:textSize="20dp"
+                android:layout_marginRight="12dp"
                 android:paddingStart="35dp"
-                android:paddingTop="7dp"
-                android:textColor="#000"
+                android:paddingTop="4dp"
+                android:textColor="#F9FDFD"
                 android:id="@+id/textView16"
                 android:layout_gravity="right|top" />
         </FrameLayout>

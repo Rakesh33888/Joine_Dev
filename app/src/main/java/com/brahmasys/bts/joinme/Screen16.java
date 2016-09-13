@@ -114,6 +114,7 @@ public class Screen16 extends AppCompatActivity implements
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
+
         shareicon= (ImageView) findViewById(R.id.shareicon);
         shareicon.setVisibility(View.VISIBLE);
 

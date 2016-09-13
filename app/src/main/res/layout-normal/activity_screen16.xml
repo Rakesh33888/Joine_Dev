@@ -23,6 +23,7 @@
         android:theme="@style/NavigationTheme"
         app:itemTextColor="#ffffff"
         android:layout_gravity="start"
+        app:itemIconTint="@android:color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_screen16"
         app:menu="@menu/activity_screen16_drawer" />

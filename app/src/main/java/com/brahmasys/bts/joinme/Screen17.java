@@ -14,9 +14,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -44,6 +44,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
     ProgressDialog pd;
+    LinearLayout backlayout_screen_17;
     RatingBar myratingBar;
     //Button btnJoineActivity;
     TextView reporttext,updatetext;
@@ -85,6 +86,16 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         reviews     = (TextView) v.findViewById(R.id.reviews);
         minimumRating = (RatingBar)v.findViewById(R.id.myRatingBar);
         icon = (ImageView) v.findViewById(R.id.imageViewrfting);
+        backlayout_screen_17= (LinearLayout) v.findViewById(R.id.backlayoutscreen17);
+        backlayout_screen_17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
 
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading...");
@@ -123,10 +134,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         imageViewbck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
+
             }
         });
         reporttext.setClickable(true);

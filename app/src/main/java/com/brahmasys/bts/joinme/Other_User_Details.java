@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     CircularImageView createrimage;
     ProgressDialog pd;
     RatingBar myratingBar;
+    LinearLayout backlayout_user_detail;
     Button btnJoineActivity;
     TextView reporttext;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
@@ -89,6 +91,16 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         timetextview = (TextView) v.findViewById(R.id.timetextview);
         reviews     = (TextView) v.findViewById(R.id.reviews);
         minimumRating = (RatingBar)v.findViewById(R.id.myRatingBar);
+        backlayout_user_detail= (LinearLayout) v.findViewById(R.id.backlayout_user_detail);
+        backlayout_user_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
         icon = (ImageView) v.findViewById(R.id.imageViewrfting);
         pd = new ProgressDialog(getActivity());
         pd.setMessage("loading...");
@@ -127,10 +139,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         imageViewbck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
+
             }
         });
         reporttext.setClickable(true);

@@ -21,10 +21,15 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="29dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="7dp"
                 android:id="@+id/frameLayoutbck"
                 android:layout_gravity="center_horizontal|left">
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="left"
+                    android:id="@+id/backlayout_user_detail">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -33,6 +38,7 @@
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/backbtn"
                     android:layout_gravity="left|center" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

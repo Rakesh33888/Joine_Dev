@@ -12,6 +12,7 @@
         android:inputType="textEmailAddress"
         android:drawableLeft="@drawable/emailicon"
         android:layout_marginTop="80dp"
+
         android:textColor="#fff"
         android:backgroundTint="#d5ffffff"
         android:drawablePadding="18dp"

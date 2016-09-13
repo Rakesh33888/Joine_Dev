@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -30,6 +31,7 @@ import java.util.List;
 public class Messagescreen extends Fragment{
     ListView groups_listView;
     ImageView back;
+    LinearLayout backlayoutmessge;
     FragmentManager fragmentManager;
     public static final String USERID = "userid";
     SharedPreferences user_id,user_Details,user_pic,lat_lng;
@@ -47,15 +49,22 @@ public class Messagescreen extends Fragment{
 
         groups_listView = (ListView) v.findViewById(R.id.listView);
         back = (ImageView) v.findViewById(R.id.back);
-        user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
-        edit_userid = user_id.edit();
-         back.setOnClickListener(new View.OnClickListener() {
+        backlayoutmessge= (LinearLayout) v.findViewById(R.id.backlayoutmessge);
+        backlayoutmessge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(getContext(),Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
+            }
+        });
+        user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
+        edit_userid = user_id.edit();
+         back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

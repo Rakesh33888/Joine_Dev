@@ -442,7 +442,7 @@
                 <EditText
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:hint="cost"
+                    android:hint="0"
                     android:inputType="numberDecimal"
                     android:paddingStart="7dp"
                     android:background="@drawable/edittext_style"
