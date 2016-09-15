@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,6 +44,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     ImageView imageView6;
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
+    Button btnJoineActivity;
     ProgressDialog pd;
     LinearLayout backlayout_screen_17;
     RatingBar myratingBar;
@@ -71,7 +73,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
-       // btnJoineActivity= (Button) v.findViewById(R.id.button6);
+        btnJoineActivity= (Button) v.findViewById(R.id.button6);
         reporttext= (TextView) v.findViewById(R.id.reportactitytext);
         updatetext= (TextView) v.findViewById(R.id.updateactivitytext);
         acitvityname = (TextView) v.findViewById(R.id.acitvityname);
@@ -151,14 +153,14 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             }
         });
 
-      //  btnJoineActivity.setClickable(true);
-       /* btnJoineActivity.setOnClickListener(new View.OnClickListener() {
+    btnJoineActivity.setClickable(true);
+       btnJoineActivity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                FnJoinActivvity();
-                getActivity().finish();}
+           public void onClick(View v) {
+               FnJoinActivvity();
+               getActivity().finish();}
         });
-*/
+
 
 
         updatetext.setClickable(true);

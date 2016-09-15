@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,6 +92,7 @@ public class Screen3a extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen3aa);
+       // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -375,12 +375,7 @@ public class Screen3a extends AppCompatActivity {
                     } else {
                         Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters", Toast.LENGTH_SHORT);
                         View view = toast.getView();
-                        InputMethodManager inputManager =
-                                (InputMethodManager) context.
-                                        getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputManager.hideSoftInputFromWindow(
-                                this.getCurrentFocus().getWindowToken(),
-                                InputMethodManager.HIDE_NOT_ALWAYS);
+
                         view.setBackgroundResource(R.drawable.smallbox1);
                         TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                         col.setTextColor(Color.RED);
@@ -389,12 +384,7 @@ public class Screen3a extends AppCompatActivity {
                 } else {
                     Toast toast = Toast.makeText(Screen3a.this, "Please choose a photo", Toast.LENGTH_SHORT);
                     View view = toast.getView();
-                    InputMethodManager inputManager =
-                            (InputMethodManager) context.
-                                    getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputManager.hideSoftInputFromWindow(
-                            this.getCurrentFocus().getWindowToken(),
-                            InputMethodManager.HIDE_NOT_ALWAYS);
+
                     view.setBackgroundResource(R.drawable.smallbox1);
                     TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                     col.setTextColor(Color.RED);

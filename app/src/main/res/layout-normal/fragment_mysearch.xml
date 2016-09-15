@@ -47,7 +47,7 @@
         android:layout_height="91dp"
         android:background="@drawable/box"
         android:id="@+id/relativelayout_seek"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="45dp"
         android:layout_gravity="center_horizontal|top">
 
 
@@ -91,6 +91,7 @@
         android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:background="@drawable/bigbox"
+        android:layout_marginTop="8dp"
         android:id="@+id/relativelayout_checkbox"
         android:gravity="center_horizontal|left"
 

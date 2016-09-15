@@ -88,6 +88,7 @@ public class Screen16 extends AppCompatActivity implements
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen16);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
 
@@ -118,7 +119,6 @@ public class Screen16 extends AppCompatActivity implements
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
-                finish();
             }
         });
 

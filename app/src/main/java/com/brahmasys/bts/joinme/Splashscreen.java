@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.brahmasys.bts.joinme.R;
-
 public class Splashscreen extends Activity{
     private SessionManager session;
     @Override
@@ -13,6 +11,7 @@ public class Splashscreen extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         session = new SessionManager(getApplicationContext());
+        //getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Thread timerThread = new Thread(){
             public void run(){
                 try{
@@ -50,4 +49,6 @@ public class Splashscreen extends Activity{
         super.onPause();
         finish();
     }
-}
+
+    }
+
