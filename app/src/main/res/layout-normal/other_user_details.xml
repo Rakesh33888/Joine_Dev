@@ -128,14 +128,14 @@
                     android:layout_alignStart="@+id/frameLayout5">
 
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="47dp"
+                        android:layout_height="36dp"
                         android:id="@+id/imageViewrfting"
                         android:foregroundGravity="center|left"
 
                         android:layout_marginLeft="10dp"
                         android:layout_gravity="left|center_vertical" />
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="80dp"
@@ -145,23 +145,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/acitvityname"
+                            android:singleLine="true"
+
                             android:layout_gravity="center_vertical"
-                            android:textSize="18dp"
+                            android:textSize="16sp"
                             android:layout_weight="1"
                             android:textColor="#FFFBFB"
                             android:text="Rafting"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Today at 17:00"
-                            android:textSize="16dp"
-                            android:layout_weight="1"
-                            android:id="@+id/timetextview"
-                            android:textColor="#FFFBFB"
-                            android:layout_gravity="center_vertical"
-
-                            />
-                    </LinearLayout>
+                    </FrameLayout>
 
 
 
@@ -169,12 +160,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/distancefromnearby"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="55dp"
                         android:textSize="12dp"
                         android:textColor="#FFFBFB"
+                        android:singleLine="true"
                         android:layout_marginLeft="80dp"
                         android:text="1 Km away at River Mersey,England"
                         android:layout_gravity="left" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Today at 17:00"
+                        android:textSize="14sp"
+                        android:singleLine="true"
+
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="7dp"
+                        android:id="@+id/timetextview"
+                        android:textColor="#FFFBFB"
+                        android:layout_gravity="right|center_vertical"
+
+                        />
 
                 </FrameLayout>
                 <FrameLayout
@@ -204,6 +211,7 @@
                         android:layout_marginLeft="79dp"
                         android:layout_marginTop="15dp"
                         android:textColor="#FFFBFB"
+                        android:singleLine="true"
                         android:textSize="16dp"
                         android:id="@+id/owner_name"
                         android:layout_gravity="left|top" />
@@ -226,6 +234,7 @@
                         android:layout_height="wrap_content"
                         android:text="13 reviews"
                         android:layout_marginLeft="30dp"
+                        android:singleLine="true"
                         android:layout_marginTop="10dp"
                         android:textColor="#D8CEC5"
                         android:id="@+id/reviews"
@@ -246,11 +255,11 @@
                     android:layout_below="@+id/createrprlfram">
 
                     <ImageView
-                        android:layout_width="21dp"
-                        android:layout_height="19dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/peoples"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginLeft="19dp"
+                        android:layout_marginTop="19dp"
                         android:src="@drawable/peoples"
                         android:layout_gravity="left|top" />
 
@@ -264,6 +273,7 @@
                             android:layout_height="wrap_content"
                             android:text="Up to 6 People:"
                             android:id="@+id/uptopeoples"
+                            android:singleLine="true"
                             android:textSize="14dp"
                             android:textColor="#FFFBFB"
 
@@ -276,16 +286,17 @@
                             android:text="Currently have 3"
                             android:textColor="#FFFBFB"
                             android:textSize="14dp"
+                            android:singleLine="true"
                             android:layout_marginLeft="5dp"
                             android:id="@+id/currentpeoples"
                             android:layout_gravity="center_vertical|right" />
                     </LinearLayout>
                     <ImageView
-                        android:layout_width="21dp"
-                        android:layout_height="19dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/moneyicon"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="42dp"
+                        android:layout_marginLeft="19dp"
+                        android:layout_marginTop="45dp"
                         android:src="@drawable/money"
                         android:layout_gravity="left" />
 
@@ -295,17 +306,18 @@
                         android:text="Cost $67"
                         android:textColor="#FFFBFB"
                         android:textSize="14dp"
+                        android:singleLine="true"
                         android:layout_marginTop="42dp"
                         android:layout_marginLeft="40dp"
                         android:id="@+id/costtext"
                         android:layout_gravity="left|top" />
 
                     <ImageView
-                        android:layout_width="21dp"
-                        android:layout_height="19dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/clockicon"
                         android:src="@drawable/clock"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="23dp"
                         android:layout_marginTop="75dp"
                         android:layout_gravity="left|top" />
 
@@ -315,8 +327,9 @@
                         android:text="Takes 2 hours,"
                         android:id="@+id/timetext"
                         android:textSize="14dp"
+                        android:singleLine="true"
                         android:layout_marginLeft="40dp"
-                        android:layout_marginTop="75dp"
+                        android:layout_marginTop="70dp"
                         android:textColor="#FFFBFB"
                         android:layout_gravity="left|top" />
 
@@ -324,7 +337,7 @@
                 </FrameLayout>
 
                 <Button
-                    android:layout_width="159dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/joinactivity"
                     android:id="@+id/button6"
