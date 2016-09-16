@@ -153,6 +153,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/editText5"
                 android:hint="Type here"
+                android:background="@drawable/edittext_style"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_weight="6.14"

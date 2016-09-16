@@ -5,13 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,11 +33,18 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -288,6 +292,7 @@ public class Screen16 extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
+                msg.setBackgroundResource(R.drawable.colourbubble);
                 fragmentManager=getSupportFragmentManager();
                 Messagescreen messagescreen=new Messagescreen();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
@@ -298,6 +303,9 @@ public class Screen16 extends AppCompatActivity implements
 
             }
         });
+
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);

@@ -529,7 +529,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_below="@+id/enter_discription">
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/createbutton"
                     android:text="Create"

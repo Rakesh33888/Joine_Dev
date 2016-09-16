@@ -150,7 +150,7 @@
                 android:layout_width="306dp"
                 android:layout_height="match_parent"
                 android:id="@+id/editText5"
-
+                android:background="@drawable/edittext_style"
                 android:hint="Type here"
                 android:layout_marginLeft="10dp" />
 
