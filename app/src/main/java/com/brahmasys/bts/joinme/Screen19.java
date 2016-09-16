@@ -1,11 +1,13 @@
 package com.brahmasys.bts.joinme;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -36,6 +39,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,6 +48,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +72,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -129,7 +135,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
     public static final int PICK_IMAGE2 = 2;
     public static final int PICK_IMAGE3 = 3;
     String imgPath;
-    ProgressDialog prog;
+    boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
     @Nullable
     @Override
@@ -149,12 +155,6 @@ public class Screen19 extends android.support.v4.app.Fragment {
             longitude2 = Double.parseDouble(lat_lng.getString("lng","0.0"));
 //          pd = new ProgressDialog(getActivity());
 //          pd.setMessage("Creating....");
-
-        prog= new ProgressDialog(getActivity());//Assuming that you are using fragments.
-        prog.setTitle("pleaseWait...");
-        prog.setCancelable(false);
-        prog.setIndeterminate(true);
-        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
 
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
@@ -457,29 +457,57 @@ public class Screen19 extends android.support.v4.app.Fragment {
         firstimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, ""), PICK_IMAGE1);
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE1);
             }
         });
         secondimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent();
-                intent1.setType("image/*");
-                intent1.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent1, ""), PICK_IMAGE2);
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE2);
 
             }
         });
         thirdimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent();
-                intent2.setType("image/*");
-                intent2.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent2, ""), PICK_IMAGE3);
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE3);
 
             }
         });
@@ -719,10 +747,10 @@ public class Screen19 extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
 
-                prog.show();
+
                 if (edittextactivityname.getText().toString().length() >= 2) {
                     if (enterdiscription.getText().toString().length() >= 10) {
-                        prog.show();
+
                         int int_month = 0;
                         year = spinnerforyear.getSelectedItem().toString();
                         month = spinnerformonth.getSelectedItem().toString();
@@ -902,8 +930,6 @@ public class Screen19 extends android.support.v4.app.Fragment {
                                         .commit();
                                 Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
 
-                                prog.dismiss();
-
 
                             }
                         } catch (JSONException e) {
@@ -920,7 +946,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
             }
         });
 
-
+        new Marshmallow_Permissions().verifyStoragePermissions(getActivity());
 
         return v;
     }
@@ -946,112 +972,48 @@ public class Screen19 extends android.support.v4.app.Fragment {
         return imgPath;
     }
 
+
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode != Activity.RESULT_CANCELED) {
+        if (isKitKat && resultCode != Activity.RESULT_CANCELED) {
 
-            String uri = getAbsolutePath(data.getData());
+            String uri = new ImagePath().getPath(getContext(), data.getData());
+
+
             if (requestCode == PICK_IMAGE1) {
                 selectedImagePath = uri;
-                firstimage.setImageBitmap(decodeFile(selectedImagePath));
+                firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
 
             }
-//            if (requestCode == PICK_IMAGE2) {
-//                selectedImagePath2 = uri;
-//                secondimage.setImageBitmap(decodeFile(selectedImagePath2));
-//            }
-//            if (requestCode == PICK_IMAGE3) {
-//                selectedImagePath3 = uri;
-//                thirdimage.setImageBitmap(decodeFile(selectedImagePath3));
-//            }
-//            else {
-//                super.onActivityResult(requestCode, resultCode, data);
-//            }
-
-
-        }
-        if (resultCode != Activity.RESULT_CANCELED) {
-
-            String uri = getAbsolutePath(data.getData());
             if (requestCode == PICK_IMAGE2) {
                 selectedImagePath2 = uri;
-                secondimage.setImageBitmap(decodeFile(selectedImagePath2));
+                secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
             }
-
-        }
-
-        if (resultCode != Activity.RESULT_CANCELED) {
-
-            String uri = getAbsolutePath(data.getData());
             if (requestCode == PICK_IMAGE3) {
                 selectedImagePath3 = uri;
-                thirdimage.setImageBitmap(decodeFile(selectedImagePath3));
+                thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
+            } else {
+                super.onActivityResult(requestCode, resultCode, data);
             }
-//            else {
-//                super.onActivityResult(requestCode, resultCode, data);
-//            }
+
+
         }
     }
-
-
-    public Bitmap decodeFile(String path) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, o);
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 70;
-
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE && o.outHeight / scale / 2 >= REQUIRED_SIZE)
-                scale *= 2;
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeFile(path, o2);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
-
-    public String getAbsolutePath(Uri uri) {
-        String[] projection = { MediaStore.MediaColumns.DATA };
-        @SuppressWarnings("deprecation")
-        Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } else
-            return null;
-    }
-
-
 
     private void doFileUpload(){
-        prog.show();
-        File file1 = new File(selectedImagePath);
-        File file2 = new File(selectedImagePath2);
-        File file3 = new File(selectedImagePath3);
+
         String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
         for (int i=0;i<3;i++) {
             String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id1;
             try {
                 org.apache.http.client.HttpClient client = new DefaultHttpClient();
                 HttpPost post = new HttpPost(urlString);
-                FileBody bin1 = new FileBody(file1);
-                FileBody bin2 = new FileBody(file2);
-                FileBody bin3 = new FileBody(file3);
 
                 MultipartEntity reqEntity = new MultipartEntity();
                 reqEntity.addPart("uploadedfile1", new FileBody(new File(paths[i])));
-               // reqEntity.addPart("uploadedfile2", new FileBody(file2));
-               // reqEntity.addPart("uploadedfile3", new FileBody(file3));
+
 
                 post.setEntity(reqEntity);
                 HttpResponse response = client.execute(post);
@@ -1062,10 +1024,8 @@ public class Screen19 extends android.support.v4.app.Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
                             try {
-                                prog.dismiss();
-                                //    res.setTextColor(Color.GREEN);
-                                //    res.setText("n Response from server : n " + response_str);
-                                //    Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
+
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
