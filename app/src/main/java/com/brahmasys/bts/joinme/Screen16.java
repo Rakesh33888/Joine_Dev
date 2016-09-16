@@ -1,11 +1,14 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -63,7 +66,7 @@ public class Screen16 extends AppCompatActivity implements
     private SwipeStackAdapter mAdapter;
     private ArrayAdapter<Book> adapter;
     Context context;
-
+    boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
@@ -92,6 +95,7 @@ public class Screen16 extends AppCompatActivity implements
 Screen19 screen19_fragment;
     TextView name_activity,time_activity,distance_activity;
     List<String> activity_name,distance,time,activity_id,userid_other;
+    ProgressDialog pd;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +103,8 @@ Screen19 screen19_fragment;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
 
+        pd = new ProgressDialog(Screen16.this);
+        pd.setMessage("Uploading...");
 
 
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
@@ -141,10 +147,7 @@ Screen19 screen19_fragment;
         context=this;
         setListViewAdapter();
 
-
-
-
-
+     Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
 
     }
 
@@ -305,10 +308,24 @@ Screen19 screen19_fragment;
         navtextview = (TextView) header.findViewById(R.id.navtextview);
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
         editbutton= (Button) header.findViewById(R.id.editbutton);
+
+
         editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery(SELECT_FILE1);
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE1);
 
 
             }
@@ -347,6 +364,7 @@ Screen19 screen19_fragment;
         }
         navigationView.setNavigationItemSelectedListener(this);
         navimage.setClickable(true);
+
         navimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -571,14 +589,14 @@ Screen19 screen19_fragment;
     }
 
 
-    public void openGallery(int req_code){
-
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
-    }
-
+//    public void openGallery(int req_code){
+//
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
+//    }
+//
 
     public  void Member_add_to_Group()
     {
@@ -636,29 +654,22 @@ Screen19 screen19_fragment;
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(screen19_fragment != null) {
-
-
             screen19_fragment.onActivityResult(requestCode, resultCode, data);
         }else {
 
-            if (resultCode == RESULT_OK) {
-                Uri selectedImageUri = data.getData();
+
+            if (isKitKat && resultCode != Activity.RESULT_CANCELED) {
+
+                String uri = new ImagePath().getPath(Screen16.this, data.getData());
+
+
                 if (requestCode == SELECT_FILE1) {
+                    pd.show();
+                    selectedPath1 = uri;
+                    navimage.setImageBitmap(new DecodeImage().decodeFile(selectedPath1));
 
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                        navimage.setImageBitmap(bitmap);
-
-                    } catch (IOException e) {
-
-                    }
-
-                    selectedPath1 = getPath(selectedImageUri);
-                    System.out.println("selectedPath1 : " + selectedPath1);
                 }
-
                 Thread thread = new Thread(new Runnable() {
                     public void run() {
                         doFileUpload();
@@ -670,17 +681,12 @@ Screen19 screen19_fragment;
                     }
                 });
                 thread.start();
+             }
 
-            }
         }
     }
-    public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
+
+
 
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
@@ -697,43 +703,45 @@ Screen19 screen19_fragment;
 
     private void doFileUpload(){
 
-//        File file1 = new File(selectedPath1);
-//
-//        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/"+user_id.getString("userid","null");
-//        try
-//        {
-//            org.apache.http.client.HttpClient client = new DefaultHttpClient();
-//            HttpPost post = new HttpPost(urlString);
-//            FileBody bin1 = new FileBody(file1);
-//
-//            MultipartEntity reqEntity = new MultipartEntity();
-//            reqEntity.addPart("uploadedfile1", bin1);
-//
-//            reqEntity.addPart("user", new StringBody("User"));
-//            post.setEntity(reqEntity);
-//            HttpResponse response = client.execute(post);
-//            resEntity = response.getEntity();
-//            final String response_str = EntityUtils.toString(resEntity);
-//            if (resEntity != null) {
-//                Log.i("RESPONSE",response_str);
-//                runOnUiThread(new Runnable(){
-//                    public void run() {
-//                        try {
-//
-//
-//                            //    res.setTextColor(Color.GREEN);
-//                            //    res.setText("n Response from server : n " + response_str);
-//                           Toast.makeText(getApplicationContext(),"Updated Successfully", Toast.LENGTH_LONG).show();
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }
-//        }
-//        catch (Exception ex){
-//            Log.e("Debug", "error: " + ex.getMessage(), ex);
-//        }
+        File file1 = new File(selectedPath1);
+
+        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/"+user_id.getString("userid","null");
+        try
+        {
+            org.apache.http.client.HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(urlString);
+            FileBody bin1 = new FileBody(file1);
+
+            MultipartEntity reqEntity = new MultipartEntity();
+            reqEntity.addPart("uploadedfile1", bin1);
+
+            reqEntity.addPart("user", new StringBody("User"));
+            post.setEntity(reqEntity);
+            HttpResponse response = client.execute(post);
+            resEntity = response.getEntity();
+            final String response_str = EntityUtils.toString(resEntity);
+            if (resEntity != null) {
+                Log.i("RESPONSE",response_str);
+                runOnUiThread(new Runnable(){
+                    public void run() {
+                        try {
+
+
+                            //    res.setTextColor(Color.GREEN);
+                            //    res.setText("n Response from server : n " + response_str);
+                            pd.hide();
+                            pd.dismiss();
+                           Toast.makeText(getApplicationContext(),"Updated Successfully", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }
+        catch (Exception ex){
+            Log.e("Debug", "error: " + ex.getMessage(), ex);
+        }
     }
 
 }

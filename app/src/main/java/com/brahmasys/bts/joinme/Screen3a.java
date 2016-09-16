@@ -2,6 +2,7 @@ package com.brahmasys.bts.joinme;
 
 import android.Manifest;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -69,7 +71,7 @@ public class Screen3a extends AppCompatActivity {
     String gender;
     int select_image;
     String deviceuid,device_type="android",registration_type="normal",device_token="";
-
+    boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
 
     private static final int SELECT_FILE1 = 1;
@@ -91,6 +93,7 @@ public class Screen3a extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen3aa);
+        Marshmallow_Permissions.verifyStoragePermissions(Screen3a.this);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -170,7 +173,21 @@ public class Screen3a extends AppCompatActivity {
         circle_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery(SELECT_FILE1);
+
+
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE1);
 
             }
         });
@@ -397,38 +414,33 @@ public class Screen3a extends AppCompatActivity {
     }
 
 
-    public void openGallery(int req_code){
-
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select file to upload "), req_code);
-    }
+//    public void openGallery(int req_code){
+//
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent,"Select file to upload "), req_code);
+//    }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            if (requestCode == SELECT_FILE1)
-            {
 
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    circle_image.setImageBitmap(bitmap);
-                    select_image =1;
-                } catch (IOException e) {
+        if (isKitKat && resultCode != Activity.RESULT_CANCELED) {
 
-                }
+            String uri = new ImagePath().getPath(Screen3a.this, data.getData());
 
-                selectedPath1 = getPath(selectedImageUri);
-                System.out.println("selectedPath1 : " + selectedPath1);
+
+            if (requestCode == SELECT_FILE1) {
+
+                selectedPath1 = uri;
+                circle_image.setImageBitmap(new DecodeImage().decodeFile(selectedPath1));
+                select_image =1;
             }
-
-            Thread thread=new Thread(new Runnable(){
-                public void run(){
+            Thread thread = new Thread(new Runnable() {
+                public void run() {
                     doFileUpload();
-                    runOnUiThread(new Runnable(){
+                    runOnUiThread(new Runnable() {
                         public void run() {
 
                         }
@@ -436,8 +448,43 @@ public class Screen3a extends AppCompatActivity {
                 }
             });
             thread.start();
-
         }
+
+
+
+
+
+
+//        if (resultCode == RESULT_OK) {
+//            Uri selectedImageUri = data.getData();
+//            if (requestCode == SELECT_FILE1)
+//            {
+//
+//                try {
+//                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+//                    circle_image.setImageBitmap(bitmap);
+//                    select_image =1;
+//                } catch (IOException e) {
+//
+//                }
+//
+//                selectedPath1 = getPath(selectedImageUri);
+//                System.out.println("selectedPath1 : " + selectedPath1);
+//            }
+//
+//            Thread thread=new Thread(new Runnable(){
+//                public void run(){
+//                    doFileUpload();
+//                    runOnUiThread(new Runnable(){
+//                        public void run() {
+//
+//                        }
+//                    });
+//                }
+//            });
+//            thread.start();
+
+//        }
     }
     public String getPath(Uri uri) {
         String[] projection = { MediaStore.Images.Media.DATA };
