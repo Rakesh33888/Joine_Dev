@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="8dp">
+            android:layout_marginLeft="7dp">
             <com.brahmasys.bts.joinme.Expandable_GridView
                 android:id="@+id/group_grid"
                 android:layout_width="fill_parent"
@@ -62,12 +62,17 @@
                 android:stretchMode="columnWidth"
                 android:focusable="true"
                 android:clickable="true"/>
+
             <Button
-                android:layout_width="155dp"
-                android:layout_height="161dp"
+                android:layout_width="172dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="left"
                 android:background="@drawable/createalbum"
                 android:id="@+id/createnewactivity"
-                android:layout_marginRight="15dp"/>
+                />
+
         </LinearLayout>
     </ScrollView>
 

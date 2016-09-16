@@ -70,6 +70,7 @@ public class Screen3a extends AppCompatActivity {
     Spinner day,month,year;
     String gender;
     int select_image;
+    Context context;
     String deviceuid,device_type="android",registration_type="normal",device_token="";
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
@@ -93,7 +94,11 @@ public class Screen3a extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen3aa);
+<<<<<<< HEAD
         Marshmallow_Permissions.verifyStoragePermissions(Screen3a.this);
+=======
+       // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+>>>>>>> origin/master
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -217,6 +222,12 @@ public class Screen3a extends AppCompatActivity {
 
 
         continue_btn.setOnClickListener(new View.OnClickListener() {
+            private View currentFocus;
+
+            public View getCurrentFocus() {
+                return currentFocus;
+            }
+
             @Override
             public void onClick(View v) {
                 if (select_image == 1) {
@@ -240,19 +251,19 @@ public class Screen3a extends AppCompatActivity {
                         JSONObject jsonObjSend = new JSONObject();
                         try {
                             // Add key/value pairs
-                            jsonObjSend.put("confermationcode",conformation_code.getText().toString());
+                            jsonObjSend.put("confermationcode", conformation_code.getText().toString());
                             jsonObjSend.put("deviceid", deviceuid);
                             jsonObjSend.put("device_token", device_token);
                             jsonObjSend.put("device_type", device_type);
-                            jsonObjSend.put("discription",share.getText().toString());
-                            jsonObjSend.put("dob",birth);
-                            jsonObjSend.put("fname",firstname.getText().toString());
-                            jsonObjSend.put("gender",gender);
-                            jsonObjSend.put("lat",latitude);
-                            jsonObjSend.put("lname",lastname.getText().toString());
-                            jsonObjSend.put("lon",longitude);
-                            jsonObjSend.put("registration_type",registration_type);
-                            jsonObjSend.put("userid",user_id.getString("userid","null"));
+                            jsonObjSend.put("discription", share.getText().toString());
+                            jsonObjSend.put("dob", birth);
+                            jsonObjSend.put("fname", firstname.getText().toString());
+                            jsonObjSend.put("gender", gender);
+                            jsonObjSend.put("lat", latitude);
+                            jsonObjSend.put("lname", lastname.getText().toString());
+                            jsonObjSend.put("lon", longitude);
+                            jsonObjSend.put("registration_type", registration_type);
+                            jsonObjSend.put("userid", user_id.getString("userid", "null"));
                             //  hideDialog();
                             Log.i(TAG, jsonObjSend.toString(13));
 
@@ -373,14 +384,7 @@ public class Screen3a extends AppCompatActivity {
                                         });
 
 
-
-
-
-
-
-                            }
-                            else
-                            {
+                            } else {
                                 Toast.makeText(Screen3a.this, str_value, Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
@@ -388,22 +392,19 @@ public class Screen3a extends AppCompatActivity {
                         }
 
 
-
-
-
-
                     } else {
                         Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters", Toast.LENGTH_SHORT);
                         View view = toast.getView();
+
                         view.setBackgroundResource(R.drawable.smallbox1);
                         TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                         col.setTextColor(Color.RED);
                         toast.show();
                     }
-                }else
-                {
+                } else {
                     Toast toast = Toast.makeText(Screen3a.this, "Please choose a photo", Toast.LENGTH_SHORT);
                     View view = toast.getView();
+
                     view.setBackgroundResource(R.drawable.smallbox1);
                     TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                     col.setTextColor(Color.RED);

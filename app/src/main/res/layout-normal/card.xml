@@ -22,14 +22,14 @@
     <android.support.v7.widget.CardView
         android:layout_height="220dp"
         android:layout_width="match_parent"
-        android:background="@drawable/smallbox1"
+
         android:layout_marginTop="240dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="65dp"
-        android:background="#B8BAB5"
+        android:background="#ebebeb"
         android:layout_below="@+id/swipeStack"
         android:id="@+id/frameLayout2"
         android:layout_alignEnd="@+id/swipeStack"
@@ -47,10 +47,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Rafting"
+            android:singleLine="true"
             android:id="@+id/textView14"
             android:layout_marginLeft="65dp"
-            android:textSize="14dp"
-            android:textColor="#F9FDFD"
+            android:textSize="16dp"
+            android:textColor="#FFF"
             android:layout_gravity="left|center" />
 
         <TextView
@@ -59,9 +60,10 @@
             android:paddingBottom="15dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:textSize="12dp"
+            android:textSize="13dp"
+            android:singleLine="true"
             android:paddingStart="35dp"
-            android:textColor="#F9FDFD"
+            android:textColor="#FFF"
             android:layout_marginRight="12dp"
             android:id="@+id/textView15"
             android:layout_marginTop="9dp"
@@ -72,11 +74,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text1"
-            android:textSize="12dp"
+            android:textSize="13dp"
             android:layout_marginRight="12dp"
+            android:singleLine="true"
             android:paddingStart="35dp"
             android:paddingTop="7dp"
-            android:textColor="#F9FDFD"
+            android:textColor="#FFF"
             android:id="@+id/textView16"
             android:layout_gravity="right|top" />
     </FrameLayout>

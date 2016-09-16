@@ -461,7 +461,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:hint="0"
-
+                    android:singleLine="true"
                     android:inputType="numberDecimal"
                     android:paddingStart="7dp"
                     android:background="@drawable/edittext_style"
@@ -513,6 +513,7 @@
                     android:layout_marginLeft="15dp"
                     android:hint="-"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:id="@+id/numbrlimitbtn"
                     android:inputType="number"
                     android:maxLength="4"

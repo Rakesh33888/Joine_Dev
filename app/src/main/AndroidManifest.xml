@@ -36,7 +36,8 @@
         <activity
             android:name="com.brahmasys.bts.joinme.Splashscreen"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,6 +47,7 @@
         <activity
             android:name="com.brahmasys.bts.joinme.MainActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,8 +59,10 @@
             android:name="com.brahmasys.bts.joinme.Screen16"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_screen16"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.brahmasys.bts.joinme.Screen3a"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait"/>
 
         <receiver
