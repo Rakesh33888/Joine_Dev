@@ -60,8 +60,9 @@ public class Screen16 extends AppCompatActivity implements
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
     TextView navtextview;
-     public ImageView shareicon;
+     public static ImageView shareicon;
     LinearLayout backlayoutdrawer;
+    LinearLayout shareiconlayout;
     Button editbutton;
     ImageView create,like,dislike,btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
@@ -108,19 +109,6 @@ public class Screen16 extends AppCompatActivity implements
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
 
-        shareicon= (ImageView) findViewById(R.id.shareicon);
-        shareicon.setVisibility(View.VISIBLE);
-
-        shareicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
 
 
         activity_url = new ArrayList<String>();
@@ -241,6 +229,22 @@ public class Screen16 extends AppCompatActivity implements
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+        //shareiconlayout= (LinearLayout) toolbar.findViewById(R.id.shareiconlayout);
+        shareicon= (ImageView)toolbar. findViewById(R.id.shareicon);
+
+            shareicon.setVisibility(shareicon.VISIBLE);
+
+        shareicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
+
 
 
         like = (ImageView) findViewById(R.id.like);

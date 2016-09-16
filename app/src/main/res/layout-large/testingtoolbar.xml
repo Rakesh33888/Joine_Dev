@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -25,14 +26,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center">
         </include>
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/shareicon"
-            android:src="@drawable/share"
-            android:visibility="gone"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_gravity="right|center" />
+            android:id="@+id/shareiconlayout"
+            android:layout_gravity="right|center" >
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/share"
+                android:id="@+id/shareicon"
+                android:visibility="gone"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right|center"
+                />
+        </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 

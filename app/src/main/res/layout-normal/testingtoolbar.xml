@@ -23,6 +23,7 @@
             android:layout_gravity="right|center">
 
         </include>
+
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -30,7 +31,9 @@
             android:id="@+id/shareicon"
             android:visibility="gone"
             android:layout_marginRight="10dp"
-            android:layout_gravity="right|center" />
+            android:layout_gravity="right|center"
+            />
+
     </android.support.v7.widget.Toolbar>
 
 </LinearLayout>
