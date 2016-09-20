@@ -88,6 +88,19 @@ public class Single_group_Message extends Fragment    {
 
         owner   = (CircularImageView) v.findViewById(R.id.hosted);
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage);
+        createrimage.setClickable(true);
+        createrimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Screen17 screen17 = new Screen17();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.flContent,screen17);
+//                fragmentTransaction.addToBackStack(null);
+//                //fragmentTransaction.setCustomAnimations(R.anim.trans_left_in, R.anim.trans_left_out);
+//                fragmentTransaction.commit();
+            }
+        });
         tvActivityName= (TextView) v.findViewById(R.id.textView25);
         tvActivityTime= (TextView) v.findViewById(R.id.textView26);
         tvleave_chat= (TextView) v.findViewById(R.id.leave_chat);

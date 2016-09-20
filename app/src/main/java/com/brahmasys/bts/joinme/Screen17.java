@@ -270,6 +270,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 costtext.setText("Cost " + cost);
                                 timetext.setText("Takes " + duration + "  hours");
 
+
                               //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
                                 Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).into(icon);
                                 Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).into(createrimage);

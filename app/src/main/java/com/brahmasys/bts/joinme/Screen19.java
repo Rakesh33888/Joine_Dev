@@ -1,37 +1,24 @@
 package com.brahmasys.bts.joinme;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,7 +26,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,7 +34,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +49,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -72,8 +56,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -236,8 +218,10 @@ public class Screen19 extends android.support.v4.app.Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
+
                 for (int i=0;i<allurl.size();i++)
                 {
+
                     if (i==spinnericon.getSelectedItemPosition())
                     {
 
@@ -952,7 +936,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
     }
 
     private void setListViewAdapter() {
-        books = new ArrayList<Book>();
+       books = new ArrayList<Book>();
         adapter = new IconAdapter(getActivity(), R.layout.icon_image, books);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnericon.setAdapter(adapter);
