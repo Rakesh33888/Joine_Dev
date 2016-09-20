@@ -117,13 +117,15 @@
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                   >
 
                     <Spinner
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:id="@+id/spinner_day"
                         android:spinnerMode="dropdown"
+                       android:gravity="center"
                         android:layout_marginStart="33dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true" >
@@ -131,10 +133,11 @@
 
 
                     <Spinner
-                        android:layout_width="65dp"
+                        android:layout_width="75dp"
                         android:layout_height="match_parent"
                         android:id="@+id/spinner_month"
                         android:spinnerMode="dropdown"
+                        android:gravity="center"
                         android:layout_gravity="center"
                         android:layout_alignParentTop="true"
                         android:layout_toEndOf="@+id/spinner_day">
@@ -142,10 +145,11 @@
                     </Spinner>
 
                     <Spinner
-                        android:layout_width="70dp"
+                        android:layout_width="75dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/spinner_year"
+                        android:gravity="center"
                         android:spinnerMode="dropdown"
                         android:layout_alignParentTop="true"
                         android:layout_toEndOf="@+id/spinner_month">
@@ -155,9 +159,10 @@
                         android:layout_width="35dp"
                         android:layout_height="match_parent"
                         android:id="@+id/spinner_hour"
+                        android:gravity="center"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="19dp"
+                        android:layout_marginEnd="17dp"
                         android:layout_toEndOf="@+id/spinner_year">
                     </Spinner>
                 </RelativeLayout>
@@ -336,6 +341,7 @@
 
                            android:id="@+id/textViewfor_gender"
                              />
+
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -353,6 +359,7 @@
                             android:layout_height="wrap_content"
                             android:text="Men"
                             android:scaleX="0.65"
+
                             android:textSize="21dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="12dp"
@@ -360,6 +367,7 @@
                             android:scaleY="0.65"
                             android:id="@+id/checkBoxformen"
                             />
+
                          </LinearLayout>
 
                 <LinearLayout
@@ -533,7 +541,7 @@
                 android:layout_marginBottom="20dp"
                  android:layout_below="@+id/enter_discription">
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/createbutton"
                     android:text="Create"

@@ -21,16 +21,18 @@
             android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center">
+        </include>
+
+        <include layout="@layout/share_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="10dp"
+            >
 
         </include>
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/share"
-            android:id="@+id/shareicon"
-            android:visibility="gone"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right|center" />
+
+
     </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

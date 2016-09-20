@@ -167,8 +167,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                app:kswTintColor="#076c3c"
-                app:kswThumbColor="#939393" />
+                app:kswBackColor="#CDCBCB"
+                app:kswTintColor="#CDCBCB"
+                app:kswThumbColor="#3AA16B" />
         </RelativeLayout>
 
         <RelativeLayout
