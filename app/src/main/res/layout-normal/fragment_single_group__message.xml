@@ -16,7 +16,7 @@
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:id="@+id/createrimage"
+            android:id="@+id/createrimage1"
             android:layout_margin="10dp"
             android:src="@drawable/butterfly"/>
 
@@ -27,8 +27,8 @@
             android:text="Rafting"
             android:textColor="#ffffff"
             android:id="@+id/textView25"
-            android:layout_alignTop="@+id/createrimage"
-            android:layout_toEndOf="@+id/createrimage" />
+            android:layout_alignTop="@+id/createrimage1"
+            android:layout_toEndOf="@+id/createrimage1" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/createrimage"
+            android:layout_below="@+id/createrimage1"
             android:layout_alignParentStart="true">
 
             <LinearLayout

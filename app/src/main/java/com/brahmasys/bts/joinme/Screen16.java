@@ -61,15 +61,16 @@ public class Screen16 extends AppCompatActivity implements
     private ArrayList<Book> books;
     private SwipeStackAdapter mAdapter;
     private ArrayAdapter<Book> adapter;
+    public RelativeLayout relativeLayout_share_icon;
     Context context;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-    Toolbar toolbar;
+     public Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
     TextView navtextview;
      public static ImageView shareicon;
     LinearLayout backlayoutdrawer;
-    LinearLayout shareiconlayout;
+
     Button editbutton;
     ImageView create,like,dislike,btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
@@ -236,10 +237,12 @@ public class Screen16 extends AppCompatActivity implements
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        //shareiconlayout= (LinearLayout) toolbar.findViewById(R.id.shareiconlayout);
+        relativeLayout_share_icon= (RelativeLayout) findViewById(R.id.Relativelayout_share_icon);
+
+
         shareicon= (ImageView)toolbar. findViewById(R.id.shareicon);
 
-            shareicon.setVisibility(shareicon.VISIBLE);
+        shareicon.setVisibility(View.VISIBLE);
 
         shareicon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -453,7 +456,13 @@ public class Screen16 extends AppCompatActivity implements
         dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSwipeStack.onViewSwipedToLeft();
+
+                    mSwipeStack.onViewSwipedToLeft();
+
+
+
+
+
 
 
             }
@@ -471,6 +480,7 @@ public class Screen16 extends AppCompatActivity implements
 
             }
         });
+
 
         btninfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -575,6 +585,8 @@ public class Screen16 extends AppCompatActivity implements
         Toast.makeText(this, getString(R.string.view_swiped_right, swipedElement),
                 Toast.LENGTH_SHORT).show();
         Member_add_to_Group();
+
+
     }
 
     @Override
@@ -582,6 +594,7 @@ public class Screen16 extends AppCompatActivity implements
         Book swipedElement = mAdapter.getItem(position);
         Toast.makeText(this, getString(R.string.view_swiped_left, swipedElement),
                 Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -746,6 +759,9 @@ public class Screen16 extends AppCompatActivity implements
         catch (Exception ex){
             Log.e("Debug", "error: " + ex.getMessage(), ex);
         }
+
     }
+
+
 
 }

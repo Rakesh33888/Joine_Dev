@@ -164,12 +164,15 @@
                         android:text="Rafting"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/distancefromnearby"
                         android:layout_marginTop="58dp"
                         android:textSize="20dp"
-
+                        android:minLines="1"
+                        android:maxLines="2"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginBottom="5dp"
                         android:singleLine="true"
                         android:textColor="#FFFBFB"
                         android:layout_marginLeft="85dp"

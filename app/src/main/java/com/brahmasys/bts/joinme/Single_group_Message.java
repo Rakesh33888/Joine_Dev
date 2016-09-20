@@ -28,7 +28,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,20 +84,20 @@ public class Single_group_Message extends Fragment    {
 
 
         View v = inflater.inflate(R.layout.fragment_single_group__message, container, false);
+         // v.setBackgroundResource(R.drawable.colourbubble);
 
         owner   = (CircularImageView) v.findViewById(R.id.hosted);
-        createrimage = (CircularImageView) v.findViewById(R.id.createrimage);
+        createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
         createrimage.setClickable(true);
         createrimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Screen17 screen17 = new Screen17();
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.flContent,screen17);
-//                fragmentTransaction.addToBackStack(null);
-//                //fragmentTransaction.setCustomAnimations(R.anim.trans_left_in, R.anim.trans_left_out);
-//                fragmentTransaction.commit();
+
+//                getFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.flContent, new Screen17())
+//                        .commit();
+
             }
         });
         tvActivityName= (TextView) v.findViewById(R.id.textView25);

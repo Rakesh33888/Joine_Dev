@@ -348,6 +348,10 @@
 
                         android:id="@+id/textViewfor_gender"
                         />
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -371,7 +375,7 @@
                         android:textColor="#AFAFAF"
                         android:scaleY="0.90"
                         android:id="@+id/checkBoxformen"
-                        />
+                        /></RadioGroup>
                 </LinearLayout>
 
                 <LinearLayout

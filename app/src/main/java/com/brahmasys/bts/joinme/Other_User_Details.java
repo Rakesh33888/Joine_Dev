@@ -244,13 +244,14 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                 String rating = userdetails.getString("activity_rating");
                                 String review = userdetails.getString("activity_review");
                                 String time = userdetails.getString("activity_time");
+                                String activity_address=userdetails.getString("activity_Adress");
                                 String joined = userdetails.getString("participant_joined");
                                 String icon1 = userdetails.getString("acitivity_icon");
                                 owner_id = userdetails.getString("activity_owner_id");
                                 String activity_id = userdetails.getString("activity_id");
 
                                 acitvityname.setText(activity_name);
-                                distancefromnearby.setText(distance);
+                                distancefromnearby.setText(distance+" at "+activity_address);
                                 owner_name1.setText("Created by " + owner_name);
                                 uptopeoples.setText("Up to " + limit + " peoples:");
                                 currentpeoples.setText("Currently have " + joined);

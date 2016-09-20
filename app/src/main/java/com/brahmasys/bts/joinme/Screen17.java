@@ -55,8 +55,6 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
     public static final String URL_AddMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/";
-
-
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     String lat="0",lon="0";

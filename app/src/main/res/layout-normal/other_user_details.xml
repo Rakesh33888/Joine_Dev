@@ -157,16 +157,20 @@
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/distancefromnearby"
-                        android:layout_marginTop="55dp"
+                        android:layout_marginTop="50dp"
                         android:textSize="12dp"
                         android:textColor="#FFFBFB"
-                        android:singleLine="true"
+                        android:minLines="1"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="2"
+                        android:layout_marginRight="5dp"
                         android:layout_marginLeft="80dp"
-                        android:text="1 Km away at River Mersey,England"
+                        android:text="1 Km away"
                         android:layout_gravity="left" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -175,7 +179,7 @@
                         android:textSize="14sp"
                         android:singleLine="true"
 
-                        android:layout_marginBottom="2dp"
+                        android:layout_marginBottom="6dp"
                         android:layout_marginRight="7dp"
                         android:id="@+id/timetextview"
                         android:textColor="#FFFBFB"

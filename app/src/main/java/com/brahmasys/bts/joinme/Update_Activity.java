@@ -76,6 +76,8 @@ public class Update_Activity extends android.support.v4.app.Fragment {
     String[] currency = new String[]{"$", "€"};
     String year,month,day,hour,minute;
     String availability;
+
+
     String gender="";
     String duration="0",icon = "0",title,address,age_start,age_end,cost="0",limit="0",description;
     Double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
@@ -791,7 +793,7 @@ public class Update_Activity extends android.support.v4.app.Fragment {
                         try {
                             json = new JSONObject(String.valueOf(jsonObjRecv));
                             String message = json.getString("message");
-                            if (message.equals("Updated Successfully")) {
+                            if (message.equals("The activity has been created!")) {
 
 
 
