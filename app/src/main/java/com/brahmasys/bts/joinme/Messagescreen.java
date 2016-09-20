@@ -1,8 +1,11 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,6 +40,7 @@ public class Messagescreen extends Fragment{
     SharedPreferences user_id,user_Details,user_pic,lat_lng;
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
 
+    ProgressDialog progressDialog;
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
@@ -47,6 +51,12 @@ public class Messagescreen extends Fragment{
 
         View v=inflater.inflate(R.layout.activity_messagescreen,container,false);
 
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         groups_listView = (ListView) v.findViewById(R.id.listView);
         back = (ImageView) v.findViewById(R.id.back);
         backlayoutmessge= (LinearLayout) v.findViewById(R.id.backlayoutmessge);
@@ -119,7 +129,7 @@ public class Messagescreen extends Fragment{
                                 Log.d("Type", cast.getString(i));
                             }
                             adapter.notifyDataSetChanged();
-
+                            progressDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

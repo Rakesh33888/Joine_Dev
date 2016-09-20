@@ -3,6 +3,8 @@ package com.brahmasys.bts.joinme;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -44,8 +46,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     ImageView imageView6;
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
-    Button btnJoineActivity;
-    ProgressDialog pd;
+  //  Button btnJoineActivity;
+
     LinearLayout backlayout_screen_17;
     RatingBar myratingBar;
     //Button btnJoineActivity;
@@ -62,16 +64,23 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
     String uid,aid,owner_id;
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final View v=inflater.inflate(R.layout.screen17,container,false);
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
-        btnJoineActivity= (Button) v.findViewById(R.id.button6);
+      //  btnJoineActivity= (Button) v.findViewById(R.id.button6);
         reporttext= (TextView) v.findViewById(R.id.reportactitytext);
         updatetext= (TextView) v.findViewById(R.id.updateactivitytext);
         acitvityname = (TextView) v.findViewById(R.id.acitvityname);
@@ -97,9 +106,6 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             }
         });
 
-        pd = new ProgressDialog(getActivity());
-        pd.setMessage("loading...");
-        pd.show();
 
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
@@ -151,13 +157,13 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             }
         });
 
-    btnJoineActivity.setClickable(true);
-       btnJoineActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-           public void onClick(View v) {
-               FnJoinActivvity();
-               getActivity().finish();}
-        });
+//    btnJoineActivity.setClickable(true);
+//       btnJoineActivity.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//           public void onClick(View v) {
+//               FnJoinActivvity();
+//               getActivity().finish();}
+//        });
 
 
 
@@ -269,8 +275,12 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 timetext.setText("Takes " + duration + "  hours");
 
                               //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
-                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).into(icon);
-                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).into(createrimage);
+                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly)
+                                        .resize(60, 60)
+                                        .centerCrop().into(icon);
+                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly)
+                                        .resize(60, 60)
+                                        .centerCrop().into(createrimage);
 
                                 long timestampString = Long.parseLong(time);
                                 String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
@@ -320,7 +330,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        pd.hide();
+                        progressDialog.dismiss();
                     }
                 });
         return v;
@@ -363,30 +373,30 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         transaction.commit();
     }
 
-    private void FnJoinActivvity() {
-        String userid = user_id.getString("userid", "");
-        String act_id = activity_id.getString("activity_id", "");
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(URL_AddMemberToGroup + userid + "/" + act_id,
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
-
-                    public void onSuccess(String response) {
-
-                        fragmentManager = getFragmentManager();
-                        Single_group_Message update_activity = new Single_group_Message();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.flContent, update_activity)
-                                .addToBackStack(null)
-                                .commit();
-
-                    }
-                });
-
-
-
-    }
+//    private void FnJoinActivvity() {
+//        String userid = user_id.getString("userid", "");
+//        String act_id = activity_id.getString("activity_id", "");
+//
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        client.get(URL_AddMemberToGroup + userid + "/" + act_id,
+//                new AsyncHttpResponseHandler() {
+//                    // When the response returned by REST has Http response code '200'
+//
+//                    public void onSuccess(String response) {
+//
+//                        fragmentManager = getFragmentManager();
+//                        Single_group_Message update_activity = new Single_group_Message();
+//                        fragmentManager.beginTransaction()
+//                                .replace(R.id.flContent, update_activity)
+//                                .addToBackStack(null)
+//                                .commit();
+//
+//                    }
+//                });
+//
+//
+//
+//    }
 
     private void replaceFragment(Fragment fr) {
         Fragment mygroup=new Mygroup();

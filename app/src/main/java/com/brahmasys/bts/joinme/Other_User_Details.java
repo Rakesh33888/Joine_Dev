@@ -3,6 +3,8 @@ package com.brahmasys.bts.joinme;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,7 +51,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     ImageView imageView6;
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
-    ProgressDialog pd;
+
     RatingBar myratingBar;
     LinearLayout backlayout_user_detail;
     Button btnJoineActivity;
@@ -60,7 +62,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     public static final String ACTIVITYID = "activity_id";
     public static final String URL_AddMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/";
 
-
+    ProgressDialog progressDialog;
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     String lat="0",lon="0";
@@ -73,6 +75,12 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final View v=inflater.inflate(R.layout.other_user_details,container,false);
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
@@ -102,9 +110,6 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
             }
         });
         icon = (ImageView) v.findViewById(R.id.imageViewrfting);
-        pd = new ProgressDialog(getActivity());
-        pd.setMessage("loading...");
-        pd.show();
 
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
@@ -310,7 +315,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        pd.hide();
+                        progressDialog.dismiss();
                     }
                 });
         return v;

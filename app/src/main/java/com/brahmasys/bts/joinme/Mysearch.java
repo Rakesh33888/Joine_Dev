@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -39,13 +41,13 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
     //static
     public static final String USERID = "userid";
-
+    ProgressDialog progressDialog;
 
     public static String dateSelection = "";
 
     private static final String TAG = "SaveUserPreference";
     public  static final String URL_SaveUserPreference ="http://52.37.136.238/JoinMe/User.svc/SaveUserPreference";
-    ProgressDialog pd;
+ //   ProgressDialog pd;
 
     LinearLayout linearLayout,layoutback;
     RelativeLayout relativeLayout1,relativeLayout2;
@@ -84,7 +86,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param param1 Parameter nari1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment Mysearch.
      */
@@ -112,10 +114,15 @@ public class Mysearch extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mysearch, container, false);
-
-        pd = new ProgressDialog(getActivity());
-        pd.setMessage("loading...");
-        pd.show();
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        pd = new ProgressDialog(getActivity());
+//        pd.setMessage("loading...");
+//        pd.show();
         linearLayout = (LinearLayout) v.findViewById(R.id.linearlayout);
         relativeLayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout_seek);
         relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
@@ -178,7 +185,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                                 c3.setChecked(false);
 
                             }
-                            else if (date.equals("1")) {
+                            else if (date.equals("nari1")) {
                                 c1.setChecked(false);
                                 c2.setChecked(true);
                                 c3.setChecked(false);
@@ -198,12 +205,13 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
                             }
 
-                            pd.hide();
+                           // pd.hide();
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
 
                     }});
 
@@ -247,7 +255,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                 if (v==c2){
                     c1.setChecked(false);
                     c3.setChecked(false);
-                    dateSelection = "1";
+                    dateSelection = "nari1";
                 }
 
             }
@@ -295,6 +303,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     //Calling API in this fn to save the User Preference
     public  void FnPostRequest(String distanceStr,String select_date,String user_id){
 
+        new Custom_Progress(getActivity());
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -323,7 +332,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
         try {
             json = new JSONObject(String.valueOf(jsonObjRecv));
             String result = json.getString("message");
-
+            new Custom_Progress(getActivity()).dismiss();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -381,13 +390,14 @@ public class Mysearch extends android.support.v4.app.Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-
+                   new Custom_Progress(getActivity());
                     String seekBarValue = Integer.toString(seekBar.getProgress());
                     FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                     getActivity().finish();
+                    new Custom_Progress(getActivity()).dismiss();
                     return true;
                 }
                 return false;

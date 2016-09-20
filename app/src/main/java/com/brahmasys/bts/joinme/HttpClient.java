@@ -68,7 +68,7 @@ public class HttpClient {
 				// convert content stream to a String
 				String resultString= convertStreamToString(instream);
 				instream.close();
-			 //resultString = resultString.substring(1,resultString.length()-1); // remove wrapping "[" and "]"
+			 //resultString = resultString.substring(nari1,resultString.length()-nari1); // remove wrapping "[" and "]"
 
 				// Transform the String into a JSONObject
 				JSONObject jsonObjRecv = new JSONObject(resultString);

@@ -3,6 +3,7 @@ package com.brahmasys.bts.joinme;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -69,7 +70,7 @@ public class MainActivity extends Activity  {
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng,edit_token_id,edit_profile_pic;
     String userid,social_id=" ",login_type="regular",device_token;
     Double latitude=0.0,longitude=0.0;
-
+    ProgressDialog progressDialog;
 
     int refresh=0;
     @Override
@@ -280,10 +281,10 @@ public class MainActivity extends Activity  {
                 final Dialog dialog = new Dialog(MainActivity.this);
                 // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.setContentView(R.layout.layout_xml);
+
                 dialog.show();
                 b4 = (Button) dialog.findViewById(R.id.button4);
                 final EditText email = (EditText) dialog.findViewById(R.id.editText);
@@ -298,6 +299,14 @@ public class MainActivity extends Activity  {
                                 .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
 
                         if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
+
+                            //Progress Dialog
+                            progressDialog =ProgressDialog.show(MainActivity.this, null, null, true);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setCancelable(false);
+                            progressDialog.setContentView(R.layout.custom_progress);
+                            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                             if (android.os.Build.VERSION.SDK_INT > 9) {
                                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -438,15 +447,19 @@ public class MainActivity extends Activity  {
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
-                                                        Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                                        startActivity(i);
-                                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                                        finish();
-                                                        session.setLogin(true);
-                                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
-                                                        toast.setGravity(Gravity.CENTER, 0, 0);
-                                                        toast.show();
-                                                        dialog.dismiss();
+
+
+                                                                        Intent i = new Intent(getApplicationContext(), Screen16.class);
+                                                                        startActivity(i);
+                                                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                                        finish();
+                                                                        session.setLogin(true);
+                                                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                                                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                                                        toast.show();
+                                                                        dialog.dismiss();
+                                                                        progressDialog.dismiss();
+
                                                     }
 
                                                 });
@@ -459,9 +472,11 @@ public class MainActivity extends Activity  {
                                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                                         Toast.makeText(MainActivity.this, "Please verify your account...!", Toast.LENGTH_LONG).show();
 
+                                        progressDialog.dismiss();
                                     }
                                 } else {
                                     Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -471,9 +486,11 @@ public class MainActivity extends Activity  {
                         } else
 
                         {
+                            progressDialog.dismiss();
                             Toast toast = Toast.makeText(getApplicationContext(), "Enter Credentials...! ", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
+
                         }
                     }
 
@@ -511,6 +528,12 @@ public class MainActivity extends Activity  {
                                 if (matcher.matches()) {
                                     if (pass.getText().toString().trim().length() >= 4) {
 
+                                        progressDialog =ProgressDialog.show(MainActivity.this, null, null, true);
+                                        progressDialog.setIndeterminate(true);
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.setContentView(R.layout.custom_progress);
+                                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                                         AsyncHttpClient client = new AsyncHttpClient();
                                         client.get("http://52.37.136.238/JoinMe/User.svc/CheckUserEmailAvailability/" + email.getText().toString(),
@@ -577,6 +600,7 @@ public class MainActivity extends Activity  {
                                                                         finish();
                                                                         // Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
                                                                         dialog.dismiss();
+                                                                        progressDialog.dismiss();
 
                                                                     }
                                                                 } catch (JSONException e) {
@@ -585,7 +609,7 @@ public class MainActivity extends Activity  {
 
 
                                                             } else {
-
+                                                                progressDialog.dismiss();
                                                                 Toast.makeText(getApplicationContext(), "Username already exist!", Toast.LENGTH_LONG).show();
                                                             }
 
@@ -621,13 +645,16 @@ public class MainActivity extends Activity  {
 
 
                                     } else {
+
                                         Toast.makeText(MainActivity.this, "Password must be at least 4 characters. ", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
+
                                     Toast.makeText(getApplicationContext(), "Invalid Mail Id.", Toast.LENGTH_SHORT).show();
                                 }
 
                             } else {
+
                                 Toast toast = Toast.makeText(getApplicationContext(), "Invalid connection", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();

@@ -3,6 +3,7 @@ package com.brahmasys.bts.joinme;
 import android.Manifest;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -73,7 +75,7 @@ public class Screen3a extends AppCompatActivity {
     Context context;
     String deviceuid,device_type="android",registration_type="normal",device_token="";
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
+    ProgressDialog progressDialog;
 
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
@@ -233,6 +235,12 @@ public class Screen3a extends AppCompatActivity {
                 if (select_image == 1) {
                     if (firstname.getText().toString().length() >= 2) {
 
+                        progressDialog = ProgressDialog.show(Screen3a.this, null, null, true);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setContentView(R.layout.custom_progress);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         if (male.isChecked()) {
                             gender = "male";
                         } else {
@@ -380,12 +388,15 @@ public class Screen3a extends AppCompatActivity {
                                                 startActivity(i1);
                                                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                                                 finish();
+
+                                                progressDialog.dismiss();
                                             }
                                         });
 
 
                             } else {
                                 Toast.makeText(Screen3a.this, str_value, Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -400,6 +411,7 @@ public class Screen3a extends AppCompatActivity {
                         TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                         col.setTextColor(Color.RED);
                         toast.show();
+                        progressDialog.dismiss();
                     }
                 } else {
                     Toast toast = Toast.makeText(Screen3a.this, "Please choose a photo", Toast.LENGTH_SHORT);
@@ -409,6 +421,7 @@ public class Screen3a extends AppCompatActivity {
                     TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                     col.setTextColor(Color.RED);
                     toast.show();
+
                 }
             }
         });
@@ -464,7 +477,7 @@ public class Screen3a extends AppCompatActivity {
 //                try {
 //                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
 //                    circle_image.setImageBitmap(bitmap);
-//                    select_image =1;
+//                    select_image =nari1;
 //                } catch (IOException e) {
 //
 //                }

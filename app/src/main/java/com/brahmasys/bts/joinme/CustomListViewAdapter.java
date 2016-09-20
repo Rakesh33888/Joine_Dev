@@ -26,13 +26,11 @@ import java.util.List;
 public class CustomListViewAdapter extends ArrayAdapter<Book> {
 
   public Mygroup activity;
- ProgressDialog pd;
+
     public CustomListViewAdapter(Activity activity, int resource, List<Book> books) {
         super(activity, resource, books);
          activity = activity;
-        pd = new ProgressDialog(getContext());
-        pd.setMessage("loading...");
-        pd.show();
+
     }
 
 
@@ -61,9 +59,12 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
         holder.name.setText(book.getName());
         holder.authorName.setText(book.getAuthorName());
 
-        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).into(holder.image);
+        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).placeholder(R.drawable.butterfly)
+                .resize(200, 200)
+                .centerCrop().into(holder.image);
+
         //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
-        pd.hide();
+
         return convertView;
     }
 

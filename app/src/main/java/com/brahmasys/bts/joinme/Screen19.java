@@ -16,6 +16,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -30,6 +32,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -84,7 +87,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class Screen19 extends android.support.v4.app.Fragment {
+public class Screen19 extends Fragment {
 
 
 
@@ -115,7 +118,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
     private static final String LAT_LNG = "lat_lng";
     SharedPreferences user_id,activity_id,lat_lng;
     SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
-  //  ProgressDialog pd;
+     ProgressDialog  progressDialog;
     private Integer THRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
@@ -747,9 +750,9 @@ public class Screen19 extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
 
-
                 if (edittextactivityname.getText().toString().length() >= 2) {
                     if (enterdiscription.getText().toString().length() >= 10) {
+
 
                         int int_month = 0;
                         year = spinnerforyear.getSelectedItem().toString();
@@ -868,7 +871,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
                         JSONObject jsonObjSend = new JSONObject();
                         try {
-                            jsonObjSend.put("activity_availability", availability);//1
+                            jsonObjSend.put("activity_availability", availability);//nari1
                             jsonObjSend.put("activity_description", description); //2
                             jsonObjSend.put("activity_duration", duration);       //3
                             jsonObjSend.put("activity_icon", icon);               //4
@@ -1004,6 +1007,13 @@ public class Screen19 extends android.support.v4.app.Fragment {
 
     private void doFileUpload(){
 
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
         for (int i=0;i<3;i++) {
             String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id1;
@@ -1036,6 +1046,7 @@ public class Screen19 extends android.support.v4.app.Fragment {
                 Log.e("Debug", "error: " + ex.getMessage(), ex);
             }
         }
+        progressDialog.dismiss();
     }
 
     public ContentResolver getContentResolver() {

@@ -54,7 +54,7 @@ public class Appsetting extends Fragment{
     private Button incButton,incButton1;
     private Button decButton,decButton1;
     private TextView hours,mins;
-    ProgressDialog pd;
+   // ProgressDialog pd;
     Button btnbck,btnreport,btndelt;
     ImageView imageback;
      private ListView customlistview;
@@ -69,7 +69,7 @@ public class Appsetting extends Fragment{
     Button yes,no;
     String deviceuid;
     SwitchButton switchNear;
-
+     ProgressDialog progressDialog;
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
@@ -126,9 +126,16 @@ public class Appsetting extends Fragment{
 
         View v = inflater.inflate(R.layout.fragment_appsetting, container, false);
 
-        pd = new ProgressDialog(getActivity());
-        pd.setMessage("Updating...");
-        pd.show();
+//        pd = new ProgressDialog(getActivity());
+//        pd.setMessage("Updating...");
+//        pd.show();
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         incButton = (Button) v.findViewById(R.id.incButton);
         decButton = (Button) v.findViewById(R.id.decButton);
         hours = (TextView) v.findViewById(R.id.numberEditText);
@@ -142,13 +149,13 @@ public class Appsetting extends Fragment{
         backlayoutappsetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pd.show();
+              //  pd.show();
                 FnSaveUserSettings();
                 Intent i = new Intent(getActivity(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
-                pd.hide();
+             //   pd.hide();
 
             }
         });
@@ -370,6 +377,7 @@ public class Appsetting extends Fragment{
 
     public  void Delete_Account()
     {
+        new Custom_Progress(getActivity());
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("userid",""),
                 new AsyncHttpResponseHandler() {
@@ -387,6 +395,7 @@ public class Appsetting extends Fragment{
                             Intent intent=new Intent(getActivity(),MainActivity.class);
                             startActivity(intent);
                             onFinish();
+                            new Custom_Progress(getActivity()).dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -397,7 +406,7 @@ public class Appsetting extends Fragment{
 
     private void logoutUser() {
 
-
+         new Custom_Progress(getActivity());
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/User.svc/LogOut/" + user_id.getString("userid", "") + "/" + deviceuid,
                 new AsyncHttpResponseHandler() {
@@ -426,6 +435,7 @@ public class Appsetting extends Fragment{
                                 startActivity(intent);
                                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                                 getActivity().finish();
+                                new Custom_Progress(getActivity()).dismiss();
                             }
 
 
@@ -442,6 +452,7 @@ public class Appsetting extends Fragment{
 
 
     protected void FnPopulateUserSettings(final View v ){
+
         AsyncHttpClient client = new AsyncHttpClient();
         String id = user_id.getString("userid", "");
         client.get(URL_GetUserSettings + id,
@@ -482,12 +493,13 @@ public class Appsetting extends Fragment{
                             TextView minutes = (TextView)v.findViewById(R.id.numberEditText1);
 
                             minutes.setText(activity_reminder_min);
-
-                        pd.hide();
+                         progressDialog.dismiss();
+                        //pd.hide();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
 
                 });
@@ -496,11 +508,12 @@ public class Appsetting extends Fragment{
     //Calling API in this fn to save the User Settings
     //@Added By Ajay
     private void FnSaveUserSettings(){
-
+        new Custom_Progress(getActivity());
             if (android.os.Build.VERSION.SDK_INT > 9) {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
             }
+
 
         //Here we are getting values from the UI elements
 
@@ -542,7 +555,7 @@ public class Appsetting extends Fragment{
             try {
                 json = new JSONObject(String.valueOf(jsonObjRecv));
                 String result = json.getString("message");
-
+                new Custom_Progress(getActivity()).dismiss();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -554,7 +567,7 @@ public class Appsetting extends Fragment{
                 e.printStackTrace();
             }
 
-        pd.hide();
+        //pd.hide();
 
     }
 
@@ -607,7 +620,7 @@ public class Appsetting extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        pd.show();
+        //pd.show();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -620,7 +633,8 @@ public class Appsetting extends Fragment{
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                     getActivity().finish();
-                    pd.hide();
+
+                //    pd.hide();
                     return true;
                 }
                 return false;

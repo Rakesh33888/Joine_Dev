@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -14,9 +15,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,10 +49,17 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,10 +69,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-public class Update_Activity extends android.support.v4.app.Fragment {
+public class Update_Activity extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 3;
     private static final int RESULT_OK = 3;
-
+    ProgressDialog progressDialog;
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
     Button update_activity,delet_activity;
@@ -89,19 +99,23 @@ public class Update_Activity extends android.support.v4.app.Fragment {
     private static final String LAT_LNG = "lat_lng";
     SharedPreferences user_id,activity_id,lat_lng;
     SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
-    ProgressDialog pd;
+
     private Integer THRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
-    private static final int SELECT_FILE3 = 1,SELECT_FILE4=2,SELECT_FILE5=3;
-    String selectedPath3 = "NONE",selectedPath4 = "NONE",selectedPath5 = "NONE";
-    HttpEntity resEntity1;
+    private String selectedImagePath = "",selectedImagePath2 = "",selectedImagePath3 = "";
+    public static final int PICK_IMAGE1 = 1;
+    public static final int PICK_IMAGE2 = 2;
+    public static final int PICK_IMAGE3 = 3;
+    String imgPath;
+    HttpEntity resEntity;
     String activity_id1 ="0", str_value="0";
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
     List<String> allurl;
     FragmentManager fragmentManager;
+    boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -118,8 +132,6 @@ public class Update_Activity extends android.support.v4.app.Fragment {
 
         latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
         longitude2 = Double.parseDouble(lat_lng.getString("lng", "0.0"));
-        pd = new ProgressDialog(getActivity());
-        pd.setMessage("loading");
 
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
@@ -205,7 +217,7 @@ public class Update_Activity extends android.support.v4.app.Fragment {
 
 
                 for (int i=0;i<allurl.size();i++)
-                { allurl.add(null);
+                {
                     if (i==spinnericon.getSelectedItemPosition())
                     {
 
@@ -400,20 +412,58 @@ public class Update_Activity extends android.support.v4.app.Fragment {
         firstimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery1(SELECT_FILE3);
 
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE1);
             }
         });
         secondimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery1(SELECT_FILE4);
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE2);
+
             }
         });
         thirdimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery1(SELECT_FILE5);
+                Intent intent;
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                }else{
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                }
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE3);
+
             }
         });
 
@@ -647,7 +697,14 @@ public class Update_Activity extends android.support.v4.app.Fragment {
 
                 if (edittextactivityname.getText().toString().length() >= 2) {
                     if (enterdiscription.getText().toString().length() >= 10) {
-                        pd.show();
+//
+//                        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+//                        progressDialog.setIndeterminate(true);
+//                        progressDialog.setCancelable(false);
+//                        progressDialog.setContentView(R.layout.custom_progress);
+//                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                         int int_month = 0;
                         year = (String) spinnerforyear.getSelectedItem();
                         month = (String) spinnerformonth.getSelectedItem();
@@ -764,7 +821,7 @@ public class Update_Activity extends android.support.v4.app.Fragment {
                         JSONObject jsonObjSend = new JSONObject();
                         try {
                             // Add key/value pairs
-                            jsonObjSend.put("activity_availability", availability);//1
+                            jsonObjSend.put("activity_availability", availability);//nari1
                             jsonObjSend.put("activity_description", description); //2
                             jsonObjSend.put("activity_duration", duration);       //3
                             jsonObjSend.put("activity_icon", icon);               //4
@@ -798,15 +855,15 @@ public class Update_Activity extends android.support.v4.app.Fragment {
 
 
                                 fragmentManager=getFragmentManager();
-
+                                doFileUpload();
                                 Mygroup mygroup = new Mygroup();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.flContent, mygroup)
                                         .addToBackStack(null)
                                         .commit();
 
+                                    //progressDialog.dismiss();
 
-                                pd.hide();
                                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
@@ -845,7 +902,7 @@ public class Update_Activity extends android.support.v4.app.Fragment {
 
                     @Override
                     public void onClick(View v) {
-
+                        new Custom_Progress(getActivity());
                         AsyncHttpClient client = new AsyncHttpClient();
                         client.get("http://52.37.136.238/JoinMe/Activity.svc/DeleteActivity/" + activity_id.getString("activity_id",""),
                                 new AsyncHttpResponseHandler() {
@@ -865,6 +922,7 @@ public class Update_Activity extends android.support.v4.app.Fragment {
                                                 startActivity(i);
                                                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                                                 getActivity().finish();
+                                                new Custom_Progress(getActivity()).dismiss();
                                                 Toast.makeText(getActivity(), del_msg, Toast.LENGTH_SHORT).show();
 
                                             }
@@ -905,138 +963,71 @@ public class Update_Activity extends android.support.v4.app.Fragment {
 
     }
 
-   public void openGallery1(int req_code){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select file to upload "), req_code);
+        if (isKitKat && resultCode != Activity.RESULT_CANCELED) {
+
+            String uri = new ImagePath().getPath(getContext(), data.getData());
+
+
+            if (requestCode == PICK_IMAGE1) {
+                selectedImagePath = uri;
+                firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
+
+            }
+            if (requestCode == PICK_IMAGE2) {
+                selectedImagePath2 = uri;
+                secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
+            }
+            if (requestCode == PICK_IMAGE3) {
+                selectedImagePath3 = uri;
+                thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
+            } else {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+
+
+        }
     }
 
+    private void doFileUpload(){
 
- /*    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK &&
-                data != null && data.getData() != null) {
-            Uri selectedImageUri = data.getData();
-            if (requestCode == SELECT_FILE3)
-            {
 
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    firstimage.setImageBitmap(bitmap);
+        String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
+        for (int i=0;i<3;i++) {
+            String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id.getString("activity_id","");
+            try {
+                org.apache.http.client.HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(urlString);
 
-                } catch (IOException e) {
+                MultipartEntity reqEntity = new MultipartEntity();
+                reqEntity.addPart("uploadedfile1", new FileBody(new File(paths[i])));
 
-                }
 
-                selectedPath3 = getPath(selectedImageUri);
-                System.out.println("selectedPath1 : " + selectedPath3);
-            }
-
-            if (requestCode == SELECT_FILE4)
-            {
-
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    secondimage.setImageBitmap(bitmap);
-
-                } catch (IOException e) {
-
-                }
-
-                selectedPath4 = getPath(selectedImageUri);
-                System.out.println("selectedPath2 : " + selectedPath4);
-            }
-
-            if (requestCode == SELECT_FILE5)
-            {
-
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                    thirdimage.setImageBitmap(bitmap);
-
-                } catch (IOException e) {
-
-                }
-
-                selectedPath5 = getPath(selectedImageUri);
-                System.out.println("selectedPath3 : " + selectedPath5);
-            }
-
-            Thread thread=new Thread(new Runnable(){
-                public void run(){
-                    doFileUpload1();
+                post.setEntity(reqEntity);
+                HttpResponse response = client.execute(post);
+                resEntity = response.getEntity();
+                final String response_str = EntityUtils.toString(resEntity);
+                if (resEntity != null) {
+                    Log.i("RESPONSE", response_str);
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
+                            try {
 
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 }
-            });
-            thread.start();
-        }
-    }
-    public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-
-    public ContentResolver getContentResolver() {
-        return contentResolver;
-    }
-
-    private void doFileUpload1(){
-
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        File file1 = new File(selectedPath3);
-        File file2 = new File(selectedPath4);
-        File file3 = new File(selectedPath5);
-        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/"+activity_id.getString("activity_id","0");
-        try
-        {
-            org.apache.http.client.HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(urlString);
-            FileBody bin1 = new FileBody(file1);
-            FileBody bin2 = new FileBody(file2);
-            FileBody bin3 = new FileBody(file3);
-
-            MultipartEntity reqEntity = new MultipartEntity();
-            reqEntity.addPart("uploadedfile1", bin1);
-            reqEntity.addPart("uploadedfile2", bin2);
-            reqEntity.addPart("uploadedfile3", bin3);
-
-            reqEntity.addPart("user", new StringBody("User"));
-            post.setEntity(reqEntity);
-            HttpResponse response = client.execute(post);
-            resEntity1 = response.getEntity();
-            final String response_str = EntityUtils.toString(resEntity1);
-            if (resEntity1 != null) {
-                Log.i("RESPONSE", response_str);
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        try {
-                            //    res.setTextColor(Color.GREEN);
-                            //    res.setText("n Response from server : n " + response_str);
-                            //Toast.makeText(getApplicationContext(),"Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+            } catch (Exception ex) {
+                Log.e("Debug", "error: " + ex.getMessage(), ex);
             }
         }
-        catch (Exception ex){
-            Log.e("Debug", "error: " + ex.getMessage(), ex);
-        }
-    }*/
+
+    }
+
 
     @Override
     public void onResume() {

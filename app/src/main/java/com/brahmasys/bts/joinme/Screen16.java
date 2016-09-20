@@ -374,7 +374,13 @@ public class Screen16 extends AppCompatActivity implements
             if (i==allurl.size()-1)
             {
                 //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
-                Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
+              //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
+                Picasso.with(this)
+                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
+                        .placeholder(R.drawable.default_profile)
+                        .resize(90, 90)
+                        .centerCrop()
+                        .into(navimage);
                // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
 
             }
@@ -602,6 +608,7 @@ public class Screen16 extends AppCompatActivity implements
     @Override
     public void onViewSwipedToLeft(int position) {
         Book swipedElement = mAdapter.getItem(position);
+
         Toast.makeText(this, getString(R.string.view_swiped_left, swipedElement),
                 Toast.LENGTH_SHORT).show();
 

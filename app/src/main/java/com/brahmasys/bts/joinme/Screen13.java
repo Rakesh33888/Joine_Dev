@@ -2,7 +2,9 @@ package com.brahmasys.bts.joinme;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,10 +40,11 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
     SharedPreferences.Editor edit_userid,edit_activity_id;
     String firstname="join",lastname="me",about="null",owner_id;
     TextView report_text,name,age,description,owner_name;
-    ProgressDialog pd;
+  //  ProgressDialog pd;
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
     FragmentManager fragmentManager;
+    ProgressDialog progressDialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,10 +58,16 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
 
-        pd = new ProgressDialog(getActivity());
-        pd.setMessage("loading...");
-        pd.show();
+//        pd = new ProgressDialog(getActivity());
+//        pd.setMessage("loading...");
+//        pd.show();
 
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDemoSlider = (SliderLayout) v.findViewById(R.id.slider);
 
         url_maps = new HashMap<String, String>();
@@ -93,8 +102,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
                     // When the response returned by REST has Http response code '200'
 
                     public void onSuccess(String response) {
-                        // Hide Progress Dialog
-                        //  prgDialog.hide();
+
                         try {
                             // Extract JSON Object from JSON returned by REST WS
                             JSONObject obj = new JSONObject(response);
@@ -156,8 +164,8 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
                                 mDemoSlider.addSlider(textSliderView);
 
                             }
-
-                            pd.hide();
+                            progressDialog.dismiss();
+                            //pd.hide();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

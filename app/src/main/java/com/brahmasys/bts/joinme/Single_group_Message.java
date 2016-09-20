@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -43,7 +44,7 @@ public class Single_group_Message extends Fragment    {
     public static final String ACTIVITYID = "activity_id";
     private static final String URL_RemoveMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/RemoveMemberToGroup/";
     private static final String URL_GetActivityDetailsForChat = "http://52.37.136.238/JoinMe/Activity.svc/GetActivityDetailsForChat/";
-
+    ProgressDialog progressDialog;
 
 
 
@@ -82,7 +83,12 @@ public class Single_group_Message extends Fragment    {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
 
-
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View v = inflater.inflate(R.layout.fragment_single_group__message, container, false);
          // v.setBackgroundResource(R.drawable.colourbubble);
 
@@ -196,7 +202,9 @@ public class Single_group_Message extends Fragment    {
                                     Integer txtActivityTime = json.getInt("activity_time");
                                     String txtAddress = json.getString("activity_address");
 
-                                    Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).into(createrimage);
+                                    Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).placeholder(R.drawable.butterfly)
+                                            .resize(70, 70)
+                                            .centerCrop().into(createrimage);
 
                                     tvActivityName.setText(txtActivityName);
                                     long timestampString =  Long.parseLong(String.valueOf(txtActivityTime));
@@ -226,7 +234,7 @@ public class Single_group_Message extends Fragment    {
 
                                     }
                                     adapter.notifyDataSetChanged();
-
+                                    progressDialog.dismiss();
                                 }
 
 

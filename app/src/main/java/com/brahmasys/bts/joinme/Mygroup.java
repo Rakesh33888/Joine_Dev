@@ -1,8 +1,11 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -53,7 +56,7 @@ public class Mygroup extends Fragment{
 
     List<String> allactivityid;
     List<String> alluserid;
-
+    ProgressDialog progressDialog;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,7 +75,7 @@ public class Mygroup extends Fragment{
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param param1 Parameter nari1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment Mygroup.
      */
@@ -99,7 +102,12 @@ public class Mygroup extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
-
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -199,7 +207,7 @@ public class Mygroup extends Fragment{
 
             }
             adapter.notifyDataSetChanged();
-
+            progressDialog.dismiss();
             //Log.w("details",String.valueOf(userdetails));
         } catch (JSONException e) {
             e.printStackTrace();
