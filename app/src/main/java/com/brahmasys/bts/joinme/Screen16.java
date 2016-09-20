@@ -68,7 +68,7 @@ public class Screen16 extends AppCompatActivity implements
     android.support.v7.app.ActionBar actionBar;
     ImageView navimage, logo, msg,back_nav;
     TextView navtextview;
-     public static ImageView shareicon;
+     public ImageView shareicon;
     LinearLayout backlayoutdrawer;
 
     Button editbutton;
@@ -120,6 +120,19 @@ public class Screen16 extends AppCompatActivity implements
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
 
+        shareicon= (ImageView) findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.VISIBLE);
+
+        shareicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
 
 
         activity_url = new ArrayList<String>();
@@ -237,6 +250,7 @@ public class Screen16 extends AppCompatActivity implements
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+
         relativeLayout_share_icon= (RelativeLayout) findViewById(R.id.Relativelayout_share_icon);
 
 
@@ -295,7 +309,6 @@ public class Screen16 extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                msg.setBackgroundResource(R.drawable.colourbubble);
                 fragmentManager=getSupportFragmentManager();
                 Messagescreen messagescreen=new Messagescreen();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
@@ -306,9 +319,6 @@ public class Screen16 extends AppCompatActivity implements
 
             }
         });
-
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);

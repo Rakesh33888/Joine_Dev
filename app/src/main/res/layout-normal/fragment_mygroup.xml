@@ -23,22 +23,22 @@
             android:id="@+id/backlayoutgroup">
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/backbtn"
-            android:layout_marginLeft="15dp"
-            android:id="@+id/backtogroupsetting"
-            android:layout_gravity="left|center" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Group Activity"
-            android:textColor="#c5fdfdfd"
-            android:textSize="15dp"
-            android:layout_marginLeft="8dp"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/mygroupactivity"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/backbtn"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/backtogroupsetting"
+                android:layout_gravity="left|center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Group Activity"
+                android:textColor="#c5fdfdfd"
+                android:textSize="15dp"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/mygroupactivity"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -48,33 +48,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true" >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginLeft="5dp">
-        <com.brahmasys.bts.joinme.Expandable_GridView
-            android:id="@+id/group_grid"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
-            android:numColumns="2"
-            android:adjustViewBounds="true"
-            android:verticalSpacing="0dip"
-            android:stretchMode="columnWidth"
-            android:focusable="true"
-            android:clickable="true"/>
-
-        <Button
-            android:layout_width="172dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/createalbum"
-            android:layout_marginRight="15dp"
-            android:id="@+id/createnewactivity"
-            android:layout_gravity="left"
-            />
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp">
+            <com.brahmasys.bts.joinme.Expandable_GridView
+                android:id="@+id/group_grid"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:numColumns="2"
+                android:adjustViewBounds="true"
+                android:verticalSpacing="0dip"
+                android:stretchMode="columnWidth"
+                android:focusable="true"
+                android:clickable="true"/>
+            <Button
+                android:layout_width="155dp"
+                android:layout_height="161dp"
+                android:background="@drawable/createalbum"
+                android:id="@+id/createnewactivity"
+                android:layout_marginRight="15dp"/>
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

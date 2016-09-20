@@ -10,8 +10,8 @@
         android:id="@+id/relativelayout_group">
 
         <ImageView
-            android:layout_width="168dp"
-            android:layout_height="160dp"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
             android:src="@drawable/butterfly"
             android:id="@+id/thumbnail"
             android:layout_alignParentStart="true" />
@@ -27,23 +27,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
-                android:singleLine="true"
-                android:inputType="textCapSentences"
                 android:id="@+id/imgaeinfotxt"
                 android:paddingStart="5dp"
                 android:paddingTop="5dp"
                 android:text="Ski"
-                android:textSize="12dp"/>
+                android:textSize="14dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
                 android:layout_marginTop="5dp"
                 android:id="@+id/timeinotext"
-                android:textSize="12dp"
-                android:singleLine="true"
+                android:textSize="13dp"
                 android:paddingStart="5dp"
-                android:paddingTop="8dp"
+                android:paddingTop="4dp"
                 android:layout_gravity="center_vertical"
                 android:text="20.11.2016 at 6 PM"/>
 

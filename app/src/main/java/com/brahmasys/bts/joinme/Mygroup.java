@@ -97,8 +97,8 @@ public class Mygroup extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState) {
-     View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
+                             Bundle savedInstanceState) {
+        View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
 
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
@@ -110,8 +110,8 @@ public class Mygroup extends Fragment{
         context=getActivity();
         groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
         groups_list.setExpanded(true);
-       setListViewAdapter();
-       backlayoutgroup= (LinearLayout) v.findViewById(R.id.backlayoutgroup);
+        setListViewAdapter();
+        backlayoutgroup= (LinearLayout) v.findViewById(R.id.backlayoutgroup);
         backlayoutgroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,12 +140,12 @@ public class Mygroup extends Fragment{
             public void onClick(View v) {
                 fragmentManager=getFragmentManager();
 
-                    Screen19 screen19=new Screen19();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.flContent,screen19)
-                            .addToBackStack(null)
-                            .commit();
-                }
+                Screen19 screen19=new Screen19();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, screen19)
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
 
 
@@ -163,15 +163,15 @@ public class Mygroup extends Fragment{
         }
         JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
 
-            //Log.w("RESULT",String.valueOf(jsonObjRecv));
-       JSONObject json = null;
+        //Log.w("RESULT",String.valueOf(jsonObjRecv));
+        JSONObject json = null;
         try {
             json = new JSONObject(String.valueOf(jsonObjRecv));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-         alluserid = new ArrayList<String>();
-         allactivityid = new ArrayList<String>();
+        alluserid = new ArrayList<String>();
+        allactivityid = new ArrayList<String>();
 
 
         JSONArray userdetails = null;
