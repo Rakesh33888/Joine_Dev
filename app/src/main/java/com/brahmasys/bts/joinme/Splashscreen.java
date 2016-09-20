@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-<<<<<<< HEAD
 import com.brahmasys.bts.joinme.R;
 
 import java.net.InetAddress;
@@ -16,8 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-=======
->>>>>>> origin/master
 public class Splashscreen extends Activity{
     private SessionManager session;
     @Override
@@ -25,21 +22,12 @@ public class Splashscreen extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         session = new SessionManager(getApplicationContext());
-<<<<<<< HEAD
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-=======
-        //getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Thread timerThread = new Thread(){
-            public void run(){
-                try{
-                    sleep(1500);
-                }catch(InterruptedException e){
->>>>>>> origin/master
                     e.printStackTrace();
                 }
 
@@ -100,6 +88,4 @@ public class Splashscreen extends Activity{
         super.onPause();
         finish();
     }
-
-    }
-
+}
