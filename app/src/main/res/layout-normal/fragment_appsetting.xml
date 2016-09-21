@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="App Setting"
+            android:text="App Settings"
             android:textSize="18dp"
             android:textColor="#b1b0b0"
             android:paddingStart="8dp"
