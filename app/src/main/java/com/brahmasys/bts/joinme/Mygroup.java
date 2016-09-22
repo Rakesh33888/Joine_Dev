@@ -108,6 +108,7 @@ public class Mygroup extends Fragment{
         progressDialog.setContentView(R.layout.custom_progress);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -118,6 +119,7 @@ public class Mygroup extends Fragment{
         context=getActivity();
         groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
         groups_list.setExpanded(true);
+
         setListViewAdapter();
         backlayoutgroup= (LinearLayout) v.findViewById(R.id.backlayoutgroup);
         backlayoutgroup.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +171,8 @@ public class Mygroup extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
         JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
 
         //Log.w("RESULT",String.valueOf(jsonObjRecv));
@@ -177,9 +181,12 @@ public class Mygroup extends Fragment{
             json = new JSONObject(String.valueOf(jsonObjRecv));
         } catch (JSONException e) {
             e.printStackTrace();
+
         }
+
         alluserid = new ArrayList<String>();
         allactivityid = new ArrayList<String>();
+
 
 
         JSONArray userdetails = null;
@@ -197,6 +204,7 @@ public class Mygroup extends Fragment{
                 book.setImageUrl(actor.getString("activity_url"));
 
 
+
                 long timestampString =  Long.parseLong(actor.getString("activity_time"));
                 String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
                         format(new java.util.Date(timestampString * 1000));
@@ -205,13 +213,16 @@ public class Mygroup extends Fragment{
 
                 books.add(book);
 
+
             }
             adapter.notifyDataSetChanged();
-            progressDialog.dismiss();
+
+
             //Log.w("details",String.valueOf(userdetails));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        progressDialog.dismiss();
 
         groups_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -231,17 +242,21 @@ public class Mygroup extends Fragment{
                         .addToBackStack(null)
                         .commit();
 
+
             }
         });
+
 
 
         return v;
     }
 
     private void setListViewAdapter() {
+
         books = new ArrayList<Book>();
         adapter = new CustomListViewAdapter(getActivity(), R.layout.groups_list, books);
         groups_list.setAdapter(adapter);
+
 
     }
 

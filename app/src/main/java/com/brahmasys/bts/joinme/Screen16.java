@@ -121,19 +121,6 @@ public class Screen16 extends AppCompatActivity implements
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
 
-        shareicon= (ImageView) findViewById(R.id.shareicon);
-        shareicon.setVisibility(View.VISIBLE);
-
-        shareicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
 
 
 
@@ -253,10 +240,26 @@ public class Screen16 extends AppCompatActivity implements
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        relativeLayout_share_icon= (RelativeLayout) findViewById(R.id.Relativelayout_share_icon);
 
 
 
+        relativeLayout_share_icon= (RelativeLayout)toolbar. findViewById(R.id.Relativelayout_share_icon);
+        shareicon= (ImageView)toolbar. findViewById(R.id.shareicon);
+        View item=getLayoutInflater().inflate(R.layout.share_icon,null);
+        relativeLayout_share_icon.addView(item);
+        shareicon.setVisibility(View.VISIBLE);
+        relativeLayout_share_icon.setVisibility(View.VISIBLE);
+
+        shareicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
 
 
 

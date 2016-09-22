@@ -24,12 +24,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -46,10 +49,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    Button facebook, mail,b4,b5;
-    Button already_member,show;
+    Button facebook, mail, b4, b5;
+    Button already_member, show;
+    RelativeLayout relativemain;
     SessionManager session;
     private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
     private static final String TAG = "SignUp";
@@ -57,29 +61,48 @@ public class MainActivity extends Activity  {
 
     private static final String TAG1 = "Login";
     private static final String URL1 = "http://52.37.136.238/JoinMe/User.svc/Login";
-   public  static final String TOKEN_ID = "token";
+    public static final String TOKEN_ID = "token";
 
-    String deviceuid,device_type="android";
+    String deviceuid, device_type = "android";
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
     private static final String LAT_LNG = "lat_lng";
-    public  static final String PROFILE_PIC = "profile_pic";
+    public static final String PROFILE_PIC = "profile_pic";
 
-    SharedPreferences user_id,user_Details,user_pic,lat_lng,token_id,profile_pic;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng,edit_token_id,edit_profile_pic;
-    String userid,social_id=" ",login_type="regular",device_token;
-    Double latitude=0.0,longitude=0.0;
+    SharedPreferences user_id, user_Details, user_pic, lat_lng, token_id, profile_pic;
+    SharedPreferences.Editor edit_userid, edit_user_detals, edit_user_pic, edit_lat_lng, edit_token_id, edit_profile_pic;
+    String userid, social_id = " ", login_type = "regular", device_token;
+    Double latitude = 0.0, longitude = 0.0;
     ProgressDialog progressDialog;
+    Context context;
 
-    int refresh=0;
+    int refresh = 0;
+
     @Override
-    public void onCreate(Bundle savedInstanceState ) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         facebook = (Button) findViewById(R.id.facebook);
         mail = (Button) findViewById(R.id.mail);
+
+        relativemain = (RelativeLayout) findViewById(R.id.relativemain);
+        relativemain.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                hideKeyboard(view);
+                return false;
+            }
+
+            private void hideKeyboard(View view) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
+
+
+
         session = new SessionManager(getApplicationContext());
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -174,9 +197,9 @@ public class MainActivity extends Activity  {
         }
     }
 
-    public static boolean checkPermission(String strPermission,Context _c,Activity _a){
+    public static boolean checkPermission(String strPermission,Context _c,Activity _a) {
         int result = ContextCompat.checkSelfPermission(_c, strPermission);
-        if (result == PackageManager.PERMISSION_GRANTED){
+        if (result == PackageManager.PERMISSION_GRANTED) {
 
             return true;
 
@@ -186,6 +209,7 @@ public class MainActivity extends Activity  {
 
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -281,14 +305,59 @@ public class MainActivity extends Activity  {
                 final Dialog dialog = new Dialog(MainActivity.this);
                 // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.setContentView(R.layout.layout_xml);
 
                 dialog.show();
                 b4 = (Button) dialog.findViewById(R.id.button4);
                 final EditText email = (EditText) dialog.findViewById(R.id.editText);
+                email.setOnKeyListener(new View.OnKeyListener() {
+
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+
+                        if (event.getAction() == KeyEvent.ACTION_DOWN
+                                && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            Log.i("event", "captured");
+
+                            return false;
+                        } else if (event.getAction() == KeyEvent.ACTION_DOWN
+                                && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                            Log.i("Back event Trigered", "Back event");
+
+                        }
+
+
+                        return false;
+                    }
+                });
+
+
                 final EditText pass = (EditText) dialog.findViewById(R.id.editText2);
+                pass.setOnKeyListener(new View.OnKeyListener() {
+
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+
+                        if (event.getAction() == KeyEvent.ACTION_DOWN
+                                && event.getKeyCode() ==       KeyEvent.KEYCODE_ENTER) {
+                            Log.i("event", "captured");
+
+                            return false;
+                        }
+                        else if(event.getAction() == KeyEvent.ACTION_DOWN
+                                && event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+                            Log.i("Back event Trigered","Back event");
+
+                        }
+
+
+
+
+                        return false;
+                    }
+                });
 
 
                 b4.setOnClickListener(new View.OnClickListener() {

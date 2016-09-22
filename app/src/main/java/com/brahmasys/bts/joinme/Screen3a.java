@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -53,7 +52,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,6 +120,7 @@ public class Screen3a extends AppCompatActivity {
         share = (EditText) findViewById(R.id.share);
 
         rgroup = (SegmentedGroup) findViewById(R.id.radioGroup);
+        rgroup.setTintColor(Color.parseColor("#005F99"));
         male = (RadioButton) findViewById(R.id.male);
         female = (RadioButton) findViewById(R.id.female);
         continue_btn = (Button) findViewById(R.id.continue_btn);

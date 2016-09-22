@@ -245,6 +245,7 @@ public class Appsetting extends Fragment{
 
         session = new SessionManager(getActivity());
         dis = (SegmentedGroup) v.findViewById(R.id.distance);
+        dis.setTintColor(Color.parseColor("#005F99"));
         miles = (RadioButton) v.findViewById(R.id.miles);
         km = (RadioButton) v.findViewById(R.id.km);
         linearLayoutterm= (LinearLayout) v.findViewById(R.id.linearlayoutterm);

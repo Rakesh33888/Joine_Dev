@@ -129,6 +129,7 @@
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
@@ -136,6 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Messages"
+                android:paddingTop="9dp"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/message" />
             <Spinner
@@ -151,6 +153,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
             android:layout_weight="1">
 
             <TextView
@@ -158,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:text="New activity near by"
                 android:layout_marginLeft="10dp"
+                android:paddingTop="9dp"
                 android:id="@+id/near_by" />
 
             <com.kyleduo.switchbutton.SwitchButton
@@ -176,7 +180,9 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.36">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1.56">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -197,6 +203,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -251,6 +258,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="wrap_content"

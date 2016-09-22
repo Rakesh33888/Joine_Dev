@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -177,18 +176,18 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
 
 
-        minimumRating.setOnTouchListener(new View.OnTouchListener()
-        {
-            public boolean onTouch(View view, MotionEvent event)
-            {
-                float touchPositionX = event.getX();
-                float width = minimumRating.getWidth();
-                float starsf = (touchPositionX / width) * 5.0f;
-                int stars = (int)starsf + 1;
-                minimumRating.setRating(stars);
-                return true;
-            }
-        });
+//        minimumRating.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            public boolean onTouch(View view, MotionEvent event)
+//            {
+//                float touchPositionX = event.getX();
+//                float width = minimumRating.getWidth();
+//                float starsf = (touchPositionX / width) * 5.0f;
+//                int stars = (int)starsf + 1;
+//                minimumRating.setRating(stars);
+//                return true;
+//            }
+//        });
         final ImageView createrimage= (ImageView) v.findViewById(R.id.createrimage);
         createrimage.setClickable(true);
         createrimage.setOnClickListener(new View.OnClickListener() {
