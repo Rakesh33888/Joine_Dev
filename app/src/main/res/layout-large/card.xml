@@ -21,14 +21,14 @@
     <android.support.v7.widget.CardView
         android:layout_height="300dp"
         android:layout_width="match_parent"
-
+        android:background="#bfcacaca"
         android:layout_marginTop="340dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="90dp"
-            android:background="#ebebeb"
+            android:background="#bfcacaca"
             android:layout_below="@+id/swipeStack"
             android:id="@+id/frameLayout2"
             android:layout_alignEnd="@+id/swipeStack"

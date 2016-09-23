@@ -132,7 +132,6 @@
                         android:layout_height="36dp"
                         android:id="@+id/imageViewrfting"
                         android:foregroundGravity="center|left"
-
                         android:layout_marginLeft="10dp"
                         android:layout_gravity="left|center_vertical" />
                     <FrameLayout
@@ -200,11 +199,12 @@
                     android:layout_alignParentStart="true">
 
                     <com.github.siyamed.shapeimageview.CircularImageView
-                        android:layout_width="65dp"
-                        android:layout_height="66dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
                         android:id="@+id/createrimage"
                         android:clickable="true"
                         android:layout_marginTop="7dp"
+                        android:layout_marginBottom="7dp"
                         android:layout_marginLeft="12dp"
                         android:src="@drawable/butterfly"/>
 

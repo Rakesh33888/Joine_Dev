@@ -64,11 +64,12 @@ public class Screen16 extends AppCompatActivity implements
     public RelativeLayout relativeLayout_share_icon;
     Context context;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-     public Toolbar toolbar;
+    public Toolbar toolbar;
     android.support.v7.app.ActionBar actionBar;
-    ImageView navimage, logo, msg,back_nav;
+    ImageView navimage, logo ,back_nav;
+
     TextView navtextview;
-     public ImageView shareicon;
+    public ImageView shareicon,msg;
     LinearLayout backlayoutdrawer;
 
     Button editbutton;
@@ -120,19 +121,7 @@ public class Screen16 extends AppCompatActivity implements
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
 
-        shareicon= (ImageView) findViewById(R.id.shareicon);
-        shareicon.setVisibility(View.VISIBLE);
 
-        shareicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
 
 
         activity_url = new ArrayList<String>();
@@ -251,12 +240,15 @@ public class Screen16 extends AppCompatActivity implements
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        relativeLayout_share_icon= (RelativeLayout) findViewById(R.id.Relativelayout_share_icon);
 
 
+
+        relativeLayout_share_icon= (RelativeLayout)toolbar. findViewById(R.id.Relativelayout_share_icon);
         shareicon= (ImageView)toolbar. findViewById(R.id.shareicon);
-
+        View item=getLayoutInflater().inflate(R.layout.share_icon,null);
+        relativeLayout_share_icon.addView(item);
         shareicon.setVisibility(View.VISIBLE);
+        relativeLayout_share_icon.setVisibility(View.VISIBLE);
 
         shareicon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,6 +292,7 @@ public class Screen16 extends AppCompatActivity implements
             }
         });
 
+
         reltivelayoutlogo = (RelativeLayout) findViewById(R.id.custmtool);
         relativeLayoutmsg = (RelativeLayout) findViewById(R.id.msssg);
         msg = (ImageView) findViewById(R.id.msg);
@@ -309,6 +302,7 @@ public class Screen16 extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
+                msg.setBackgroundResource(R.drawable.colourbubble);
                 fragmentManager=getSupportFragmentManager();
                 Messagescreen messagescreen=new Messagescreen();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
@@ -658,7 +652,7 @@ public class Screen16 extends AppCompatActivity implements
                                     String result = obj.getString("message");
 
                                     if (result.equals("Updated Successfully")) {
-
+                                        msg.setBackgroundResource(R.drawable.colourbubble);
                                         fragmentManager = getSupportFragmentManager();
                                         Single_group_Message update_activity = new Single_group_Message();
                                         Bundle bundle = new Bundle();

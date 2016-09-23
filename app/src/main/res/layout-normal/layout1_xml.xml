@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:inputType="text"
 
-
+        android:maxLength="35"
         android:drawableLeft="@drawable/emailicon"
         android:layout_marginTop="50dp"
         android:textColor="#fff"
@@ -20,7 +20,7 @@
         android:paddingStart="10dp"
         android:textColorHint="#85e2e2e2"
         android:hint="Email Address"
-
+       android:singleLine="true"
         android:id="@+id/editText3"
 />
 
@@ -31,6 +31,8 @@
         android:inputType="textPassword"
         android:backgroundTint="#d5ffffff"
         android:textColor="#fff"
+        android:maxLength="10"
+        android:singleLine="true"
         android:drawablePadding="25dp"
         android:paddingStart="10dp"
         android:textColorHint="#85e2e2e2"

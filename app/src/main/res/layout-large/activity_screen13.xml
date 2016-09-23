@@ -115,7 +115,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/imageView"
-                    android:background="@drawable/peoples"/>
+                    android:src="@drawable/profileicon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -150,7 +150,11 @@
         android:layout_height="50dp"
         android:text="Traveling through Europe La vida es bonita!!"
         android:layout_marginLeft="15dp"
-        android:textColor="#ffffff"
+
+        android:maxLines="2"
+        android:minLines="1"
+       android:textColor="#ffffff"
+        android:paddingLeft="9dp"
         android:id="@+id/textView18"
         android:alpha="0.8"
         android:textSize="20dp" />
@@ -160,22 +164,25 @@
         android:orientation="vertical"
         android:background="@drawable/smallbox1"
         android:layout_margin="8dp"
-        android:layout_weight="0.69">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello Luis!"
-            android:id="@+id/owner_name"
-            android:layout_margin="10dp"
-            android:textColor="#ffffff"
-            />
+        android:layout_weight="0.69"
+        android:weightSum="1">
+
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:id="@+id/editText9"
-            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
             android:textColorHint="#ffffff"
-            android:background="@null"/>
+
+            android:gravity="left|top"
+            android:hint="Type here"
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingRight="10dp"
+            android:layout_marginBottom="9dp"
+            android:textColor="#ffffff"
+            android:background="@null"
+             />
     </LinearLayout>
 
     <Button

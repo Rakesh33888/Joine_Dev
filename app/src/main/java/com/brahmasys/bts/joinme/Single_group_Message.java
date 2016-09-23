@@ -93,16 +93,22 @@ public class Single_group_Message extends Fragment    {
          // v.setBackgroundResource(R.drawable.colourbubble);
 
         owner   = (CircularImageView) v.findViewById(R.id.hosted);
+        Bundle bundle = this.getArguments();
+        act_id  = bundle.getString("activityid","0");
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
         createrimage.setClickable(true);
         createrimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                getFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.flContent, new Screen17())
-//                        .commit();
+                Screen17 screen17 = new Screen17();
+                FragmentManager fm = getFragmentManager();
+                Bundle bundle=new Bundle();
+                bundle.putString("userid",user_id.getString("userid","0"));
+                bundle.putString("activityid",act_id);
+                screen17.setArguments(bundle);
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.flContent, screen17);
+                transaction.commit();
 
             }
         });
@@ -112,9 +118,9 @@ public class Single_group_Message extends Fragment    {
         tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
         tvHostedByName = (TextView) v.findViewById(R.id.name);
         participants_list = (HorizontalListView) v. findViewById(R.id.participants_list);
-        Bundle bundle = this.getArguments();
 
-        act_id  = bundle.getString("activityid","0");
+
+
 
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);

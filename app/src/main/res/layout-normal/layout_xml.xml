@@ -12,10 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-
+        android:singleLine="true"
         android:textColorHint="#85e2e2e2"
         android:paddingStart="10dp"
         android:drawablePadding="18dp"
+        android:maxLength="35"
         android:backgroundTint="#d5ffffff"
         android:drawableLeft= "@drawable/emailicon"
         android:layout_marginTop="50dp"
@@ -28,8 +29,9 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:backgroundTint="#d5ffffff"
-
+        android:singleLine="true"
         android:drawablePadding="25dp"
+        android:maxLength="10"
         android:textColorHint="#85e2e2e2"
         android:textColor="#fff"
         android:hint="Password"

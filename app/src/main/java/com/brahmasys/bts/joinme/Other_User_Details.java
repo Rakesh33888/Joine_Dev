@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,6 +51,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
 
+
     RatingBar myratingBar;
     LinearLayout backlayout_user_detail;
     Button btnJoineActivity;
@@ -70,6 +70,8 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
     String uid,aid,owner_id;
+
+
 
     @Nullable
     @Override
@@ -95,6 +97,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         currentpeoples = (TextView) v.findViewById(R.id.currentpeoples);
         costtext = (TextView) v.findViewById(R.id.costtext);
         timetext = (TextView) v.findViewById(R.id.timetext);
+
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage);
         timetextview = (TextView) v.findViewById(R.id.timetextview);
         reviews     = (TextView) v.findViewById(R.id.reviews);
@@ -173,18 +176,18 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
 
 
-        minimumRating.setOnTouchListener(new View.OnTouchListener()
-        {
-            public boolean onTouch(View view, MotionEvent event)
-            {
-                float touchPositionX = event.getX();
-                float width = minimumRating.getWidth();
-                float starsf = (touchPositionX / width) * 5.0f;
-                int stars = (int)starsf + 1;
-                minimumRating.setRating(stars);
-                return true;
-            }
-        });
+//        minimumRating.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            public boolean onTouch(View view, MotionEvent event)
+//            {
+//                float touchPositionX = event.getX();
+//                float width = minimumRating.getWidth();
+//                float starsf = (touchPositionX / width) * 5.0f;
+//                int stars = (int)starsf + 1;
+//                minimumRating.setRating(stars);
+//                return true;
+//            }
+//        });
         final ImageView createrimage= (ImageView) v.findViewById(R.id.createrimage);
         createrimage.setClickable(true);
         createrimage.setOnClickListener(new View.OnClickListener() {
@@ -264,8 +267,13 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                 timetext.setText("Takes " + duration + "  hours");
 
                                 //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
-                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).into(icon);
-                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).into(createrimage);
+                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly)
+                                        .resize(60, 60)
+                                        .centerCrop().into(icon);
+                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly)
+                                        .resize(60, 60)
+                                        .centerCrop()
+                                        .into(createrimage);
 
                                 long timestampString = Long.parseLong(time);
                                 String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
@@ -377,7 +385,9 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                             String result = obj.getString("message");
 
                             if (result.equals("Updated Successfully"))
+
                             {
+
                                 fragmentManager = getFragmentManager();
                                 Single_group_Message update_activity = new Single_group_Message();
 

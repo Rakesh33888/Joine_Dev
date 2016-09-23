@@ -173,10 +173,9 @@
                         android:maxLines="2"
                         android:layout_marginRight="7dp"
                         android:layout_marginBottom="5dp"
-                        android:singleLine="true"
                         android:textColor="#FFFBFB"
                         android:layout_marginLeft="85dp"
-                        android:text="1 Km away at River Mersey,England"
+                        android:text="1 Km away "
                         android:layout_gravity="left" />
 
                 </FrameLayout>
@@ -192,10 +191,11 @@
                     android:layout_marginTop="20dp">
 
                     <com.github.siyamed.shapeimageview.CircularImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:id="@+id/createrimage"
                         android:clickable="true"
+                        android:layout_marginBottom="7dp"
                         android:layout_marginTop="7dp"
                         android:layout_marginLeft="12dp"
                         android:src="@drawable/butterfly"/>

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.brahmasys.bts.joinme.R;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -27,11 +25,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Screen13 extends android.support.v4.app.Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     public static final String USERID = "userid";
@@ -130,7 +125,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
                                 age.setText(userdetails.getString("age"));
                                 name.setText(firstname + " " + lastname);
                                 description.setText(about);
-                                owner_name.setText("Hello"+" "+userdetails.getString("fname")+"!");
+                               // owner_name.setText("Hello"+" "+userdetails.getString("fname")+"!");
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

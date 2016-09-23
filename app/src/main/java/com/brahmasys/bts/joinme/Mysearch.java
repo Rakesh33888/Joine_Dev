@@ -54,11 +54,12 @@ public class Mysearch extends android.support.v4.app.Fragment {
     ImageView back;
     TextView mysearch,textView7,Maxdistance,distance;
     CheckBox c1,c2,c3;
-    LinearLayout shareiconlayout;
+
+    RelativeLayout relativeLayout_share_icon;
     SeekBar seekBar;
     String search_distance;
     String select_date;
-     public   ImageView shareicon;
+   
 
     SharedPreferences searchdistance,selectdate;
     SharedPreferences.Editor edit_searchdistance,edit_selectdate;
@@ -127,13 +128,9 @@ public class Mysearch extends android.support.v4.app.Fragment {
         relativeLayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout_seek);
         relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
         textView7 = (TextView) v.findViewById(R.id.textView7);
-        shareicon= (ImageView) v.findViewById(R.id.shareicon);
-        shareicon= (ImageView) v.findViewById(R.id.shareicon);
-//        if (shareicon.isShown()==true) {
-//            shareicon.setVisibility(View.GONE);
-//        }else {
-//            shareicon.setVisibility(shareicon.VISIBLE);
-//        }
+
+
+
         mysearch = (TextView) v.findViewById(R.id.textView6);
         layoutback= (LinearLayout) v.findViewById(R.id.backlayoutsearch);
         layoutback.setOnClickListener(new View.OnClickListener() {

@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -50,7 +49,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
     LinearLayout backlayout_screen_17;
     RatingBar myratingBar;
-    //Button btnJoineActivity;
+    Button btnJoineActivity;
     TextView reporttext,updatetext;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
     FragmentManager fragmentManager;
@@ -80,7 +79,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
-      //  btnJoineActivity= (Button) v.findViewById(R.id.button6);
+       // btnJoineActivity= (Button) v.findViewById(R.id.button6);
         reporttext= (TextView) v.findViewById(R.id.reportactitytext);
         updatetext= (TextView) v.findViewById(R.id.updateactivitytext);
         acitvityname = (TextView) v.findViewById(R.id.acitvityname);
@@ -185,18 +184,19 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
         });
 
-        minimumRating.setOnTouchListener(new View.OnTouchListener()
-        {
-            public boolean onTouch(View view, MotionEvent event)
-            {
-                float touchPositionX = event.getX();
-                float width = minimumRating.getWidth();
-                float starsf = (touchPositionX / width) * 5.0f;
-                int stars = (int)starsf + 1;
-                minimumRating.setRating(stars);
-                return true;
-            }
-        });
+
+//        minimumRating.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            public boolean onTouch(View view, MotionEvent event)
+//            {
+//                float touchPositionX = event.getX();
+//                float width = minimumRating.getWidth();
+//                float starsf = (touchPositionX / width) * 5.0f;
+//                int stars = (int)starsf + 1;
+//                minimumRating.setRating(stars);
+//                return true;
+//            }
+//        });
         final ImageView createrimage= (ImageView) v.findViewById(R.id.createrimage);
         createrimage.setClickable(true);
         createrimage.setOnClickListener(new View.OnClickListener() {
@@ -260,6 +260,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 String owner_pic = userdetails.getString("activity_owner_pic");
                                 String rating = userdetails.getString("activity_rating");
                                 String review = userdetails.getString("activity_review");
+                                String activity_address=userdetails.getString("activity_Adress");
                                 String time = userdetails.getString("activity_time");
                                 String joined = userdetails.getString("participant_joined");
                                 String icon1 = userdetails.getString("acitivity_icon");
@@ -267,7 +268,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 String activity_id = userdetails.getString("activity_id");
 
                                 acitvityname.setText(activity_name);
-                                distancefromnearby.setText(distance);
+                                distancefromnearby.setText( distance+" at "+ activity_address);
                                 owner_name1.setText("Created by " + owner_name);
                                 uptopeoples.setText("Up to " + limit + " peoples:");
                                 currentpeoples.setText("Currently have " + joined);
