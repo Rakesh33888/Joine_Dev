@@ -15,7 +15,32 @@
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"></uses-permission>
+    <uses-permission android:name="android.permission.READ_CALENDAR"></uses-permission>
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission-sdk-23 android:name="android.permission.READ_CALENDAR"/>
+
+    <uses-permission android:name="android.permission.SET_TIME"></uses-permission>
+
+    <uses-permission android:name="android.permission.SET_TIME_ZONE"></uses-permission>
+    <uses-permission-sdk-23 android:name="android.permission.SET_TIME"></uses-permission-sdk-23>
+    <uses-permission-sdk-23  android:name="android.permission.SET_TIME_ZONE"></uses-permission-sdk-23>
+
+
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+
+
+
+
+
+
+
+
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
 
     <permission
         android:name="com.brahmasys.bts.joinme.permission.C2D_MESSAGE"

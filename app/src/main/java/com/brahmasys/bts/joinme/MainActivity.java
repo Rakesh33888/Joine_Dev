@@ -83,6 +83,9 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+         Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
+
+
         // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         facebook = (Button) findViewById(R.id.facebook);
         mail = (Button) findViewById(R.id.mail);

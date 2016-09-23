@@ -213,15 +213,17 @@ public class Update_Activity extends Fragment {
         spinnericon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                
+
 
                 for (int i=0;i<allurl.size();i++)
 
-                {
-                    if (i==spinnericon.getSelectedItemPosition())
                     {
+                        if (i==spinnericon.getSelectedItemPosition())
+                        {
 
-                        icon = allurl.get(i);
+
+                            icon = allurl.get(i);
+
 
                     }
                 }

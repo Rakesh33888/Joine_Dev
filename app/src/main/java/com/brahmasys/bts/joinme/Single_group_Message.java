@@ -45,7 +45,7 @@ public class Single_group_Message extends Fragment    {
     private static final String URL_RemoveMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/RemoveMemberToGroup/";
     private static final String URL_GetActivityDetailsForChat = "http://52.37.136.238/JoinMe/Activity.svc/GetActivityDetailsForChat/";
     ProgressDialog progressDialog;
-
+    private  CircularImageView listimage;
 
 
     private static final String IMAGE_BASE_URL = "http://52.37.136.238/JoinMe/";
@@ -115,9 +115,11 @@ public class Single_group_Message extends Fragment    {
         tvActivityName= (TextView) v.findViewById(R.id.textView25);
         tvActivityTime= (TextView) v.findViewById(R.id.textView26);
         tvleave_chat= (TextView) v.findViewById(R.id.leave_chat);
+        listimage= (CircularImageView)v.findViewById(R.id.participants);
         tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
         tvHostedByName = (TextView) v.findViewById(R.id.name);
         participants_list = (HorizontalListView) v. findViewById(R.id.participants_list);
+
 
 
 
@@ -263,6 +265,8 @@ public class Single_group_Message extends Fragment    {
         books = new ArrayList<Book>();
         adapter = new custom_listview_participants(getActivity(), R.layout.participants, books);
         participants_list.setAdapter(adapter);
+
+
 
     }
 

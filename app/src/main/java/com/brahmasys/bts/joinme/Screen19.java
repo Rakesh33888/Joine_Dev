@@ -1,40 +1,28 @@
 package com.brahmasys.bts.joinme;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,7 +30,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -51,7 +38,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +53,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -75,8 +60,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -109,7 +92,7 @@ public class Screen19 extends Fragment {
     String availability;
     String gender="";
     String duration="0",icon ="null",title,address,age_start,age_end,cost="0",limit="0",description;
-    Double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
+    double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
     String complete_address,city,state,zip,country,total_address;
     private static final String TAG = "CreateActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/CreateActivity";
@@ -791,7 +774,7 @@ public class Screen19 extends Fragment {
                         Calendar c = Calendar.getInstance();
                         c.set(Calendar.YEAR, Integer.parseInt(year));
                         c.set(Calendar.MONTH, int_month - 1);
-                        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+                        c.set(Calendar.DAY_OF_MONTH,1);
                         c.set(Calendar.HOUR, Integer.parseInt(hour));
                         c.set(Calendar.MINUTE, 0);
                         c.set(Calendar.SECOND, 0);
@@ -835,15 +818,19 @@ public class Screen19 extends Fragment {
 
                             List<Address> addresses = null;
                             try {
+
                                 addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                                if(addresses.size()>0) {
+                                    complete_address = addresses.get(0).getAddressLine(0);
+                                    city = addresses.get(0).getLocality();
+                                    state = addresses.get(0).getAdminArea();
+                                    zip = addresses.get(0).getPostalCode();
+                                    country = addresses.get(0).getCountryName();
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            complete_address = addresses.get(0).getAddressLine(0);
-                            city = addresses.get(0).getLocality();
-                            state = addresses.get(0).getAdminArea();
-                            zip = addresses.get(0).getPostalCode();
-                            country = addresses.get(0).getCountryName();
+
                             total_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
                         } else {
 
@@ -860,7 +847,7 @@ public class Screen19 extends Fragment {
                         age_start = age1.getText().toString();
                         age_end = age2.getText().toString();
 
-                        Log.w("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
+                        Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
                                 + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
 
 

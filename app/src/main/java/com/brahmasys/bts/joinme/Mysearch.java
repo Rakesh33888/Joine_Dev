@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -52,6 +53,8 @@ public class Mysearch extends android.support.v4.app.Fragment {
     LinearLayout linearLayout,layoutback;
     RelativeLayout relativeLayout1,relativeLayout2;
     ImageView back;
+    ImageView shareicon;
+    private ActionBar toolbar;
     TextView mysearch,textView7,Maxdistance,distance;
     CheckBox c1,c2,c3;
 
@@ -75,7 +78,6 @@ public class Mysearch extends android.support.v4.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     public Mysearch() {
@@ -112,6 +114,8 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mysearch, container, false);
@@ -128,6 +132,8 @@ public class Mysearch extends android.support.v4.app.Fragment {
         relativeLayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout_seek);
         relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
         textView7 = (TextView) v.findViewById(R.id.textView7);
+
+
 
 
 
@@ -271,6 +277,8 @@ public class Mysearch extends android.support.v4.app.Fragment {
         Maxdistance= (TextView) v.findViewById(R.id.Maxdistance);
         distance= (TextView) v.findViewById(R.id.distance);
         seekBar= (SeekBar) v.findViewById(R.id.seekBar);
+
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
