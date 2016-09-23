@@ -67,10 +67,11 @@
             android:layout_alignParentStart="true">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="220dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -83,7 +84,7 @@
                 <com.devsmart.android.ui.HorizontalListView
                     android:id="@+id/participants_list"
                     android:layout_width="match_parent"
-                    android:layout_height="49dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical|bottom"
                     android:layout_marginLeft="5dp" />
 

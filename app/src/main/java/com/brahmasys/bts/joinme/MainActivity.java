@@ -77,6 +77,8 @@ public class MainActivity extends Activity  {
     public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Marshmallow_Permissions.verifyStoragePermissions(MainActivity.this);
+        Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
        // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         facebook = (Button) findViewById(R.id.facebook);
         mail = (Button) findViewById(R.id.mail);
@@ -163,6 +165,7 @@ public class MainActivity extends Activity  {
 
 
     }
+
 
     public void requestPermission(String strPermission, int perCode, Context _c, Activity _a){
 

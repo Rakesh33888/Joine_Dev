@@ -109,7 +109,7 @@ public class Screen19 extends Fragment {
     String availability;
     String gender="";
     String duration="0",icon ="null",title,address,age_start,age_end,cost="0",limit="0",description;
-    Double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
+    double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
     String complete_address,city,state,zip,country,total_address;
     private static final String TAG = "CreateActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/CreateActivity";
@@ -154,8 +154,8 @@ public class Screen19 extends Fragment {
         lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
 
-            latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
-            longitude2 = Double.parseDouble(lat_lng.getString("lng","0.0"));
+            latitude2 = Double.parseDouble(lat_lng.getString("lat", "0"));
+            longitude2 = Double.parseDouble(lat_lng.getString("lng","0"));
 //          pd = new ProgressDialog(getActivity());
 //          pd.setMessage("Creating....");
 
@@ -274,7 +274,6 @@ public class Screen19 extends Fragment {
         if(location != null){
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-
             //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
         }
 
@@ -284,7 +283,7 @@ public class Screen19 extends Fragment {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
 
-        latitude = latitude;
+            latitude = latitude;
             longitude = longitude;
 
         }
@@ -835,15 +834,19 @@ public class Screen19 extends Fragment {
 
                             List<Address> addresses = null;
                             try {
+
                                 addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                                 if(addresses.size()>0) {
+                                    complete_address = addresses.get(0).getAddressLine(0);
+                                    city = addresses.get(0).getLocality();
+                                    state = addresses.get(0).getAdminArea();
+                                    zip = addresses.get(0).getPostalCode();
+                                    country = addresses.get(0).getCountryName();
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            complete_address = addresses.get(0).getAddressLine(0);
-                            city = addresses.get(0).getLocality();
-                            state = addresses.get(0).getAdminArea();
-                            zip = addresses.get(0).getPostalCode();
-                            country = addresses.get(0).getCountryName();
+
                             total_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
                         } else {
 
@@ -860,7 +863,7 @@ public class Screen19 extends Fragment {
                         age_start = age1.getText().toString();
                         age_end = age2.getText().toString();
 
-                        Log.w("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
+                        Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
                                 + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
 
 

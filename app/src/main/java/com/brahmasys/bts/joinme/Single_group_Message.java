@@ -203,7 +203,7 @@ public class Single_group_Message extends Fragment    {
                                     String txtAddress = json.getString("activity_address");
 
                                     Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).placeholder(R.drawable.butterfly)
-                                            .resize(70, 70)
+                                            .resize(60, 60)
                                             .centerCrop().into(createrimage);
 
                                     tvActivityName.setText(txtActivityName);
@@ -222,7 +222,9 @@ public class Single_group_Message extends Fragment    {
                                         JSONObject row = arrGroup.getJSONObject(i);
                                         if(row.getBoolean("isowner")){
                                             tvHostedByName.setText(row.getString("user_name"));
-                                            Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).into(owner);
+                                            Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
+                                                    .resize(30, 30)
+                                                    .centerCrop().into(owner);
                                         }
                                         else
                                         {
