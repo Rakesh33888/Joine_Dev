@@ -84,13 +84,13 @@ public class Update_Activity extends Fragment {
     private ContentResolver contentResolver;
     TextView age1,age2;
     String[] currency = new String[]{"$", "€"};
-    String year,month,day,hour,minute;
+    String year="0",month="0",day="0",hour="0",minute;
     String availability;
 
 
     String gender="";
     String duration="0",icon = "0",title,address,age_start,age_end,cost="0",limit="0",description;
-    Double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
+    double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
     String complete_address,city,state,zip,country,total_address;
     private static final String TAG = "UpdateActivityDetails";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityDetails";

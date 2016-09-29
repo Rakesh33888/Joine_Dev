@@ -105,7 +105,7 @@ public class Screen19 extends Fragment {
     private ContentResolver contentResolver;
     TextView age1,age2;
     String[] currency = new String[]{"$", "€"};
-    String year,month,day,hour,minute;
+    String year="0",month="0",day="0",hour="0",minute;
     String availability;
     String gender="";
     String duration="0",icon ="null",title,address,age_start,age_end,cost="0",limit="0",description;
@@ -690,7 +690,7 @@ public class Screen19 extends Fragment {
 
                 if (day_position.equals(String.valueOf(current_day))) {
                     List hours = new ArrayList<Integer>();
-                    hours.add(0, " ");
+                   hours.add(0, "");
                     for (int i = 0; i < 23; i++) {
 
                         if (current_hour <= i) {
@@ -704,7 +704,7 @@ public class Screen19 extends Fragment {
 
                 } else {
                     List hours = new ArrayList<Integer>();
-                    hours.add(0, " ");
+                    hours.add(0, "");
                     for (int i = 0; i < 23; i++) {
                         hours.add(Integer.toString(i));
                     }
@@ -721,7 +721,7 @@ public class Screen19 extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
                 List hours = new ArrayList<Integer>();
-                hours.add(0, " ");
+                hours.add(0, "");
                 // TODO Auto-generated method stub
                 ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
                 spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
