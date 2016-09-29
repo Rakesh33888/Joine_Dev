@@ -90,7 +90,11 @@ public class Update_Activity extends Fragment {
 
 
 
-    String year,month,day,hour,minute;
+
+
+
+    String year="0",month="0",day="0",hour="0",minute;
+
     String availability;
     ImageView shareicon;
     ArrayList<String> data;

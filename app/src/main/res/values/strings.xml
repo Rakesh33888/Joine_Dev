@@ -7,7 +7,7 @@
     <string name="underlinedText"><u>Report Activity</u></string>
     <string name="underlinedText1"><u>Update Activity</u></string>
 
-
+    <string name="facebook_App_id">1824054824539410</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="swipe_left">Swipe left</string>

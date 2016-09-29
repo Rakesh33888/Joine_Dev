@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -32,8 +33,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+
+import android.widget.TextView;
+
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.loopj.android.http.AsyncHttpClient;
@@ -48,12 +63,22 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity implements View.OnClickListener {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     Button facebook, mail,b4,b5;
     Button already_member,show;
     SessionManager session;
     RelativeLayout relativemain;
+
+    TextView  tv_profile_name ;
+
+    LoginButton loginButton;
+    CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+
+    String email_json,username_json, socialId_json;
+
+
     private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
     private static final String TAG = "SignUp";
     private static final String URL = "http://52.37.136.238/JoinMe/User.svc/SignUp";
@@ -68,9 +93,10 @@ public class MainActivity extends Activity  {
     public static final String USER_PIC = "user_pic";
     private static final String LAT_LNG = "lat_lng";
     public  static final String PROFILE_PIC = "profile_pic";
+    public  static final String FACEBOOK_DET = "facebook";
 
-    SharedPreferences user_id,user_Details,user_pic,lat_lng,token_id,profile_pic;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng,edit_token_id,edit_profile_pic;
+    SharedPreferences user_id,user_Details,user_pic,lat_lng,token_id,profile_pic,facebook_det;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng,edit_token_id,edit_profile_pic,edit_facebook_det;
     String userid,social_id=" ",login_type="regular",device_token;
     Double latitude=0.0,longitude=0.0;
     ProgressDialog progressDialog;
@@ -79,15 +105,25 @@ public class MainActivity extends Activity  {
     @Override
     public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+
 
          Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
 
 
 
         // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
+
+        //AppEventsLogger.activateApp(this);
+
+
         Marshmallow_Permissions.verifyStoragePermissions(MainActivity.this);
        // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
+        tv_profile_name = (TextView) findViewById(R.id.textView31);
 
         facebook = (Button) findViewById(R.id.facebook);
         mail = (Button) findViewById(R.id.mail);
@@ -119,9 +155,83 @@ public class MainActivity extends Activity  {
         });
 
 
+        facebook_det = getSharedPreferences(FACEBOOK_DET, MODE_PRIVATE);
+        edit_facebook_det = facebook_det.edit();
+
+        relativemain = (RelativeLayout) findViewById(R.id.relativemain);
+        /******* Facebook *******/
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("public_profile email");
+        facebook.setOnClickListener((View.OnClickListener) MainActivity.this);
+        relativemain.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                hideKeyboard(view);
+                return false;
+            }
+
+            private void hideKeyboard(View view) {
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
         already_member = (Button) findViewById(R.id.show);
 
+        tv_profile_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_profile_name.setText(facebook_det.getString("email","null"));
+            }
+        });
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+
+                        final JSONObject json = response.getJSONObject();
+
+
+                        try {
+                            if (json != null) {
+                                String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + json.getString("id");
+                                email_json = json.getString("email");
+                                final String username_json = json.getString("name");
+                                final String socialId_json = json.getString("id");
+                                edit_facebook_det.putString("email",email_json);
+                                edit_facebook_det.commit();
+                                Log.e("email", email_json);
+
+                                Toast.makeText(MainActivity.this, email_json, Toast.LENGTH_SHORT).show();
+                            }
+                            //email.setText(email_json);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,link,email,picture");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -188,7 +298,11 @@ public class MainActivity extends Activity  {
 
 
     }
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     public void requestPermission(String strPermission, int perCode, Context _c, Activity _a){
 
@@ -235,6 +349,25 @@ public class MainActivity extends Activity  {
 
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    public void onClick(View v) {
+        if (v == facebook) {
+            loginButton.performClick();
+            if(AccessToken.getCurrentAccessToken() != null){
+
+
+                // LoginManager.getInstance().logOut();
+
+            }
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -720,7 +853,6 @@ public class MainActivity extends Activity  {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
-
 
 
 }
