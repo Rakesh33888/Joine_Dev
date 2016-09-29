@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -56,7 +55,7 @@ public class custom_listview_participants extends ArrayAdapter<Book> {
       //  holder.authorName.setText(book.getAuthorName());
 
         Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).placeholder(R.drawable.butterfly)
-                .resize(70, 70)
+                .resize(25, 25)
                 .centerCrop().into(holder.image);
         //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
         pd.hide();

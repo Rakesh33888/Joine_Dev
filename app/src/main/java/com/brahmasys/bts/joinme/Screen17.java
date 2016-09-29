@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,7 +49,9 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
   //  Button btnJoineActivity;
 
     LinearLayout backlayout_screen_17;
+    ImageView shareicon;
     RatingBar myratingBar;
+    String activity_name,cost,distance,duration,limit,owner_name,owner_pic,rating,review,activity_address,time,joined,icon1;
     Button btnJoineActivity;
     TextView reporttext,updatetext;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
@@ -172,7 +175,23 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             public void onClick(View v) {
 
                 fragmentManager=getFragmentManager();
-                Update_Activity update_activity =new Update_Activity();
+                 Update_Activity update_activity =new Update_Activity();
+                Bundle args = new Bundle();
+                args.putString("activityname", activity_name);
+                args.putString("cost",cost);
+                args.putString("distance",distance);
+                args.putString("ownerpic",owner_pic);
+                args.putString("duration",duration);
+                args.putString("limit",limit);
+                args.putString("ownername",owner_name);
+                args.putString("rating",rating);
+                args.putString("review",review);
+                args.putString("activity_address",activity_address);
+                args.putString("owner_id",owner_id);
+                args.putString("time",time);
+                args.putString("joind",joined);
+                args.putSerializable("url",url_maps);
+                update_activity.setArguments(args);
                     fragmentManager.beginTransaction()
                             .replace(R.id.flContent,update_activity)
                             .addToBackStack(null)
@@ -217,6 +236,10 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
             }
         });
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.VISIBLE);
+
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + 0 + "/" + 0,
@@ -251,19 +274,19 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
                             try {
                                 //Getting information form the Json Response object
-                                String cost = userdetails.getString("activity_cost");
-                                String distance = userdetails.getString("activity_distance");
-                                String duration = userdetails.getString("activity_duration");
-                                String limit = userdetails.getString("participant_limit");
-                                String activity_name = userdetails.getString("activity_name");
-                                String owner_name = userdetails.getString("activity_owner_name");
-                                String owner_pic = userdetails.getString("activity_owner_pic");
-                                String rating = userdetails.getString("activity_rating");
-                                String review = userdetails.getString("activity_review");
-                                String activity_address=userdetails.getString("activity_Adress");
-                                String time = userdetails.getString("activity_time");
-                                String joined = userdetails.getString("participant_joined");
-                                String icon1 = userdetails.getString("acitivity_icon");
+                                cost = userdetails.getString("activity_cost");
+                                distance = userdetails.getString("activity_distance");
+                                duration = userdetails.getString("activity_duration");
+                                limit = userdetails.getString("participant_limit");
+                                activity_name = userdetails.getString("activity_name");
+                                owner_name = userdetails.getString("activity_owner_name");
+                                owner_pic = userdetails.getString("activity_owner_pic");
+                                rating = userdetails.getString("activity_rating");
+                                review = userdetails.getString("activity_review");
+                                activity_address=userdetails.getString("activity_Adress");
+                                time = userdetails.getString("activity_time");
+                                joined = userdetails.getString("participant_joined");
+                                icon1 = userdetails.getString("acitivity_icon");
                                 owner_id = userdetails.getString("activity_owner_id");
                                 String activity_id = userdetails.getString("activity_id");
 
@@ -278,10 +301,12 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                               //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
                                 Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly)
                                         .resize(60, 60)
-                                        .centerCrop().into(icon);
+                                        .centerCrop()
+                                .into(icon);
                                 Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly)
                                         .resize(60, 60)
-                                        .centerCrop().into(createrimage);
+                                        .centerCrop()
+                                        .into(createrimage);
 
                                 long timestampString = Long.parseLong(time);
                                 String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
@@ -313,7 +338,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     TextSliderView textSliderView = new TextSliderView(getActivity());
                                     // initialize a SliderLayout
                                     textSliderView.image(url_maps.get(name))
-                                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                                             .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                                                                           @Override
                                                                           public void onSliderClick(BaseSliderView baseSliderView) {

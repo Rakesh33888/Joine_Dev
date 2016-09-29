@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,12 +23,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -45,16 +50,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import link.fls.swipestack.SwipeStack;
 
 public class Screen16 extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener
-        ,Mysearch.OnFragmentInteractionListener,
+        , Mysearch.OnFragmentInteractionListener,
         Mygroup.OnFragmentInteractionListener,
-        Appsetting.OnFragmentInteractionListener,SwipeStack.SwipeStackListener {
+        Appsetting.OnFragmentInteractionListener, SwipeStack.SwipeStackListener {
     private static final int PICK_IMAGE_REQUEST = 2;
 
     private SwipeStack mSwipeStack;
@@ -65,15 +72,16 @@ public class Screen16 extends AppCompatActivity implements
     Context context;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     public Toolbar toolbar;
-    android.support.v7.app.ActionBar actionBar;
-    ImageView navimage, logo ,back_nav;
+    ActionBar actionBar;
+    ImageView navimage, logo, back_nav;
 
     TextView navtextview;
-    public ImageView shareicon,msg;
+    public ImageView shareicon, msg;
+    ImageButton reloadactivity;
     LinearLayout backlayoutdrawer;
 
     Button editbutton;
-    ImageView create,like,dislike,btninfo;
+    ImageView create, like, dislike, btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
     FragmentManager fragmentManager;
     private static final String TAG1 = "GetUserActivity";
@@ -83,20 +91,26 @@ public class Screen16 extends AppCompatActivity implements
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
     private static final String LAT_LNG = "lat_lng";
-    SharedPreferences user_id,user_Details,user_pic,lat_lng;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
+    SharedPreferences user_id, user_Details, user_pic, lat_lng;
+    SharedPreferences.Editor edit_userid, edit_user_detals, edit_user_pic, edit_lat_lng;
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
-    int pic_list_size =0;
-    String lat,lon;
+    int pic_list_size = 0;
+    String lat, lon;
     List<String> activity_url;
     Screen19 screen19_fragment;
-    TextView name_activity,time_activity,distance_activity;
-    List<String> activity_name,distance,time,activity_id,userid_other;
+    TextView name_activity, time_activity, distance_activity;
+    List<String> activity_name, distance, time, activity_id, userid_other;
     ProgressDialog pd;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client2;
+
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen16);
 
@@ -107,7 +121,7 @@ public class Screen16 extends AppCompatActivity implements
         pd.setMessage("Uploading...");
 
 
-        user_id =getSharedPreferences(USERID, MODE_PRIVATE);
+        user_id = getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
         user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
         edit_user_detals = user_Details.edit();
@@ -122,103 +136,124 @@ public class Screen16 extends AppCompatActivity implements
         distance_activity = (TextView) findViewById(R.id.textView16);
 
 
-
-
         activity_url = new ArrayList<String>();
-        activity_name= new ArrayList<String>();
-        distance= new ArrayList<String>();
-        time= new ArrayList<String>();
-        activity_id= new ArrayList<String>();
-        userid_other= new ArrayList<String>();
+        activity_name = new ArrayList<String>();
+        distance = new ArrayList<String>();
+        time = new ArrayList<String>();
+        activity_id = new ArrayList<String>();
+        userid_other = new ArrayList<String>();
 
-        context=this;
+        context = this;
         setListViewAdapter();
 
-     Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
+        Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client2.connect();
+        if (Connectivity_Checking.isConnectingToInternet()) {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + user_id.getString("userid", ""),
+                    new AsyncHttpResponseHandler() {
+                        // When the response returned by REST has Http response code '200'
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + user_id.getString("userid", ""),
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
-
-                    public void onSuccess(String response) {
-                        // Hide Progress Dialog
-                        //  prgDialog.hide();
-                        try {
-                            // Extract JSON Object from JSON returned by REST WS
-                            JSONObject obj = new JSONObject(response);
-
-
-                            JSONObject json = null;
+                        public void onSuccess(String response) {
+                            // Hide Progress Dialog
+                            //  prgDialog.hide();
                             try {
-                                json = new JSONObject(String.valueOf(obj));
+                                // Extract JSON Object from JSON returned by REST WS
+                                JSONObject obj = new JSONObject(response);
+
+
+                                JSONObject json = null;
+                                try {
+                                    json = new JSONObject(String.valueOf(obj));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                /************************* UserDetails start **************************/
+                                JSONObject userdetails = null;
+                                try {
+                                    userdetails = json.getJSONObject("details");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                try {
+                                    //Getting information form the Json Response object
+                                    String firstname_user = userdetails.getString("fname");
+                                    String lastname_user = userdetails.getString("lname");
+
+                                    //Save the data in sharedPreference
+                                    edit_user_detals.putString("firstname", firstname_user);
+                                    edit_user_detals.putString("lastname", lastname_user);
+                                    edit_user_detals.commit();
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                JSONArray cast = userdetails.getJSONArray("user_pic");
+                                edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                                edit_user_pic.commit();
+
+                                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                List<String> allid = new ArrayList<String>();
+                                List<String> allurl = new ArrayList<String>();
+
+                                for (int i = 0; i < cast.length(); i++) {
+                                    JSONObject actor = cast.getJSONObject(i);
+                                    String id = actor.getString("id");
+                                    String url = actor.getString("url");
+                                    allid.add(id);
+                                    allurl.add(url);
+                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                    Log.d("Type", cast.getString(i));
+                                }
+                                for (int j = 0; j < allid.size(); j++) {
+                                    edit_user_pic.putString("id_" + j, allid.get(j));
+                                    edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                                }
+                                edit_user_pic.commit();
+                                edit_user_pic.commit();
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
-                            /************************* UserDetails start **************************/
-                            JSONObject userdetails = null;
-                            try {
-                                userdetails = json.getJSONObject("details");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                //Getting information form the Json Response object
-                                String firstname_user = userdetails.getString("fname");
-                                String lastname_user = userdetails.getString("lname");
-
-                                //Save the data in sharedPreference
-                                edit_user_detals.putString("firstname", firstname_user);
-                                edit_user_detals.putString("lastname", lastname_user);
-                                edit_user_detals.commit();
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            JSONArray cast = userdetails.getJSONArray("user_pic");
-                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                            edit_user_pic.commit();
-
-                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                            List<String> allid = new ArrayList<String>();
-                            List<String> allurl = new ArrayList<String>();
-
-                            for (int i = 0; i < cast.length(); i++) {
-                                JSONObject actor = cast.getJSONObject(i);
-                                String id = actor.getString("id");
-                                String url = actor.getString("url");
-                                allid.add(id);
-                                allurl.add(url);
-                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                Log.d("Type", cast.getString(i));
-                            }
-                            for (int j = 0; j < allid.size(); j++) {
-                                edit_user_pic.putString("id_" + j, allid.get(j));
-                                edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                            }
-                            edit_user_pic.commit();
-                            edit_user_pic.commit();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                });
+                    });
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(Screen16.this);
+        }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Screen16 Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client2, viewAction);
     }
 
     @Override
@@ -228,11 +263,13 @@ public class Screen16 extends AppCompatActivity implements
 
     }
 
+
+
     private void fillWithTestData() {
 
 
         setSupportActionBar(toolbar);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -240,15 +277,19 @@ public class Screen16 extends AppCompatActivity implements
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+        reloadactivity= (ImageButton) findViewById(R.id.reloadactivity);
+        reloadactivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
+            }
+        });
+        relativeLayout_share_icon = (RelativeLayout) toolbar.findViewById(R.id.Relativelayout_share_icon);
+        shareicon = (ImageView) toolbar.findViewById(R.id.shareicon);
 
-        relativeLayout_share_icon= (RelativeLayout)toolbar. findViewById(R.id.Relativelayout_share_icon);
-        shareicon= (ImageView)toolbar. findViewById(R.id.shareicon);
-        View item=getLayoutInflater().inflate(R.layout.share_icon,null);
-        relativeLayout_share_icon.addView(item);
         shareicon.setVisibility(View.VISIBLE);
-        relativeLayout_share_icon.setVisibility(View.VISIBLE);
+
 
         shareicon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,31 +303,25 @@ public class Screen16 extends AppCompatActivity implements
         });
 
 
-
         like = (ImageView) findViewById(R.id.like);
         dislike = (ImageView) findViewById(R.id.dislike);
 
 
-
-
-
-
-        btninfo = (ImageView)findViewById(R.id.infobutton);
+        btninfo = (ImageView) findViewById(R.id.infobutton);
         btninfo.setClickable(true);
 
 
         logo = (ImageView) findViewById(R.id.logo);
-        create= (ImageView)findViewById(R.id.createnewactivity);
+        create = (ImageView) findViewById(R.id.createnewactivity);
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager=getSupportFragmentManager();
-                Screen19 screen19=new Screen19();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.flContent,screen19)
-                            .addToBackStack(null)
-                            .commit();
-
+                fragmentManager = getSupportFragmentManager();
+                Screen19 screen19 = new Screen19();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, screen19)
+                        .addToBackStack(null)
+                        .commit();
 
 
             }
@@ -303,11 +338,11 @@ public class Screen16 extends AppCompatActivity implements
             public void onClick(View v) {
 
                 msg.setBackgroundResource(R.drawable.colourbubble);
-                fragmentManager=getSupportFragmentManager();
-                Messagescreen messagescreen=new Messagescreen();
+                fragmentManager = getSupportFragmentManager();
+                Messagescreen messagescreen = new Messagescreen();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.flContent,messagescreen)
+                        .replace(R.id.flContent, messagescreen)
                         .addToBackStack(null)
                         .commit();
 
@@ -318,18 +353,18 @@ public class Screen16 extends AppCompatActivity implements
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
         navtextview = (TextView) header.findViewById(R.id.navtextview);
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
-        editbutton= (Button) header.findViewById(R.id.editbutton);
+        editbutton = (Button) header.findViewById(R.id.editbutton);
 
 
         editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                }else{
+                } else {
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
                 }
                 intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
@@ -341,41 +376,39 @@ public class Screen16 extends AppCompatActivity implements
 
             }
         });
-        backlayoutdrawer= (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
-        navtextview.setText(user_Details.getString("firstname","")+"\t"+user_Details.getString("lastname","null"));
+        backlayoutdrawer = (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
+        navtextview.setText(user_Details.getString("firstname", "") + "\t" + user_Details.getString("lastname", "null"));
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-         pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size","0"));
+        pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size", "0"));
         List<String> allid = new ArrayList<String>();
         List<String> allurl = new ArrayList<String>();
 
-        for (int j = 0; j < pic_list_size; j++)
-        {
-           String id= user_pic.getString("id_" + j, "");
-           String url= user_pic.getString("url_" + j, "");
+        for (int j = 0; j < pic_list_size; j++) {
+            String id = user_pic.getString("id_" + j, "");
+            String url = user_pic.getString("url_" + j, "");
 
             allid.add(id);
             allurl.add(url);
         }
 
 
-        for (int i = 0; i< allid.size(); i++) {
+        for (int i = 0; i < allid.size(); i++) {
 
 
-            if (i==allurl.size()-1)
-            {
+            if (i == allurl.size() - 1) {
                 //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
-              //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
+                //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
                 Picasso.with(this)
                         .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
                         .placeholder(R.drawable.default_profile)
                         .resize(90, 90)
                         .centerCrop()
                         .into(navimage);
-               // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
+                // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
 
             }
         }
@@ -401,15 +434,16 @@ public class Screen16 extends AppCompatActivity implements
         try {
             // Add key/value pairs
 
-            jsonObjSend.put("lat",lat);
-            jsonObjSend.put("lon",lon);
-            jsonObjSend.put("userid", user_id.getString("userid","00"));
+            jsonObjSend.put("lat", lat);
+            jsonObjSend.put("lon", lon);
+            jsonObjSend.put("userid", user_id.getString("userid", "00"));
             //  hideDialog();
             Log.i(TAG1, jsonObjSend.toString(3));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
 
 
@@ -419,7 +453,6 @@ public class Screen16 extends AppCompatActivity implements
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 
         try {
@@ -437,7 +470,7 @@ public class Screen16 extends AppCompatActivity implements
 
                 activity_name.add(actor.getString("activity_name"));
                 distance.add(actor.getString("activity_distance"));
-                time .add(actor.getString("activity_time"));
+                time.add(actor.getString("activity_time"));
                 activity_id.add(actor.getString("activity_id"));
                 userid_other.add(actor.getString("userid"));
                 activity_url.add(id);
@@ -448,8 +481,8 @@ public class Screen16 extends AppCompatActivity implements
                 book.setAuthorName(actor.getString("activity_distance"));
                 book.setIcon_image(actor.getString("acitivity_icon"));
                 long timestampString = Long.parseLong(actor.getString("activity_time"));
-                String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
-                        format(new java.util.Date(timestampString * 1000));
+                String value = new SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
+                        format(new Date(timestampString * 1000));
 
                 book.setTime(value);
 
@@ -467,23 +500,20 @@ public class Screen16 extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                    mSwipeStack.onViewSwipedToLeft();
 
-
-
-
-
+                mSwipeStack.onViewSwipedToLeft();
 
 
             }
+
+
         });
 
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // mSwipeStack.onViewSwipedToRight();
+                mSwipeStack.onViewSwipedToRight();
                 Log.w("position", String.valueOf(mSwipeStack.getCurrentPosition()));
-
 
 
                 Member_add_to_Group();
@@ -500,10 +530,8 @@ public class Screen16 extends AppCompatActivity implements
 
                     Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
 
-                }
-                else
-                {
-                   // Toast.makeText(Screen16.this, userid_other.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
+                } else {
+                    // Toast.makeText(Screen16.this, userid_other.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
 
                     fragmentManager = getSupportFragmentManager();
                     Other_User_Details other_user = new Other_User_Details();
@@ -519,14 +547,12 @@ public class Screen16 extends AppCompatActivity implements
                 }
 
 
-
-
-
             }
         });
 
 
     }
+
     private void setListViewAdapter() {
         books = new ArrayList<Book>();
         adapter = new SwipeStackAdapter(this, R.layout.card, books);
@@ -552,7 +578,6 @@ public class Screen16 extends AppCompatActivity implements
         Class fragmentClass = null;
         if (id == R.id.my_search) {
             fragmentClass = Mysearch.class;
-
 
 
         } else if (id == R.id.group_activites) {
@@ -587,8 +612,6 @@ public class Screen16 extends AppCompatActivity implements
     }
 
 
-
-
     @Override
     public void onViewSwipedToRight(int position) {
         Book swipedElement = mAdapter.getItem(position);
@@ -607,14 +630,23 @@ public class Screen16 extends AppCompatActivity implements
                 Toast.LENGTH_SHORT).show();
 
 
-
-
     }
 
     @Override
     public void onStackEmpty() {
+
+     if (mAdapter.isEmpty()){
+         reloadactivity.setVisibility(View.VISIBLE);
+     }
+        else {
+         reloadactivity.setVisibility(View.GONE);
+     }
+
         Toast.makeText(this, R.string.stack_empty, Toast.LENGTH_SHORT).show();
+
+
     }
+
 
 
 //    public void openGallery(int req_code){
@@ -626,65 +658,62 @@ public class Screen16 extends AppCompatActivity implements
 //    }
 //
 
-    public  void Member_add_to_Group()
-    {
+    public void Member_add_to_Group() {
 
         if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
 
             Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
 
-        }
-        else {
-         //   Toast.makeText(Screen16.this, activity_id.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
+        } else {
+            //   Toast.makeText(Screen16.this, activity_id.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
 
 
-           AsyncHttpClient client = new AsyncHttpClient();
-                client.get("http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/" + user_id.getString("userid","000") + "/" + activity_id.get(mSwipeStack.getCurrentPosition()),
-                        new AsyncHttpResponseHandler() {
-                            // When the response returned by REST has Http response code '200'
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get("http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/" + user_id.getString("userid", "000") + "/" + activity_id.get(mSwipeStack.getCurrentPosition()),
+                    new AsyncHttpResponseHandler() {
+                        // When the response returned by REST has Http response code '200'
 
-                            public void onSuccess(String response) {
+                        public void onSuccess(String response) {
 
-                                try {
-                                    // Extract JSON Object from JSON returned by REST WS
-                                    JSONObject obj = new JSONObject(response);
+                            try {
+                                // Extract JSON Object from JSON returned by REST WS
+                                JSONObject obj = new JSONObject(response);
 
-                                    String result = obj.getString("message");
+                                String result = obj.getString("message");
 
-                                    if (result.equals("Updated Successfully")) {
-                                        msg.setBackgroundResource(R.drawable.colourbubble);
-                                        fragmentManager = getSupportFragmentManager();
-                                        Single_group_Message update_activity = new Single_group_Message();
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("activityid",activity_id.get(mSwipeStack.getCurrentPosition()));
-                                        update_activity.setArguments(bundle);
-                                        fragmentManager.beginTransaction()
-                                                .replace(R.id.flContent, update_activity)
-                                                .addToBackStack(null)
-                                                .commit();
+                                if (result.equals("Updated Successfully")) {
+                                    fragmentManager = getSupportFragmentManager();
+                                    Single_group_Message update_activity = new Single_group_Message();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
+                                    update_activity.setArguments(bundle);
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.flContent, update_activity)
+                                            .addToBackStack(null)
+                                            .commit();
 
-                                    } else {
+                                } else {
 
-                                        Toast.makeText(Screen16.this, "String was not recognized as a valid DateTime.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Screen16.this, "String was not recognized as a valid DateTime.", Toast.LENGTH_SHORT).show();
 
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-
-
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        });
-        }
 
+
+                        }
+                    });
+        }
 
 
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(screen19_fragment != null) {
+        if (screen19_fragment != null) {
             screen19_fragment.onActivityResult(requestCode, resultCode, data);
-        }else {
+        } else {
 
 
             if (isKitKat && resultCode != Activity.RESULT_CANCELED) {
@@ -709,11 +738,10 @@ public class Screen16 extends AppCompatActivity implements
                     }
                 });
                 thread.start();
-             }
+            }
 
         }
     }
-
 
 
     public void onAttachFragment(Fragment fragment) {
@@ -724,18 +752,17 @@ public class Screen16 extends AppCompatActivity implements
         // if a match is found
         if (fragment instanceof Screen19) {
 
-            this.screen19_fragment= (Screen19) fragment;
+            this.screen19_fragment = (Screen19) fragment;
 
         }
     }
 
-    private void doFileUpload(){
+    private void doFileUpload() {
 
         File file1 = new File(selectedPath1);
 
-        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/"+user_id.getString("userid","null");
-        try
-        {
+        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/" + user_id.getString("userid", "null");
+        try {
             org.apache.http.client.HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urlString);
             FileBody bin1 = new FileBody(file1);
@@ -749,8 +776,8 @@ public class Screen16 extends AppCompatActivity implements
             resEntity = response.getEntity();
             final String response_str = EntityUtils.toString(resEntity);
             if (resEntity != null) {
-                Log.i("RESPONSE",response_str);
-                runOnUiThread(new Runnable(){
+                Log.i("RESPONSE", response_str);
+                runOnUiThread(new Runnable() {
                     public void run() {
                         try {
 
@@ -759,20 +786,37 @@ public class Screen16 extends AppCompatActivity implements
                             //    res.setText("n Response from server : n " + response_str);
                             pd.hide();
                             pd.dismiss();
-                           Toast.makeText(getApplicationContext(),"Updated Successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
             }
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             Log.e("Debug", "error: " + ex.getMessage(), ex);
         }
 
     }
 
 
+    @Override
+    public void onStop() {
+        super.onStop();
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Screen16 Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client2, viewAction);
+        client2.disconnect();
+    }
 }

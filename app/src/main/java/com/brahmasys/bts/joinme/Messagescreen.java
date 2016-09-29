@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import java.util.List;
 public class Messagescreen extends Fragment{
     ListView groups_listView;
     ImageView back;
+    ImageView shareicon;
     LinearLayout backlayoutmessge;
     FragmentManager fragmentManager;
     public static final String USERID = "userid";
@@ -77,6 +79,10 @@ public class Messagescreen extends Fragment{
 
             }
         });
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
 
         context=getActivity();
          setListViewAdapter();

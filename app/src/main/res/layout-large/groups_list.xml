@@ -31,7 +31,7 @@
                 android:singleLine="true"
                 android:inputType="textCapSentences"
                 android:paddingStart="5dp"
-                android:paddingTop="5dp"
+                android:paddingTop="7dp"
                 android:text="Ski"
                 android:textSize="14dp"/>
             <TextView

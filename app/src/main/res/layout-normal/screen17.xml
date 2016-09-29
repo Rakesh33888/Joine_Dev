@@ -26,9 +26,9 @@
         android:id="@+id/frameLayoutbck"
         android:layout_gravity="center_horizontal|left">
             <LinearLayout
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_gravity="left"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_gravity="left|center"
                 android:id="@+id/backlayoutscreen17">
             <ImageView
             android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                     custom:auto_cycle="true"
                     custom:indicator_visibility="visible"
                     custom:pager_animation_span="1100"
-                    android:layout_height="200dp"/>
+                    android:layout_height="225dp"/>
 
                 <com.daimajia.slider.library.Indicators.PagerIndicator
                     android:id="@+id/custom_indicator"

@@ -89,6 +89,7 @@
                 <com.devsmart.android.ui.HorizontalListView
                     android:id="@+id/participants_list"
                     android:layout_width="match_parent"
+                    android:clickable="true"
                     android:layout_height="match_parent"
 
                     android:layout_gravity="center" />

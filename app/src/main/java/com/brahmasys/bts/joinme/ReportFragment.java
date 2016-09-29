@@ -1,23 +1,27 @@
 package com.brahmasys.bts.joinme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.brahmasys.bts.joinme.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +32,9 @@ import org.json.JSONObject;
 public class ReportFragment extends android.support.v4.app.Fragment {
     TextView textproblm;
     EditText editTextproblem;
+    ImageView shareicon;
     Button buttoncncl,buttonsnd;
+    FrameLayout reportlayout;
     public static final String ACTIVITYID = "activity_id";
     public static final String USERID = "userid";
     SharedPreferences user_id,activity_id;
@@ -46,6 +52,11 @@ public class ReportFragment extends android.support.v4.app.Fragment {
 
         textproblm= (TextView) v.findViewById(R.id.textView17);
         editTextproblem= (EditText) v.findViewById(R.id.editText10);
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
         buttoncncl= (Button) v.findViewById(R.id.buttoncancel);
         buttoncncl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +69,20 @@ public class ReportFragment extends android.support.v4.app.Fragment {
                         break;
                 }
 
+            }
+        });
+
+        reportlayout= (FrameLayout) v.findViewById(R.id.framelayoutreport);
+        reportlayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                hideKeyboard(view);
+                return false;
+            }
+
+            private void hideKeyboard(View view) {
+                InputMethodManager in = (InputMethodManager)getActivity(). getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
         buttonsnd= (Button) v.findViewById(R.id.buttonsend);

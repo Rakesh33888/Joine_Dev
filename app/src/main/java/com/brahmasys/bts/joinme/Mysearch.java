@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -134,6 +135,9 @@ public class Mysearch extends android.support.v4.app.Fragment {
         textView7 = (TextView) v.findViewById(R.id.textView7);
 
 
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
 
 
 
@@ -165,7 +169,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
+        if(Connectivity_Checking.isConnectingToInternet()) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/User.svc/GetUserPreference/"+ user_id.getString("userid",""),
                 new AsyncHttpResponseHandler() {
@@ -214,9 +218,17 @@ public class Mysearch extends android.support.v4.app.Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                         progressDialog.dismiss();
 
                     }});
+        }
+    else
+    {
+        Splashscreen dia = new Splashscreen();
+        dia.Connectivity_Dialog_with_refresh(getActivity());
+    }
+
 
 
 

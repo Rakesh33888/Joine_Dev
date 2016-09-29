@@ -21,6 +21,7 @@ import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -72,7 +73,7 @@ import java.util.TimeZone;
 public class Update_Activity extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 3;
     private static final int RESULT_OK = 3;
-    ProgressDialog progressDialog;
+
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
     Button update_activity,delet_activity;
@@ -83,14 +84,21 @@ public class Update_Activity extends Fragment {
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
     TextView age1,age2;
+    ProgressDialog progressDialog;
     String[] currency = new String[]{"$", "€"};
+
+
+
+
     String year,month,day,hour,minute;
     String availability;
-
+    ImageView shareicon;
+    ArrayList<String> data;
+    int image;
 
     String gender="";
     String duration="0",icon = "0",title,address,age_start,age_end,cost="0",limit="0",description;
-    Double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
+    double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
     String complete_address,city,state,zip,country,total_address;
     private static final String TAG = "UpdateActivityDetails";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityDetails";
@@ -107,18 +115,53 @@ public class Update_Activity extends Fragment {
     public static final int PICK_IMAGE1 = 1;
     public static final int PICK_IMAGE2 = 2;
     public static final int PICK_IMAGE3 = 3;
+
+    int imageView1;
+    int imageview2;
+    int imageview3;
     String imgPath;
+    String myint;
+    String owerid;
     HttpEntity resEntity;
     String activity_id1 ="0", str_value="0";
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
+
     List<String> allurl;
     FragmentManager fragmentManager;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setContentView(R.layout.custom_progress);
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+         Bundle bundle = this.getArguments();
+         String titleactivity= bundle.getString("activityname","");
+         String par_cost=bundle.getString("cost","");
+         String owner=bundle.getString("ownerpic","");
+         String durtion=bundle.getString("duration","");
+
+         owerid=bundle.getString("owner_id","");
+        data= (ArrayList<String>) bundle.getSerializable("key");
+        if (bundle != null) {
+            data = (ArrayList<String>) bundle.getSerializable("key");
+            image = bundle.getInt("pos");
+        }
+
+         String limt=bundle.getString("limit","");
+         String activityaddress=bundle.getString("activity_address","");
+
+
+
+
+         
+
 
         View v = inflater.inflate(R.layout.update_activity, container, false);
 
@@ -126,6 +169,7 @@ public class Update_Activity extends Fragment {
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
+
 
         lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
@@ -140,6 +184,7 @@ public class Update_Activity extends Fragment {
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
 
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
+
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
         address_search = (FrameLayout) v.findViewById(R.id.address_search);
         //   edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
@@ -155,8 +200,19 @@ public class Update_Activity extends Fragment {
         checkBoxformen = (CheckBox) v.findViewById(R.id.checkBoxformen);
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
 
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
+
+
+
+
+
+
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
         firstimage =(CircularImageView) v.findViewById(R.id.firstimage);
+
         secondimage = (CircularImageView) v.findViewById(R.id.secondimage);
         thirdimage = (CircularImageView) v.findViewById(R.id.thrdimage);
         age1 = (TextView) v.findViewById(R.id.age1);
@@ -165,6 +221,31 @@ public class Update_Activity extends Fragment {
         update_activity  = (Button) v.findViewById(R.id.update_activity);
         delet_activity = (Button) v.findViewById(R.id.delete_activity);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
+
+        // user details which user wants to update//
+        edittextactivityname.setText(titleactivity);
+        edit_cost.setText(par_cost);
+//        for (int i = 0; i <data.size(); i++) {
+//            if(i==0) {
+//                imageView1 = getResources().getIdentifier("stagebtn_" + i, "", "");
+//
+//            }
+//            if(i==1) {
+//                 imageview2 = getResources().getIdentifier("acvr" + i, "", "");
+//            }
+//            if(i==2) {
+//                 imageview3 = getResources().getIdentifier("ddccd" + i, "", "");
+//            }
+
+//        }
+//        firstimage.setImageResource(imageView1);
+//        secondimage.setImageResource(imageview2);
+//        thirdimage.setBackgroundResource(imageview3);
+
+        edit_limit.setText(limt);
+
+   //     geo_autocomplete.setText(activityaddress);
+
 
 
 
@@ -215,16 +296,13 @@ public class Update_Activity extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
+
                 for (int i=0;i<allurl.size();i++)
-
+                {
+                    if (i==spinnericon.getSelectedItemPosition())
                     {
-                        if (i==spinnericon.getSelectedItemPosition())
-                        {
 
-
-                            icon = allurl.get(i);
-
-
+                        icon = allurl.get(i);
                     }
                 }
                 //  Toast.makeText(getActivity(),spinnericon.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
@@ -687,7 +765,7 @@ public class Update_Activity extends Fragment {
         });
 
 
-        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
+        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,currency);
         currency_symbol.setAdapter(adapter_currency);
         /**************************Spinner functionality Ends *****************************/
         TimeZone tz = TimeZone.getDefault();
@@ -701,12 +779,12 @@ public class Update_Activity extends Fragment {
                 if (edittextactivityname.getText().toString().length() >= 2) {
                     if (enterdiscription.getText().toString().length() >= 10) {
 //
-//                        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
-//                        progressDialog.setIndeterminate(true);
-//                        progressDialog.setCancelable(false);
-//                        progressDialog.setContentView(R.layout.custom_progress);
-//                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setContentView(R.layout.custom_progress);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                         int int_month = 0;
                         year = (String) spinnerforyear.getSelectedItem();
@@ -746,7 +824,7 @@ public class Update_Activity extends Fragment {
                         c.set(Calendar.YEAR, Integer.parseInt(year));
                         c.set(Calendar.MONTH, int_month);
                         c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-                        c.set(Calendar.HOUR, Integer.parseInt(hour));
+                        c.set(Calendar.HOUR, 1);
                         c.set(Calendar.MINUTE, 0);
                         c.set(Calendar.SECOND, 0);
                         c.set(Calendar.MILLISECOND, 0);
@@ -846,6 +924,7 @@ public class Update_Activity extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                       progressDialog.dismiss();
                         JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
 
 
@@ -865,7 +944,7 @@ public class Update_Activity extends Fragment {
                                         .addToBackStack(null)
                                         .commit();
 
-                                    //progressDialog.dismiss();
+                                //progressDialog.dismiss();
 
                                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                             } else {
@@ -875,7 +954,7 @@ public class Update_Activity extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                       progressDialog.dismiss();
 
                     } else {
                         Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
@@ -939,7 +1018,7 @@ public class Update_Activity extends Fragment {
                                         }
                                     }
                                 });
-                        dialog.dismiss();
+//                        dialog.dismiss();
                     }
                 });
                 no.setOnClickListener(new View.OnClickListener() {
@@ -954,7 +1033,10 @@ public class Update_Activity extends Fragment {
             }
         });
 
+
         return v;
+
+
     }
 
 
@@ -998,7 +1080,7 @@ public class Update_Activity extends Fragment {
 
         String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
         for (int i=0;i<3;i++) {
-            String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id.getString("activity_id","");
+            String urlString = " http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityPic/"+activity_id.getString("activity_id","") + owerid;
             try {
                 org.apache.http.client.HttpClient client = new DefaultHttpClient();
                 HttpPost post = new HttpPost(urlString);

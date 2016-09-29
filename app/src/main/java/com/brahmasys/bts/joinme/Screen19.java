@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -79,6 +80,7 @@ public class Screen19 extends Fragment {
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
     Button create;
+    ImageView shareicon;
 
     FrameLayout address_search;
     Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
@@ -88,6 +90,10 @@ public class Screen19 extends Fragment {
     private ContentResolver contentResolver;
     TextView age1,age2;
     String[] currency = new String[]{"$", "€"};
+
+
+
+
     String year,month,day,hour,minute;
     String availability;
     String gender="";
@@ -101,7 +107,7 @@ public class Screen19 extends Fragment {
     private static final String LAT_LNG = "lat_lng";
     SharedPreferences user_id,activity_id,lat_lng;
     SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
-     ProgressDialog  progressDialog;
+    ProgressDialog  progressDialog;
     private Integer THRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
@@ -126,6 +132,12 @@ public class Screen19 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setContentView(R.layout.custom_progress);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         View v = inflater.inflate(R.layout.activity_screen19, container, false);
 
@@ -137,8 +149,8 @@ public class Screen19 extends Fragment {
         lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
 
-            latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
-            longitude2 = Double.parseDouble(lat_lng.getString("lng","0.0"));
+            latitude2 = Double.parseDouble(lat_lng.getString("lat", "0"));
+            longitude2 = Double.parseDouble(lat_lng.getString("lng","0"));
 //          pd = new ProgressDialog(getActivity());
 //          pd.setMessage("Creating....");
 
@@ -158,12 +170,19 @@ public class Screen19 extends Fragment {
         edit_cost = (EditText) v.findViewById(R.id.forcost);
         edit_limit = (EditText) v.findViewById(R.id.numbrlimitbtn);
 
+
+
         checkboxcurrent = (CheckBox) v.findViewById(R.id.checkBoxfor_current);
         checkBoxaddress = (CheckBox) v.findViewById(R.id.checkboxfor_address);
         checkBoxforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_everyone);
         checkBoxnotforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_noteveryone);
         checkBoxformen = (CheckBox) v.findViewById(R.id.checkBoxformen);
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
 
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
         firstimage =(CircularImageView) v.findViewById(R.id.firstimage);
@@ -211,7 +230,7 @@ public class Screen19 extends Fragment {
                             Log.d("Type", String.valueOf(allurl));
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        } progressDialog.dismiss();
                     }
                 });
 
@@ -257,7 +276,6 @@ public class Screen19 extends Fragment {
         if(location != null){
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-
             //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
         }
 
@@ -267,7 +285,7 @@ public class Screen19 extends Fragment {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
 
-        latitude = latitude;
+            latitude = latitude;
             longitude = longitude;
 
         }
@@ -775,7 +793,7 @@ public class Screen19 extends Fragment {
                         c.set(Calendar.YEAR, Integer.parseInt(year));
                         c.set(Calendar.MONTH, int_month - 1);
                         c.set(Calendar.DAY_OF_MONTH,1);
-                        c.set(Calendar.HOUR, Integer.parseInt(hour));
+                        c.set(Calendar.HOUR,1);
                         c.set(Calendar.MINUTE, 0);
                         c.set(Calendar.SECOND, 0);
                         c.set(Calendar.MILLISECOND, 0);
@@ -820,7 +838,10 @@ public class Screen19 extends Fragment {
                             try {
 
                                 addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                                if(addresses.size()>0) {
+
+                                if(addresses.size()>0)
+                                 if(addresses.size()>0) {
+
                                     complete_address = addresses.get(0).getAddressLine(0);
                                     city = addresses.get(0).getLocality();
                                     state = addresses.get(0).getAdminArea();
@@ -901,13 +922,15 @@ public class Screen19 extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
+
                         try {
                             str_value = json_LL.getString("message");
 
 
                             //  Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
 
-                            if (str_value.equals("Added Successfully")) {
+                            if (str_value.equals("The activity has been created!")) {
 
 
 
@@ -925,6 +948,7 @@ public class Screen19 extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
 
 
                     } else {

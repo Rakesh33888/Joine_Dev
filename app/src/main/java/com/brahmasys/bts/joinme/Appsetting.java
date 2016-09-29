@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -64,7 +65,7 @@ public class Appsetting extends Fragment{
     ArrayList customarraylist;
     FragmentManager fragmentManager;
     LinearLayout logout,linearLayoutterm,backlayoutappsetting;
-
+    ImageView shareicon;
     SessionManager session;
     Button yes,no;
     String deviceuid;
@@ -135,6 +136,11 @@ public class Appsetting extends Fragment{
         progressDialog.setContentView(R.layout.custom_progress);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //Toolbar toolbar= (Toolbar) getActivity().findViewById(R.id.toolbar);
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
 
         incButton = (Button) v.findViewById(R.id.incButton);
         decButton = (Button) v.findViewById(R.id.decButton);
@@ -149,13 +155,13 @@ public class Appsetting extends Fragment{
         backlayoutappsetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  pd.show();
+                //  pd.show();
                 FnSaveUserSettings();
                 Intent i = new Intent(getActivity(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
-             //   pd.hide();
+                //   pd.hide();
 
             }
         });
@@ -246,6 +252,7 @@ public class Appsetting extends Fragment{
         session = new SessionManager(getActivity());
         dis = (SegmentedGroup) v.findViewById(R.id.distance);
         dis.setTintColor(Color.parseColor("#005F99"));
+
         miles = (RadioButton) v.findViewById(R.id.miles);
         km = (RadioButton) v.findViewById(R.id.km);
         linearLayoutterm= (LinearLayout) v.findViewById(R.id.linearlayoutterm);
@@ -453,57 +460,63 @@ public class Appsetting extends Fragment{
 
 
     protected void FnPopulateUserSettings(final View v ){
+        if(Connectivity_Checking.isConnectingToInternet()) {
+            AsyncHttpClient client = new AsyncHttpClient();
+            String id = user_id.getString("userid", "");
+            client.get(URL_GetUserSettings + id,
+                    new AsyncHttpResponseHandler() {
+                        // When the response returned by REST has Http response code '200'
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        String id = user_id.getString("userid", "");
-        client.get(URL_GetUserSettings + id,
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
+                        public void onSuccess(String jsonResult) {
 
-                    public void onSuccess(String jsonResult) {
-
-                        try {
-                            // Extract JSON Object from JSON returned by REST WS
-                            JSONObject dataObj = new JSONObject(jsonResult).getJSONObject("user_setting");
-                            String activity_nearby = dataObj.getString("activity_nearby");
-                            String activity_reminder_hour = dataObj.getString("activity_reminder_hour");
-                            String activity_reminder_min = dataObj.getString("activity_reminder_min");
-                            String distance_km = dataObj.getString("distance_km");
-                            String new_level = dataObj.getString("new_level");
-                            String notification_by = dataObj.getString("notification_by");
-                            String userid = dataObj.getString("userid");
+                            try {
+                                // Extract JSON Object from JSON returned by REST WS
+                                JSONObject dataObj = new JSONObject(jsonResult).getJSONObject("user_setting");
+                                String activity_nearby = dataObj.getString("activity_nearby");
+                                String activity_reminder_hour = dataObj.getString("activity_reminder_hour");
+                                String activity_reminder_min = dataObj.getString("activity_reminder_min");
+                                String distance_km = dataObj.getString("distance_km");
+                                String new_level = dataObj.getString("new_level");
+                                String notification_by = dataObj.getString("notification_by");
+                                String userid = dataObj.getString("userid");
 
 
-                            if(distance_km.equals("K")||distance_km.equals("k")){
-                                km.setChecked(true);
-                            }else{
-                                miles.setChecked(true);
+                                if (distance_km.equals("K") || distance_km.equals("k")) {
+                                    km.setChecked(true);
+                                } else {
+                                    miles.setChecked(true);
+                                }
+
+
+                                SwitchButton switchButton = (SwitchButton) v.findViewById(R.id.near);
+
+                                if (true == Boolean.valueOf(activity_nearby)) {
+                                    switchButton.setChecked(true);
+                                } else {
+                                    switchButton.setChecked(false);
+                                }
+                                TextView hour = (TextView) v.findViewById(R.id.numberEditText);
+
+                                hour.setText(activity_reminder_hour);
+                                TextView minutes = (TextView) v.findViewById(R.id.numberEditText1);
+
+                                minutes.setText(activity_reminder_min);
+                                progressDialog.dismiss();
+                                //pd.hide();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-
-                            SwitchButton switchButton = (SwitchButton)v.findViewById(R.id.near);
-
-                            if( true == Boolean.valueOf(activity_nearby) ){
-                                switchButton.setChecked(true);
-                            }else {
-                                switchButton.setChecked(false);
-                            }
-                            TextView hour = (TextView)v.findViewById(R.id.numberEditText);
-
-                            hour.setText(activity_reminder_hour);
-                            TextView minutes = (TextView)v.findViewById(R.id.numberEditText1);
-
-                            minutes.setText(activity_reminder_min);
-                         progressDialog.dismiss();
-                        //pd.hide();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
 
-                    }
-
-                });
+                    });
+        }
+        else
+        {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+        }
     }
 
     //Calling API in this fn to save the User Settings

@@ -8,10 +8,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -35,6 +37,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
     SharedPreferences.Editor edit_userid,edit_activity_id;
     String firstname="join",lastname="me",about="null",owner_id;
     TextView report_text,name,age,description,owner_name;
+    ImageView shareicon;
   //  ProgressDialog pd;
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
@@ -79,6 +82,12 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         report_text.setPaintFlags(report_text.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         name  = (TextView) v.findViewById(R.id.textView19);
         description = (TextView) v.findViewById(R.id.textView18);
+
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
 
         report_text.setOnClickListener(new View.OnClickListener() {
             @Override

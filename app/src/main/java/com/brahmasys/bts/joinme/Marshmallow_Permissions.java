@@ -2,8 +2,10 @@ package com.brahmasys.bts.joinme;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.view.View;
 
 /**
  * Created by apple on 14/09/16.
@@ -15,10 +17,7 @@ public class Marshmallow_Permissions {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
 
     };
-    private static String[] PERMISSIONS_CALENDER = {
-            Manifest.permission.READ_CALENDAR,
-            Manifest.permission.WRITE_CALENDAR
-    };
+
     public static void Calender_Permissions(Activity activity)
     {
         int writePermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR);
@@ -31,6 +30,16 @@ public class Marshmallow_Permissions {
             ActivityCompat.requestPermissions(activity,PERMISSIONS_CALENDER,callbackId);
         }
     }
+
+    private static String[] PERMISSIONS_CALENDER = {
+            Manifest.permission.READ_CALENDAR,
+            Manifest.permission.WRITE_CALENDAR
+    };
+    private Context context;
+    private Activity activity;
+    private static final int PERMISSION_REQUEST_CODE = 1;
+    private View view;
+
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have read or write permission
         int writePermission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -38,12 +47,23 @@ public class Marshmallow_Permissions {
 
         if (writePermission != PackageManager.PERMISSION_GRANTED || readPermission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
+
             ActivityCompat.requestPermissions(
                     activity,
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
 
+
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
+
         }
+
     }
+
+
+
 }
+
+
+

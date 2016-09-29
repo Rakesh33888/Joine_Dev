@@ -12,8 +12,8 @@
     <ImageView android:id="@+id/textViewCard"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:src="@drawable/rafting"
-         android:gravity="center"/>
+        android:gravity="center"/>
+
 
 
     </android.support.v7.widget.CardView>
@@ -22,7 +22,6 @@
     <android.support.v7.widget.CardView
         android:layout_height="220dp"
         android:layout_width="match_parent"
-
         android:layout_marginTop="240dp"
         android:background="#bfcacaca"
         xmlns:android="http://schemas.android.com/apk/res/android">

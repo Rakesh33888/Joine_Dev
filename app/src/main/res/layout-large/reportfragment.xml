@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9F9F9"
+    android:background="#d4d3d3"
     android:id="@+id/framelayoutreport">
 
 <LinearLayout
@@ -28,10 +28,13 @@
         android:layout_height="350dp"
         android:id="@+id/editText10"
         android:paddingTop="5dp"
+        android:inputType="textAutoComplete|textMultiLine|textCapWords"
         android:paddingStart="10dp"
         android:drawablePadding="18dp"
         android:cursorVisible="true"
         android:gravity="top|left"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/bigbox"
         android:backgroundTint="#ffffff"

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
 
-
+    ImageView shareicon;
     RatingBar myratingBar;
     LinearLayout backlayout_user_detail;
     Button btnJoineActivity;
@@ -112,6 +113,11 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                 getActivity().finish();
             }
         });
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.VISIBLE);
+
         icon = (ImageView) v.findViewById(R.id.imageViewrfting);
 
 
@@ -305,7 +311,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                     TextSliderView textSliderView = new TextSliderView(getActivity());
                                     // initialize a SliderLayout
                                     textSliderView.image(url_maps.get(name))
-                                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                                             .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                                                                           @Override
                                                                           public void onSliderClick(BaseSliderView baseSliderView) {

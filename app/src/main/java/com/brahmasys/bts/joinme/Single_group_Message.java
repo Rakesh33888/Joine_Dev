@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.devsmart.android.ui.HorizontalListView;
@@ -54,13 +57,15 @@ public class Single_group_Message extends Fragment    {
     CircularImageView createrimage,owner;
     HorizontalListView participants_list;
     Button yes,no;
-    String act_id;
+    String act_id,userid;
+    ImageView shareicon;
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     TextView tvActivityName,tvActivityTime,tvActivityAddress,tvHostedByName,tvleave_chat;
     private String mParam1;
     private String mParam2;
     private ArrayList<Book> books;
+    private ArrayList<String> other_user_id;
     private ArrayAdapter<Book> adapter;
     Context context;
     private OnFragmentInteractionListener mListener;
@@ -96,6 +101,14 @@ public class Single_group_Message extends Fragment    {
         Bundle bundle = this.getArguments();
         act_id  = bundle.getString("activityid","0");
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
+
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
+        other_user_id=new ArrayList<String>();
+
         createrimage.setClickable(true);
         createrimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +116,7 @@ public class Single_group_Message extends Fragment    {
                 Screen17 screen17 = new Screen17();
                 FragmentManager fm = getFragmentManager();
                 Bundle bundle=new Bundle();
-                bundle.putString("userid",user_id.getString("userid","0"));
+                bundle.putString("userid",userid);
                 bundle.putString("activityid",act_id);
                 screen17.setArguments(bundle);
                 FragmentTransaction transaction = fm.beginTransaction();
@@ -119,6 +132,29 @@ public class Single_group_Message extends Fragment    {
         tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
         tvHostedByName = (TextView) v.findViewById(R.id.name);
         participants_list = (HorizontalListView) v. findViewById(R.id.participants_list);
+        participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for (int i=0;i<other_user_id.size();i++){
+                    if (position==other_user_id.indexOf(other_user_id.get(i))){
+
+                        Screen13 screen13 = new Screen13();
+                        FragmentManager fm1 = getFragmentManager();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userid",other_user_id.get(i));
+                        screen13.setArguments(bundle);
+                        FragmentTransaction transaction = fm1.beginTransaction();
+                        transaction.replace(R.id.flContent, screen13);
+                        transaction.commit();
+
+                    }
+                }
+
+
+            }
+        });
+
+
 
 
 
@@ -211,7 +247,7 @@ public class Single_group_Message extends Fragment    {
                                     String txtAddress = json.getString("activity_address");
 
                                     Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).placeholder(R.drawable.butterfly)
-                                            .resize(70, 70)
+                                            .resize(60, 60)
                                             .centerCrop().into(createrimage);
 
                                     tvActivityName.setText(txtActivityName);
@@ -230,12 +266,15 @@ public class Single_group_Message extends Fragment    {
                                         JSONObject row = arrGroup.getJSONObject(i);
                                         if(row.getBoolean("isowner")){
                                             tvHostedByName.setText(row.getString("user_name"));
-                                            Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).into(owner);
+                                            Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
+                                                    .resize(30, 30)
+                                                    .centerCrop().into(owner);
                                         }
                                         else
                                         {
                                             Book book = new Book();
                                             book.setImageUrl(row.getString("profile_pic"));
+                                            other_user_id.add(row.getString(userid));
                                             books.add(book);
 
                                         }
@@ -254,6 +293,7 @@ public class Single_group_Message extends Fragment    {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
                     }
                 });
 
@@ -265,13 +305,12 @@ public class Single_group_Message extends Fragment    {
         books = new ArrayList<Book>();
         adapter = new custom_listview_participants(getActivity(), R.layout.participants, books);
         participants_list.setAdapter(adapter);
-
-
+       // progressDialog.dismiss();
 
     }
 
     private void FnLeaveChat() {
-        String userid = user_id.getString("userid", "");
+        userid = user_id.getString("userid", "");
       //  String act_id = activity_id.getString("activity_id", "");
 
         AsyncHttpClient client = new AsyncHttpClient();

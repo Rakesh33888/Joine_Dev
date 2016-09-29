@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 public class Terms_services extends Fragment {
     ImageView backimage;
     LinearLayout backlayout;
+    ImageView shareicon;
     TextView terms_services;
     private static final String TAG = Terms_services.class.getSimpleName();
     private WebView mWebView;
@@ -32,6 +34,11 @@ public class Terms_services extends Fragment {
         backimage = (ImageView) v.findViewById(R.id.imageback_terms_services);
         terms_services= (TextView) v.findViewById(R.id.terms_services_text);
         backlayout= (LinearLayout) v.findViewById(R.id.backlayouthomescreen);
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
         mWebView = (WebView)v.findViewById(R.id.webviewterms_services);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setLoadWithOverviewMode(true);

@@ -31,16 +31,16 @@
                 android:paddingStart="5dp"
                 android:paddingTop="5dp"
                 android:text="Ski"
-                android:textSize="14dp"/>
+                android:textSize="12dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
                 android:layout_marginTop="5dp"
                 android:id="@+id/timeinotext"
-                android:textSize="13dp"
+                android:textSize="12dp"
                 android:paddingStart="5dp"
-                android:paddingTop="4dp"
+                android:paddingTop="6dp"
                 android:layout_gravity="center_vertical"
                 android:text="20.11.2016 at 6 PM"/>
 

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -94,13 +95,18 @@ public class Mygroup extends Fragment{
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
         progressDialog =ProgressDialog.show(getActivity(), null, null, true);
         progressDialog.setIndeterminate(true);
@@ -108,7 +114,12 @@ public class Mygroup extends Fragment{
         progressDialog.setContentView(R.layout.custom_progress);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        
+
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
+
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -116,11 +127,12 @@ public class Mygroup extends Fragment{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
         context=getActivity();
         groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
         groups_list.setExpanded(true);
-
         setListViewAdapter();
+        progressDialog.dismiss();
         backlayoutgroup= (LinearLayout) v.findViewById(R.id.backlayoutgroup);
         backlayoutgroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,8 +183,6 @@ public class Mygroup extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
         JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
 
         //Log.w("RESULT",String.valueOf(jsonObjRecv));
@@ -181,28 +191,29 @@ public class Mygroup extends Fragment{
             json = new JSONObject(String.valueOf(jsonObjRecv));
         } catch (JSONException e) {
             e.printStackTrace();
-
         }
-
         alluserid = new ArrayList<String>();
         allactivityid = new ArrayList<String>();
 
 
-
         JSONArray userdetails = null;
+
+
+
         try {
             userdetails = json.getJSONArray("data");
+
 
             for (int i = 0; i < userdetails.length(); i++) {
                 JSONObject actor = userdetails.getJSONObject(i);
                 String activity_id = actor.getString("activity_id");
                 String user_id = actor.getString("userid");
+
                 allactivityid.add(activity_id);
                 alluserid.add(user_id);
                 Book book = new Book();
                 book.setName(actor.getString("activity_name"));
                 book.setImageUrl(actor.getString("activity_url"));
-
 
 
                 long timestampString =  Long.parseLong(actor.getString("activity_time"));
@@ -213,16 +224,14 @@ public class Mygroup extends Fragment{
 
                 books.add(book);
 
-
             }
             adapter.notifyDataSetChanged();
-
 
             //Log.w("details",String.valueOf(userdetails));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        progressDialog.dismiss();
+
 
         groups_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -242,21 +251,22 @@ public class Mygroup extends Fragment{
                         .addToBackStack(null)
                         .commit();
 
-
             }
         });
-
 
 
         return v;
     }
 
+
+
     private void setListViewAdapter() {
+
+
 
         books = new ArrayList<Book>();
         adapter = new CustomListViewAdapter(getActivity(), R.layout.groups_list, books);
         groups_list.setAdapter(adapter);
-
 
     }
 

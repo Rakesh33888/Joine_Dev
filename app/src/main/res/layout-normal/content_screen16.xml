@@ -11,7 +11,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.brahmasys.bts.joinme.Screen16"
     tools:showIn="@layout/app_bar_screen16">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:id="@+id/framfile"
 
+        >
 
         <link.fls.swipestack.SwipeStack
             android:id="@+id/swipeStack"
@@ -22,6 +27,17 @@
             android:clipChildren="false"
             app:disable_hw_acceleration="false"
             android:layout_gravity="center" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:id="@+id/reloadactivity"
+            android:textSize="16dp"
+            android:visibility="gone"
+            android:background="@drawable/custom_button1"
+            android:src="@drawable/refresh"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
 
 
@@ -30,10 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
 
-        android:layout_below="@+id/swipeStack"
+        android:layout_below="@+id/framfile"
         android:id="@+id/frameLayout2"
-        android:layout_alignEnd="@+id/swipeStack"
-        android:layout_alignStart="@+id/swipeStack">
+        android:layout_alignEnd="@+id/framfile"
+        android:layout_alignStart="@+id/framfile">
 
 
        <!-- <ImageView
