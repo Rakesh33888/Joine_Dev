@@ -140,19 +140,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         edit_token_id = token_id.edit();
         profile_pic = getSharedPreferences(PROFILE_PIC, MODE_PRIVATE);
         edit_profile_pic = profile_pic.edit();
-        relativemain = (RelativeLayout) findViewById(R.id.relativemain);
-        relativemain.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent ev) {
-                hideKeyboard(view);
-                return false;
-            }
-
-            private void hideKeyboard(View view) {
-                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-        });
 
 
         facebook_det = getSharedPreferences(FACEBOOK_DET, MODE_PRIVATE);

@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -136,14 +134,9 @@ public class Screen19 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setContentView(R.layout.custom_progress);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         View v = inflater.inflate(R.layout.activity_screen19, container, false);
+
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -234,7 +227,7 @@ public class Screen19 extends Fragment {
                             Log.d("Type", String.valueOf(allurl));
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        } progressDialog.dismiss();
+                        }
                     }
                 });
 
@@ -920,13 +913,14 @@ public class Screen19 extends Fragment {
                             e.printStackTrace();
                         }
 
+
                         JSONObject json_LL = null;
                         try {
                             json_LL = json.getJSONObject("response");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        progressDialog.dismiss();
+
 
                         try {
                             str_value = json_LL.getString("message");
@@ -952,7 +946,7 @@ public class Screen19 extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        progressDialog.dismiss();
+
 
 
                     } else {
@@ -1022,12 +1016,7 @@ public class Screen19 extends Fragment {
 
     private void doFileUpload(){
 
-        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setContentView(R.layout.custom_progress);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
         String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
         for (int i=0;i<3;i++) {
@@ -1061,7 +1050,7 @@ public class Screen19 extends Fragment {
                 Log.e("Debug", "error: " + ex.getMessage(), ex);
             }
         }
-        progressDialog.dismiss();
+
     }
 
     public ContentResolver getContentResolver() {

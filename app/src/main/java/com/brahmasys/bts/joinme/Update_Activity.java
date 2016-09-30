@@ -75,47 +75,42 @@ public class Update_Activity extends Fragment {
     private static final int RESULT_OK = 3;
 
     CircularImageView firstimage, secondimage, thirdimage;
-    EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
-    Button update_activity,delet_activity;
+    EditText edittextactivityname, enterdiscription, edit_cost, edit_limit;
+    Button update_activity, delet_activity;
     FrameLayout address_search;
-    Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
+    Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour, currency_symbol;
     LinearLayout not_everyone;
     CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
-    TextView age1,age2;
+    TextView age1, age2;
     ProgressDialog progressDialog;
     String[] currency = new String[]{"$", "€"};
 
 
-
-
-
-
-
-    String year="0",month="0",day="0",hour="0",minute;
+    String year = "0", month = "0", day = "0", hour = "0", minute;
 
     String availability;
     ImageView shareicon;
     ArrayList<String> data;
     int image;
 
-    String gender="";
-    String duration="0",icon = "0",title,address,age_start,age_end,cost="0",limit="0",description;
-    double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
-    String complete_address,city,state,zip,country,total_address;
+    String gender = "";
+    String duration = "0", icon = "0", title, address, age_start, age_end, cost = "0", limit = "0", description;
+    double latitude = 0.0, longitude = 0.0, latitude1, longitude1, latitude2, longitude2;
+    String complete_address, city, state, zip, country, total_address;
     private static final String TAG = "UpdateActivityDetails";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityDetails";
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
     private static final String LAT_LNG = "lat_lng";
-    SharedPreferences user_id,activity_id,lat_lng;
-    SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
+    SharedPreferences user_id, activity_id, lat_lng;
+    SharedPreferences.Editor edit_userid, edit_activity_id, edit_lat_lng;
 
     private Integer THRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
-    private String selectedImagePath = "",selectedImagePath2 = "",selectedImagePath3 = "";
+    private String selectedImagePath = "", selectedImagePath2 = "", selectedImagePath3 = "";
     public static final int PICK_IMAGE1 = 1;
     public static final int PICK_IMAGE2 = 2;
     public static final int PICK_IMAGE3 = 3;
@@ -126,16 +121,19 @@ public class Update_Activity extends Fragment {
     String imgPath;
     String myint;
     String owerid;
+    String object_detail;
     HttpEntity resEntity;
-    String activity_id1 ="0", str_value="0";
+    String activity_id1 = "0", str_value = "0";
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
+    // JSONObject obj;
 
     List<String> allurl;
     FragmentManager fragmentManager;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-    String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
+    String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
@@ -145,31 +143,16 @@ public class Update_Activity extends Fragment {
 //        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 //        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-         Bundle bundle = this.getArguments();
-         String titleactivity= bundle.getString("activityname","");
-         String par_cost=bundle.getString("cost","");
-         String owner=bundle.getString("ownerpic","");
-         String durtion=bundle.getString("duration","");
-
-         owerid=bundle.getString("owner_id","");
-        data= (ArrayList<String>) bundle.getSerializable("key");
-        if (bundle != null) {
-            data = (ArrayList<String>) bundle.getSerializable("key");
-            image = bundle.getInt("pos");
-        }
-
-         String limt=bundle.getString("limit","");
-         String activityaddress=bundle.getString("activity_address","");
+        Bundle bundle = this.getArguments();
 
 
+        object_detail = bundle.getString("obj", "");
 
-
-         
 
 
         View v = inflater.inflate(R.layout.update_activity, container, false);
 
-        user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
+        user_id = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
@@ -192,7 +175,7 @@ public class Update_Activity extends Fragment {
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
         address_search = (FrameLayout) v.findViewById(R.id.address_search);
         //   edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
-        enterdiscription  = (EditText) v.findViewById(R.id.enter_discription);
+        enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
         edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
         edit_cost = (EditText) v.findViewById(R.id.forcost);
         edit_limit = (EditText) v.findViewById(R.id.numbrlimitbtn);
@@ -204,53 +187,24 @@ public class Update_Activity extends Fragment {
         checkBoxformen = (CheckBox) v.findViewById(R.id.checkBoxformen);
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
 
-        Toolbar refTool = ((Screen16)getActivity()).toolbar;
-        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        Toolbar refTool = ((Screen16) getActivity()).toolbar;
+        shareicon = (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
 
 
-
-
-
-
-
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
-        firstimage =(CircularImageView) v.findViewById(R.id.firstimage);
+        firstimage = (CircularImageView) v.findViewById(R.id.firstimage);
 
         secondimage = (CircularImageView) v.findViewById(R.id.secondimage);
         thirdimage = (CircularImageView) v.findViewById(R.id.thrdimage);
         age1 = (TextView) v.findViewById(R.id.age1);
         age2 = (TextView) v.findViewById(R.id.age2);
 
-        update_activity  = (Button) v.findViewById(R.id.update_activity);
+        update_activity = (Button) v.findViewById(R.id.update_activity);
         delet_activity = (Button) v.findViewById(R.id.delete_activity);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
 
         // user details which user wants to update//
-        edittextactivityname.setText(titleactivity);
-        edit_cost.setText(par_cost);
-//        for (int i = 0; i <data.size(); i++) {
-//            if(i==0) {
-//                imageView1 = getResources().getIdentifier("stagebtn_" + i, "", "");
-//
-//            }
-//            if(i==1) {
-//                 imageview2 = getResources().getIdentifier("acvr" + i, "", "");
-//            }
-//            if(i==2) {
-//                 imageview3 = getResources().getIdentifier("ddccd" + i, "", "");
-//            }
-
-//        }
-//        firstimage.setImageResource(imageView1);
-//        secondimage.setImageResource(imageview2);
-//        thirdimage.setBackgroundResource(imageview3);
-
-        edit_limit.setText(limt);
-
-   //     geo_autocomplete.setText(activityaddress);
-
-
 
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -300,11 +254,8 @@ public class Update_Activity extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
-
-                for (int i=0;i<allurl.size();i++)
-                {
-                    if (i==spinnericon.getSelectedItemPosition())
-                    {
+                for (int i = 0; i < allurl.size(); i++) {
+                    if (i == spinnericon.getSelectedItemPosition()) {
 
                         icon = allurl.get(i);
                     }
@@ -319,8 +270,6 @@ public class Update_Activity extends Fragment {
         });
 
 
-
-
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -328,7 +277,7 @@ public class Update_Activity extends Fragment {
         }
         Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        if(location != null){
+        if (location != null) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
         }
@@ -336,12 +285,10 @@ public class Update_Activity extends Fragment {
 
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             latitude = latitude;
             longitude = longitude;
-        }
-        else
-        {
+        } else {
             latitude = latitude2;
             longitude = longitude2;
         }
@@ -390,9 +337,11 @@ public class Update_Activity extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) {
@@ -499,11 +448,11 @@ public class Update_Activity extends Fragment {
             public void onClick(View v) {
 
                 Intent intent;
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                }else{
+                } else {
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
                 }
                 intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
@@ -517,11 +466,11 @@ public class Update_Activity extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                }else{
+                } else {
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
                 }
                 intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
@@ -536,11 +485,11 @@ public class Update_Activity extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                }else{
+                } else {
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
                 }
                 intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
@@ -567,9 +516,8 @@ public class Update_Activity extends Fragment {
         /*************************** Spinner Functionality Start ***********************/
         List year_list = new ArrayList<Integer>();
         year_list.add(0, " ");
-        for (int i = 2015; i <= 2020; i++)
-        {
-            if (current_year<=i) {
+        for (int i = 2015; i <= 2020; i++) {
+            if (current_year <= i) {
                 year_list.add(Integer.toString(i));
             }
         }
@@ -630,10 +578,6 @@ public class Update_Activity extends Fragment {
         });
 
 
-
-
-
-
         spinnerformonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -641,7 +585,7 @@ public class Update_Activity extends Fragment {
                                        long arg3) {
                 // TODO Auto-generated method stub
                 String sp1 = String.valueOf(spinnerformonth.getSelectedItem());
-                int month_position=0;
+                int month_position = 0;
                 if (sp1.equals("Jan")) {
                     month_position = 01;
                 } else if (sp1.equals("Feb")) {
@@ -669,8 +613,7 @@ public class Update_Activity extends Fragment {
                 }
 
 
-
-                if (month_position==current_month) {
+                if (month_position == current_month) {
                     List day_list = new ArrayList<Integer>();
                     day_list.add(0, " ");
                     for (int i = 1; i < 31; i++) {
@@ -713,8 +656,6 @@ public class Update_Activity extends Fragment {
 
             }
         });
-
-
 
 
         spinnerforday.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -769,7 +710,7 @@ public class Update_Activity extends Fragment {
         });
 
 
-        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,currency);
+        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
         currency_symbol.setAdapter(adapter_currency);
         /**************************Spinner functionality Ends *****************************/
         TimeZone tz = TimeZone.getDefault();
@@ -783,7 +724,7 @@ public class Update_Activity extends Fragment {
                 if (edittextactivityname.getText().toString().length() >= 2) {
                     if (enterdiscription.getText().toString().length() >= 10) {
 //
-                        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                        progressDialog = ProgressDialog.show(getActivity(), null, null, true);
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.setContentView(R.layout.custom_progress);
@@ -918,7 +859,7 @@ public class Update_Activity extends Fragment {
                             jsonObjSend.put("lon", longitude);                     //10
                             jsonObjSend.put("participant_age_end", age_end);       //11
                             jsonObjSend.put("participant_age_start", age_start);   //12
-                            jsonObjSend.put("participant_cost", cost+currency_symbol.getSelectedItem().toString());             //13
+                            jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
                             jsonObjSend.put("participant_gender", gender);         //14
                             jsonObjSend.put("participant_limit", limit);           //15
                             jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
@@ -928,7 +869,7 @@ public class Update_Activity extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                       progressDialog.dismiss();
+                        progressDialog.dismiss();
                         JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
 
 
@@ -936,11 +877,10 @@ public class Update_Activity extends Fragment {
                         try {
                             json = new JSONObject(String.valueOf(jsonObjRecv));
                             String message = json.getString("message");
-                            if (message.equals("The activity has been created!")) {
+                            if (message.equals("The activity has been updated succesfully!")) {
 
 
-
-                                fragmentManager=getFragmentManager();
+                                fragmentManager = getFragmentManager();
                                 doFileUpload();
                                 Mygroup mygroup = new Mygroup();
                                 fragmentManager.beginTransaction()
@@ -958,7 +898,7 @@ public class Update_Activity extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                       progressDialog.dismiss();
+                        progressDialog.dismiss();
 
                     } else {
                         Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
@@ -990,7 +930,7 @@ public class Update_Activity extends Fragment {
                     public void onClick(View v) {
                         new Custom_Progress(getActivity());
                         AsyncHttpClient client = new AsyncHttpClient();
-                        client.get("http://52.37.136.238/JoinMe/Activity.svc/DeleteActivity/" + activity_id.getString("activity_id",""),
+                        client.get("http://52.37.136.238/JoinMe/Activity.svc/DeleteActivity/" + activity_id.getString("activity_id", ""),
                                 new AsyncHttpResponseHandler() {
                                     // When the response returned by REST has Http response code '200'
 
@@ -1001,8 +941,7 @@ public class Update_Activity extends Fragment {
                                             // Extract JSON Object from JSON returned by REST WS
                                             JSONObject obj = new JSONObject(response);
                                             String del_msg = obj.getString("message");
-                                            if (del_msg.equals("Deleted Successfully"))
-                                            {
+                                            if (del_msg.equals("Deleted Successfully")) {
                                                 edit_activity_id.clear().commit();
                                                 Intent i = new Intent(getActivity(), Screen16.class);
                                                 startActivity(i);
@@ -1011,9 +950,7 @@ public class Update_Activity extends Fragment {
                                                 new Custom_Progress(getActivity()).dismiss();
                                                 Toast.makeText(getActivity(), del_msg, Toast.LENGTH_SHORT).show();
 
-                                            }
-                                            else
-                                            {
+                                            } else {
                                                 Toast.makeText(getActivity(), del_msg, Toast.LENGTH_SHORT).show();
                                             }
 
@@ -1033,15 +970,20 @@ public class Update_Activity extends Fragment {
                 });
 
 
-
             }
         });
+
 
 
         return v;
 
 
+
     }
+private void  userdetail(String responce){
+
+
+}
 
 
     private void setListViewAdapter() {
@@ -1078,6 +1020,8 @@ public class Update_Activity extends Fragment {
 
         }
     }
+
+
 
     private void doFileUpload(){
 
@@ -1116,6 +1060,8 @@ public class Update_Activity extends Fragment {
         }
 
     }
+
+
 
 
     @Override

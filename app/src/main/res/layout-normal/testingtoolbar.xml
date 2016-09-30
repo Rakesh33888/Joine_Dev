@@ -11,6 +11,7 @@
         android:background="@color/newcolor"
         android:fitsSystemWindows="true"
         app:popupTheme="@style/AppTheme.PopupOverlay">
+
         <include layout="@layout/custom_toolbar"
             android:layout_gravity="center"
             android:layout_height="wrap_content"

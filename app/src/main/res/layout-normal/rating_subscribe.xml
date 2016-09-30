@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:background="#fff"
+    android:layout_gravity="center"
+    android:layout_height="300dp"
+    android:weightSum="1">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:id="@+id/activityreview"
+        android:textColor="#acacac"
+        android:text="How was the activty Rafting ?"/>
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+
+
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:id="@+id/image_of_activity"
+        android:visibility="visible"
+        android:src="@drawable/butterfly"
+        />
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:stepSize="0.5"
+
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="@color/ratingbar"
+            style="?android:attr/ratingBarStyleIndicator" />
+
+
+    </RelativeLayout>
+     <EditText
+        android:layout_width="290dp"
+        android:layout_height="50dp"
+         android:layout_marginTop="25dp"
+         android:paddingLeft="5dp"
+         android:paddingRight="5dp"
+         android:paddingBottom="5dp"
+         android:background="#cee9e9e9"
+         android:layout_gravity="center"/>
+    <Button
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:text="submite"
+        android:textSize="18dp"
+        android:textColor="#fff"
+        android:background="@drawable/custom_button1"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"/>
+</LinearLayout>

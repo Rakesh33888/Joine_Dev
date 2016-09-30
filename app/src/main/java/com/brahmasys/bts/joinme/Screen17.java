@@ -67,17 +67,18 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     HashMap<String,String> url_maps;
     String uid,aid,owner_id;
     ProgressDialog progressDialog;
+    JSONObject obj;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
-        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setContentView(R.layout.custom_progress);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+              progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+              progressDialog.setIndeterminate(true);
+              progressDialog.setCancelable(false);
+              progressDialog.setContentView(R.layout.custom_progress);
+              progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+              progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final View v=inflater.inflate(R.layout.screen17,container,false);
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
@@ -177,20 +178,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                 fragmentManager=getFragmentManager();
                  Update_Activity update_activity =new Update_Activity();
                 Bundle args = new Bundle();
-                args.putString("activityname", activity_name);
-                args.putString("cost",cost);
-                args.putString("distance",distance);
-                args.putString("ownerpic",owner_pic);
-                args.putString("duration",duration);
-                args.putString("limit",limit);
-                args.putString("ownername",owner_name);
-                args.putString("rating",rating);
-                args.putString("review",review);
-                args.putString("activity_address",activity_address);
-                args.putString("owner_id",owner_id);
-                args.putString("time",time);
-                args.putString("joind",joined);
-                args.putSerializable("url",url_maps);
+
+                args.putString("accountDetails", String.valueOf(obj));
                 update_activity.setArguments(args);
                     fragmentManager.beginTransaction()
                             .replace(R.id.flContent,update_activity)
@@ -251,7 +240,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                         //  prgDialog.hide();
                         try {
                             // Extract JSON Object from JSON returned by REST WS
-                            JSONObject obj = new JSONObject(response);
+                            obj = new JSONObject(response);
 
 
                             JSONObject json = null;

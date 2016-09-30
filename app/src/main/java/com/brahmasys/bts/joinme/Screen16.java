@@ -428,130 +428,131 @@ public class Screen16 extends AppCompatActivity implements
                 drawerLayout.closeDrawers();
             }
         });
+        if (Connectivity_Checking.isConnectingToInternet()) {
 
 
-        JSONObject jsonObjSend = new JSONObject();
-        try {
-            // Add key/value pairs
+            JSONObject jsonObjSend = new JSONObject();
+            try {
+                // Add key/value pairs
 
-            jsonObjSend.put("lat", lat);
-            jsonObjSend.put("lon", lon);
-            jsonObjSend.put("userid", user_id.getString("userid", "00"));
-            //  hideDialog();
-            Log.i(TAG1, jsonObjSend.toString(3));
+                jsonObjSend.put("lat", lat);
+                jsonObjSend.put("lon", lon);
+                jsonObjSend.put("userid", user_id.getString("userid", "00"));
+                //  hideDialog();
+                Log.i(TAG1, jsonObjSend.toString(3));
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
-
-
-        JSONObject json = null;
-        try {
-            json = new JSONObject(String.valueOf(jsonObjRecv));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-
-
-            JSONArray cast = json.getJSONArray("data");
-
-            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-            //List<String> allid = new ArrayList<String>();
-
-
-            for (int i = 0; i < cast.length(); i++) {
-                JSONObject actor = cast.getJSONObject(i);
-                String id = actor.getString("activity_url");
-
-                activity_name.add(actor.getString("activity_name"));
-                distance.add(actor.getString("activity_distance"));
-                time.add(actor.getString("activity_time"));
-                activity_id.add(actor.getString("activity_id"));
-                userid_other.add(actor.getString("userid"));
-                activity_url.add(id);
-
-                Book book = new Book();
-                book.setName(actor.getString("activity_name"));
-                book.setImageUrl(actor.getString("activity_url"));
-                book.setAuthorName(actor.getString("activity_distance"));
-                book.setIcon_image(actor.getString("acitivity_icon"));
-                long timestampString = Long.parseLong(actor.getString("activity_time"));
-                String value = new SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
-                        format(new Date(timestampString * 1000));
-
-                book.setTime(value);
-
-                books.add(book);
-                Log.d("Type", cast.getString(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-            adapter.notifyDataSetChanged();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
 
 
-        dislike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                mSwipeStack.onViewSwipedToLeft();
-
-
+            JSONObject json = null;
+            try {
+                json = new JSONObject(String.valueOf(jsonObjRecv));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
 
-        });
-
-        like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSwipeStack.onViewSwipedToRight();
-                Log.w("position", String.valueOf(mSwipeStack.getCurrentPosition()));
+            try {
 
 
-                Member_add_to_Group();
+                JSONArray cast = json.getJSONArray("data");
 
+                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                //List<String> allid = new ArrayList<String>();
+
+
+                for (int i = 0; i < cast.length(); i++) {
+                    JSONObject actor = cast.getJSONObject(i);
+                    String id = actor.getString("activity_url");
+
+                    activity_name.add(actor.getString("activity_name"));
+                    distance.add(actor.getString("activity_distance"));
+                    time.add(actor.getString("activity_time"));
+                    activity_id.add(actor.getString("activity_id"));
+                    userid_other.add(actor.getString("userid"));
+                    activity_url.add(id);
+
+                    Book book = new Book();
+                    book.setName(actor.getString("activity_name"));
+                    book.setImageUrl(actor.getString("activity_url"));
+                    book.setAuthorName(actor.getString("activity_distance"));
+                    book.setIcon_image(actor.getString("acitivity_icon"));
+                    long timestampString = Long.parseLong(actor.getString("activity_time"));
+                    String value = new SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
+                            format(new Date(timestampString * 1000));
+
+                    book.setTime(value);
+
+                    books.add(book);
+                    Log.d("Type", cast.getString(i));
+                }
+
+                adapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
 
 
-        btninfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            dislike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
 
-                    Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
+                    mSwipeStack.onViewSwipedToLeft();
 
-                } else {
-                    // Toast.makeText(Screen16.this, userid_other.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
-
-                    fragmentManager = getSupportFragmentManager();
-                    Other_User_Details other_user = new Other_User_Details();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()));
-                    bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
-                    other_user.setArguments(bundle);
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.flContent, other_user)
-                            .addToBackStack(null)
-                            .commit();
 
                 }
 
 
-            }
-        });
+            });
+
+            like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSwipeStack.onViewSwipedToRight();
+                    Log.w("position", String.valueOf(mSwipeStack.getCurrentPosition()));
 
 
-    }
+                    Member_add_to_Group();
+
+                }
+            });
+
+
+            btninfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
+
+                        Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        // Toast.makeText(Screen16.this, userid_other.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
+
+                        fragmentManager = getSupportFragmentManager();
+                        Other_User_Details other_user = new Other_User_Details();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()));
+                        bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
+                        other_user.setArguments(bundle);
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.flContent, other_user)
+                                .addToBackStack(null)
+                                .commit();
+
+                    }
+
+
+                }
+            });
+
+
+        }}
 
     private void setListViewAdapter() {
         books = new ArrayList<Book>();

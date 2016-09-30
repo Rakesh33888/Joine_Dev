@@ -37,5 +37,13 @@
         <item>Dec</item>
     </string-array>
 
+    <string name="text1"><u>I didn t go</u></string>
+    <string name="text2"><u>Remind me later</u></string>
+    <string name="text3"><u>skip</u></string>
+    <string name="text4"><u>The activity was canceled</u></string>
+
+
 
 </resources>
+
+

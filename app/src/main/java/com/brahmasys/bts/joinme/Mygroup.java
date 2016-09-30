@@ -170,7 +170,7 @@ public class Mygroup extends Fragment{
             }
         });
 
-
+        if(Connectivity_Checking.isConnectingToInternet()) {
 
         JSONObject jsonObjSend = new JSONObject();
         try {
@@ -231,7 +231,12 @@ public class Mygroup extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        }
+        else
+        {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+        }
 
         groups_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -261,15 +266,18 @@ public class Mygroup extends Fragment{
 
 
     private void setListViewAdapter() {
+        if (Connectivity_Checking.isConnectingToInternet()) {
 
 
+            books = new ArrayList<Book>();
+            adapter = new CustomListViewAdapter(getActivity(), R.layout.groups_list, books);
+            groups_list.setAdapter(adapter);
 
-        books = new ArrayList<Book>();
-        adapter = new CustomListViewAdapter(getActivity(), R.layout.groups_list, books);
-        groups_list.setAdapter(adapter);
-
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+        }
     }
-
 
 
 

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:layout_height="240dp">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:id="@+id/activityreview_text"
+            android:textColor="#acacac"
+            android:text="How was the activty Rafting ?"/>
+
+    </RelativeLayout>
+    <FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_gravity="center_horizontal">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:id="@+id/activty_image"
+        android:visibility="visible"
+        android:src="@drawable/butterfly"
+        />
+
+
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal">
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:stepSize="0.5"
+
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="@color/ratingbar"
+            style="?android:attr/ratingBarStyleIndicator" />
+
+
+    </RelativeLayout>
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:textSize="16sp"
+            android:layout_marginLeft="15sp"
+            android:id="@+id/i_dont_go_text"
+            android:gravity="center"
+            android:text="@string/text1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/remind_me_later"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/text2"/>
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:textSize="16sp"
+            android:id="@+id/skip"
+            android:layout_marginRight="30dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:text="@string/text3"/>
+
+    </FrameLayout>
+
+
+
+
+
+
+
+</LinearLayout>

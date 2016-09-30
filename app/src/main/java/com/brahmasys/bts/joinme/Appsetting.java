@@ -136,7 +136,7 @@ public class Appsetting extends Fragment{
         progressDialog.setContentView(R.layout.custom_progress);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        //Toolbar toolbar= (Toolbar) getActivity().findViewById(R.id.toolbar);
+
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
