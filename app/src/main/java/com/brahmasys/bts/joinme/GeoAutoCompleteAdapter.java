@@ -3,6 +3,7 @@ package com.brahmasys.bts.joinme;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +94,7 @@ public class GeoAutoCompleteAdapter extends BaseAdapter implements Filterable {
 
         try {
             // Getting a maximum of 15 Address that matches the input text
-            addresses = geocoder.getFromLocationName(query_text, 15);
+            addresses = geocoder.getFromLocationName(query_text, 50);
 
             for(int i=0;i<addresses.size();i++){
                 Address address = (Address) addresses.get(i);
@@ -102,6 +103,7 @@ public class GeoAutoCompleteAdapter extends BaseAdapter implements Filterable {
                     geo_search_results.add(new GeoSearchResult(address));
                 }
             }
+
 
 
         } catch (IOException e) {

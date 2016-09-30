@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.location.Address;
+import android.util.Log;
 
 /**
  * Created by apple on 24/08/16.
@@ -20,13 +21,14 @@ public class GeoSearchResult {
 
         display_address += address.getAddressLine(0) + "\n";
 
-        for(int i = 1; i < address.getMaxAddressLineIndex(); i++)
+        for(int i = 1; i <=address.getMaxAddressLineIndex(); i++)
         {
             display_address += address.getAddressLine(i) + ", ";
+
         }
 
-        display_address = display_address.substring(0, display_address.length() - 2);
-
+        display_address = display_address.substring(0, display_address.length()-2);
+        Log.e("ADDRESS",display_address);
         return display_address;
     }
 

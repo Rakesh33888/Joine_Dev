@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
  */
 public class DelayAutoCompleteTextView extends AutoCompleteTextView {
 
-    private static final int MESSAGE_TEXT_CHANGED = 100;
-    private static final int DEFAULT_AUTOCOMPLETE_DELAY = 750;
+    private static final int MESSAGE_TEXT_CHANGED = 50;
+    private static final int DEFAULT_AUTOCOMPLETE_DELAY = 300;
 
     private int mAutoCompleteDelay = DEFAULT_AUTOCOMPLETE_DELAY;
     private ProgressBar mLoadingIndicator;
@@ -23,6 +23,8 @@ public class DelayAutoCompleteTextView extends AutoCompleteTextView {
         @Override
         public void handleMessage(Message msg) {
             DelayAutoCompleteTextView.super.performFiltering((CharSequence) msg.obj, msg.arg1);
+            setLoadingIndicator(mLoadingIndicator);
+            setAutoCompleteDelay(mAutoCompleteDelay);
         }
     };
 

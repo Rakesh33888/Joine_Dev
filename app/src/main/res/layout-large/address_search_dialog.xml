@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     android:background="#ffffff">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#005F99">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:textColor="#ffffff"
+                android:id="@+id/done"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="#ffffff"
+                android:id="@+id/cancel"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView5"
+                android:src="@drawable/logoaction"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/address_search"
+        android:background="@drawable/edittext_style"
+        android:layout_gravity="center_horizontal" >
+
+        <com.brahmasys.bts.joinme.DelayAutoCompleteTextView
+            android:id="@+id/geo_autocomplete"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:imeOptions="flagNoExtractUi|actionSearch"
+            android:inputType="textCapSentences"
+            android:textColor="#ff32"
+            android:background="@null"
+            android:hint="Search"
+            style="@style/Autocomplete"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:padding="10dp"
+            android:dropDownWidth="fill_parent"
+            />
+
+        <ImageView
+            android:id="@+id/geo_autocomplete_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/circle_close"
+            android:contentDescription="Hello"
+            android:layout_gravity="center_vertical|end"
+            android:visibility="gone"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            />
+    </FrameLayout>
+
+
+</LinearLayout>

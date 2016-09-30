@@ -2,9 +2,11 @@ package com.brahmasys.bts.joinme;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -21,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,6 +32,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,6 +41,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +62,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,34 +80,25 @@ public class Screen19 extends Fragment {
 
 
     FragmentManager fragmentManager;
-
+    RelativeLayout search_layout;
     CircularImageView firstimage, secondimage, thirdimage;
-    EditText edittextactivityname , enterdiscription,edit_cost,edit_limit;
+    EditText edittextactivityname , enterdiscription,edit_cost,edit_limit,current_address;
     Button create;
     ImageView shareicon;
-
     FrameLayout address_search;
     Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour,currency_symbol;
     LinearLayout not_everyone;
     CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
-    TextView age1,age2;
+    TextView age1,age2,text_search_address;
     String[] currency = new String[]{"$", "€"};
-
-
-
-
-
-
-
     String year="0",month="0",day="0",hour="0",minute;
-
     String availability;
     String gender="";
     String duration="0",icon ="null",title,address,age_start,age_end,cost="0",limit="0",description;
     double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
-    String complete_address,city,state,zip,country,total_address;
+    String complete_address,city,state,zip,country,total_address,checked_current_address;
     private static final String TAG = "CreateActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/CreateActivity";
     public static final String USERID = "userid";
@@ -110,9 +107,11 @@ public class Screen19 extends Fragment {
     SharedPreferences user_id,activity_id,lat_lng;
     SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
     ProgressDialog  progressDialog;
+
     private Integer THRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
+
     private static final int SELECT_FILE3 = 1,SELECT_FILE4=2,SELECT_FILE5=3;
     String selectedPath3 = "NONE",selectedPath4 = "NONE",selectedPath5 = "NONE";
     HttpEntity resEntity;
@@ -151,7 +150,9 @@ public class Screen19 extends Fragment {
 //          pd = new ProgressDialog(getActivity());
 //          pd.setMessage("Creating....");
 
-
+        search_layout  = (RelativeLayout) v.findViewById(R.id.search_layout);
+        current_address = (EditText)v.findViewById(R.id.current_address);
+        text_search_address = (TextView)v.findViewById(R.id.search_address);
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
         spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
@@ -191,6 +192,12 @@ public class Screen19 extends Fragment {
         create  = (Button) v.findViewById(R.id.createbutton);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
 
+        search_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Address_search_Dialog();
+            }
+        });
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/Activity.svc/GetActivityIconList/" + user_id.getString("userid", "null"),
@@ -292,82 +299,109 @@ public class Screen19 extends Fragment {
             longitude = longitude2;
         }
 
-        geo_autocomplete_clear = (ImageView) v.findViewById(R.id.geo_autocomplete_clear);
-
-        geo_autocomplete = (DelayAutoCompleteTextView) v.findViewById(R.id.geo_autocomplete);
-        geo_autocomplete.setThreshold(THRESHOLD);
-        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(getContext())); // 'this' is Activity instance
-
-        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
-                geo_autocomplete.setText(result.getAddress());
-
-
-                Geocoder coder = new Geocoder(getActivity());
-                try {
-                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 1);
-                    for (Address add : adresses) {
-                        //Controls to ensure it is right address such as country etc.
-                        longitude1 = add.getLongitude();
-                        latitude1 = add.getLatitude();
-                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                double earthRadius = 3958.75;
-                double dLat = Math.toRadians(latitude - latitude1);
-                double dLng = Math.toRadians(longitude - longitude1);
-                double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                        Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude)) *
-                                Math.sin(dLng / 2) * Math.sin(dLng / 2);
-                double c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                double dist = earthRadius * c1;
-                if (dist > 100) {
-                    Toast.makeText(getActivity(), "Address is higher than 100 km from your current location", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        geo_autocomplete.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
-                } else {
-                    geo_autocomplete_clear.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                geo_autocomplete.setText("");
-            }
-        });
-
-
+//        geo_autocomplete_clear = (ImageView) v.findViewById(R.id.geo_autocomplete_clear);
+//
+//        geo_autocomplete = (DelayAutoCompleteTextView) v.findViewById(R.id.geo_autocomplete);
+//        geo_autocomplete.setThreshold(THRESHOLD);
+//        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(getContext())); // 'this' is Activity instance
+//        geo_autocomplete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Address_search_Dialog();
+//            }
+//        });
+//        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
+//                geo_autocomplete.setText(result.getAddress());
+//
+//
+//                Geocoder coder = new Geocoder(getActivity());
+//                try {
+//                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 10);
+//                    for (Address add : adresses) {
+//                        //Controls to ensure it is right address such as country etc.
+//                        longitude1 = add.getLongitude();
+//                        latitude1 = add.getLatitude();
+//                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//                double earthRadius = 3958.75;
+//                double dLat = Math.toRadians(latitude - latitude1);
+//                double dLng = Math.toRadians(longitude - longitude1);
+//                double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+//                        Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude)) *
+//                                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+//                double c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+//                double dist = earthRadius * c1;
+//                if (dist > 100) {
+//                    Toast.makeText(getActivity(), "Address is higher than 100 km from your current location", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//
+//        geo_autocomplete.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.length() > 0) {
+//                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
+//                } else {
+//                    geo_autocomplete_clear.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//
+//        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                geo_autocomplete.setText("");
+//            }
+//        });
+//
+//
 
 
 
         /******************** CheckBox Functionality Start*******************/
         checkboxcurrent.setChecked(true);
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
+        List<Address> addresses = null;
+        try {
+
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+            if(addresses.size()>0)
+                if(addresses.size()>0) {
+
+                    complete_address = addresses.get(0).getAddressLine(0);
+                    city = addresses.get(0).getLocality();
+                    state = addresses.get(0).getAdminArea();
+                    zip = addresses.get(0).getPostalCode();
+                    country = addresses.get(0).getCountryName();
+                }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        checked_current_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
+        current_address.setText(checked_current_address);
 
         checkboxcurrent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -375,7 +409,11 @@ public class Screen19 extends Fragment {
                 if (v == checkboxcurrent) {
                     checkBoxaddress.setChecked(false);
                     //edittextforaddress.setVisibility(View.GONE);
-                    address_search.setVisibility(View.GONE);
+                    //address_search.setVisibility(View.GONE);
+                    current_address.setVisibility(View.VISIBLE);
+                    search_layout.setVisibility(View.GONE);
+
+
                 }
 
             }
@@ -390,7 +428,9 @@ public class Screen19 extends Fragment {
                 if (v == checkBoxaddress) {
                     checkboxcurrent.setChecked(false);
                     //edittextforaddress.setVisibility(View.VISIBLE);
-                    address_search.setVisibility(View.VISIBLE);
+                   // address_search.setVisibility(View.VISIBLE);
+                    search_layout.setVisibility(View.VISIBLE);
+                    current_address.setVisibility(View.GONE);
                 }
 
             }
@@ -829,27 +869,27 @@ public class Screen19 extends Fragment {
                         }
                         if (checkboxcurrent.isChecked()) {
 
-                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+//                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+//
+//                            List<Address> addresses = null;
+//                            try {
+//
+//                                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+//
+//                                if(addresses.size()>0)
+//                                 if(addresses.size()>0) {
+//
+//                                    complete_address = addresses.get(0).getAddressLine(0);
+//                                    city = addresses.get(0).getLocality();
+//                                    state = addresses.get(0).getAdminArea();
+//                                    zip = addresses.get(0).getPostalCode();
+//                                    country = addresses.get(0).getCountryName();
+//                                }
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
 
-                            List<Address> addresses = null;
-                            try {
-
-                                addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-                                if(addresses.size()>0)
-                                 if(addresses.size()>0) {
-
-                                    complete_address = addresses.get(0).getAddressLine(0);
-                                    city = addresses.get(0).getLocality();
-                                    state = addresses.get(0).getAdminArea();
-                                    zip = addresses.get(0).getPostalCode();
-                                    country = addresses.get(0).getCountryName();
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            total_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
+                            total_address = checked_current_address;
                         } else {
 
                             total_address = geo_autocomplete.getText().toString();
@@ -1014,6 +1054,116 @@ public class Screen19 extends Fragment {
         }
     }
 
+
+    public void Address_search_Dialog() {
+
+        final Dialog emailDialog = new Dialog(getActivity(), android.R.style.Theme_DeviceDefault);
+        emailDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        emailDialog.setCancelable(true);
+        emailDialog.setContentView(R.layout.address_search_dialog);
+
+        // Get dialog widgets references.
+       // final EditText editFriendsEmail = (EditText)emailDialog.findViewById(R.id.editEmailAddFriendEmail);
+        Button btnAccept = (Button)emailDialog.findViewById(R.id.done);
+        Button cancel  = (Button) emailDialog.findViewById(R.id.cancel);
+
+        geo_autocomplete_clear = (ImageView) emailDialog.findViewById(R.id.geo_autocomplete_clear);
+
+        geo_autocomplete = (DelayAutoCompleteTextView) emailDialog.findViewById(R.id.geo_autocomplete);
+        geo_autocomplete.setThreshold(THRESHOLD);
+        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(getContext())); // 'this' is Activity instance
+
+        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
+                geo_autocomplete.setText(result.getAddress());
+
+
+                Geocoder coder = new Geocoder(getActivity());
+                try {
+                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 0);
+                    for (Address add : adresses) {
+                        //Controls to ensure it is right address such as country etc.
+                        longitude1 = add.getLongitude();
+                        latitude1 = add.getLatitude();
+                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                double earthRadius = 3958.75;
+                double dLat = Math.toRadians(latitude - latitude1);
+                double dLng = Math.toRadians(longitude - longitude1);
+                double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude)) *
+                                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                double c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                double dist = earthRadius * c1;
+                if (dist > 100) {
+                    Toast.makeText(getActivity(), "Address is higher than 100 km from your current location", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        geo_autocomplete.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
+                } else {
+                    geo_autocomplete_clear.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                geo_autocomplete.setText("");
+            }
+        });
+
+
+
+
+        // Set on click lister for accept button
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!geo_autocomplete.getText().toString().equals(""))
+                {
+                    emailDialog.dismiss();
+                    text_search_address.setText(geo_autocomplete.getText().toString());
+                 }
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emailDialog.dismiss();
+            }
+        });
+
+        //now that the dialog is set up, it's time to show it
+        emailDialog.show();
+    }
     private void doFileUpload(){
 
 

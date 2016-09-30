@@ -225,43 +225,85 @@
                     android:checked="false" />
 
 
-                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="210dp"
                         android:layout_height="wrap_content"
-                        android:background="#ffffff"
-                        android:visibility="gone"
-                        android:id="@+id/address_search">
-
-                        <com.brahmasys.bts.joinme.DelayAutoCompleteTextView
-                            android:id="@+id/geo_autocomplete"
-                            android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginRight="5dp">
+                        <EditText
+                            android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:imeOptions="flagNoExtractUi|actionSearch"
                             android:inputType="textCapSentences"
                             android:textColor="#ff32"
-                            android:background="#ffffff"
-                            android:hint="Search"
+                            android:background="@drawable/edittext_style"
+                            android:hint="Address"
+                            android:id="@+id/current_address"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="35dp"
-                            android:layout_marginRight="35dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:padding="10dp"
-                            android:dropDownWidth="fill_parent"
                             />
 
-                        <ImageView
-                            android:id="@+id/geo_autocomplete_clear"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/circle_close"
-                            android:contentDescription="Hello"
-                            android:layout_gravity="center_vertical|end"
-                            android:visibility="gone"
-                            android:layout_marginEnd="12dp"
-                            android:layout_marginRight="12dp"
-                            />
-                    </FrameLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="@drawable/edittext_style"
+                            android:id="@+id/search_layout"
+                            android:padding="10dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/search_address"
+                                android:text="Search Address"
+                                android:singleLine="true"
+                                android:layout_centerHorizontal="true"
+                                android:textSize="15dp"
+                                android:textColor="#454444"/>
+
+                        </RelativeLayout>
+                        <!--  <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                             android:layout_width="fill_parent"
+                             android:layout_height="wrap_content"
+                             android:id="@+id/address_search"
+                             android:visibility="gone"
+                             android:background="@drawable/edittext_style"
+                             android:layout_gravity="center_horizontal" >
+
+                             <com.brahmasys.bts.joinme.DelayAutoCompleteTextView
+                                 android:id="@+id/geo_autocomplete"
+                                 android:layout_width="fill_parent"
+                                 android:layout_height="fill_parent"
+                                 android:imeOptions="flagNoExtractUi|actionSearch"
+                                 android:inputType="textCapSentences"
+                                 android:textColor="#ff32"
+                                 android:background="@null"
+                                 android:hint="Search"
+                                 android:layout_gravity="center_vertical"
+                                 android:layout_marginEnd="35dp"
+                                 android:layout_marginRight="35dp"
+                                 android:layout_marginTop="4dp"
+                                 android:layout_marginBottom="4dp"
+                                 android:padding="10dp"
+                                 android:dropDownWidth="fill_parent"
+                                 />
+
+                             <ImageView
+                                 android:id="@+id/geo_autocomplete_clear"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:src="@drawable/circle_close"
+                                 android:contentDescription="Hello"
+                                 android:layout_gravity="center_vertical|end"
+                                 android:visibility="gone"
+                                 android:layout_marginEnd="12dp"
+                                 android:layout_marginRight="12dp"
+                                 />
+                         </FrameLayout>  -->
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
             </LinearLayout>
