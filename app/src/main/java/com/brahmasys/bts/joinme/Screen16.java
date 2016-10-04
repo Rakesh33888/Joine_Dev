@@ -160,87 +160,7 @@ public class Screen16 extends AppCompatActivity implements
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client2.connect();
-        if (Connectivity_Checking.isConnectingToInternet()) {
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + user_id.getString("userid", ""),
-                    new AsyncHttpResponseHandler() {
-                        // When the response returned by REST has Http response code '200'
-
-                        public void onSuccess(String response) {
-                            // Hide Progress Dialog
-                            //  prgDialog.hide();
-                            try {
-                                // Extract JSON Object from JSON returned by REST WS
-                                JSONObject obj = new JSONObject(response);
-
-
-                                JSONObject json = null;
-                                try {
-                                    json = new JSONObject(String.valueOf(obj));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                                /************************* UserDetails start **************************/
-                                JSONObject userdetails = null;
-                                try {
-                                    userdetails = json.getJSONObject("details");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                try {
-                                    //Getting information form the Json Response object
-                                    String firstname_user = userdetails.getString("fname");
-                                    String lastname_user = userdetails.getString("lname");
-
-                                    //Save the data in sharedPreference
-                                    edit_user_detals.putString("firstname", firstname_user);
-                                    edit_user_detals.putString("lastname", lastname_user);
-                                    edit_user_detals.commit();
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                JSONArray cast = userdetails.getJSONArray("user_pic");
-                                edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                                edit_user_pic.commit();
-
-                                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                List<String> allid = new ArrayList<String>();
-                                List<String> allurl = new ArrayList<String>();
-
-                                for (int i = 0; i < cast.length(); i++) {
-                                    JSONObject actor = cast.getJSONObject(i);
-                                    String id = actor.getString("id");
-                                    String url = actor.getString("url");
-                                    allid.add(id);
-                                    allurl.add(url);
-                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                    Log.d("Type", cast.getString(i));
-                                }
-                                for (int j = 0; j < allid.size(); j++) {
-                                    edit_user_pic.putString("id_" + j, allid.get(j));
-                                    edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                                }
-                                edit_user_pic.commit();
-                                edit_user_pic.commit();
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-        } else {
-            Splashscreen dia = new Splashscreen();
-            dia.Connectivity_Dialog_with_refresh(Screen16.this);
-        }
+        GetUserData();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
@@ -263,28 +183,111 @@ public class Screen16 extends AppCompatActivity implements
 
     }
 
+public void GetUserData()
+{
+    if (Connectivity_Checking.isConnectingToInternet()) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + user_id.getString("userid", ""),
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
 
+                    public void onSuccess(String response) {
+                        // Hide Progress Dialog
+                        //  prgDialog.hide();
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+
+
+                            JSONObject json = null;
+                            try {
+                                json = new JSONObject(String.valueOf(obj));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            /************************* UserDetails start **************************/
+                            JSONObject userdetails = null;
+                            try {
+                                userdetails = json.getJSONObject("details");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                //Getting information form the Json Response object
+                                String firstname_user = userdetails.getString("fname");
+                                String lastname_user = userdetails.getString("lname");
+
+                                //Save the data in sharedPreference
+                                edit_user_detals.putString("firstname", firstname_user);
+                                edit_user_detals.putString("lastname", lastname_user);
+                                edit_user_detals.commit();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            JSONArray cast = userdetails.getJSONArray("user_pic");
+                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                            edit_user_pic.commit();
+
+                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                            List<String> allid = new ArrayList<String>();
+                            List<String> allurl = new ArrayList<String>();
+
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String id = actor.getString("id");
+                                String url = actor.getString("url");
+                                allid.add(id);
+                                allurl.add(url);
+                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                Log.d("Type", cast.getString(i));
+                            }
+                            for (int j = 0; j < allid.size(); j++) {
+                                edit_user_pic.putString("id_" + j, allid.get(j));
+                                edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                            }
+                            edit_user_pic.commit();
+                            edit_user_pic.commit();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    } else {
+        Splashscreen dia = new Splashscreen();
+        dia.Connectivity_Dialog_with_refresh(Screen16.this);
+    }
+}
 
     private void fillWithTestData() {
 
 
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+//        setSupportActionBar(toolbar);
+      //  ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowTitleEnabled(false);
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        reloadactivity= (ImageButton) findViewById(R.id.reloadactivity);
-        reloadactivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+//        reloadactivity= (ImageButton) findViewById(R.id.reloadactivity);
+//        reloadactivity.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
         relativeLayout_share_icon = (RelativeLayout) toolbar.findViewById(R.id.Relativelayout_share_icon);
         shareicon = (ImageView) toolbar.findViewById(R.id.shareicon);
 
@@ -458,40 +461,41 @@ public class Screen16 extends AppCompatActivity implements
 
             try {
 
+                if(!json.equals("")) {
+                    JSONArray cast = json.getJSONArray("data");
 
-                JSONArray cast = json.getJSONArray("data");
-
-                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                //List<String> allid = new ArrayList<String>();
+                    //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                    //List<String> allid = new ArrayList<String>();
 
 
-                for (int i = 0; i < cast.length(); i++) {
-                    JSONObject actor = cast.getJSONObject(i);
-                    String id = actor.getString("activity_url");
+                    for (int i = 0; i < cast.length(); i++) {
+                        JSONObject actor = cast.getJSONObject(i);
+                        String id = actor.getString("activity_url");
 
-                    activity_name.add(actor.getString("activity_name"));
-                    distance.add(actor.getString("activity_distance"));
-                    time.add(actor.getString("activity_time"));
-                    activity_id.add(actor.getString("activity_id"));
-                    userid_other.add(actor.getString("userid"));
-                    activity_url.add(id);
+                        activity_name.add(actor.getString("activity_name"));
+                        distance.add(actor.getString("activity_distance"));
+                        time.add(actor.getString("activity_time"));
+                        activity_id.add(actor.getString("activity_id"));
+                        userid_other.add(actor.getString("userid"));
+                        activity_url.add(id);
 
-                    Book book = new Book();
-                    book.setName(actor.getString("activity_name"));
-                    book.setImageUrl(actor.getString("activity_url"));
-                    book.setAuthorName(actor.getString("activity_distance"));
-                    book.setIcon_image(actor.getString("acitivity_icon"));
-                    long timestampString = Long.parseLong(actor.getString("activity_time"));
-                    String value = new SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
-                            format(new Date(timestampString * 1000));
+                        Book book = new Book();
+                        book.setName(actor.getString("activity_name"));
+                        book.setImageUrl(actor.getString("activity_url"));
+                        book.setAuthorName(actor.getString("activity_distance"));
+                        book.setIcon_image(actor.getString("acitivity_icon"));
+                        long timestampString = Long.parseLong(actor.getString("activity_time"));
+                        String value = new SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
+                                format(new Date(timestampString * 1000));
 
-                    book.setTime(value);
+                        book.setTime(value);
 
-                    books.add(book);
-                    Log.d("Type", cast.getString(i));
+                        books.add(book);
+                        Log.d("Type", cast.getString(i));
+                    }
+
+                    adapter.notifyDataSetChanged();
                 }
-
-                adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -714,6 +718,7 @@ public class Screen16 extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (screen19_fragment != null) {
             screen19_fragment.onActivityResult(requestCode, resultCode, data);
+
         } else {
 
 
@@ -726,6 +731,9 @@ public class Screen16 extends AppCompatActivity implements
                     pd.show();
                     selectedPath1 = uri;
                     navimage.setImageBitmap(new DecodeImage().decodeFile(selectedPath1));
+
+
+
 
                 }
                 Thread thread = new Thread(new Runnable() {
@@ -782,7 +790,10 @@ public class Screen16 extends AppCompatActivity implements
                     public void run() {
                         try {
 
-
+                            GetUserData();
+                            overridePendingTransition( 0, 0);
+                            startActivity(getIntent());
+                            overridePendingTransition( 0, 0);
                             //    res.setTextColor(Color.GREEN);
                             //    res.setText("n Response from server : n " + response_str);
                             pd.hide();

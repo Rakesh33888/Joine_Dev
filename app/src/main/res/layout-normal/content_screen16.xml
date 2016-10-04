@@ -27,7 +27,7 @@
             android:clipChildren="false"
             app:disable_hw_acceleration="false"
             android:layout_gravity="center" />
-        <ImageButton
+      <!--  <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
@@ -36,7 +36,7 @@
             android:visibility="gone"
             android:background="@drawable/custom_button1"
             android:src="@drawable/refresh"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"/> -->
     </FrameLayout>
 
 

@@ -143,12 +143,28 @@ public class Update_Activity extends Fragment {
 //        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 //        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Bundle bundle = this.getArguments();
 
+        String userProfileString=getArguments().getString("accountDetails");
+        JSONObject jsonObject = null;
+        try {
+             jsonObject=new JSONObject(userProfileString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject userdetails = null;
+        try {
+            userdetails = jsonObject.getJSONObject("act_details");
 
-        object_detail = bundle.getString("obj", "");
+            Log.w("ACTIVITY DETAILS", String.valueOf(userdetails));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-
+        try {
+            Log.e("Activity Name",userdetails.getString("activity_name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         View v = inflater.inflate(R.layout.update_activity, container, false);
 
@@ -877,8 +893,7 @@ public class Update_Activity extends Fragment {
                         try {
                             json = new JSONObject(String.valueOf(jsonObjRecv));
                             String message = json.getString("message");
-                            if (message.equals("The activity has been updated succesfully!")) {
-
+                            if (message.equals("Added Successfully")) {
 
                                 fragmentManager = getFragmentManager();
                                 doFileUpload();
@@ -928,7 +943,7 @@ public class Update_Activity extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        new Custom_Progress(getActivity());
+                       // new Custom_Progress(getActivity());
                         AsyncHttpClient client = new AsyncHttpClient();
                         client.get("http://52.37.136.238/JoinMe/Activity.svc/DeleteActivity/" + activity_id.getString("activity_id", ""),
                                 new AsyncHttpResponseHandler() {
@@ -943,11 +958,14 @@ public class Update_Activity extends Fragment {
                                             String del_msg = obj.getString("message");
                                             if (del_msg.equals("Deleted Successfully")) {
                                                 edit_activity_id.clear().commit();
-                                                Intent i = new Intent(getActivity(), Screen16.class);
-                                                startActivity(i);
+                                                fragmentManager = getFragmentManager();
+                                                Mygroup mygroup = new Mygroup();
+                                                fragmentManager.beginTransaction()
+                                                        .replace(R.id.flContent, mygroup)
+                                                        .addToBackStack(null)
+                                                        .commit();
                                                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                                                getActivity().finish();
-                                                new Custom_Progress(getActivity()).dismiss();
+                                              //  new Custom_Progress(getActivity()).dismiss();
                                                 Toast.makeText(getActivity(), del_msg, Toast.LENGTH_SHORT).show();
 
                                             } else {
@@ -959,7 +977,7 @@ public class Update_Activity extends Fragment {
                                         }
                                     }
                                 });
-//                        dialog.dismiss();
+                      dialog.dismiss();
                     }
                 });
                 no.setOnClickListener(new View.OnClickListener() {

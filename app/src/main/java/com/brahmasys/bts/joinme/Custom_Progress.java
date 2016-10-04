@@ -26,5 +26,4 @@ public class Custom_Progress extends ProgressDialog {
 
 
 
-
 }

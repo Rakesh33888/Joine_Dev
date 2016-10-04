@@ -782,92 +782,102 @@ public class Screen19 extends Fragment {
 
 
 
-
-
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CreateActivity();
+            }
+        });
 
-                if (edittextactivityname.getText().toString().length() >= 2) {
-                    if (enterdiscription.getText().toString().length() >= 10) {
+        new Marshmallow_Permissions().verifyStoragePermissions(getActivity());
 
-
-                        int int_month = 0;
-                        year = spinnerforyear.getSelectedItem().toString();
-                        month = spinnerformonth.getSelectedItem().toString();
-                        day = spinnerforday.getSelectedItem().toString();
-                        hour = spinnerforhour.getSelectedItem().toString();
-
-                        if (month.equals("Jan")) {
-                            int_month = 1;
-                        } else if (month.equals("Feb")) {
-                            int_month = 2;
-                        } else if (month.equals("Mar")) {
-                            int_month = 3;
-                        } else if (month.equals("Apr")) {
-                            int_month = 4;
-                        } else if (month.equals("May")) {
-                            int_month = 5;
-                        } else if (month.equals("Jun")) {
-                            int_month = 6;
-                        } else if (month.equals("Jul")) {
-                            int_month = 7;
-                        } else if (month.equals("Aug")) {
-                            int_month = 8;
-                        } else if (month.equals("Sept")) {
-                            int_month = 9;
-                        } else if (month.equals("Oct")) {
-                            int_month = 10;
-                        } else if (month.equals("Nov")) {
-                            int_month = 11;
-                        } else if (month.equals("Dec")) {
-                            int_month = 12;
-                        }
+        return v;
+    }
 
 
-                        /*************** Time Stamp Start********************/
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.YEAR, Integer.parseInt(year));
-                        c.set(Calendar.MONTH, int_month - 1);
-                        c.set(Calendar.DAY_OF_MONTH,1);
-                        c.set(Calendar.HOUR,1);
-                        c.set(Calendar.MINUTE, 0);
-                        c.set(Calendar.SECOND, 0);
-                        c.set(Calendar.MILLISECOND, 0);
-                        long result = (c.getTimeInMillis() / 1000L);
-                        /********************* Time Stamp End ***************/
-                        /********************* TimeZone Start ***************/
-                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
-                                Locale.getDefault());
-                        Date currentLocalTime = calendar.getTime();
-                        DateFormat date = new SimpleDateFormat("Z");
-                        String localTime = date.format(currentLocalTime);
 
-                        String sign = localTime.substring(0, 1);
-                        String hr = localTime.substring(1, 3);
-                        String min = localTime.substring(3, 5);
+    public void CreateActivity()
+    {
+        if (edittextactivityname.getText().toString().length() >= 2) {
+            if (enterdiscription.getText().toString().length() >= 10) {
 
-                        int res = (Integer.parseInt(hr) * 60) + Integer.parseInt(min);
-                        if (sign.equals("+")) {
-                            res = -res;
-                        } else {
-                            res = +res;
-                        }
-                        /********************* TimeZone End ***************/
 
-                        if (checkBoxforeveryone.isChecked()) {
-                            availability = "public";
-                            gender = "";
+                int int_month = 0;
+                year = spinnerforyear.getSelectedItem().toString();
+                month = spinnerformonth.getSelectedItem().toString();
+                day = spinnerforday.getSelectedItem().toString();
+                hour = spinnerforhour.getSelectedItem().toString();
 
-                        } else {
-                            availability = "private";
-                            if (checkBoxformen.isChecked()) {
-                                gender = "male";
-                            } else {
-                                gender = "female";
-                            }
-                        }
-                        if (checkboxcurrent.isChecked()) {
+                if (month.equals("Jan")) {
+                    int_month = 1;
+                } else if (month.equals("Feb")) {
+                    int_month = 2;
+                } else if (month.equals("Mar")) {
+                    int_month = 3;
+                } else if (month.equals("Apr")) {
+                    int_month = 4;
+                } else if (month.equals("May")) {
+                    int_month = 5;
+                } else if (month.equals("Jun")) {
+                    int_month = 6;
+                } else if (month.equals("Jul")) {
+                    int_month = 7;
+                } else if (month.equals("Aug")) {
+                    int_month = 8;
+                } else if (month.equals("Sept")) {
+                    int_month = 9;
+                } else if (month.equals("Oct")) {
+                    int_month = 10;
+                } else if (month.equals("Nov")) {
+                    int_month = 11;
+                } else if (month.equals("Dec")) {
+                    int_month = 12;
+                }
+
+
+                /*************** Time Stamp Start********************/
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR, Integer.parseInt(year));
+                c.set(Calendar.MONTH, int_month - 1);
+                c.set(Calendar.DAY_OF_MONTH,1);
+                c.set(Calendar.HOUR,1);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
+                long result = (c.getTimeInMillis() / 1000L);
+                /********************* Time Stamp End ***************/
+                /********************* TimeZone Start ***************/
+                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
+                        Locale.getDefault());
+                Date currentLocalTime = calendar.getTime();
+                DateFormat date = new SimpleDateFormat("Z");
+                String localTime = date.format(currentLocalTime);
+
+                String sign = localTime.substring(0, 1);
+                String hr = localTime.substring(1, 3);
+                String min = localTime.substring(3, 5);
+
+                int res = (Integer.parseInt(hr) * 60) + Integer.parseInt(min);
+                if (sign.equals("+")) {
+                    res = -res;
+                } else {
+                    res = +res;
+                }
+                /********************* TimeZone End ***************/
+
+                if (checkBoxforeveryone.isChecked()) {
+                    availability = "public";
+                    gender = "";
+
+                } else {
+                    availability = "private";
+                    if (checkBoxformen.isChecked()) {
+                        gender = "male";
+                    } else {
+                        gender = "female";
+                    }
+                }
+                if (checkboxcurrent.isChecked()) {
 
 //                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 //
@@ -889,118 +899,113 @@ public class Screen19 extends Fragment {
 //                                e.printStackTrace();
 //                            }
 
-                            total_address = checked_current_address;
-                        } else {
-
-                            total_address = geo_autocomplete.getText().toString();
-
-                        }
-
-
-                        //  address = edittextforaddress.getText().toString();
-                        title = edittextactivityname.getText().toString();
-                        description = enterdiscription.getText().toString();
-                        cost = edit_cost.getText().toString();
-                        limit = edit_limit.getText().toString();
-                        age_start = age1.getText().toString();
-                        age_end = age2.getText().toString();
-
-                        Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
-                                + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
-
-
-                        if (android.os.Build.VERSION.SDK_INT > 9) {
-                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                            StrictMode.setThreadPolicy(policy);
-                        }
-
-                        JSONObject jsonObjSend = new JSONObject();
-                        try {
-                            jsonObjSend.put("activity_availability", availability);//nari1
-                            jsonObjSend.put("activity_description", description); //2
-                            jsonObjSend.put("activity_duration", duration);       //3
-                            jsonObjSend.put("activity_icon", icon);               //4
-                            jsonObjSend.put("activity_time", result);              //5
-                            jsonObjSend.put("activity_timezoneoffset", res);       //6
-                            jsonObjSend.put("activity_title", title);              //7
-                            jsonObjSend.put("address", total_address);             //8
-                            jsonObjSend.put("lat", latitude);                      //9
-                            jsonObjSend.put("lon", longitude);                     //10
-                            jsonObjSend.put("participant_age_end", age_end);       //11
-                            jsonObjSend.put("participant_age_start", age_start);   //12
-                            jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
-                            jsonObjSend.put("participant_gender", gender);         //14
-                            jsonObjSend.put("participant_limit", limit);           //15
-                            jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
-
-                            Log.i(TAG, jsonObjSend.toString(16));
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
-
-
-                        JSONObject json = null;
-                        try {
-                            json = new JSONObject(String.valueOf(jsonObjRecv));
-                            activity_id1 = json.getString("activityid");
-                            edit_activity_id.putString("activity_id", activity_id1);
-                            edit_activity_id.commit();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        JSONObject json_LL = null;
-                        try {
-                            json_LL = json.getJSONObject("response");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        try {
-                            str_value = json_LL.getString("message");
-
-
-                            //  Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
-
-                            if (str_value.equals("The activity has been created!")) {
-
-
-
-                                fragmentManager = getFragmentManager();
-                                doFileUpload();
-                                Mygroup mygroup = new Mygroup();
-                                fragmentManager.beginTransaction()
-                                        .replace(R.id.flContent, mygroup)
-                                        .addToBackStack(null)
-                                        .commit();
-                                Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
-
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-                    } else {
-                        Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
-                    }
+                    total_address = checked_current_address;
                 } else {
-                    Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
+
+                    total_address = geo_autocomplete.getText().toString();
+
                 }
+
+
+                //  address = edittextforaddress.getText().toString();
+                title = edittextactivityname.getText().toString();
+                description = enterdiscription.getText().toString();
+                cost = edit_cost.getText().toString();
+                limit = edit_limit.getText().toString();
+                age_start = age1.getText().toString();
+                age_end = age2.getText().toString();
+
+                Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
+                        + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
+
+
+                if (android.os.Build.VERSION.SDK_INT > 9) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
+
+                JSONObject jsonObjSend = new JSONObject();
+                try {
+                    jsonObjSend.put("activity_availability", availability);//nari1
+                    jsonObjSend.put("activity_description", description); //2
+                    jsonObjSend.put("activity_duration", duration);       //3
+                    jsonObjSend.put("activity_icon", icon);               //4
+                    jsonObjSend.put("activity_time", result);              //5
+                    jsonObjSend.put("activity_timezoneoffset", res);       //6
+                    jsonObjSend.put("activity_title", title);              //7
+                    jsonObjSend.put("address", total_address);             //8
+                    jsonObjSend.put("lat", latitude);                      //9
+                    jsonObjSend.put("lon", longitude);                     //10
+                    jsonObjSend.put("participant_age_end", age_end);       //11
+                    jsonObjSend.put("participant_age_start", age_start);   //12
+                    jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
+                    jsonObjSend.put("participant_gender", gender);         //14
+                    jsonObjSend.put("participant_limit", limit);           //15
+                    jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
+
+                    Log.i(TAG, jsonObjSend.toString(16));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
+
+
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(String.valueOf(jsonObjRecv));
+                    activity_id1 = json.getString("activityid");
+                    edit_activity_id.putString("activity_id", activity_id1);
+                    edit_activity_id.commit();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                JSONObject json_LL = null;
+                try {
+                    json_LL = json.getJSONObject("response");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    str_value = json_LL.getString("message");
+
+
+                    //  Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+
+                    if (str_value.equals("Added Successfully")) {
+
+
+
+                        fragmentManager = getFragmentManager();
+                        doFileUpload();
+                        Mygroup mygroup = new Mygroup();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.flContent, mygroup)
+                                .addToBackStack(null)
+                                .commit();
+
+                        Toast.makeText(getActivity(), str_value, Toast.LENGTH_LONG).show();
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            } else {
+                Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
             }
-        });
-
-        new Marshmallow_Permissions().verifyStoragePermissions(getActivity());
-
-        return v;
+        } else {
+            Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setListViewAdapter() {
@@ -1035,6 +1040,7 @@ public class Screen19 extends Fragment {
 
 
             if (requestCode == PICK_IMAGE1) {
+
                 selectedImagePath = uri;
                 firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
 

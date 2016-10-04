@@ -178,7 +178,6 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                 fragmentManager=getFragmentManager();
                  Update_Activity update_activity =new Update_Activity();
                 Bundle args = new Bundle();
-
                 args.putString("accountDetails", String.valueOf(obj));
                 update_activity.setArguments(args);
                     fragmentManager.beginTransaction()

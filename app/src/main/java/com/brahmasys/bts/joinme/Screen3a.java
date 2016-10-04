@@ -74,7 +74,7 @@ public class Screen3a extends AppCompatActivity {
     String deviceuid,device_type="android",registration_type="normal",device_token="";
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     ProgressDialog progressDialog;
-
+    SessionManager session;
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
@@ -105,7 +105,7 @@ public class Screen3a extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
         deviceuid = Settings.Secure.getString(Screen3a.this.getContentResolver(), Settings.Secure.ANDROID_ID);
-
+        session = new SessionManager(getApplicationContext());
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
         user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
@@ -161,20 +161,20 @@ public class Screen3a extends AppCompatActivity {
         year.setAdapter(spinnerArrayAdapter1);
 
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayOptions(actionBar.getDisplayOptions()
-                | actionBar.DISPLAY_SHOW_CUSTOM);
-        ImageView imageView4 = new ImageView(actionBar.getThemedContext());
-        imageView4.setScaleType(ImageView.ScaleType.CENTER);
-        imageView4.setImageResource(R.drawable.logoaction);
-        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
-                ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER_VERTICAL
-                | Gravity.CENTER);
-        layoutParams.rightMargin = 40;
-        imageView4.setLayoutParams(layoutParams);
-        actionBar.setCustomView(imageView4);
+//        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowTitleEnabled(false);
+//        actionBar.setDisplayOptions(actionBar.getDisplayOptions()
+//                | actionBar.DISPLAY_SHOW_CUSTOM);
+//        ImageView imageView4 = new ImageView(actionBar.getThemedContext());
+//        imageView4.setScaleType(ImageView.ScaleType.CENTER);
+//        imageView4.setImageResource(R.drawable.logoaction);
+//        ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
+//                ActionBar.LayoutParams.MATCH_PARENT,
+//                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER_VERTICAL
+//                | Gravity.CENTER);
+//        layoutParams.rightMargin = 40;
+//        imageView4.setLayoutParams(layoutParams);
+//        actionBar.setCustomView(imageView4);
         circle_image.setClickable(true);
         circle_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -382,7 +382,7 @@ public class Screen3a extends AppCompatActivity {
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
-
+                                                session.setLogin(true);
                                                 Intent i1 = new Intent(getApplicationContext(), Screen16.class);
                                                 startActivity(i1);
                                                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);

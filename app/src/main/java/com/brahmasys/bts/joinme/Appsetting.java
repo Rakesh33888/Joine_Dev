@@ -386,6 +386,7 @@ public class Appsetting extends Fragment{
     public  void Delete_Account()
     {
         new Custom_Progress(getActivity());
+
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("userid",""),
                 new AsyncHttpResponseHandler() {
@@ -398,11 +399,20 @@ public class Appsetting extends Fragment{
                             // Extract JSON Object from JSON returned by REST WS
                             JSONObject obj = new JSONObject(response);
                             String result=obj.getString("message");
-                            logoutUser();
+
+                            session.setLogin(false);
+                            edit_user_detals.clear();
+                            edit_user_detals.commit();
+
+                            edit_user_pic.clear();
+                            edit_user_pic.commit();
+
+                            edit_userid.clear();
+                            edit_userid.commit();
                             Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(getActivity(),MainActivity.class);
                             startActivity(intent);
-                            onFinish();
+                            getActivity().finish();
                             new Custom_Progress(getActivity()).dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
