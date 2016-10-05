@@ -273,7 +273,7 @@ public class Mygroup extends Fragment{
 
 
                     long timestampString =  Long.parseLong(actor.getString("activity_time"));
-                    String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
+                    String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' hh aa ").
                             format(new java.util.Date(timestampString * 1000));
 
                     book.setAuthorName(value);

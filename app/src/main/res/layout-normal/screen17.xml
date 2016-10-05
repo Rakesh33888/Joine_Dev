@@ -14,7 +14,6 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.brahmasys.bts.joinme.Screen17">
@@ -45,7 +44,6 @@
             android:text="@string/underlinedText"
             android:id="@+id/reportactitytext"
             android:clickable="true"
-
             android:layout_marginLeft="120dp"
             android:gravity="center" />
 
@@ -57,14 +55,13 @@
             android:gravity="center"
             android:layout_marginLeft="230dp"
             android:textColorLink="#de212121"
-
             android:id="@+id/updateactivitytext"/>
          </FrameLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:layout_below="@+id/frameLayoutbck"
             xmlns:android="http://schemas.android.com/apk/res/android"
             tools:context="com.brahmasys.bts.joinme.Screen17">
@@ -73,7 +70,6 @@
             android:layout_width="fill_parent"
             android:layout_height="220dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:layout_weight="0.20"
             android:id="@+id/frameLayout5"
             android:layout_centerHorizontal="true">
@@ -130,7 +126,7 @@
         android:background="@drawable/smallbox1"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.06"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/frameLayout5"
         android:layout_centerHorizontal="true"
         android:layout_alignStart="@+id/frameLayout5">
@@ -199,7 +195,6 @@
                 android:background="#24ededed"
                 android:id="@+id/createrprlfram"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
                 android:layout_weight="0.06"
                 android:layout_below="@+id/frameLayoutactity"
                 android:layout_alignParentStart="true">
@@ -233,7 +228,7 @@
                     android:id="@+id/myRatingBar"
                     android:layout_marginLeft="78dp"
                     android:progressTint="@color/ratingbar"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:stepSize="0.5"
 
                     android:isIndicator="true"
@@ -246,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:text="13 reviews"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:singleLine="true"
                     android:textColor="#FFFBFB"
                     android:id="@+id/reviews"

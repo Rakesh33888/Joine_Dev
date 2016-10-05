@@ -71,7 +71,7 @@
             android:id="@+id/textView11"
             android:textSize="20dp"
             android:textColor="#BDBDBD"
-            android:paddingStart="15dp"
+            android:paddingStart="10dp"
             android:layout_gravity="center"
             android:layout_centerVertical="true" />
 
@@ -123,7 +123,8 @@
             android:layout_height="wrap_content"
             android:text="Notifications"
             android:layout_margin="10dp"
-            android:id="@+id/textView8" />
+            android:id="@+id/textView8"
+            android:textSize="20dp" />
 
 
         <RelativeLayout
@@ -159,7 +160,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New activity near by"
+                android:text="Nearby"
                 android:layout_marginLeft="10dp"
                 android:paddingTop="9dp"
                 android:id="@+id/near_by" />
@@ -171,9 +172,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
+                app:kswBackDrawable="@drawable/miui_back_drawable"
+                app:kswBackMeasureRatio="2"
+                app:kswThumbDrawable="@drawable/miui_thumb_drawable"
                 app:kswBackColor="#CDCBCB"
                 app:kswTintColor="#CDCBCB"
-                app:kswThumbColor="#3AA16B" />
+
+                />
         </RelativeLayout>
 
         <RelativeLayout
@@ -322,12 +327,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="52dp"
         android:id="@+id/linearlayoutterm"
         android:background="@drawable/bigbox"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp">
 
         <TextView
@@ -336,19 +340,18 @@
             android:text="Terms of service"
             android:textSize="18dp"
             android:textColor="#C3C3C3"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:paddingStart="10dp"
-            android:id="@+id/termsofservices" />
+            android:id="@+id/termsofservices"
+            android:layout_marginTop="15dp" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="52dp"
         android:id="@+id/logout"
-        android:background="@drawable/bigbox"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp">
+        android:background="@drawable/bigbox">
 
         <TextView
             android:layout_width="wrap_content"
@@ -356,9 +359,10 @@
             android:text="Log out"
             android:textColor="#B6B6B6"
             android:textSize="18dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:paddingStart="10dp"
-            android:id="@+id/textView13" />
+            android:id="@+id/textView13"
+            android:layout_marginTop="15dp" />
     </LinearLayout>
 
     <Button

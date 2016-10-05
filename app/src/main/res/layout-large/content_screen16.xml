@@ -99,8 +99,8 @@
     </FrameLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:id="@+id/dislike"
         android:background="@drawable/dislike"
         android:layout_below="@+id/frameLayout2"
@@ -108,8 +108,8 @@
         android:layout_marginLeft="15dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:background="@drawable/message1"
         android:id="@+id/like"
         android:layout_alignTop="@+id/dislike"
@@ -124,7 +124,7 @@
         android:id="@+id/infobutton"
         android:layout_alignTop="@+id/like"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="20dp" />
 
     <ImageView
         android:layout_width="wrap_content"

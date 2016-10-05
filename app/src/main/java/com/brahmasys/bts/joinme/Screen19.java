@@ -867,8 +867,8 @@ public class Screen19 extends Fragment {
                 Calendar c = Calendar.getInstance();
                 c.set(Calendar.YEAR, Integer.parseInt(year));
                 c.set(Calendar.MONTH, int_month - 1);
-                c.set(Calendar.DAY_OF_MONTH,1);
-                c.set(Calendar.HOUR,1);
+                c.set(Calendar.DAY_OF_MONTH,Integer.parseInt(day)-1);
+                c.set(Calendar.HOUR,Integer.parseInt(hour));
                 c.set(Calendar.MINUTE, 0);
                 c.set(Calendar.SECOND, 0);
                 c.set(Calendar.MILLISECOND, 0);

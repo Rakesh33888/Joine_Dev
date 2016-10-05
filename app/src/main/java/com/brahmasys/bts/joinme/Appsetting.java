@@ -313,7 +313,7 @@ public class Appsetting extends Fragment{
         });
 
           dropdown = (Spinner) v.findViewById(R.id.spinner1);
-        String[] items = new String[]{"All messages", "Only from travelers", "Only from groups"};
+        String[] items = new String[]{"All messages", "Only from travelers", "Only from groups","None"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
 
@@ -469,7 +469,7 @@ public class Appsetting extends Fragment{
     }
 
 
-    protected void FnPopulateUserSettings(final View v ){
+    public void FnPopulateUserSettings(final View v ){
         if(Connectivity_Checking.isConnectingToInternet()) {
             AsyncHttpClient client = new AsyncHttpClient();
             String id = user_id.getString("userid", "");

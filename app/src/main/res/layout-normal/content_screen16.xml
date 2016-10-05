@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.brahmasys.bts.joinme.Screen16"
     tools:showIn="@layout/app_bar_screen16">
@@ -98,16 +99,16 @@
     </FrameLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:id="@+id/dislike"
         android:background="@drawable/dislike"
         android:layout_below="@+id/frameLayout2"
         android:layout_marginTop="25dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:background="@drawable/message1"
         android:id="@+id/like"
         android:layout_alignTop="@+id/dislike"
@@ -121,7 +122,7 @@
         android:id="@+id/infobutton"
         android:layout_alignTop="@+id/like"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="25dp" />
 
     <ImageView
         android:layout_width="wrap_content"

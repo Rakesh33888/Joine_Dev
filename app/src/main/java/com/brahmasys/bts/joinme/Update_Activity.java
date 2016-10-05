@@ -785,7 +785,7 @@ public class Update_Activity extends Fragment {
                         c.set(Calendar.YEAR, Integer.parseInt(year));
                         c.set(Calendar.MONTH, int_month);
                         c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-                        c.set(Calendar.HOUR, 1);
+                        c.set(Calendar.HOUR, Integer.parseInt(hour));
                         c.set(Calendar.MINUTE, 0);
                         c.set(Calendar.SECOND, 0);
                         c.set(Calendar.MILLISECOND, 0);

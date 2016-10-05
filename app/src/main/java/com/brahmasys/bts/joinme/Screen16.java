@@ -84,7 +84,7 @@ public class Screen16 extends AppCompatActivity implements
     public ImageView shareicon, msg;
     ImageButton reloadactivity;
     LinearLayout backlayoutdrawer;
-
+    NavigationView navigationView;
     Button editbutton;
     ImageView create, like, dislike, btninfo;
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
@@ -359,7 +359,7 @@ public void GetUserData()
 
             }
         });
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
 
@@ -410,6 +410,7 @@ public void GetUserData()
             }
         }
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(false);
         backlayoutdrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -584,7 +585,7 @@ public void GetUserData()
         Class fragmentClass = null;
         if (id == R.id.my_search) {
             fragmentClass = Mysearch.class;
-
+            navigationView.getMenu().getItem(0).setChecked(true);
 
         } else if (id == R.id.group_activites) {
             fragmentClass = Mygroup.class;

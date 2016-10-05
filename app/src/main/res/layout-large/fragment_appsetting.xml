@@ -72,7 +72,7 @@
                     android:id="@+id/textView11"
                     android:textSize="20dp"
                     android:textColor="#BDBDBD"
-                    android:paddingStart="15dp"
+                    android:paddingStart="10dp"
                     android:layout_gravity="center"
                     android:layout_centerVertical="true" />
 
@@ -124,7 +124,7 @@
                     android:text="Notifications"
                     android:layout_margin="10dp"
                     android:id="@+id/textView8"
-                    android:textSize="20dp" />
+                    android:textSize="30dp" />
 
 
                 <RelativeLayout
@@ -159,7 +159,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="New activity near by"
+                        android:text="NearBy"
                         android:layout_marginLeft="10dp"
                         android:id="@+id/near_by"
                         android:textSize="20dp" />
@@ -173,7 +173,9 @@
                         android:layout_marginRight="20dp"
                         app:kswBackColor="#CDCBCB"
                         app:kswTintColor="#CDCBCB"
-                        app:kswThumbColor="#3AA16B" />
+                        app:kswBackDrawable="@drawable/miui_back_drawable"
+                        app:kswBackMeasureRatio="2"
+                        app:kswThumbDrawable="@drawable/miui_thumb_drawable" />
                 </RelativeLayout>
 
                 <RelativeLayout

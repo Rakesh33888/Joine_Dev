@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.kyleduo.switchbutton.SwitchButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -46,7 +47,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     ProgressDialog progressDialog;
 
     public static String dateSelection = "";
-
+    String distanceStr,date;
     private static final String TAG = "SaveUserPreference";
     public  static final String URL_SaveUserPreference ="http://52.37.136.238/JoinMe/User.svc/SaveUserPreference";
  //   ProgressDialog pd;
@@ -56,7 +57,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     ImageView back;
     ImageView shareicon;
     private ActionBar toolbar;
-    TextView mysearch,textView7,Maxdistance,distance;
+    TextView mysearch,textView7,Maxdistance,distance,distance_type;
     CheckBox c1,c2,c3;
 
     RelativeLayout relativeLayout_share_icon;
@@ -64,7 +65,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     String search_distance;
     String select_date;
    
-
+    String Km="",Mile="",dist_type;
     SharedPreferences searchdistance,selectdate;
     SharedPreferences.Editor edit_searchdistance,edit_selectdate;
     SharedPreferences user_id,user_Details,user_pic,lat_lng;
@@ -103,7 +104,6 @@ public class Mysearch extends android.support.v4.app.Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,9 +114,6 @@ public class Mysearch extends android.support.v4.app.Fragment {
         }
 
     }
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mysearch, container, false);
@@ -126,15 +123,14 @@ public class Mysearch extends android.support.v4.app.Fragment {
         progressDialog.setContentView(R.layout.custom_progress);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        pd = new ProgressDialog(getActivity());
-//        pd.setMessage("loading...");
-//        pd.show();
         linearLayout = (LinearLayout) v.findViewById(R.id.linearlayout);
         relativeLayout1 = (RelativeLayout) v.findViewById(R.id.relativelayout_seek);
         relativeLayout2 = (RelativeLayout) v.findViewById(R.id.relativelayout_checkbox);
         textView7 = (TextView) v.findViewById(R.id.textView7);
-
-
+        distance_type = (TextView) v.findViewById(R.id.distance_type);
+        Maxdistance= (TextView) v.findViewById(R.id.Maxdistance);
+        distance= (TextView) v.findViewById(R.id.distance);
+        seekBar= (SeekBar) v.findViewById(R.id.seekBar);
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
@@ -146,12 +142,22 @@ public class Mysearch extends android.support.v4.app.Fragment {
         layoutback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String seekBarValue = Integer.toString(seekBar.getProgress());
-                FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
-                Intent i = new Intent(getContext(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
+
+                if (!distanceStr.equals(distance.getText().toString())||!date.equals(dateSelection)) {
+                    String seekBarValue = Integer.toString(seekBar.getProgress());
+                    FnPostRequest(seekBarValue, dateSelection, user_id.getString("userid", ""));
+                    Intent i = new Intent(getContext(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                }
+                else {
+                    Intent i = new Intent(getContext(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+
+                }
 
             }
         });
@@ -159,7 +165,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
         searchdistance =getActivity().getSharedPreferences(search_distance, getActivity().MODE_PRIVATE);
         edit_searchdistance = searchdistance.edit();
-        selectdate=getActivity().getSharedPreferences(select_date,getActivity().MODE_PRIVATE);
+        selectdate=getActivity().getSharedPreferences(select_date, getActivity().MODE_PRIVATE);
         edit_selectdate=selectdate.edit();
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
@@ -169,88 +175,210 @@ public class Mysearch extends android.support.v4.app.Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
         if(Connectivity_Checking.isConnectingToInternet()) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserPreference/"+ user_id.getString("userid",""),
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
+            AsyncHttpClient client = new AsyncHttpClient();
+            String id = user_id.getString("userid", "");
+            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserSettings/" + id,
+                    new AsyncHttpResponseHandler() {
+                        // When the response returned by REST has Http response code '200'
 
-                    public void onSuccess(String response) {
-                        // Hide Progress Dialog
-                        //  prgDialog.hide();
-                        try {
-                            // Extract JSON Object from JSON returned by REST WS
-                            JSONObject dataObj = new JSONObject(response).getJSONObject("data");
-                            String distanceStr = dataObj.getString("search_distance");
-                            String date = dataObj.getString("select_date");
-                           // Toast.makeText(getContext(), distanceStr, Toast.LENGTH_SHORT).show();
-                            distance.setText(distanceStr + "km");
-                            seekBar.setProgress(Integer.parseInt(distanceStr));
-                            if (date.equals("0")) {
-                                c1.setChecked(true);
-                                c2.setChecked(false);
-                                c3.setChecked(false);
+                        public void onSuccess(String jsonResult) {
 
+                            try {
+                                // Extract JSON Object from JSON returned by REST WS
+                                JSONObject dataObj = new JSONObject(jsonResult).getJSONObject("user_setting");
+                                final String distance_km = dataObj.getString("distance_km");
+
+                                if (distance_km.equals("K") || distance_km.equals("k")) {
+                                   Km =distance_km;
+                                    dist_type = "km";
+                                    Log.e("DISTANCE",Km);
+                                } else {
+                                    Mile = distance_km;
+                                    dist_type="miles";
+                                    Log.e("DISTANCE",distance_km);
+                                }
+
+                                AsyncHttpClient client = new AsyncHttpClient();
+                                client.get("http://52.37.136.238/JoinMe/User.svc/GetUserPreference/"+ user_id.getString("userid",""),
+                                        new AsyncHttpResponseHandler() {
+                                            // When the response returned by REST has Http response code '200'
+
+                                            public void onSuccess(String response) {
+                                                // Hide Progress Dialog
+                                                //  prgDialog.hide();
+                                                try {
+                                                    // Extract JSON Object from JSON returned by REST WS
+                                                    JSONObject dataObj = new JSONObject(response).getJSONObject("data");
+                                                    distanceStr = dataObj.getString("search_distance");
+                                                    date = dataObj.getString("select_date");
+                                                    // Toast.makeText(getContext(), distanceStr, Toast.LENGTH_SHORT).show();
+
+                                                    if (Mile.equals(distance_km))
+                                                    {
+//                                                        double oneMile=0.62137;
+//                                                        double distanceM= Integer.parseInt(distanceStr)*oneMile;
+//                                                        long distM=(long)distanceM;
+//
+//                                                        int DISTANCE_Miles = (int)distM;
+//                                                        distance.setText(String.valueOf(DISTANCE_Miles));
+                                                        distance_type.setText(dist_type);
+//                                                        seekBar.setProgress(DISTANCE_Miles);
+//                                                        Log.e("DISTANCE", String.valueOf(DISTANCE_Miles));
+
+                                                    }
+                                                    else
+                                                    {
+                                                        distance.setText(distanceStr);
+                                                        distance_type.setText(dist_type);
+
+                                                    }
+
+                                                    seekBar.setProgress(Integer.parseInt(distanceStr));
+                                                    if (date.equals("0")) {
+                                                        c1.setChecked(true);
+                                                        c2.setChecked(false);
+                                                        c3.setChecked(false);
+                                                        c1.setClickable(false);
+                                                        c2.setClickable(true);
+                                                        c3.setClickable(true);
+
+                                                    }
+                                                    else if (date.equals("nari1")) {
+                                                        c1.setChecked(false);
+                                                        c2.setChecked(true);
+                                                        c3.setChecked(false);
+                                                        c2.setClickable(false);
+                                                        c1.setClickable(true);
+                                                        c3.setClickable(true);
+                                                    }
+                                                    else if (date.equals("3")) {
+                                                        c1.setChecked(false);
+                                                        c2.setChecked(false);
+                                                        c3.setChecked(true);
+                                                        c3.setClickable(false);
+                                                        c1.setClickable(true);
+                                                        c2.setClickable(true);
+                                                    }
+                                                    else
+                                                    {
+                                                        c1.setChecked(true);
+                                                        c2.setChecked(false);
+                                                        c3.setChecked(false);
+
+                                                    }
+
+                                                    // pd.hide();
+
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                progressDialog.dismiss();
+
+                                            }});
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            else if (date.equals("nari1")) {
-                                c1.setChecked(false);
-                                c2.setChecked(true);
-                                c3.setChecked(false);
 
-                            }
-                            else if (date.equals("2")) {
-                                c1.setChecked(false);
-                                c2.setChecked(false);
-                                c3.setChecked(true);
-
-                            }
-                            else
-                            {
-                                c1.setChecked(true);
-                                c2.setChecked(false);
-                                c3.setChecked(false);
-
-                            }
-
-                           // pd.hide();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
 
-                        progressDialog.dismiss();
-
-                    }});
+                    });
         }
-    else
-    {
-        Splashscreen dia = new Splashscreen();
-        dia.Connectivity_Dialog_with_refresh(getActivity());
-    }
+        else
+        {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+        }
 
+//        if(Connectivity_Checking.isConnectingToInternet()) {
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserPreference/"+ user_id.getString("userid",""),
+//                new AsyncHttpResponseHandler() {
+//                    // When the response returned by REST has Http response code '200'
+//
+//                    public void onSuccess(String response) {
+//                        // Hide Progress Dialog
+//                        //  prgDialog.hide();
+//                        try {
+//                            // Extract JSON Object from JSON returned by REST WS
+//                            JSONObject dataObj = new JSONObject(response).getJSONObject("data");
+//                            distanceStr = dataObj.getString("search_distance");
+//                            date = dataObj.getString("select_date");
+//                           // Toast.makeText(getContext(), distanceStr, Toast.LENGTH_SHORT).show();
+//
+//                            if (Km.equals("k"))
+//                            {
+//                                distance.setText(distanceStr + "km");
+//                            }
+//                            else
+//                            {
+//                                double oneMile=0.62137;
+//                                double distanceKm= Integer.parseInt(distanceStr)*oneMile;
+//
+//                                Log.e("DISTANCE",String.valueOf(distanceKm));
+//                            }
+//
+//                            seekBar.setProgress(Integer.parseInt(distanceStr));
+//                            if (date.equals("0")) {
+//                                c1.setChecked(true);
+//                                c2.setChecked(false);
+//                                c3.setChecked(false);
+//                                c1.setClickable(false);
+//                                c2.setClickable(true);
+//                                c3.setClickable(true);
+//
+//                            }
+//                            else if (date.equals("nari1")) {
+//                                c1.setChecked(false);
+//                                c2.setChecked(true);
+//                                c3.setChecked(false);
+//                                c2.setClickable(false);
+//                                c1.setClickable(true);
+//                                c3.setClickable(true);
+//                            }
+//                            else if (date.equals("3")) {
+//                                c1.setChecked(false);
+//                                c2.setChecked(false);
+//                                c3.setChecked(true);
+//                                c3.setClickable(false);
+//                                c1.setClickable(true);
+//                                c2.setClickable(true);
+//                            }
+//                            else
+//                            {
+//                                c1.setChecked(true);
+//                                c2.setChecked(false);
+//                                c3.setChecked(false);
+//
+//                            }
+//
+//                           // pd.hide();
+//
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        progressDialog.dismiss();
+//
+//                    }});
+//        }
+//    else
+//    {
+//        Splashscreen dia = new Splashscreen();
+//        dia.Connectivity_Dialog_with_refresh(getActivity());
+//    }
 
-
-
-
-        back = (ImageView) v.findViewById(R.id.button7);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                //I need user id here to pass in the function
-
-                //This line can get you the userid for Logged in User
-                //String userid = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE).getString("userid","");
-
-
-            }
-        });
         c1 = (CheckBox) v.findViewById(R.id.checkBox);
         c2 = (CheckBox) v.findViewById(R.id.checkBox2);
         c3 = (CheckBox) v.findViewById(R.id.checkBox3);
+
+
 
 
         c1.setOnClickListener(new View.OnClickListener() {
@@ -260,7 +388,12 @@ public class Mysearch extends android.support.v4.app.Fragment {
                     c2.setChecked(false);
                     c3.setChecked(false);
                     dateSelection = "0";
+                    c1.setClickable(false);
+                    c2.setClickable(true);
+                    c3.setClickable(true);
                 }
+
+
 
             }
         });
@@ -271,7 +404,11 @@ public class Mysearch extends android.support.v4.app.Fragment {
                     c1.setChecked(false);
                     c3.setChecked(false);
                     dateSelection = "nari1";
+                    c2.setClickable(false);
+                    c1.setClickable(true);
+                    c3.setClickable(true);
                 }
+
 
             }
         });
@@ -282,19 +419,22 @@ public class Mysearch extends android.support.v4.app.Fragment {
                     c2.setChecked(false);
                     c1.setChecked(false);
                     dateSelection = "3";
+                    c3.setClickable(false);
+                    c1.setClickable(true);
+                    c2.setClickable(true);
                 }
 
             }
         });
-        Maxdistance= (TextView) v.findViewById(R.id.Maxdistance);
-        distance= (TextView) v.findViewById(R.id.distance);
-        seekBar= (SeekBar) v.findViewById(R.id.seekBar);
+
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                distance.setText(progress + "km");
+
+                distance.setText(progress+"");
+                distance_type.setText(dist_type);
 
 
             }
