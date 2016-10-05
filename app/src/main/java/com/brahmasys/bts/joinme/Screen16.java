@@ -5,9 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -23,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,7 +68,7 @@ public class Screen16 extends AppCompatActivity implements
         Mygroup.OnFragmentInteractionListener,
         Appsetting.OnFragmentInteractionListener, SwipeStack.SwipeStackListener {
     private static final int PICK_IMAGE_REQUEST = 2;
-
+    ProgressDialog progressDialog;
     private SwipeStack mSwipeStack;
     private ArrayList<Book> books;
     private SwipeStackAdapter mAdapter;
@@ -266,6 +271,9 @@ public void GetUserData()
         Splashscreen dia = new Splashscreen();
         dia.Connectivity_Dialog_with_refresh(Screen16.this);
     }
+
+
+
 }
 
     private void fillWithTestData() {
@@ -354,31 +362,19 @@ public void GetUserData()
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
+
+
         navtextview = (TextView) header.findViewById(R.id.navtextview);
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
         editbutton = (Button) header.findViewById(R.id.editbutton);
-
-
         editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                } else {
-                    intent = new Intent(Intent.ACTION_GET_CONTENT);
-                }
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setType("image/*");
-
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE1);
-
+                Image_Choose();
 
             }
         });
+
         backlayoutdrawer = (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
         navtextview.setText(user_Details.getString("firstname", "") + "\t" + user_Details.getString("lastname", "null"));
 
@@ -400,8 +396,6 @@ public void GetUserData()
 
 
         for (int i = 0; i < allid.size(); i++) {
-
-
             if (i == allurl.size() - 1) {
                 //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
                 //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
@@ -416,15 +410,6 @@ public void GetUserData()
             }
         }
         navigationView.setNavigationItemSelectedListener(this);
-        navimage.setClickable(true);
-
-        navimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         backlayoutdrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -558,6 +543,22 @@ public void GetUserData()
 
         }}
 
+    public void Image_Choose()
+    {
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("image/*");
+
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE1);
+    }
     private void setListViewAdapter() {
         books = new ArrayList<Book>();
         adapter = new SwipeStackAdapter(this, R.layout.card, books);
@@ -716,6 +717,8 @@ public void GetUserData()
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if (screen19_fragment != null) {
             screen19_fragment.onActivityResult(requestCode, resultCode, data);
 
@@ -728,12 +731,17 @@ public void GetUserData()
 
 
                 if (requestCode == SELECT_FILE1) {
-                    pd.show();
-                    selectedPath1 = uri;
-                    navimage.setImageBitmap(new DecodeImage().decodeFile(selectedPath1));
+                   // pd.show();
+
+                    progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setContentView(R.layout.custom_progress);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-
+            selectedPath1 = uri;
 
                 }
                 Thread thread = new Thread(new Runnable() {
@@ -741,6 +749,9 @@ public void GetUserData()
                         doFileUpload();
                         runOnUiThread(new Runnable() {
                             public void run() {
+                               // fillWithTestData();
+                               GetUserData();
+                                navimage.setImageBitmap(new DecodeImage().decodeFile(selectedPath1));
 
                             }
                         });
@@ -790,14 +801,15 @@ public void GetUserData()
                     public void run() {
                         try {
 
-                            GetUserData();
-                            overridePendingTransition( 0, 0);
-                            startActivity(getIntent());
-                            overridePendingTransition( 0, 0);
+                            progressDialog.dismiss();
+//                            overridePendingTransition( 0, 0);
+//                            startActivity(getIntent());
+//                            overridePendingTransition( 0, 0);
                             //    res.setTextColor(Color.GREEN);
                             //    res.setText("n Response from server : n " + response_str);
-                            pd.hide();
-                            pd.dismiss();
+//                            pd.hide();
+//                            pd.dismiss();
+
                             Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.printStackTrace();

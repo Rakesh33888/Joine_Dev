@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -108,13 +110,19 @@ public class Mygroup extends Fragment{
 
 
         View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
-        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+//        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setContentView(R.layout.custom_progress);
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        progressDialog = ProgressDialog.show(getActivity(), null,null, true);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.setContentView(R.layout.custom_progress);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
 
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
@@ -132,11 +140,12 @@ public class Mygroup extends Fragment{
         groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
         groups_list.setExpanded(true);
         setListViewAdapter();
-        progressDialog.dismiss();
+
         backlayoutgroup= (LinearLayout) v.findViewById(R.id.backlayoutgroup);
         backlayoutgroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent(getContext(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
@@ -160,92 +169,43 @@ public class Mygroup extends Fragment{
         createalbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager=getFragmentManager();
+                fragmentManager = getFragmentManager();
 
-                Screen19 screen19=new Screen19();
+                Screen19 screen19 = new Screen19();
                 fragmentManager.beginTransaction()
                         .replace(R.id.flContent, screen19)
                         .addToBackStack(null)
                         .commit();
+
             }
         });
 
-        if(Connectivity_Checking.isConnectingToInternet()) {
-
-        JSONObject jsonObjSend = new JSONObject();
-        try {
-            // Add key/value pairs
-            jsonObjSend.put("lat", "0");
-            jsonObjSend.put("lon", "0");
-            jsonObjSend.put("userid",user_id.getString("userid","0"));
-            Log.i(TAG, jsonObjSend.toString(3));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
-
-        //Log.w("RESULT",String.valueOf(jsonObjRecv));
-        JSONObject json = null;
-        try {
-            json = new JSONObject(String.valueOf(jsonObjRecv));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        alluserid = new ArrayList<String>();
-        allactivityid = new ArrayList<String>();
 
 
-        JSONArray userdetails = null;
+        new Thread(new Runnable() {
+            @Override
+            public void run()
+            {
 
+                Getting_Groups();
 
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-        try {
-            userdetails = json.getJSONArray("data");
+                        progressDialog.dismiss();
 
-
-            for (int i = 0; i < userdetails.length(); i++) {
-                JSONObject actor = userdetails.getJSONObject(i);
-                String activity_id = actor.getString("activity_id");
-                String user_id = actor.getString("userid");
-
-                allactivityid.add(activity_id);
-                alluserid.add(user_id);
-                Book book = new Book();
-                book.setName(actor.getString("activity_name"));
-                book.setImageUrl(actor.getString("activity_url"));
-
-
-                long timestampString =  Long.parseLong(actor.getString("activity_time"));
-                String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
-                        format(new java.util.Date(timestampString * 1000));
-
-                book.setAuthorName(value);
-
-                books.add(book);
+                    }
+                });
 
             }
-            adapter.notifyDataSetChanged();
+        }).start();
 
-            //Log.w("details",String.valueOf(userdetails));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        }
-        else
-        {
-            Splashscreen dia = new Splashscreen();
-            dia.Connectivity_Dialog_with_refresh(getActivity());
-        }
 
         groups_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-
                 fragmentManager=getFragmentManager();
-
                 Screen17 screen17 = new Screen17();
                 Bundle bundle = new Bundle();
                 bundle.putString("userid", alluserid.get(position));
@@ -264,6 +224,83 @@ public class Mygroup extends Fragment{
     }
 
 
+    public  void Getting_Groups()
+    {
+        if(Connectivity_Checking.isConnectingToInternet()) {
+
+            JSONObject jsonObjSend = new JSONObject();
+            try {
+                // Add key/value pairs
+                jsonObjSend.put("lat", "0");
+                jsonObjSend.put("lon", "0");
+                jsonObjSend.put("userid",user_id.getString("userid","0"));
+                Log.i(TAG, jsonObjSend.toString(3));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
+
+            //Log.w("RESULT",String.valueOf(jsonObjRecv));
+            JSONObject json = null;
+            try {
+                json = new JSONObject(String.valueOf(jsonObjRecv));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            alluserid = new ArrayList<String>();
+            allactivityid = new ArrayList<String>();
+
+
+            JSONArray userdetails = null;
+
+
+
+            try {
+                userdetails = json.getJSONArray("data");
+
+
+                for (int i = 0; i < userdetails.length(); i++) {
+                    JSONObject actor = userdetails.getJSONObject(i);
+                    String activity_id = actor.getString("activity_id");
+                    String user_id = actor.getString("userid");
+
+                    allactivityid.add(activity_id);
+                    alluserid.add(user_id);
+                    Book book = new Book();
+                    book.setName(actor.getString("activity_name"));
+                    book.setImageUrl(actor.getString("activity_url"));
+
+
+                    long timestampString =  Long.parseLong(actor.getString("activity_time"));
+                    String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
+                            format(new java.util.Date(timestampString * 1000));
+
+                    book.setAuthorName(value);
+
+                    books.add(book);
+
+                }
+               // adapter.notifyDataSetChanged();
+
+               getActivity().runOnUiThread(new Runnable() {
+                   public void run() {
+                       adapter.notifyDataSetChanged();
+                   }
+               });
+                //Log.w("details",String.valueOf(userdetails));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        else
+        {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+        }
+
+    }
 
     private void setListViewAdapter() {
         if (Connectivity_Checking.isConnectingToInternet()) {
@@ -272,6 +309,7 @@ public class Mygroup extends Fragment{
             books = new ArrayList<Book>();
             adapter = new CustomListViewAdapter(getActivity(), R.layout.groups_list, books);
             groups_list.setAdapter(adapter);
+
 
         } else {
             Splashscreen dia = new Splashscreen();
@@ -321,14 +359,17 @@ public class Mygroup extends Fragment{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    Intent i = new Intent(getActivity(), Screen16.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                    getActivity().finish();
+                            Intent i = new Intent(getActivity(), Screen16.class);
+                            startActivity(i);
+                            getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                            getActivity().finish();
+
                     return true;
                 }
                 return false;
             }
         });
     }
+
+
 }

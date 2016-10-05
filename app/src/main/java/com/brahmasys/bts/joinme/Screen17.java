@@ -79,6 +79,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
               progressDialog.setContentView(R.layout.custom_progress);
               progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
               progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         final View v=inflater.inflate(R.layout.screen17,container,false);
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);

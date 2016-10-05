@@ -40,16 +40,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.loopj.android.http.AsyncHttpClient;
@@ -74,10 +64,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     TextView  tv_profile_name ;
 
-    LoginButton loginButton;
-
-    CallbackManager callbackManager;
-    private AccessTokenTracker accessTokenTracker;
+//    LoginButton loginButton;
+//
+//    CallbackManager callbackManager;
+   // private AccessTokenTracker accessTokenTracker;
 
     String email_json,username_json, socialId_json;
 
@@ -108,7 +98,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+    //    FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
 
@@ -150,10 +140,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         relativemain = (RelativeLayout) findViewById(R.id.relativemain);
         /******* Facebook *******/
-        callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-      //  loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends", "email", "user_birthday"));
-        loginButton.setReadPermissions(Arrays.asList("user_birthday"));
+//        callbackManager = CallbackManager.Factory.create();
+//        loginButton = (LoginButton) findViewById(R.id.login_button);
+//      //  loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends", "email", "user_birthday"));
+//        loginButton.setReadPermissions(Arrays.asList("user_birthday"));
         facebook.setOnClickListener((View.OnClickListener) MainActivity.this);
         relativemain.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -175,64 +165,64 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 tv_profile_name.setText(facebook_det.getString("email","null"));
             }
         });
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-                        final JSONObject json = response.getJSONObject();
-                        Log.e("LoginActivity", response.toString());
-
-                        try {
-                            if (json != null) {
-                                String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + json.getString("id");
-                                email_json = json.getString("email");
-                                final String username_json = json.getString("name");
-                                final String socialId_json = json.getString("id");
-                                final String gender = json.getString("gender");
-                             //   final String dob    =json.getString("birthday");
-                                final String firstname = json.getString("first_name");
-                                final String lastname = json.getString("last_name");
-                                edit_facebook_det.putString("email", email_json);
-                                edit_facebook_det.commit();
-                                Log.e("email", email_json);
-                                Log.e("user", username_json);
-                                Log.e("id", socialId_json);
-                                Log.e("gender", gender);
-                               //Log.e("dob", dob);
-                               Log.e("last", lastname);
-                              Log.e("email", email_json);
-
-                                Toast.makeText(MainActivity.this, email_json, Toast.LENGTH_SHORT).show();
-                            }
-                            //email.setText(email_json);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "birthday");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
+//        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//
+//                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//                    @Override
+//                    public void onCompleted(JSONObject object, GraphResponse response) {
+//
+//                        final JSONObject json = response.getJSONObject();
+//                        Log.e("LoginActivity", response.toString());
+//
+//                        try {
+//                            if (json != null) {
+//                                String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + json.getString("id");
+//                                email_json = json.getString("email");
+//                                final String username_json = json.getString("name");
+//                                final String socialId_json = json.getString("id");
+//                                final String gender = json.getString("gender");
+//                             //   final String dob    =json.getString("birthday");
+//                                final String firstname = json.getString("first_name");
+//                                final String lastname = json.getString("last_name");
+//                                edit_facebook_det.putString("email", email_json);
+//                                edit_facebook_det.commit();
+//                                Log.e("email", email_json);
+//                                Log.e("user", username_json);
+//                                Log.e("id", socialId_json);
+//                                Log.e("gender", gender);
+//                               //Log.e("dob", dob);
+//                               Log.e("last", lastname);
+//                              Log.e("email", email_json);
+//
+//                                Toast.makeText(MainActivity.this, email_json, Toast.LENGTH_SHORT).show();
+//                            }
+//                            //email.setText(email_json);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                });
+//                Bundle parameters = new Bundle();
+//                parameters.putString("fields", "birthday");
+//                request.setParameters(parameters);
+//                request.executeAsync();
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//
+//            }
+//        });
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -354,7 +344,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        //callbackManager.onActivityResult(requestCode, resultCode, data);
 //        loginButton.performClick();
 //        if(AccessToken.getCurrentAccessToken() != null){
 //            // LoginManager.getInstance().logOut();
@@ -375,7 +365,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void onClick(View v) {
         if (v == facebook) {
-           loginButton.performClick();
+        //   loginButton.performClick();
 //            if(AccessToken.getCurrentAccessToken() != null){
 //
 //
