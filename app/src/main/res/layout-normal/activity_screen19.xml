@@ -487,7 +487,7 @@
                 <EditText
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:hint="0"
+                    android:hint="-"
                     android:singleLine="true"
                     android:inputType="numberDecimal"
                     android:paddingStart="7dp"

@@ -70,6 +70,7 @@ import org.w3c.dom.Text;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,8 +80,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Screen19 extends Fragment {
-
-
 
     FragmentManager fragmentManager;
     RelativeLayout search_layout;
@@ -95,7 +94,7 @@ public class Screen19 extends Fragment {
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
     TextView age1,age2,text_search_address;
-    String[] currency = new String[]{"$", "€"};
+    String[] currency = new String[]{"€", "$"};
     String year="0",month="0",day="0",hour="0",minute;
     String availability;
     String gender="";
@@ -110,22 +109,17 @@ public class Screen19 extends Fragment {
     SharedPreferences user_id,activity_id,lat_lng;
     SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
     ProgressDialog  progressDialog;
-
+    long unixTime;
     private Integer THRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
-
-    private static final int SELECT_FILE3 = 1,SELECT_FILE4=2,SELECT_FILE5=3;
-    String selectedPath3 = "NONE",selectedPath4 = "NONE",selectedPath5 = "NONE";
     HttpEntity resEntity;
     String activity_id1 ="0", str_value="0";
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
     List<String> allurl;
-
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
-
     private String selectedImagePath = "",selectedImagePath2 = "",selectedImagePath3 = "";
     public static final int PICK_IMAGE1 = 1;
     public static final int PICK_IMAGE2 = 2;
@@ -150,8 +144,6 @@ public class Screen19 extends Fragment {
 
             latitude2 = Double.parseDouble(lat_lng.getString("lat", "0"));
             longitude2 = Double.parseDouble(lat_lng.getString("lng","0"));
-//          pd = new ProgressDialog(getActivity());
-//          pd.setMessage("Creating....");
 
         search_layout  = (RelativeLayout) v.findViewById(R.id.search_layout);
         current_address = (EditText)v.findViewById(R.id.current_address);
@@ -161,40 +153,30 @@ public class Screen19 extends Fragment {
         spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
         spinnerforyear = (Spinner) v.findViewById(R.id.spinner_year);
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
-
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
         address_search = (FrameLayout) v.findViewById(R.id.address_search);
-     //   edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
         enterdiscription  = (EditText) v.findViewById(R.id.enter_discription);
         edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
         edit_cost = (EditText) v.findViewById(R.id.forcost);
         edit_limit = (EditText) v.findViewById(R.id.numbrlimitbtn);
-
-
-
         checkboxcurrent = (CheckBox) v.findViewById(R.id.checkBoxfor_current);
         checkBoxaddress = (CheckBox) v.findViewById(R.id.checkboxfor_address);
         checkBoxforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_everyone);
         checkBoxnotforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_noteveryone);
         checkBoxformen = (CheckBox) v.findViewById(R.id.checkBoxformen);
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
-
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
-
-
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
         firstimage =(CircularImageView) v.findViewById(R.id.firstimage);
         secondimage = (CircularImageView) v.findViewById(R.id.secondimage);
         thirdimage = (CircularImageView) v.findViewById(R.id.thrdimage);
         age1 = (TextView) v.findViewById(R.id.age1);
         age2 = (TextView) v.findViewById(R.id.age2);
-
         create  = (Button) v.findViewById(R.id.createbutton);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
-
         search_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -802,7 +784,11 @@ public class Screen19 extends Fragment {
                     {
                         Looper.prepare();
                         // do the thing that takes a long time
-                        CreateActivity();
+                        try {
+                            CreateActivity();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -824,8 +810,7 @@ public class Screen19 extends Fragment {
 
 
 
-    public void CreateActivity()
-    {
+    public void CreateActivity() throws ParseException {
         if (edittextactivityname.getText().toString().length() >= 2) {
             if (enterdiscription.getText().toString().length() >= 10) {
 
@@ -835,6 +820,8 @@ public class Screen19 extends Fragment {
                 month = spinnerformonth.getSelectedItem().toString();
                 day = spinnerforday.getSelectedItem().toString();
                 hour = spinnerforhour.getSelectedItem().toString();
+
+
 
                 if (month.equals("Jan")) {
                     int_month = 1;
@@ -864,15 +851,27 @@ public class Screen19 extends Fragment {
 
 
                 /*************** Time Stamp Start********************/
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.YEAR, Integer.parseInt(year));
-                c.set(Calendar.MONTH, int_month - 1);
-                c.set(Calendar.DAY_OF_MONTH,Integer.parseInt(day)-1);
-                c.set(Calendar.HOUR,Integer.parseInt(hour));
-                c.set(Calendar.MINUTE, 0);
-                c.set(Calendar.SECOND, 0);
-                c.set(Calendar.MILLISECOND, 0);
-                long result = (c.getTimeInMillis() / 1000L);
+//                Calendar c = Calendar.getInstance();
+//
+//                c.set(Calendar.YEAR, Integer.parseInt(year));
+//                c.set(Calendar.MONTH, int_month - 1);
+//                c.set(Calendar.DAY_OF_MONTH,Integer.parseInt(day));
+//
+//                c.set(Calendar.HOUR,Integer.parseInt(hour));
+//                c.set(Calendar.MINUTE, 0);
+//                c.set(Calendar.SECOND, 0);
+//                c.set(Calendar.MILLISECOND, 0);
+//                long result = (c.getTimeInMillis() / 1000L);
+//
+//
+               // String str_date=day+" "+String.valueOf(int_month)+" "+year+" "+hour+":00:00 GMT \"09 Nov 2012 23:40:18 GMT\"";
+                String dateString = day+" "+String.valueOf(int_month)+" "+year+" "+hour+":00"+":00"+" "+"GMT";
+                DateFormat dateFormat = new SimpleDateFormat("dd MM yyyy hh:mm:ss z");
+
+                    Date date1 = dateFormat.parse(dateString );
+                    unixTime = (long) date1.getTime()/1000;
+                    Log.e("Timestamp527",String.valueOf(unixTime));
+
                 /********************* Time Stamp End ***************/
                 /********************* TimeZone Start ***************/
                 Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
@@ -943,7 +942,7 @@ public class Screen19 extends Fragment {
                 age_start = age1.getText().toString();
                 age_end = age2.getText().toString();
 
-                Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
+                Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + unixTime + "\n" + title + "\n" + total_address + "\n" + latitude
                         + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
 
 
@@ -958,7 +957,7 @@ public class Screen19 extends Fragment {
                     jsonObjSend.put("activity_description", description); //2
                     jsonObjSend.put("activity_duration", duration);       //3
                     jsonObjSend.put("activity_icon", icon);               //4
-                    jsonObjSend.put("activity_time", result);              //5
+                    jsonObjSend.put("activity_time", unixTime);              //5
                     jsonObjSend.put("activity_timezoneoffset", res);       //6
                     jsonObjSend.put("activity_title", title);              //7
                     jsonObjSend.put("address", total_address);             //8

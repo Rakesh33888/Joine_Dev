@@ -86,15 +86,11 @@ public class Update_Activity extends Fragment {
     TextView age1, age2;
     ProgressDialog progressDialog;
     String[] currency = new String[]{"$", "€"};
-
-
     String year = "0", month = "0", day = "0", hour = "0", minute;
-
     String availability;
     ImageView shareicon;
     ArrayList<String> data;
     int image;
-
     String gender = "";
     String duration = "0", icon = "0", title, address, age_start, age_end, cost = "0", limit = "0", description;
     double latitude = 0.0, longitude = 0.0, latitude1, longitude1, latitude2, longitude2;
@@ -114,21 +110,13 @@ public class Update_Activity extends Fragment {
     public static final int PICK_IMAGE1 = 1;
     public static final int PICK_IMAGE2 = 2;
     public static final int PICK_IMAGE3 = 3;
-
-    int imageView1;
-    int imageview2;
-    int imageview3;
-    String imgPath;
-    String myint;
     String owerid;
-    String object_detail;
     HttpEntity resEntity;
-    String activity_id1 = "0", str_value = "0";
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
     // JSONObject obj;
-
+    String update_name;
     List<String> allurl;
     FragmentManager fragmentManager;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -136,58 +124,24 @@ public class Update_Activity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
-//        progressDialog.setIndeterminate(true);
-//        progressDialog.setCancelable(false);
-//        progressDialog.setContentView(R.layout.custom_progress);
-//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
-        String userProfileString=getArguments().getString("accountDetails");
-        JSONObject jsonObject = null;
-        try {
-             jsonObject=new JSONObject(userProfileString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JSONObject userdetails = null;
-        try {
-            userdetails = jsonObject.getJSONObject("act_details");
-
-            Log.w("ACTIVITY DETAILS", String.valueOf(userdetails));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Log.e("Activity Name",userdetails.getString("activity_name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         View v = inflater.inflate(R.layout.update_activity, container, false);
+        GettingActivityDetails();
 
         user_id = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
-
-
         lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
-
         latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
         longitude2 = Double.parseDouble(lat_lng.getString("lng", "0.0"));
-
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
         spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
         spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
         spinnerforyear = (Spinner) v.findViewById(R.id.spinner_year);
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
-
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
-
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
         address_search = (FrameLayout) v.findViewById(R.id.address_search);
         //   edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
@@ -195,27 +149,21 @@ public class Update_Activity extends Fragment {
         edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
         edit_cost = (EditText) v.findViewById(R.id.forcost);
         edit_limit = (EditText) v.findViewById(R.id.numbrlimitbtn);
-
         checkboxcurrent = (CheckBox) v.findViewById(R.id.checkBoxfor_current);
         checkBoxaddress = (CheckBox) v.findViewById(R.id.checkboxfor_address);
         checkBoxforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_everyone);
         checkBoxnotforeveryone = (CheckBox) v.findViewById(R.id.checkBoxfor_noteveryone);
         checkBoxformen = (CheckBox) v.findViewById(R.id.checkBoxformen);
         checkBoxforwomen = (CheckBox) v.findViewById(R.id.checkBoxforwomen);
-
         Toolbar refTool = ((Screen16) getActivity()).toolbar;
         shareicon = (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
-
-
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
         firstimage = (CircularImageView) v.findViewById(R.id.firstimage);
-
         secondimage = (CircularImageView) v.findViewById(R.id.secondimage);
         thirdimage = (CircularImageView) v.findViewById(R.id.thrdimage);
         age1 = (TextView) v.findViewById(R.id.age1);
         age2 = (TextView) v.findViewById(R.id.age2);
-
         update_activity = (Button) v.findViewById(R.id.update_activity);
         delet_activity = (Button) v.findViewById(R.id.delete_activity);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
@@ -263,7 +211,6 @@ public class Update_Activity extends Fragment {
                 });
 
         setListViewAdapter();
-
 
         spinnericon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -998,6 +945,35 @@ public class Update_Activity extends Fragment {
 
 
     }
+
+
+    public  void GettingActivityDetails()
+    {
+        String userProfileString=getArguments().getString("accountDetails");
+        JSONObject jsonObject = null;
+        try {
+            jsonObject=new JSONObject(userProfileString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject userdetails = null;
+        try {
+            userdetails = jsonObject.getJSONObject("act_details");
+
+            Log.w("ACTIVITY DETAILS", String.valueOf(userdetails));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Log.e("Activity Name",userdetails.getString("activity_name"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 private void  userdetail(String responce){
 
 

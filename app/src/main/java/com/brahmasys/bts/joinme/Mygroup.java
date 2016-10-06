@@ -29,8 +29,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 
 /**
@@ -271,12 +274,18 @@ public class Mygroup extends Fragment{
                     book.setName(actor.getString("activity_name"));
                     book.setImageUrl(actor.getString("activity_url"));
 
+                    long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                    Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                    String formattedDate = sdf.format(date2);
+                    Log.e("Timestamp527", String.valueOf(formattedDate));
 
-                    long timestampString =  Long.parseLong(actor.getString("activity_time"));
-                    String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' hh aa ").
-                            format(new java.util.Date(timestampString * 1000));
+//                    long timestampString =  Long.parseLong(actor.getString("activity_time"));
+//                    String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' hh aa ").
+//                            format(new java.util.Date(timestampString * 1000L));
 
-                    book.setAuthorName(value);
+                    book.setAuthorName(formattedDate);
 
                     books.add(book);
 
