@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -158,7 +159,11 @@ public class Screen16 extends AppCompatActivity implements
         client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
     @Override
     protected void onStart() {
         super.onStart();

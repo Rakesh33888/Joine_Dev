@@ -123,54 +123,51 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toEndOf="@+id/timetext">
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/relativeLayout"
+                        android:layout_marginStart="86dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select date"
+                            android:textColor="#AFAFAF"
+                            android:id="@+id/date_textview"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/date_button"
+                            android:layout_marginEnd="10dp" />
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/cal_icon"
+                            android:id="@+id/date_button"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true" />
+                    </RelativeLayout>
                     <Spinner
-                        android:layout_width="90dp"
-                        android:layout_height="match_parent"
-                        android:id="@+id/spinner_day"
-                        android:spinnerMode="dropdown"
-
-                        android:layout_marginStart="33dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" >
-                    </Spinner>
-
-
-                    <Spinner
-                        android:layout_width="90dp"
-                        android:layout_height="match_parent"
-                        android:id="@+id/spinner_month"
-                        android:spinnerMode="dropdown"
-                        android:layout_marginStart="5dp"
-                        android:layout_gravity="center"
-                        android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/spinner_day">
-
-                    </Spinner>
-
-                    <Spinner
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:id="@+id/spinner_year"
-                        android:spinnerMode="dropdown"
-                        android:layout_marginStart="5dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/spinner_month">
-                    </Spinner>
-
-                    <Spinner
-                        android:layout_width="40dp"
+                        android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:id="@+id/spinner_hour"
+                        android:layout_marginStart="21dp"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="19dp"
-                        android:layout_toEndOf="@+id/spinner_year">
-                    </Spinner>
+                        android:layout_toEndOf="@+id/relativeLayout"
+                        android:layout_centerVertical="true" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hr"
+                        android:textSize="20dp"
+                        android:textColor="#CFCFCF"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/spinner_hour"
+                        android:layout_marginStart="10dp"
+                        android:id="@+id/textView32" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -194,6 +191,7 @@
                     android:paddingStart="15dp"
                     android:layout_marginTop="8dp"/>
 
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -209,13 +207,14 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/checkBoxfor_current"
                             android:text="Current"
-                            android:scaleX="0.60"
-                            android:textSize="21dp"
+
+
                             android:layout_marginLeft="8dp"
-                            android:scaleY="0.60"
+
                             android:textColor="#AEAEAE"
                             android:layout_gravity="left"
-                            android:checked="false" />
+                            android:checked="false"
+                            android:clickable="false" />
 
 
                         <CheckBox
@@ -223,59 +222,91 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/checkboxfor_address"
                             android:text="Address"
-                            android:scaleX="0.60"
-                            android:textSize="21dp"
-                            android:layout_marginLeft="6dp"
-                            android:scaleY="0.60"
+
+
+                            android:layout_marginLeft="8dp"
+
                             android:textColor="#AEAEAE"
 
                             android:layout_gravity="left"
                             android:checked="false" />
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="300dp"
+                        android:layout_width="210dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginRight="5dp"
-                        android:layout_gravity="center">
-                        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_marginRight="5dp">
+                        <EditText
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/address_search"
-                            android:visibility="gone"
+                            android:layout_height="fill_parent"
+                            android:inputType="textCapSentences"
+                            android:textColor="#ff32"
                             android:background="@drawable/edittext_style"
-                            android:layout_gravity="center_horizontal" >
+                            android:hint="Address"
+                            android:id="@+id/current_address"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:padding="10dp"
+                            />
 
-                            <com.brahmasys.bts.joinme.DelayAutoCompleteTextView
-                                android:id="@+id/geo_autocomplete"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:imeOptions="flagNoExtractUi|actionSearch"
-                                android:inputType="textCapSentences"
-                                android:textColor="#ff32"
-                                android:background="@null"
-                                android:hint="Search"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginEnd="35dp"
-                                android:layout_marginRight="35dp"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginBottom="4dp"
-                                android:padding="10dp"
-                                android:dropDownWidth="fill_parent"
-                                />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="@drawable/edittext_style"
+                            android:id="@+id/search_layout"
+                            android:padding="10dp"
+                            android:visibility="gone">
 
-                            <ImageView
-                                android:id="@+id/geo_autocomplete_clear"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/circle_close"
-                                android:contentDescription="Hello"
-                                android:layout_gravity="center_vertical|end"
-                                android:visibility="gone"
-                                android:layout_marginEnd="12dp"
-                                android:layout_marginRight="12dp"
-                                />
-                        </FrameLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/search_address"
+                                android:text="Search Address"
+                                android:singleLine="true"
+                                android:layout_centerHorizontal="true"
+                                android:textSize="15dp"
+                                android:textColor="#454444"/>
+
+                        </RelativeLayout>
+                        <!--  <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                             android:layout_width="fill_parent"
+                             android:layout_height="wrap_content"
+                             android:id="@+id/address_search"
+                             android:visibility="gone"
+                             android:background="@drawable/edittext_style"
+                             android:layout_gravity="center_horizontal" >
+
+                             <com.brahmasys.bts.joinme.DelayAutoCompleteTextView
+                                 android:id="@+id/geo_autocomplete"
+                                 android:layout_width="fill_parent"
+                                 android:layout_height="fill_parent"
+                                 android:imeOptions="flagNoExtractUi|actionSearch"
+                                 android:inputType="textCapSentences"
+                                 android:textColor="#ff32"
+                                 android:background="@null"
+                                 android:hint="Search"
+                                 android:layout_gravity="center_vertical"
+                                 android:layout_marginEnd="35dp"
+                                 android:layout_marginRight="35dp"
+                                 android:layout_marginTop="4dp"
+                                 android:layout_marginBottom="4dp"
+                                 android:padding="10dp"
+                                 android:dropDownWidth="fill_parent"
+                                 />
+
+                             <ImageView
+                                 android:id="@+id/geo_autocomplete_clear"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:src="@drawable/circle_close"
+                                 android:contentDescription="Hello"
+                                 android:layout_gravity="center_vertical|end"
+                                 android:visibility="gone"
+                                 android:layout_marginEnd="12dp"
+                                 android:layout_marginRight="12dp"
+                                 />
+                         </FrameLayout>  -->
 
                     </LinearLayout>
 
@@ -287,7 +318,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="310dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bigbox"
                 android:orientation="vertical"
                 android:layout_below="@+id/framelayoutfor_location"
@@ -300,7 +331,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Available for"
-                    android:textSize="28dp"
+                    android:textSize="19dp"
                     android:textColor="#AFAFAF"
                     android:layout_marginTop="8dp"
                     android:paddingStart="15dp"
@@ -310,12 +341,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Everyone"
-                    android:scaleX="0.90"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="6dp"
                     android:checked="true"
-
-                    android:textSize="21dp"
-                    android:scaleY="0.90"
                     android:textColor="#AFAFAF"
                     android:id="@+id/checkBoxfor_everyone" />
 
@@ -323,126 +350,123 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Not everyone"
-                    android:scaleX="0.90"
-                    android:textSize="21dp"
-
+                    android:layout_marginLeft="6dp"
                     android:textColor="#AFAFAF"
-                    android:scaleY="0.90"
-                    android:id="@+id/checkBoxfor_noteveryone"
-                    android:layout_marginLeft="15dp" />
+                    android:id="@+id/checkBoxfor_noteveryone" />
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:id="@+id/not_everyone"
                     android:visibility="gone">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Gender"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="32dp"
-                        android:textSize="25dp"
-                        android:textColor="#AFAFAF"
-
-                        android:id="@+id/textViewfor_gender"
-                        />
-                    <RadioGroup
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Women"
-                        android:scaleX="0.90"
-                        android:textSize="21dp"
-                        android:layout_marginTop="12dp"
-                        android:textColor="#AFAFAF"
-                        android:scaleY="0.90"
-                        android:id="@+id/checkBoxforwomen"
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Gender"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginLeft="32dp"
+                            android:textSize="16dp"
+                            android:textColor="#AFAFAF"
 
-                    <CheckBox
-                        android:layout_width="wrap_content"
+                            android:id="@+id/textViewfor_gender"
+                            />
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Women"
+                                android:scaleX="0.65"
+                                android:textSize="21dp"
+                                android:layout_marginTop="12dp"
+                                android:textColor="#AFAFAF"
+                                android:scaleY="0.65"
+                                android:id="@+id/checkBoxforwomen"
+                                />
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Men"
+                                android:scaleX="0.65"
+                                android:textSize="21dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="12dp"
+                                android:textColor="#AFAFAF"
+                                android:scaleY="0.65"
+                                android:id="@+id/checkBoxformen"
+                                /> </RadioGroup>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Men"
-                        android:scaleX="0.90"
-                        android:textSize="21dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="12dp"
-                        android:textColor="#AFAFAF"
-                        android:scaleY="0.90"
-                        android:id="@+id/checkBoxformen"
-                        /></RadioGroup>
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_height="wrap_content"
+                            android:text="Age"
+                            android:id="@+id/textviewforage"
+                            android:textColor="#AFAFAF"
+                            android:layout_marginLeft="32dp"
+                            android:textSize="16dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/age1"
+                            android:textColor="#AFAFAF"
+                            android:layout_marginLeft="32dp"
+                            android:textSize="16dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:textColor="#AFAFAF"
+                            android:textSize="16dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_height="wrap_content"
+                            android:text="100"
+                            android:id="@+id/age2"
+                            android:textColor="#AFAFAF"
+                            android:textSize="16dp"
+                            />
+                    </LinearLayout>
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/rangeSeekbar"
+                        android:layout_width="311dp"
+                        android:layout_height="wrap_content"
+                        app:min_value="0"
+                        app:max_value="100"
+                        app:corner_radius="10"
+                        android:layout_gravity="center"
+                        app:bar_highlight_color="#00426A"
+                        app:left_thumb_color="#00426A"
+                        app:right_thumb_color="#00426A"
+                        app:left_thumb_color_pressed="#00426A"
+                        app:right_thumb_color_pressed="#00426A"
+                        app:data_type="_integer"
+                        android:layout_marginBottom="15dp"
+                        />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="wrap_content"
-                        android:text="Age"
-                        android:id="@+id/textviewforage"
-                        android:textColor="#AFAFAF"
-                        android:layout_marginLeft="32dp"
-                        android:textSize="25dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:id="@+id/age1"
-                        android:textColor="#AFAFAF"
-                        android:layout_marginLeft="32dp"
-                        android:textSize="20dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textColor="#AFAFAF"
-                        android:textSize="20dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="25dp"
-                        android:text="100"
-                        android:id="@+id/age2"
-                        android:textColor="#AFAFAF"
-                        android:textSize="20dp"
-                        />
-                </LinearLayout>
 
-
-
-                <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-                    android:id="@+id/rangeSeekbar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="20dp"
-                    app:min_value="0"
-                    app:max_value="100"
-                    app:corner_radius="10"
-                    android:layout_gravity="center"
-                    app:bar_highlight_color="#00426A"
-                    app:left_thumb_color="#00426A"
-                    app:right_thumb_color="#00426A"
-                    app:left_thumb_color_pressed="#00426A"
-                    app:right_thumb_color_pressed="#00426A"
-                    app:data_type="_integer"
-
-                    />
 
             </LinearLayout>
 

@@ -182,7 +182,9 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.36">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1.56">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -191,8 +193,7 @@
                         android:text="Activity reminder"
                         android:id="@+id/reminder"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true"
-                        android:textSize="20dp" />
+                        android:layout_alignParentStart="true" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -204,20 +205,29 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:orientation="vertical" >
-
-                                <Button
-                                    android:id="@+id/incButton"
-                                    android:layout_width="15dp"
-                                    android:gravity="center"
-                                    android:background="@drawable/up_arrow"
-                                    android:layout_height="10dp"
-                                    android:clickable="true"/>
+                                <RelativeLayout
+                                    android:layout_width="30dp"
+                                    android:layout_height="20dp"
+                                    android:id="@+id/incButton11"
+                                    android:orientation="vertical">
+                                    <Button
+                                        android:id="@+id/incButton"
+                                        android:layout_width="15dp"
+                                        android:gravity="center"
+                                        android:layout_gravity="center_vertical|center_horizontal"
+                                        android:background="@drawable/up_arrow"
+                                        android:layout_height="10dp"
+                                       
+                                        android:layout_centerVertical="true"
+                                        android:layout_centerHorizontal="true" />
+                                </RelativeLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -239,39 +249,55 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="h"
+
                                         android:id="@+id/textView" />
 
                                 </LinearLayout>
 
+                                <LinearLayout
+                                    android:layout_width="30dp"
+                                    android:layout_height="20dp"
+                                    android:id="@+id/decButton11"
+                                    android:orientation="vertical">
 
-
-                                <Button
-                                    android:id="@+id/decButton"
-                                    android:layout_width="15dp"
-                                    android:layout_height="10dp"
-                                    android:gravity="center"
-                                    android:background="@drawable/down_arrow"
-                                    android:clickable="true"/>
+                                    <Button
+                                        android:id="@+id/decButton"
+                                        android:layout_width="15dp"
+                                        android:layout_height="10dp"
+                                        android:gravity="center"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/down_arrow"
+                                       />
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:orientation="vertical" >
-
-                                <Button
-                                    android:id="@+id/incButton1"
-                                    android:layout_width="15dp"
-                                    android:background="@drawable/up_arrow"
-                                    android:layout_height="10dp"
-                                    android:gravity="center"
-                                    android:clickable="true"/>
+                                <RelativeLayout
+                                    android:layout_width="30dp"
+                                    android:layout_height="20dp"
+                                    android:id="@+id/incButton12"
+                                    android:orientation="vertical">
+                                    <Button
+                                        android:id="@+id/incButton1"
+                                        android:layout_width="15dp"
+                                        android:background="@drawable/up_arrow"
+                                        android:layout_height="10dp"
+                                        android:gravity="center"
+                                        android:layout_gravity="center_vertical|center_horizontal"
+                                       
+                                        android:layout_centerVertical="true"
+                                        android:layout_centerHorizontal="true" />
+                                </RelativeLayout>
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -297,16 +323,21 @@
 
                                 </LinearLayout>
 
+                                <LinearLayout
+                                    android:layout_width="30dp"
+                                    android:layout_height="20dp"
+                                    android:id="@+id/decButton12"
+                                    android:orientation="vertical">
 
-
-                                <Button
-                                    android:id="@+id/decButton1"
-                                    android:layout_width="15dp"
-                                    android:layout_height="10dp"
-                                    android:clickable="true"
-                                    android:gravity="center"
-                                    android:background="@drawable/down_arrow"
-                                    />
+                                    <Button
+                                        android:id="@+id/decButton1"
+                                        android:layout_width="15dp"
+                                        android:layout_height="10dp"
+                                       
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/down_arrow"
+                                        />
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

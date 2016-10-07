@@ -118,9 +118,50 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                   >
+                    >
 
+                    <RelativeLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/relativeLayout"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select date"
+                            android:textColor="#AFAFAF"
+                            android:id="@+id/date_textview"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/date_button"
+                            android:layout_marginEnd="10dp" />
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/cal_icon"
+                            android:id="@+id/date_button"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true" />
+                    </RelativeLayout>
                     <Spinner
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/spinner_hour"
+                        android:layout_marginStart="21dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/relativeLayout"
+                        android:layout_centerVertical="true" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hr"
+                        android:textSize="20dp"
+                        android:textColor="#CFCFCF"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/spinner_hour"
+                        android:layout_marginStart="10dp" />
+                </RelativeLayout>
+                   <!-- <Spinner
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:id="@+id/spinner_day"
@@ -164,7 +205,10 @@
                         android:layout_alignParentEnd="true"
                         android:layout_toEndOf="@+id/spinner_year">
                     </Spinner>
-                </RelativeLayout>
+                    -->
+
+
+
 
             </LinearLayout>
 
@@ -203,13 +247,14 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/checkBoxfor_current"
                         android:text="Current"
-                        android:scaleX="0.60"
-                        android:textSize="21dp"
+
+
                         android:layout_marginLeft="8dp"
-                        android:scaleY="0.60"
+
                         android:textColor="#AEAEAE"
                         android:layout_gravity="left"
-                        android:checked="false" />
+                        android:checked="false"
+                        android:clickable="false" />
 
 
                     <CheckBox
@@ -217,10 +262,10 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/checkboxfor_address"
                         android:text="Address"
-                        android:scaleX="0.60"
-                        android:textSize="21dp"
-                        android:layout_marginLeft="6dp"
-                        android:scaleY="0.60"
+
+
+                        android:layout_marginLeft="8dp"
+
                         android:textColor="#AEAEAE"
 
                         android:layout_gravity="left"
@@ -313,7 +358,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bigbox"
                 android:orientation="vertical"
                 android:layout_below="@+id/framelayoutfor_location"
@@ -336,12 +381,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Everyone"
-                    android:scaleX="0.65"
                     android:layout_marginLeft="6dp"
                     android:checked="true"
 
-                    android:textSize="21dp"
-                    android:scaleY="0.65"
                     android:textColor="#AFAFAF"
                     android:id="@+id/checkBoxfor_everyone" />
 
@@ -349,18 +391,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Not everyone"
-                    android:scaleX="0.65"
-                    android:textSize="21dp"
 
+                    android:layout_marginLeft="6dp"
                     android:textColor="#AFAFAF"
-                    android:scaleY="0.65"
                     android:id="@+id/checkBoxfor_noteveryone" />
                     <LinearLayout
                     android:layout_width="fill_parent"
                      android:layout_height="wrap_content"
-                     android:orientation="horizontal"
+                     android:orientation="vertical"
                         android:id="@+id/not_everyone"
                           android:visibility="gone">
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
                         <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
@@ -399,77 +443,77 @@
                             android:scaleY="0.65"
                             android:id="@+id/checkBoxformen"
                             />
+                       </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_height="wrap_content"
+                                android:text="Age"
+                                android:id="@+id/textviewforage"
+                                android:textColor="#AFAFAF"
+                                android:layout_marginLeft="32dp"
+                                android:textSize="16dp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:id="@+id/age1"
+                                android:textColor="#AFAFAF"
+                                android:layout_marginLeft="32dp"
+                                android:textSize="16dp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textColor="#AFAFAF"
+                                android:textSize="16dp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_height="wrap_content"
+                                android:text="100"
+                                android:id="@+id/age2"
+                                android:textColor="#AFAFAF"
+                                android:textSize="16dp"
+                                />
+                        </LinearLayout>
 
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/rangeSeekbar"
+                            android:layout_width="311dp"
+                            android:layout_height="wrap_content"
+                            app:min_value="0"
+                            app:max_value="100"
+                            app:corner_radius="10"
+                            android:enabled="false"
+                            android:layout_gravity="center"
+                            app:bar_highlight_color="#00426A"
+                            app:left_thumb_color="#00426A"
+                            app:right_thumb_color="#00426A"
+                            app:left_thumb_color_pressed="#00426A"
+                            app:right_thumb_color_pressed="#00426A"
+                            app:data_type="_integer"
+                            android:layout_marginBottom="15dp"
+                            />
                          </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="wrap_content"
-                        android:text="Age"
-                        android:id="@+id/textviewforage"
-                        android:textColor="#AFAFAF"
-                        android:layout_marginLeft="32dp"
-                        android:textSize="16dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:id="@+id/age1"
-                        android:textColor="#AFAFAF"
-                        android:layout_marginLeft="32dp"
-                        android:textSize="16dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textColor="#AFAFAF"
-                        android:textSize="16dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_height="wrap_content"
-                        android:text="100"
-                        android:id="@+id/age2"
-                        android:textColor="#AFAFAF"
-                        android:textSize="16dp"
-                        />
-                </LinearLayout>
 
-
-
-                <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-                    android:id="@+id/rangeSeekbar"
-                    android:layout_width="311dp"
-                    android:layout_height="wrap_content"
-                    app:min_value="0"
-                    app:max_value="100"
-                    app:corner_radius="10"
-                   android:layout_gravity="center"
-                    app:bar_highlight_color="#00426A"
-                    app:left_thumb_color="#00426A"
-                    app:right_thumb_color="#00426A"
-                    app:left_thumb_color_pressed="#00426A"
-                    app:right_thumb_color_pressed="#00426A"
-                    app:data_type="_integer"
-
-                    />
 
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="75dp"
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/frameLayoutfor_availble"
                 android:layout_alignStart="@+id/frameLayoutfor_availble"
@@ -516,7 +560,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="75dp"
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/linearLayoutforparticipationcost"
                 android:layout_alignStart="@+id/linearLayoutforparticipationcost"
@@ -533,7 +577,7 @@
                     android:text="Participants number limit"/>
 
                 <EditText
-                    android:layout_width="70dp"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_style"
                     android:hint="-"
@@ -542,7 +586,7 @@
                     android:id="@+id/numbrlimitbtn"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_gravity="center_horizontal|center"/>
 
             </LinearLayout>

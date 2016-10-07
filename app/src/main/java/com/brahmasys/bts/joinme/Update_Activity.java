@@ -17,6 +17,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -39,6 +40,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,7 @@ import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -63,6 +66,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,25 +75,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 public class Update_Activity extends Fragment {
-    private static final int PICK_IMAGE_REQUEST = 3;
-    private static final int RESULT_OK = 3;
-
+    TextView dateTextView;
+    ImageView dateButton;
+    RelativeLayout search_layout;
     CircularImageView firstimage, secondimage, thirdimage;
-    EditText edittextactivityname, enterdiscription, edit_cost, edit_limit;
+    EditText edittextactivityname, enterdiscription, edit_cost, edit_limit,current_address;
     Button update_activity, delet_activity;
-    FrameLayout address_search;
-    Spinner spinnericon, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour, currency_symbol;
+    Spinner spinnericon,spinnerforhour, currency_symbol;
     LinearLayout not_everyone;
     CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
-    TextView age1, age2;
+    private DelayAutoCompleteTextView geo_autocomplete;
+    TextView age1, age2,text_search_address;
     ProgressDialog progressDialog;
-    String[] currency = new String[]{"$", "€"};
+    String[] currency = new String[]{"€", "$"};
     String year = "0", month = "0", day = "0", hour = "0", minute;
     String availability;
     ImageView shareicon;
     ArrayList<String> data;
+    long unixTime=0;
     int image;
     String gender = "";
     String duration = "0", icon = "0", title, address, age_start, age_end, cost = "0", limit = "0", description;
@@ -102,9 +107,7 @@ public class Update_Activity extends Fragment {
     private static final String LAT_LNG = "lat_lng";
     SharedPreferences user_id, activity_id, lat_lng;
     SharedPreferences.Editor edit_userid, edit_activity_id, edit_lat_lng;
-
     private Integer THRESHOLD = 2;
-    private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;
     private String selectedImagePath = "", selectedImagePath2 = "", selectedImagePath3 = "";
     public static final int PICK_IMAGE1 = 1;
@@ -115,19 +118,15 @@ public class Update_Activity extends Fragment {
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
-    // JSONObject obj;
-    String update_name;
     List<String> allurl;
     FragmentManager fragmentManager;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-    String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.update_activity, container, false);
         GettingActivityDetails();
-
         user_id = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
@@ -136,15 +135,15 @@ public class Update_Activity extends Fragment {
         edit_lat_lng = lat_lng.edit();
         latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
         longitude2 = Double.parseDouble(lat_lng.getString("lng", "0.0"));
+        search_layout  = (RelativeLayout) v.findViewById(R.id.search_layout);
+        current_address = (EditText)v.findViewById(R.id.current_address);
         spinnericon = (Spinner) v.findViewById(R.id.spinnericon);
-        spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
-        spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
-        spinnerforyear = (Spinner) v.findViewById(R.id.spinner_year);
+        dateTextView = (TextView)v.findViewById(R.id.date_textview);
+        dateButton = (ImageView)v.findViewById(R.id.date_button);
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
-        address_search = (FrameLayout) v.findViewById(R.id.address_search);
-        //   edittextforaddress = (EditText) v.findViewById(R.id.textfor_address);
+        text_search_address = (TextView)v.findViewById(R.id.search_address);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
         edittextactivityname = (EditText) v.findViewById(R.id.edittextactivityname);
         edit_cost = (EditText) v.findViewById(R.id.forcost);
@@ -169,7 +168,30 @@ public class Update_Activity extends Fragment {
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
 
         // user details which user wants to update//
+        search_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Address_search_Dialog();
+            }
+        });
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
 
+                DatePickerDialog dpd = DatePickerDialog.newInstance( new DateListener(), now.get(Calendar.YEAR), now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH) );
+                Calendar cal = Calendar.getInstance();
+                cal.get(Calendar.YEAR);
+                cal.get(Calendar.MONTH);
+                cal.get(Calendar.DAY_OF_MONTH);
+                dpd.setMinDate(cal);
+                dpd.setAccentColor(Color.parseColor("#9C27B0"));
+                dpd.setTitle("Date Picker");
+                dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+
+            }
+        });
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/Activity.svc/GetActivityIconList/" + user_id.getString("userid", "null"),
@@ -223,7 +245,7 @@ public class Update_Activity extends Fragment {
                         icon = allurl.get(i);
                     }
                 }
-                //  Toast.makeText(getActivity(),spinnericon.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+
             }
 
             @Override
@@ -255,74 +277,6 @@ public class Update_Activity extends Fragment {
             latitude = latitude2;
             longitude = longitude2;
         }
-
-        geo_autocomplete_clear = (ImageView) v.findViewById(R.id.geo_autocomplete_clear);
-        geo_autocomplete = (DelayAutoCompleteTextView) v.findViewById(R.id.geo_autocomplete);
-        geo_autocomplete.setThreshold(THRESHOLD);
-        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(getContext())); // 'this' is Activity instance
-
-        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
-                geo_autocomplete.setText(result.getAddress());
-                Geocoder coder = new Geocoder(getActivity());
-                try {
-                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 1);
-                    for (Address add : adresses) {
-                        //Controls to ensure it is right address such as country etc.
-                        longitude1 = add.getLongitude();
-                        latitude1 = add.getLatitude();
-                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                double earthRadius = 3958.75;
-                double dLat = Math.toRadians(latitude - latitude1);
-                double dLng = Math.toRadians(longitude - longitude1);
-                double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                        Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude)) *
-                                Math.sin(dLng / 2) * Math.sin(dLng / 2);
-                double c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                double dist = earthRadius * c1;
-                if (dist > 100) {
-                    Toast.makeText(getActivity(), "Address is higher than 100 km from your current location", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        geo_autocomplete.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
-                } else {
-                    geo_autocomplete_clear.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                geo_autocomplete.setText("");
-            }
-        });
-
         /******************** CheckBox Functionality Start*******************/
         checkboxcurrent.setChecked(true);
 
@@ -331,8 +285,11 @@ public class Update_Activity extends Fragment {
             public void onClick(View v) {
                 if (v == checkboxcurrent) {
                     checkBoxaddress.setChecked(false);
-                    //edittextforaddress.setVisibility(View.GONE);
-                    address_search.setVisibility(View.GONE);
+                  //address_search.setVisibility(View.GONE);
+                    current_address.setVisibility(View.VISIBLE);
+                    search_layout.setVisibility(View.GONE);
+                    checkboxcurrent.setClickable(false);
+                    checkBoxaddress.setClickable(true);
                 }
 
             }
@@ -343,8 +300,10 @@ public class Update_Activity extends Fragment {
             public void onClick(View v) {
                 if (v == checkBoxaddress) {
                     checkboxcurrent.setChecked(false);
-                    //edittextforaddress.setVisibility(View.VISIBLE);
-                    address_search.setVisibility(View.VISIBLE);
+                    search_layout.setVisibility(View.VISIBLE);
+                    current_address.setVisibility(View.GONE);
+                    checkboxcurrent.setClickable(true);
+                    checkBoxaddress.setClickable(false);
                 }
 
             }
@@ -356,7 +315,8 @@ public class Update_Activity extends Fragment {
                 if (v == checkBoxforeveryone) {
                     checkBoxnotforeveryone.setChecked(false);
                     not_everyone.setVisibility(View.GONE);
-
+                    checkBoxforeveryone.setClickable(false);
+                    checkBoxnotforeveryone.setClickable(true);
 
                 }
 
@@ -369,6 +329,8 @@ public class Update_Activity extends Fragment {
                 if (v == checkBoxnotforeveryone) {
                     checkBoxforeveryone.setChecked(false);
                     not_everyone.setVisibility(View.VISIBLE);
+                    checkBoxforeveryone.setClickable(true);
+                    checkBoxnotforeveryone.setClickable(false);
                 }
 
             }
@@ -380,6 +342,8 @@ public class Update_Activity extends Fragment {
             public void onClick(View v) {
                 if (v == checkBoxforwomen) {
                     checkBoxformen.setChecked(false);
+                    checkBoxforwomen.setClickable(false);
+                    checkBoxformen.setClickable(true);
 
                 }
 
@@ -390,6 +354,8 @@ public class Update_Activity extends Fragment {
             public void onClick(View v) {
                 if (v == checkBoxformen) {
                     checkBoxforwomen.setChecked(false);
+                    checkBoxforwomen.setClickable(true);
+                    checkBoxformen.setClickable(false);
 
                 }
 
@@ -479,198 +445,24 @@ public class Update_Activity extends Fragment {
         /*************************** Spinner Functionality Start ***********************/
         List year_list = new ArrayList<Integer>();
         year_list.add(0, " ");
-        for (int i = 2015; i <= 2020; i++) {
-            if (current_year <= i) {
+        for (int i = 2015; i <= 2020; i++)
+        {
+            if (current_year<=i) {
                 year_list.add(Integer.toString(i));
             }
         }
-        ArrayAdapter<Integer> spinnerArrayAdapter1 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, year_list);
-        spinnerArrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerforyear.setAdapter(spinnerArrayAdapter1);
 
+        List hours = new ArrayList<Integer>();
+        hours.add(0, "");
+        for (int i = 0; i < 23; i++) {
+            hours.add(Integer.toString(i));
 
-        spinnerforyear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        }
+        ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+        spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrayAdapter4.notifyDataSetChanged();
+        spinnerforhour.setAdapter(spinnerArrayAdapter4);
 
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
-                                       long arg3) {
-                // TODO Auto-generated method stub
-                String sp1 = String.valueOf(spinnerforyear.getSelectedItem());
-                if (sp1.equals(String.valueOf(current_year))) {
-                    List<String> wordList = new ArrayList<String>();
-                    wordList.add(0, " ");
-                    for (int i = 0; i < 12; i++) {
-
-                        if (current_month - 1 <= i) {
-                            wordList.add(months[i]);
-                        }
-                    }
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, wordList);
-                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    adapter1.notifyDataSetChanged();
-                    spinnerformonth.setAdapter(adapter1);
-
-                } else {
-                    List<String> wordList = new ArrayList<String>();
-                    wordList.add(0, " ");
-                    for (int i = 0; i < 12; i++) {
-                        wordList.add(months[i]);
-                    }
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, wordList);
-                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    adapter1.notifyDataSetChanged();
-                    spinnerformonth.setAdapter(adapter1);
-
-                }
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                List<String> wordList = new ArrayList<String>();
-                wordList.add(0, " ");
-                // TODO Auto-generated method stub
-                wordList.add("");
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, wordList);
-                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                adapter1.notifyDataSetChanged();
-                spinnerformonth.setAdapter(adapter1);
-
-            }
-        });
-
-
-        spinnerformonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
-                                       long arg3) {
-                // TODO Auto-generated method stub
-                String sp1 = String.valueOf(spinnerformonth.getSelectedItem());
-                int month_position = 0;
-                if (sp1.equals("Jan")) {
-                    month_position = 01;
-                } else if (sp1.equals("Feb")) {
-                    month_position = 02;
-                } else if (sp1.equals("Mar")) {
-                    month_position = 03;
-                } else if (sp1.equals("Apr")) {
-                    month_position = 04;
-                } else if (sp1.equals("May")) {
-                    month_position = 05;
-                } else if (sp1.equals("Jun")) {
-                    month_position = 06;
-                } else if (sp1.equals("Jul")) {
-                    month_position = 07;
-                } else if (sp1.equals("Aug")) {
-                    month_position = 8;
-                } else if (sp1.equals("Sept")) {
-                    month_position = 9;
-                } else if (sp1.equals("Oct")) {
-                    month_position = 10;
-                } else if (sp1.equals("Nov")) {
-                    month_position = 11;
-                } else if (sp1.equals("Dec")) {
-                    month_position = 12;
-                }
-
-
-                if (month_position == current_month) {
-                    List day_list = new ArrayList<Integer>();
-                    day_list.add(0, " ");
-                    for (int i = 1; i < 31; i++) {
-
-                        if (current_day <= i) {
-                            day_list.add(Integer.toString(i));
-                        }
-                    }
-                    ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
-                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerArrayAdapter.notifyDataSetChanged();
-                    spinnerforday.setAdapter(spinnerArrayAdapter);
-
-                } else {
-                    List day_list = new ArrayList<Integer>();
-                    day_list.add(0, " ");
-                    for (int i = 1; i < 31; i++) {
-                        day_list.add(Integer.toString(i));
-                    }
-                    ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
-                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerArrayAdapter.notifyDataSetChanged();
-                    spinnerforday.setAdapter(spinnerArrayAdapter);
-
-                }
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                List day_list = new ArrayList<Integer>();
-                day_list.add(0, " ");
-                // TODO Auto-generated method stub
-                ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, day_list);
-                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerArrayAdapter.notifyDataSetChanged();
-                spinnerforday.setAdapter(spinnerArrayAdapter);
-
-
-            }
-        });
-
-
-        spinnerforday.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int pos,
-                                       long arg3) {
-                // TODO Auto-generated method stub
-                String day_position = String.valueOf(spinnerforday.getSelectedItem());
-
-                if (day_position.equals(String.valueOf(current_day))) {
-                    List hours = new ArrayList<Integer>();
-                    hours.add(0, " ");
-                    for (int i = 0; i < 23; i++) {
-
-                        if (current_hour <= i) {
-                            hours.add(Integer.toString(i));
-                        }
-                    }
-                    ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
-                    spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerArrayAdapter4.notifyDataSetChanged();
-                    spinnerforhour.setAdapter(spinnerArrayAdapter4);
-
-                } else {
-                    List hours = new ArrayList<Integer>();
-                    hours.add(0, " ");
-                    for (int i = 0; i < 23; i++) {
-                        hours.add(Integer.toString(i));
-                    }
-                    ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
-                    spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerArrayAdapter4.notifyDataSetChanged();
-                    spinnerforhour.setAdapter(spinnerArrayAdapter4);
-
-                }
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                List hours = new ArrayList<Integer>();
-                hours.add(0, " ");
-                // TODO Auto-generated method stub
-                ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
-                spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerArrayAdapter4.notifyDataSetChanged();
-                spinnerforhour.setAdapter(spinnerArrayAdapter4);
-
-            }
-        });
 
 
         ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
@@ -684,190 +476,34 @@ public class Update_Activity extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (edittextactivityname.getText().toString().length() >= 2) {
-                    if (enterdiscription.getText().toString().length() >= 10) {
-//
-                        progressDialog = ProgressDialog.show(getActivity(), null, null, true);
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setCancelable(false);
-                        progressDialog.setContentView(R.layout.custom_progress);
-                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                        int int_month = 0;
-                        year = (String) spinnerforyear.getSelectedItem();
-                        month = (String) spinnerformonth.getSelectedItem();
-                        day = (String) spinnerforday.getSelectedItem();
-                        hour = (String) spinnerforhour.getSelectedItem();
-
-                        if (month.equals("Jan")) {
-                            int_month = 1;
-                        } else if (month.equals("Feb")) {
-                            int_month = 2;
-                        } else if (month.equals("Mar")) {
-                            int_month = 3;
-                        } else if (month.equals("Apr")) {
-                            int_month = 4;
-                        } else if (month.equals("May")) {
-                            int_month = 5;
-                        } else if (month.equals("Jun")) {
-                            int_month = 6;
-                        } else if (month.equals("Jul")) {
-                            int_month = 7;
-                        } else if (month.equals("Aug")) {
-                            int_month = 8;
-                        } else if (month.equals("Sept")) {
-                            int_month = 9;
-                        } else if (month.equals("Oct")) {
-                            int_month = 10;
-                        } else if (month.equals("Nov")) {
-                            int_month = 11;
-                        } else if (month.equals("Dec")) {
-                            int_month = 12;
-                        }
-
-
-                        /*************** Time Stamp Start********************/
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.YEAR, Integer.parseInt(year));
-                        c.set(Calendar.MONTH, int_month);
-                        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-                        c.set(Calendar.HOUR, Integer.parseInt(hour));
-                        c.set(Calendar.MINUTE, 0);
-                        c.set(Calendar.SECOND, 0);
-                        c.set(Calendar.MILLISECOND, 0);
-                        long result = (c.getTimeInMillis() / 1000L);
-                        /********************* Time Stamp End ***************/
-                        /********************* TimeZone Start ***************/
-                        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
-                                Locale.getDefault());
-                        Date currentLocalTime = calendar.getTime();
-                        DateFormat date = new SimpleDateFormat("Z");
-                        String localTime = date.format(currentLocalTime);
-
-                        String sign = localTime.substring(0, 1);
-                        String hr = localTime.substring(1, 3);
-                        String min = localTime.substring(3, 5);
-
-                        int res = (Integer.parseInt(hr) * 60) + Integer.parseInt(min);
-                        if (sign.equals("+")) {
-                            res = -res;
-                        } else {
-                            res = +res;
-                        }
-                        /********************* TimeZone End ***************/
-
-                        if (checkBoxforeveryone.isChecked()) {
-                            availability = "public";
-                            gender = "";
-
-                        } else {
-                            availability = "private";
-                            if (checkBoxformen.isChecked()) {
-                                gender = "male";
-                            } else {
-                                gender = "female";
-                            }
-                        }
-                        if (checkboxcurrent.isChecked()) {
-
-                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-
-                            List<Address> addresses = null;
-                            try {
-                                addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            complete_address = addresses.get(0).getAddressLine(0);
-                            city = addresses.get(0).getLocality();
-                            state = addresses.get(0).getAdminArea();
-                            zip = addresses.get(0).getPostalCode();
-                            country = addresses.get(0).getCountryName();
-                            total_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
-                        } else {
-
-                            total_address = geo_autocomplete.getText().toString();
-
-                        }
-
-                        title = edittextactivityname.getText().toString();
-                        description = enterdiscription.getText().toString();
-                        cost = edit_cost.getText().toString();
-                        limit = edit_limit.getText().toString();
-                        age_start = age1.getText().toString();
-                        age_end = age2.getText().toString();
-
-                        Log.w("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + result + "\n" + title + "\n" + total_address + "\n" + latitude
-                                + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
-
-
-                        if (android.os.Build.VERSION.SDK_INT > 9) {
-                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                            StrictMode.setThreadPolicy(policy);
-                        }
-
-                        JSONObject jsonObjSend = new JSONObject();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        // do the thing that takes a long time
                         try {
-                            // Add key/value pairs
-                            jsonObjSend.put("activity_availability", availability);//nari1
-                            jsonObjSend.put("activity_description", description); //2
-                            jsonObjSend.put("activity_duration", duration);       //3
-                            jsonObjSend.put("activity_icon", icon);               //4
-                            jsonObjSend.put("activity_time", result);              //5
-                            jsonObjSend.put("activityid", activity_id.getString("activity_id", "00000"));                 //6
-                            jsonObjSend.put("activity_title", title);              //7
-                            jsonObjSend.put("address", total_address);             //8
-                            jsonObjSend.put("lat", latitude);                      //9
-                            jsonObjSend.put("lon", longitude);                     //10
-                            jsonObjSend.put("participant_age_end", age_end);       //11
-                            jsonObjSend.put("participant_age_start", age_start);   //12
-                            jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
-                            jsonObjSend.put("participant_gender", gender);         //14
-                            jsonObjSend.put("participant_limit", limit);           //15
-                            jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
-                            //  hideDialog();
-                            Log.i(TAG, jsonObjSend.toString(16));
-
-                        } catch (JSONException e) {
+                            UpdateActivity();
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        progressDialog.dismiss();
-                        JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
 
-
-                        JSONObject json = null;
-                        try {
-                            json = new JSONObject(String.valueOf(jsonObjRecv));
-                            String message = json.getString("message");
-                            if (message.equals("Added Successfully")) {
-
-                                fragmentManager = getFragmentManager();
-                                doFileUpload();
-                                Mygroup mygroup = new Mygroup();
-                                fragmentManager.beginTransaction()
-                                        .replace(R.id.flContent, mygroup)
-                                        .addToBackStack(null)
-                                        .commit();
-
-                                //progressDialog.dismiss();
-
-                                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        progressDialog.dismiss();
-
-                    } else {
-                        Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
+                        });
+                        Looper.loop();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
-                }
+                }).start();
+
             }
         });
 
@@ -942,10 +578,160 @@ public class Update_Activity extends Fragment {
 
         return v;
 
-
-
     }
 
+    public void UpdateActivity() throws ParseException {
+        if (edittextactivityname.getText().toString().length() >= 2) {
+            if (enterdiscription.getText().toString().length() >= 10) {
+//
+                progressDialog = ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                hour = (String) spinnerforhour.getSelectedItem();
+
+
+                /*************** Time Stamp Start********************/
+                String dateString = dateTextView.getText().toString()+" "+hour+":00"+":00"+" "+"GMT";
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
+
+                Date date1 = dateFormat.parse(dateString );
+                unixTime = (long) date1.getTime()/1000;
+                Log.e("Timestamp527", String.valueOf(unixTime));
+
+                /********************* Time Stamp End ***************/
+                /********************* TimeZone Start ***************/
+                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
+                        Locale.getDefault());
+                Date currentLocalTime = calendar.getTime();
+                DateFormat date = new SimpleDateFormat("Z");
+                String localTime = date.format(currentLocalTime);
+
+                String sign = localTime.substring(0, 1);
+                String hr = localTime.substring(1, 3);
+                String min = localTime.substring(3, 5);
+
+                int res = (Integer.parseInt(hr) * 60) + Integer.parseInt(min);
+                if (sign.equals("+")) {
+                    res = -res;
+                } else {
+                    res = +res;
+                }
+                /********************* TimeZone End ***************/
+
+                if (checkBoxforeveryone.isChecked()) {
+                    availability = "public";
+                    gender = "";
+
+                } else {
+                    availability = "private";
+                    if (checkBoxformen.isChecked()) {
+                        gender = "male";
+                    } else {
+                        gender = "female";
+                    }
+                }
+                if (checkboxcurrent.isChecked()) {
+
+                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
+                    List<Address> addresses = null;
+                    try {
+                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    complete_address = addresses.get(0).getAddressLine(0);
+                    city = addresses.get(0).getLocality();
+                    state = addresses.get(0).getAdminArea();
+                    zip = addresses.get(0).getPostalCode();
+                    country = addresses.get(0).getCountryName();
+                    total_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
+                } else {
+
+                    total_address = geo_autocomplete.getText().toString();
+
+                }
+
+                title = edittextactivityname.getText().toString();
+                description = enterdiscription.getText().toString();
+                cost = edit_cost.getText().toString();
+                limit = edit_limit.getText().toString();
+                age_start = age1.getText().toString();
+                age_end = age2.getText().toString();
+
+                Log.w("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + unixTime + "\n" + title + "\n" + total_address + "\n" + latitude
+                        + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
+
+
+                if (android.os.Build.VERSION.SDK_INT > 9) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
+
+                JSONObject jsonObjSend = new JSONObject();
+                try {
+                    // Add key/value pairs
+                    jsonObjSend.put("activity_availability", availability);//nari1
+                    jsonObjSend.put("activity_description", description); //2
+                    jsonObjSend.put("activity_duration", duration);       //3
+                    jsonObjSend.put("activity_icon", icon);               //4
+                    jsonObjSend.put("activity_time", unixTime);              //5
+                    jsonObjSend.put("activityid", activity_id.getString("activity_id", "00000"));                 //6
+                    jsonObjSend.put("activity_title", title);              //7
+                    jsonObjSend.put("address", total_address);             //8
+                    jsonObjSend.put("lat", latitude);                      //9
+                    jsonObjSend.put("lon", longitude);                     //10
+                    jsonObjSend.put("participant_age_end", age_end);       //11
+                    jsonObjSend.put("participant_age_start", age_start);   //12
+                    jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
+                    jsonObjSend.put("participant_gender", gender);         //14
+                    jsonObjSend.put("participant_limit", limit);           //15
+                    jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
+                    //  hideDialog();
+                    Log.i(TAG, jsonObjSend.toString(16));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+                JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
+
+
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(String.valueOf(jsonObjRecv));
+                    String message = json.getString("message");
+                    if (message.equals("Updated Successfully")) {
+
+                        fragmentManager = getFragmentManager();
+                        doFileUpload();
+                        Mygroup mygroup = new Mygroup();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.flContent, mygroup)
+                                .addToBackStack(null)
+                                .commit();
+
+                      Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+
+            } else {
+                Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
+        }
+    }
 
     public  void GettingActivityDetails()
     {
@@ -973,11 +759,6 @@ public class Update_Activity extends Fragment {
         }
 
     }
-
-private void  userdetail(String responce){
-
-
-}
 
 
     private void setListViewAdapter() {
@@ -1015,61 +796,150 @@ private void  userdetail(String responce){
         }
     }
 
+    public void Address_search_Dialog() {
 
+        final Dialog emailDialog = new Dialog(getActivity(), android.R.style.Theme_DeviceDefault);
+        emailDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-    private void doFileUpload(){
+        emailDialog.setCancelable(true);
+        emailDialog.setContentView(R.layout.address_search_dialog);
 
+        Button btnAccept = (Button)emailDialog.findViewById(R.id.done);
+        Button cancel  = (Button) emailDialog.findViewById(R.id.cancel);
 
-        String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
-        for (int i=0;i<3;i++) {
-            String urlString = " http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityPic/"+activity_id.getString("activity_id","") + owerid;
-            try {
-                org.apache.http.client.HttpClient client = new DefaultHttpClient();
-                HttpPost post = new HttpPost(urlString);
+        geo_autocomplete_clear = (ImageView) emailDialog.findViewById(R.id.geo_autocomplete_clear);
 
-                MultipartEntity reqEntity = new MultipartEntity();
-                reqEntity.addPart("uploadedfile1", new FileBody(new File(paths[i])));
-
-
-                post.setEntity(reqEntity);
-                HttpResponse response = client.execute(post);
-                resEntity = response.getEntity();
-                final String response_str = EntityUtils.toString(resEntity);
-                if (resEntity != null) {
-                    Log.i("RESPONSE", response_str);
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            try {
-
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+        geo_autocomplete = (DelayAutoCompleteTextView) emailDialog.findViewById(R.id.geo_autocomplete);
+        geo_autocomplete.setThreshold(THRESHOLD);
+        geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(getContext())); // 'this' is Activity instance
+        geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
+                geo_autocomplete.setText(result.getAddress());
+                Geocoder coder = new Geocoder(getActivity());
+                try {
+                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 0);
+                    for (Address add : adresses) {
+                        //Controls to ensure it is right address such as country etc.
+                        longitude1 = add.getLongitude();
+                        latitude1 = add.getLatitude();
+                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception ex) {
-                Log.e("Debug", "error: " + ex.getMessage(), ex);
-            }
-        }
 
+
+                double earthRadius = 3958.75;
+                double dLat = Math.toRadians(latitude - latitude1);
+                double dLng = Math.toRadians(longitude - longitude1);
+                double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(Math.toRadians(latitude1)) * Math.cos(Math.toRadians(latitude)) *
+                                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                double c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                double dist = earthRadius * c1;
+                if (dist > 100) {
+                    Toast.makeText(getActivity(), "Address is higher than 100 km from your current location", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        geo_autocomplete.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
+                } else {
+                    geo_autocomplete_clear.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        geo_autocomplete_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                geo_autocomplete.setText("");
+            }
+        });
+
+        // Set on click lister for accept button
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!geo_autocomplete.getText().toString().equals(""))
+                {
+                    emailDialog.dismiss();
+                    text_search_address.setText(geo_autocomplete.getText().toString());
+                }
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emailDialog.dismiss();
+            }
+        });
+        //now that the dialog is set up, it's time to show it
+        emailDialog.show();
     }
 
 
+private void doFileUpload(){
 
+    String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
+    for (int i=0;i<3;i++) {
+        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id.getString("activity_id","");
+        try {
+            org.apache.http.client.HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(urlString);
+            MultipartEntity reqEntity = new MultipartEntity();
+            reqEntity.addPart("uploadedfile1", new FileBody(new File(paths[i])));
+            post.setEntity(reqEntity);
+            HttpResponse response = client.execute(post);
+            resEntity = response.getEntity();
+            final String response_str = EntityUtils.toString(resEntity);
+            if (resEntity != null) {
+                Log.i("RESPONSE", response_str);
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        try {
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        } catch (Exception ex) {
+            Log.e("Debug", "error: " + ex.getMessage(), ex);
+        }
+    }
+
+}
 
     @Override
     public void onResume() {
         super.onResume();
-
-
-
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
@@ -1080,6 +950,13 @@ private void  userdetail(String responce){
                 return false;
             }
         });
+    }
+    public class DateListener implements DatePickerDialog.OnDateSetListener {
+        @Override
+        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+            String date = dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+            dateTextView.setText(date);
+        }
     }
 }
 

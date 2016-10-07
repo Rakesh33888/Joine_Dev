@@ -48,7 +48,7 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="23" />
     <application
-
+        android:name=".MultiDexFile"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"

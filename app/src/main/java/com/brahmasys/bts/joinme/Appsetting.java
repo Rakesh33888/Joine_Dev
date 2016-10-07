@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,11 +50,12 @@ public class Appsetting extends Fragment{
     int max_range = 23;
     int min_range = 0;
     int initialvalues = 0;
-    int max_range1 = 60;
+    int max_range1 = 45;
     int min_range1= 0;
     int initialvalues1 = 0;
-    private Button incButton,incButton1;
-    private Button decButton,decButton1;
+
+    RelativeLayout incButton11,incButton12;
+    LinearLayout decButton11,decButton12;
     private TextView hours,mins;
    // ProgressDialog pd;
     Button btnbck,btnreport,btndelt;
@@ -142,13 +144,14 @@ public class Appsetting extends Fragment{
         shareicon.setVisibility(View.GONE);
 
 
-        incButton = (Button) v.findViewById(R.id.incButton);
-        decButton = (Button) v.findViewById(R.id.decButton);
+        incButton11 = (RelativeLayout) v.findViewById(R.id.incButton11);
+        incButton12 = (RelativeLayout) v.findViewById(R.id.incButton12);
+        decButton11 = (LinearLayout) v.findViewById(R.id.decButton11);
+        decButton12 = (LinearLayout) v.findViewById(R.id.decButton12);
         hours = (TextView) v.findViewById(R.id.numberEditText);
-        incButton1 = (Button) v.findViewById(R.id.incButton1);
-        decButton1 = (Button) v.findViewById(R.id.decButton1);
         mins = (TextView) v.findViewById(R.id.numberEditText1);
         switchNear = (SwitchButton)v.findViewById(R.id.near);
+
 
         km = (RadioButton) v.findViewById(R.id.km);
         backlayoutappsetting= (LinearLayout) v.findViewById(R.id.backlayoutappsetting);
@@ -195,10 +198,10 @@ public class Appsetting extends Fragment{
 
             }
         });
-        incButton.setOnClickListener(new View.OnClickListener() {
+        incButton11.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
+                initialvalues=Integer.parseInt(hours.getText().toString());
                 if (initialvalues >= min_range && initialvalues <= max_range) initialvalues++;
                 if (initialvalues > max_range)
                     initialvalues = min_range;
@@ -207,9 +210,10 @@ public class Appsetting extends Fragment{
             }
         });
 
-        decButton.setOnClickListener(new View.OnClickListener() {
+        decButton11.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                initialvalues=Integer.parseInt(hours.getText().toString());
                 if (initialvalues >= min_range && initialvalues <= max_range)
                     initialvalues--;
 
@@ -221,11 +225,12 @@ public class Appsetting extends Fragment{
         });
 
 
-        incButton1.setOnClickListener(new View.OnClickListener() {
+        incButton12.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
-                if (initialvalues1 >= min_range1 && initialvalues1 <= max_range1) initialvalues1++;
+                initialvalues1=Integer.parseInt(mins.getText().toString());
+                if (initialvalues1 >= min_range1 && initialvalues1 <= max_range1)
+                    initialvalues1=initialvalues1+15;
                 if (initialvalues1 > max_range1)
                     initialvalues1 = min_range1;
                 mins.setText("" + initialvalues1);
@@ -233,11 +238,13 @@ public class Appsetting extends Fragment{
             }
         });
 
-        decButton1.setOnClickListener(new View.OnClickListener() {
+        decButton12.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+
+                initialvalues1=Integer.parseInt(mins.getText().toString());
                 if (initialvalues1 >= min_range1 && initialvalues1 <= max_range1)
-                    initialvalues1--;
+                    initialvalues1=initialvalues1-15;
 
                 if (initialvalues1 < min_range1)
                     initialvalues1 = max_range1;
