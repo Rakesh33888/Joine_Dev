@@ -36,7 +36,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 
 public class Single_group_Message extends Fragment    {
@@ -251,9 +254,13 @@ public class Single_group_Message extends Fragment    {
                                             .centerCrop().into(createrimage);
 
                                     tvActivityName.setText(txtActivityName);
-                                    long timestampString =  Long.parseLong(String.valueOf(txtActivityTime));
-                                    String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
-                                            format(new java.util.Date(timestampString * 1000));
+
+                                    long unixSeconds = Long.parseLong(String.valueOf(txtActivityTime));
+                                    Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                    String value = sdf.format(date2);
+
 
                                     tvActivityTime.setText(String.valueOf(value));
 

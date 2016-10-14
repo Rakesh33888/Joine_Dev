@@ -61,7 +61,7 @@
                 android:drawSelectorOnTop="true"
                 android:numColumns="2"
                 android:adjustViewBounds="true"
-                android:verticalSpacing="0dip"
+                android:verticalSpacing="10dip"
                 android:stretchMode="columnWidth"
                 android:focusable="true"
                 android:clickable="true"/>

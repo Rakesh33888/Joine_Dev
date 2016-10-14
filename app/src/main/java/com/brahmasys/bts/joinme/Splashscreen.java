@@ -103,6 +103,7 @@ public class Splashscreen extends Activity{
         dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         dialog.setContentView(R.layout.connectivity_dialog);
+        dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(
                 new ColorDrawable(Color.TRANSPARENT));
         dialog.show();

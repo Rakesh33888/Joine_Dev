@@ -37,9 +37,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class Screen17 extends android.support.v4.app.Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener  {
     FrameLayout frameLayoutbck,frameLayoutacity;
@@ -297,9 +300,14 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                         .centerCrop()
                                         .into(createrimage);
 
-                                long timestampString = Long.parseLong(time);
-                                String value = new java.text.SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
-                                        format(new java.util.Date(timestampString * 1000));
+
+                                long unixSeconds = Long.parseLong(time);
+                                Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                String value = sdf.format(date2);
+
+
 
                                 timetextview.setText(value);
                                 reviews.setText(review + " reviews");

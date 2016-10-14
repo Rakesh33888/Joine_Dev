@@ -1,12 +1,16 @@
 package com.brahmasys.bts.joinme;
 
+import android.*;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +19,7 @@ import android.os.Looper;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.multidex.MultiDex;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +29,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -56,10 +62,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import link.fls.swipestack.SwipeStack;
 
@@ -79,9 +87,9 @@ public class Screen16 extends AppCompatActivity implements
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     public Toolbar toolbar;
     ActionBar actionBar;
-    ImageView navimage, logo, back_nav;
+    ImageView navimage, logo, back_nav,swipestack_image;
 
-    TextView navtextview;
+    TextView navtextview,join,skip;
     public ImageView shareicon, msg;
     ImageButton reloadactivity;
     LinearLayout backlayoutdrawer;
@@ -109,6 +117,7 @@ public class Screen16 extends AppCompatActivity implements
     TextView name_activity, time_activity, distance_activity;
     List<String> activity_name, distance, time, activity_id, userid_other;
     ProgressDialog pd;
+    Double latitude=0.0,longitude=0.0;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -122,11 +131,6 @@ public class Screen16 extends AppCompatActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
-
-        pd = new ProgressDialog(Screen16.this);
-        pd.setMessage("Uploading...");
-
-
         user_id = getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
         user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
@@ -135,13 +139,30 @@ public class Screen16 extends AppCompatActivity implements
         edit_user_pic = user_pic.edit();
         lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
+
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+           return;
+        }
+        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if(location != null){
+            latitude = location.getLatitude();
+            longitude = location.getLongitude(); }
+        edit_lat_lng.putString("lat",String.valueOf(latitude));
+        edit_lat_lng.putString("lng", String.valueOf(longitude));
+        edit_lat_lng.commit();
+
         lat = lat_lng.getString("lat", "0000");
         lon = lat_lng.getString("lng", "0000");
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
-
-
+        swipestack_image = (ImageView) findViewById(R.id.swipestack_image);
+        join = (TextView) findViewById(R.id.join);
+        skip = (TextView) findViewById(R.id.skip);
+        reloadactivity = (ImageButton) findViewById(R.id.reloadactivity);
         activity_url = new ArrayList<String>();
         activity_name = new ArrayList<String>();
         distance = new ArrayList<String>();
@@ -422,13 +443,68 @@ public void GetUserData()
                 drawerLayout.closeDrawers();
             }
         });
+        Getting_Activities();
+            dislike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSwipeStack.swipeTopViewToLeft();
+                    mSwipeStack.setRotation(View.DRAWING_CACHE_QUALITY_AUTO);
+                }
+            });
+
+            like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSwipeStack.swipeTopViewToRight();
+                    mSwipeStack.setRotation(View.DRAWING_CACHE_QUALITY_AUTO);
+                    Member_add_to_Group();
+                }
+            });
+
+
+            btninfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity_Info();
+                }
+            });
+            swipestack_image.setClickable(true);
+            swipestack_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity_Info();
+                }
+            });
+
+
+    }
+
+    public void Activity_Info()
+    {
+        if (mSwipeStack.getCurrentPosition() >= activity_name.size())
+        {
+            Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            fragmentManager = getSupportFragmentManager();
+            Other_User_Details other_user = new Other_User_Details();
+            Bundle bundle = new Bundle();
+            bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()));
+            bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
+            other_user.setArguments(bundle);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.flContent, other_user)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
+
+    public void Getting_Activities()
+    {
         if (Connectivity_Checking.isConnectingToInternet()) {
-
-
             JSONObject jsonObjSend = new JSONObject();
             try {
                 // Add key/value pairs
-
                 jsonObjSend.put("lat", lat);
                 jsonObjSend.put("lon", lon);
                 jsonObjSend.put("userid", user_id.getString("userid", "00"));
@@ -440,114 +516,46 @@ public void GetUserData()
             }
 
             JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
-
-
             JSONObject json = null;
             try {
                 json = new JSONObject(String.valueOf(jsonObjRecv));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
             try {
 
-                if(!json.equals("")) {
+                if (!json.equals("")) {
                     JSONArray cast = json.getJSONArray("data");
-
-                    //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                    //List<String> allid = new ArrayList<String>();
-
-
                     for (int i = 0; i < cast.length(); i++) {
                         JSONObject actor = cast.getJSONObject(i);
                         String id = actor.getString("activity_url");
-
                         activity_name.add(actor.getString("activity_name"));
                         distance.add(actor.getString("activity_distance"));
                         time.add(actor.getString("activity_time"));
                         activity_id.add(actor.getString("activity_id"));
                         userid_other.add(actor.getString("userid"));
                         activity_url.add(id);
-
                         Book book = new Book();
                         book.setName(actor.getString("activity_name"));
                         book.setImageUrl(actor.getString("activity_url"));
                         book.setAuthorName(actor.getString("activity_distance"));
                         book.setIcon_image(actor.getString("acitivity_icon"));
-                        long timestampString = Long.parseLong(actor.getString("activity_time"));
-                        String value = new SimpleDateFormat("dd.MM.yyyy 'at' KK aa ").
-                                format(new Date(timestampString * 1000));
-
+                        long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                        Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                        sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                        String value = sdf.format(date2);
                         book.setTime(value);
-
                         books.add(book);
-                        Log.d("Type", cast.getString(i));
-                    }
 
+                    }
                     adapter.notifyDataSetChanged();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
-            dislike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    mSwipeStack.onViewSwipedToLeft();
-
-
-                }
-
-
-            });
-
-            like.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mSwipeStack.onViewSwipedToRight();
-                    Log.w("position", String.valueOf(mSwipeStack.getCurrentPosition()));
-
-
-                    Member_add_to_Group();
-
-                }
-            });
-
-
-            btninfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
-
-                        Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        // Toast.makeText(Screen16.this, userid_other.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
-
-                        fragmentManager = getSupportFragmentManager();
-                        Other_User_Details other_user = new Other_User_Details();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()));
-                        bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
-                        other_user.setArguments(bundle);
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.flContent, other_user)
-                                .addToBackStack(null)
-                                .commit();
-
-                    }
-
-
-                }
-            });
-
-
-        }}
+        }
+        }
 
     public void Image_Choose()
     {
@@ -562,14 +570,13 @@ public void GetUserData()
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("image/*");
-
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE1);
     }
     private void setListViewAdapter() {
         books = new ArrayList<Book>();
         adapter = new SwipeStackAdapter(this, R.layout.card, books);
         mSwipeStack.setAdapter(adapter);
-
+        mSwipeStack.setListener(this);
     }
 
 
@@ -598,8 +605,6 @@ public void GetUserData()
 
         } else if (id == R.id.app_setting) {
             fragmentClass = Appsetting.class;
-
-
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
@@ -614,71 +619,43 @@ public void GetUserData()
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-
-
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
-
-
-    @Override
+   @Override
     public void onViewSwipedToRight(int position) {
-        Book swipedElement = mAdapter.getItem(position);
-        Toast.makeText(this, getString(R.string.view_swiped_right, swipedElement),
-                Toast.LENGTH_SHORT).show();
         Member_add_to_Group();
-
-
     }
-
     @Override
     public void onViewSwipedToLeft(int position) {
-        Book swipedElement = mAdapter.getItem(position);
-
-        Toast.makeText(this, getString(R.string.view_swiped_left, swipedElement),
-                Toast.LENGTH_SHORT).show();
-
-
     }
-
     @Override
     public void onStackEmpty() {
+        reloadactivity.setVisibility(View.VISIBLE);
+        reloadactivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // mSwipeStack.resetStack();
+                Getting_Activities();
+                reloadactivity.setVisibility(View.GONE);
+            }
+        });
 
-     if (mAdapter.isEmpty()){
-         reloadactivity.setVisibility(View.VISIBLE);
-     }
-        else {
-         reloadactivity.setVisibility(View.GONE);
-     }
 
-        Toast.makeText(this, R.string.stack_empty, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "There is no activity", Toast.LENGTH_SHORT).show();
 
 
     }
 
-
-
-//    public void openGallery(int req_code){
-//
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Select file to upload "), req_code);
-//    }
-//
 
     public void Member_add_to_Group() {
 
         if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
-
-            Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
-
-        } else {
-            //   Toast.makeText(Screen16.this, activity_id.get(mSwipeStack.getCurrentPosition()), Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(Screen16.this, "There is no activity", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
             AsyncHttpClient client = new AsyncHttpClient();
             client.get("http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/" + user_id.getString("userid", "000") + "/" + activity_id.get(mSwipeStack.getCurrentPosition()),
@@ -692,12 +669,11 @@ public void GetUserData()
                                 JSONObject obj = new JSONObject(response);
 
                                 String result = obj.getString("message");
-
                                 if (result.equals("Updated Successfully")) {
                                     fragmentManager = getSupportFragmentManager();
                                     Single_group_Message update_activity = new Single_group_Message();
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
+                                    bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()-1));
                                     update_activity.setArguments(bundle);
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.flContent, update_activity)

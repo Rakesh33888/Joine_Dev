@@ -497,7 +497,7 @@ public class Appsetting extends Fragment{
                                 String notification_by = dataObj.getString("notification_by");
                                 String userid = dataObj.getString("userid");
 
-
+                                Log.e("User Settings",String.valueOf(dataObj));
                                 if (distance_km.equals("K") || distance_km.equals("k")) {
                                     km.setChecked(true);
                                 } else {

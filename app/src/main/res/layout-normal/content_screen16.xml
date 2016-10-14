@@ -26,18 +26,48 @@
             app:stack_rotation="0"
             app:stack_spacing="0dp"
             android:clipChildren="false"
+            android:clickable="true"
             app:disable_hw_acceleration="false"
             android:layout_gravity="center" />
-      <!--  <ImageButton
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/swipestack_image"
+            android:background="@null"
+            android:layout_gravity="center" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
-            android:id="@+id/reloadactivity"
-            android:textSize="16dp"
+            android:text="Join"
+            android:textColor="#05b32a"
+            android:id="@+id/join"
             android:visibility="gone"
-            android:background="@drawable/custom_button1"
-            android:src="@drawable/refresh"
-            android:layout_gravity="center"/> -->
+            android:layout_gravity="right|top"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skip"
+            android:textColor="#f5392a"
+            android:id="@+id/skip"
+            android:visibility="gone"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp" />
+          <ImageButton
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:textColor="#fff"
+              android:id="@+id/reloadactivity"
+              android:textSize="16dp"
+              android:visibility="gone"
+              android:background="@drawable/custom_button1"
+              android:src="@drawable/refresh"
+              android:layout_gravity="center"/>
     </FrameLayout>
 
 
@@ -99,16 +129,16 @@
     </FrameLayout>
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:id="@+id/dislike"
         android:background="@drawable/dislike"
         android:layout_below="@+id/frameLayout2"
         android:layout_marginTop="25dp" />
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:background="@drawable/message1"
         android:id="@+id/like"
         android:layout_alignTop="@+id/dislike"
@@ -116,13 +146,13 @@
 
     <ImageView
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@drawable/info"
         android:id="@+id/infobutton"
         android:layout_alignTop="@+id/like"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="20dp" />
 
     <ImageView
         android:layout_width="wrap_content"

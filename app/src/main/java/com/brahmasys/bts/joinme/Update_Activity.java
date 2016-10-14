@@ -50,6 +50,7 @@ import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.apache.http.HttpEntity;
@@ -96,7 +97,7 @@ public class Update_Activity extends Fragment {
     ArrayList<String> data;
     long unixTime=0;
     int image;
-    String gender = "";
+    String gender = "",Icon_url;
     String duration = "0", icon = "0", title, address, age_start, age_end, cost = "0", limit = "0", description;
     double latitude = 0.0, longitude = 0.0, latitude1, longitude1, latitude2, longitude2;
     String complete_address, city, state, zip, country, total_address;
@@ -117,6 +118,8 @@ public class Update_Activity extends Fragment {
     HttpEntity resEntity;
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
+    private ArrayAdapter<Integer> adapter1;
+    ArrayAdapter<Integer> spinnerArrayAdapter4;
     Context context;
     List<String> allurl;
     FragmentManager fragmentManager;
@@ -126,7 +129,7 @@ public class Update_Activity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.update_activity, container, false);
-        GettingActivityDetails();
+      //  GettingActivityDetails();
         user_id = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
@@ -166,8 +169,149 @@ public class Update_Activity extends Fragment {
         update_activity = (Button) v.findViewById(R.id.update_activity);
         delet_activity = (Button) v.findViewById(R.id.delete_activity);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
+        allurl = new ArrayList<String>();
+
+        /*************************** Spinner Functionality Start ***********************/
+
+        List hours = new ArrayList<Integer>();
+        hours.add(0, "");
+        for (int i = 0; i < 23; i++) {
+            hours.add(Integer.toString(i));
+
+        }
+        spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+        spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrayAdapter4.notifyDataSetChanged();
+        spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+
+
+        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
+        currency_symbol.setAdapter(adapter_currency);
+        /**************************Spinner functionality Ends *****************************/
+
+        String userProfileString=getArguments().getString("accountDetails");
+        JSONObject jsonObject = null;
+        try {
+            jsonObject=new JSONObject(userProfileString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONObject userdetails = null;
+        try {
+            userdetails = jsonObject.getJSONObject("act_details");
+            JSONArray cast = userdetails.getJSONArray("activity_pics");
+            for (int i = 0; i < cast.length(); i++) {
+                JSONObject actor = cast.getJSONObject(i);
+                String id = actor.getString("id");
+                String url = actor.getString("url");
+                if (i==0)
+                {
+                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).into(firstimage);
+                }
+                if(i==1)
+                {
+                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).into(secondimage);
+                }
+                if (i==2)
+                {
+                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).into(thirdimage);
+                }
+                Log.e("Activity Url", cast.getString(i));
+            }
+            Log.w("ACTIVITY DETAILS", String.valueOf(userdetails));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Log.e("Activity Name", userdetails.getString("activity_name"));
+
+            edittextactivityname.setText(userdetails.getString("activity_name"));
+            String cost = userdetails.getString("activity_cost");
+            String number = "";
+            String symbol = "";
+            for (int i = 0; i < cost.length(); i++)
+            {
+                char a = cost.charAt(i);
+                if (Character.isDigit(a))
+                {
+                    number = number + a;
+                    continue;
+                }
+                else
+                {
+                    symbol = symbol + a;
+                }
+            }
+            edit_cost.setText(number);
+            if (symbol.equals("$"))
+            {
+                currency_symbol.setSelection(1);
+            }
+            else
+            {
+                currency_symbol.setSelection(0);
+            }
+
+
+
+            enterdiscription.setText(userdetails.getString("activity_Description"));
+            edit_limit.setText(userdetails.getString("participant_limit"));
+            current_address.setText(userdetails.getString("activity_Adress"));
+            long unixSeconds = Long.parseLong(userdetails.getString("activity_time"));
+            Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // the format of your date
+            SimpleDateFormat sdf1 = new SimpleDateFormat("HH");
+            sdf1.setTimeZone(TimeZone.getTimeZone("GMT"));
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+            String formattedDate = sdf.format(date2);
+            String formattedDate1 = sdf1.format(date2);
+            dateTextView.setText(formattedDate);
+            spinnerforhour.setSelection(Integer.parseInt(formattedDate1) - 1);
+            Icon_url = userdetails.getString("acitivity_icon");
+
+
+            if (userdetails.getString("activity_availability").equals("public"))
+            {
+                checkBoxnotforeveryone.setChecked(false);
+                checkBoxforeveryone.setChecked(true);
+                not_everyone.setVisibility(View.GONE);
+                checkBoxforeveryone.setClickable(false);
+                checkBoxnotforeveryone.setClickable(true);
+            }
+            else {
+                checkBoxnotforeveryone.setChecked(true);
+                not_everyone.setVisibility(View.VISIBLE);
+                checkBoxforeveryone.setClickable(true);
+                checkBoxnotforeveryone.setClickable(false);
+                age1.setText(userdetails.getString("participant_age_start"));
+                age2.setText(userdetails.getString("participant_age_end"));
+//                seekBarforage.setMaxValue(Integer.parseInt(userdetails.getString("participant_age_end")));
+//                seekBarforage.setMinValue(Integer.parseInt(userdetails.getString("participant_age_start")))
+                checkBoxforeveryone.setChecked(false);
+                 if (userdetails.getString("participant_gender").equals("male"))
+                 {
+                    checkBoxformen.setChecked(true);
+                     checkBoxforwomen.setChecked(false);
+                     checkBoxforwomen.setClickable(true);
+                     checkBoxformen.setClickable(false);
+
+                 }
+                else
+                 {
+                    checkBoxforwomen.setChecked(true);
+                     checkBoxformen.setChecked(false);
+                     checkBoxforwomen.setClickable(false);
+                     checkBoxformen.setClickable(true);
+                 }
+                 }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // user details which user wants to update//
+
         search_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,8 +323,8 @@ public class Update_Activity extends Fragment {
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
 
-                DatePickerDialog dpd = DatePickerDialog.newInstance( new DateListener(), now.get(Calendar.YEAR), now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH) );
+                DatePickerDialog dpd = DatePickerDialog.newInstance(new DateListener(), now.get(Calendar.YEAR), now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH));
                 Calendar cal = Calendar.getInstance();
                 cal.get(Calendar.YEAR);
                 cal.get(Calendar.MONTH);
@@ -209,7 +353,7 @@ public class Update_Activity extends Fragment {
 
                             //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
                             List<String> allid = new ArrayList<String>();
-                            allurl = new ArrayList<String>();
+
 
                             for (int i = 0; i < cast.length(); i++) {
                                 JSONObject actor = cast.getJSONObject(i);
@@ -222,9 +366,17 @@ public class Update_Activity extends Fragment {
                                 books.add(book);
                                 //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
 
-                                Log.d("Type", cast.getString(i));
-                            }
+                                }
                             adapter.notifyDataSetChanged();
+
+                            for (int i = 0; i < allurl.size(); i++) {
+                               if (Icon_url.equals(allurl.get(i))) {
+                                    icon = allurl.get(i);
+                                    spinnericon.setSelection(allurl.indexOf(allurl.get(i)));
+
+                                }
+
+                            }
                             Log.d("Type", String.valueOf(allurl));
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -233,6 +385,7 @@ public class Update_Activity extends Fragment {
                 });
 
         setListViewAdapter();
+
 
         spinnericon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -285,7 +438,7 @@ public class Update_Activity extends Fragment {
             public void onClick(View v) {
                 if (v == checkboxcurrent) {
                     checkBoxaddress.setChecked(false);
-                  //address_search.setVisibility(View.GONE);
+                    //address_search.setVisibility(View.GONE);
                     current_address.setVisibility(View.VISIBLE);
                     search_layout.setVisibility(View.GONE);
                     checkboxcurrent.setClickable(false);
@@ -308,7 +461,7 @@ public class Update_Activity extends Fragment {
 
             }
         });
-        checkBoxforeveryone.setChecked(true);
+   //     checkBoxforeveryone.setChecked(true);
         checkBoxforeveryone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,7 +489,7 @@ public class Update_Activity extends Fragment {
             }
         });
 
-        checkBoxforwomen.setChecked(true);
+    //    checkBoxforwomen.setChecked(true);
         checkBoxforwomen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -442,32 +595,7 @@ public class Update_Activity extends Fragment {
         final int current_hour = Integer.parseInt(formattedDate.substring(11, 13));
 
 
-        /*************************** Spinner Functionality Start ***********************/
-        List year_list = new ArrayList<Integer>();
-        year_list.add(0, " ");
-        for (int i = 2015; i <= 2020; i++)
-        {
-            if (current_year<=i) {
-                year_list.add(Integer.toString(i));
-            }
-        }
 
-        List hours = new ArrayList<Integer>();
-        hours.add(0, "");
-        for (int i = 0; i < 23; i++) {
-            hours.add(Integer.toString(i));
-
-        }
-        ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
-        spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerArrayAdapter4.notifyDataSetChanged();
-        spinnerforhour.setAdapter(spinnerArrayAdapter4);
-
-
-
-        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
-        currency_symbol.setAdapter(adapter_currency);
-        /**************************Spinner functionality Ends *****************************/
         TimeZone tz = TimeZone.getDefault();
         System.out.println("TimeZone   " + tz.getDisplayName(false, TimeZone.SHORT));
 
@@ -644,12 +772,12 @@ public class Update_Activity extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    complete_address = addresses.get(0).getAddressLine(0);
-                    city = addresses.get(0).getLocality();
-                    state = addresses.get(0).getAdminArea();
-                    zip = addresses.get(0).getPostalCode();
-                    country = addresses.get(0).getCountryName();
-                    total_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
+//                    complete_address = addresses.get(0).getAddressLine(0);
+//                    city = addresses.get(0).getLocality();
+//                    state = addresses.get(0).getAdminArea();
+//                    zip = addresses.get(0).getPostalCode();
+//                    country = addresses.get(0).getCountryName();
+                    total_address = current_address.getText().toString();
                 } else {
 
                     total_address = geo_autocomplete.getText().toString();
@@ -735,28 +863,6 @@ public class Update_Activity extends Fragment {
 
     public  void GettingActivityDetails()
     {
-        String userProfileString=getArguments().getString("accountDetails");
-        JSONObject jsonObject = null;
-        try {
-            jsonObject=new JSONObject(userProfileString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JSONObject userdetails = null;
-        try {
-            userdetails = jsonObject.getJSONObject("act_details");
-
-            Log.w("ACTIVITY DETAILS", String.valueOf(userdetails));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Log.e("Activity Name",userdetails.getString("activity_name"));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
     }
 
