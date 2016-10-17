@@ -189,8 +189,19 @@ public class Mygroup extends Fragment{
             @Override
             public void run()
             {
-
+                if(Connectivity_Checking.isConnectingToInternet()) {
                 Getting_Groups();
+            }
+            else
+            {
+                progressDialog.dismiss();
+                fragmentManager=getFragmentManager();
+                Mygroup screen17 = new Mygroup();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, screen17)
+                        .addToBackStack(null)
+                        .commit();
+            }
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -229,7 +240,7 @@ public class Mygroup extends Fragment{
 
     public  void Getting_Groups()
     {
-        if(Connectivity_Checking.isConnectingToInternet()) {
+
 
             JSONObject jsonObjSend = new JSONObject();
             try {
@@ -302,12 +313,6 @@ public class Mygroup extends Fragment{
                 e.printStackTrace();
             }
 
-        }
-        else
-        {
-            Splashscreen dia = new Splashscreen();
-            dia.Connectivity_Dialog_with_refresh(getActivity());
-        }
 
     }
 

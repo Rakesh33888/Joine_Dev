@@ -100,12 +100,10 @@ public class Splashscreen extends Activity{
     {
         final Dialog dialog = new Dialog(context);
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         dialog.setContentView(R.layout.connectivity_dialog);
         dialog.setCancelable(false);
-        dialog.getWindow().setBackgroundDrawable(
-                new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
         Button yes = (Button) dialog.findViewById(R.id.ok);
         yes.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +136,7 @@ public class Splashscreen extends Activity{
 
 
                 dialog.dismiss();
-                finish();
-//                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
+
 
 
             }

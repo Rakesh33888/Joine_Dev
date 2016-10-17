@@ -413,4 +413,21 @@
 
 </LinearLayout>
     </ScrollView>
+
+   <!-- <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="#005F99">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Refresh"
+            android:id="@+id/textView33"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true" />
+    </RelativeLayout> -->
 </FrameLayout>

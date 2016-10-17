@@ -4,6 +4,7 @@ import android.*;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -169,10 +171,29 @@ public class Screen16 extends AppCompatActivity implements
         time = new ArrayList<String>();
         activity_id = new ArrayList<String>();
         userid_other = new ArrayList<String>();
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        //  Toast.makeText(MainActivity.this, token_id.getString("token","null"), Toast.LENGTH_SHORT).show();
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+
+        }else{
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Please enable GPS to use this application..")
+                    .setCancelable(false)
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent callGPSSettingIntent = new Intent(
+                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                   startActivity(callGPSSettingIntent);
+                                }
+                            });
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
 
         context = this;
         setListViewAdapter();
-
         Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.

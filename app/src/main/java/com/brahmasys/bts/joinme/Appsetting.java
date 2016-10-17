@@ -158,14 +158,21 @@ public class Appsetting extends Fragment{
         backlayoutappsetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  pd.show();
-                FnSaveUserSettings();
-                Intent i = new Intent(getActivity(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
-                //   pd.hide();
+                if(Connectivity_Checking.isConnectingToInternet()) {
+                    FnSaveUserSettings();
+                    Intent i = new Intent(getActivity(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                }
+                else
+                {
+                    Splashscreen dia = new Splashscreen();
+                    dia.Connectivity_Dialog_with_refresh(getActivity());
+                    progressDialog.dismiss();
 
+
+                }
             }
         });
 
@@ -291,36 +298,45 @@ public class Appsetting extends Fragment{
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                dialog.setContentView(R.layout.logout_custom);
-                dialog.getWindow().setBackgroundDrawable(
-                        new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-                yes = (Button) dialog.findViewById(R.id.yes);
-                no = (Button) dialog.findViewById(R.id.no);
-                yes.setOnClickListener(new View.OnClickListener() {
+                if (Connectivity_Checking.isConnectingToInternet()) {
+                    final Dialog dialog = new Dialog(getActivity());
+                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    dialog.setContentView(R.layout.logout_custom);
+                    dialog.getWindow().setBackgroundDrawable(
+                            new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                    yes = (Button) dialog.findViewById(R.id.yes);
+                    no = (Button) dialog.findViewById(R.id.no);
+                    yes.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        logoutUser();
-                        dialog.dismiss();
-                    }
-                });
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                        @Override
+                        public void onClick(View v) {
+                            logoutUser();
+                            dialog.dismiss();
+                        }
+                    });
+                    no.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
 
+                }else
+                {
+                    Splashscreen dia = new Splashscreen();
+                    dia.Connectivity_Dialog_with_refresh(getActivity());
+                    progressDialog.dismiss();
+
+
+                }
             }
         });
 
           dropdown = (Spinner) v.findViewById(R.id.spinner1);
-        String[] items = new String[]{"All messages", "Only from travelers", "Only from groups","None"};
+        String[] items = new String[]{"All messages","Only from groups","None"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
 
@@ -347,7 +363,7 @@ public class Appsetting extends Fragment{
         btndelt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (Connectivity_Checking.isConnectingToInternet()) {
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                 dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -374,10 +390,27 @@ public class Appsetting extends Fragment{
                 });
 
 
+            }else
+            {
+                Splashscreen dia = new Splashscreen();
+                dia.Connectivity_Dialog_with_refresh(getActivity());
+                progressDialog.dismiss();
+
 
             }
+        }
         });
+        if(Connectivity_Checking.isConnectingToInternet()) {
         FnPopulateUserSettings(v);
+        }
+        else
+        {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
+
+
+        }
         return v;
     }
 
@@ -393,7 +426,6 @@ public class Appsetting extends Fragment{
     public  void Delete_Account()
     {
         new Custom_Progress(getActivity());
-
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("userid",""),
                 new AsyncHttpResponseHandler() {
@@ -477,7 +509,7 @@ public class Appsetting extends Fragment{
 
 
     public void FnPopulateUserSettings(final View v ){
-        if(Connectivity_Checking.isConnectingToInternet()) {
+
             AsyncHttpClient client = new AsyncHttpClient();
             String id = user_id.getString("userid", "");
             client.get(URL_GetUserSettings + id,
@@ -496,7 +528,21 @@ public class Appsetting extends Fragment{
                                 String new_level = dataObj.getString("new_level");
                                 String notification_by = dataObj.getString("notification_by");
                                 String userid = dataObj.getString("userid");
+                                String Message_list = dataObj.getString("message");
 
+
+                                if (Message_list.equals("all messages"))
+                                {
+                                    dropdown.setSelection(0);
+                                }
+                                else if (Message_list.equals("Only from groups"))
+                                {
+                                    dropdown.setSelection(1);
+                                }
+                                else
+                                {
+                                    dropdown.setSelection(2);
+                                }
                                 Log.e("User Settings",String.valueOf(dataObj));
                                 if (distance_km.equals("K") || distance_km.equals("k")) {
                                     km.setChecked(true);
@@ -528,12 +574,7 @@ public class Appsetting extends Fragment{
                         }
 
                     });
-        }
-        else
-        {
-            Splashscreen dia = new Splashscreen();
-            dia.Connectivity_Dialog_with_refresh(getActivity());
-        }
+
     }
 
     //Calling API in this fn to save the User Settings
@@ -553,12 +594,22 @@ public class Appsetting extends Fragment{
         String activity_reminder_hours = hours.getText().toString();
         String activity_reminder_mins = mins.getText().toString();
 
+
         String distance = "";
         if(miles.isChecked()){
             distance ="M";
         }
         if(km.isChecked()){
             distance="K";
+        }
+        String message_list;
+        if (String.valueOf(dropdown.getSelectedItem()).equals("All messages"))
+        {
+            message_list = "all messages";
+        }
+        else
+        {
+            message_list = String.valueOf(dropdown.getSelectedItem());
         }
 
             JSONObject jsonObjSend = new JSONObject();
@@ -573,7 +624,8 @@ public class Appsetting extends Fragment{
                 jsonObjSend.put("new_level", true);
                 jsonObjSend.put("notification_by", "");
                 jsonObjSend.put("userid",userid);
-                Log.i("UserSettings_Request", jsonObjSend.toString(3));
+                jsonObjSend.put("message",message_list);
+                Log.i("UserSettings_Request", jsonObjSend.toString(8));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -659,13 +711,22 @@ public class Appsetting extends Fragment{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    FnSaveUserSettings();
-                    Intent i = new Intent(getActivity(), Screen16.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                    getActivity().finish();
+                    if(Connectivity_Checking.isConnectingToInternet()) {
+                        FnSaveUserSettings();
+                        Intent i = new Intent(getActivity(), Screen16.class);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                        getActivity().finish();
+                    }
+                    else
+                    {
+                        Splashscreen dia = new Splashscreen();
+                        dia.Connectivity_Dialog_with_refresh(getActivity());
+                        progressDialog.dismiss();
 
-                //    pd.hide();
+
+                    }
+
                     return true;
                 }
                 return false;

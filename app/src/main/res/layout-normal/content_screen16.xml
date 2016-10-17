@@ -15,16 +15,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:id="@+id/framfile"
-
-        >
+        android:id="@+id/framfile"   >
 
         <link.fls.swipestack.SwipeStack
             android:id="@+id/swipeStack"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             app:stack_rotation="0"
-            app:stack_spacing="0dp"
+            app:stack_spacing="3dp"
             android:clipChildren="false"
             android:clickable="true"
             app:disable_hw_acceleration="false"

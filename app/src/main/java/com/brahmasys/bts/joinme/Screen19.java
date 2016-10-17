@@ -8,6 +8,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -22,11 +24,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -58,6 +63,16 @@ import android.widget.Toast;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -151,7 +166,8 @@ public class Screen19 extends Fragment {
         lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
         latitude2 = Double.parseDouble(lat_lng.getString("lat", "0"));
-        longitude2 = Double.parseDouble(lat_lng.getString("lng","0"));
+        longitude2 = Double.parseDouble(lat_lng.getString("lng", "0"));
+        Log.e("Location lat&lon",String.valueOf(latitude2)+"\n"+String.valueOf(longitude2));
         search_layout  = (RelativeLayout) v.findViewById(R.id.search_layout);
         current_address = (EditText)v.findViewById(R.id.current_address);
         text_search_address = (TextView)v.findViewById(R.id.search_address);
@@ -208,8 +224,8 @@ public class Screen19 extends Fragment {
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
 
-               DatePickerDialog dpd = DatePickerDialog.newInstance( new DateListener(), now.get(Calendar.YEAR), now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH) );
+                DatePickerDialog dpd = DatePickerDialog.newInstance(new DateListener(), now.get(Calendar.YEAR), now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH));
                 Calendar cal = Calendar.getInstance();
                 cal.get(Calendar.YEAR);
                 cal.get(Calendar.MONTH);
@@ -257,18 +273,46 @@ public class Screen19 extends Fragment {
         spinnericon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (int i=0;i<allurl.size();i++)
-                {
-                    if (i==spinnericon.getSelectedItemPosition())
-                    {
+                for (int i = 0; i < allurl.size(); i++) {
+                    if (i == spinnericon.getSelectedItemPosition()) {
                         icon = allurl.get(i);
                     }
                 }
-              }
+            }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+
+
+
+
+//        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+//        //  Toast.makeText(MainActivity.this, token_id.getString("token","null"), Toast.LENGTH_SHORT).show();
+//        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+//            //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+//
+//        }else{
+//
+//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+//            alertDialogBuilder.setMessage("Please enable GPS to use this application..")
+//                    .setCancelable(false)
+//                    .setPositiveButton("OK",
+//                            new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    Intent callGPSSettingIntent = new Intent(
+//                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                                    startActivity(callGPSSettingIntent);
+//
+//                                }
+//                            });
+//
+//            AlertDialog alert = alertDialogBuilder.create();
+//            alert.show();
+//
+//        }
 
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
@@ -290,7 +334,7 @@ public class Screen19 extends Fragment {
             //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
         }
 
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+    LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
@@ -566,162 +610,172 @@ public class Screen19 extends Fragment {
     }
 
 
-
     public void CreateActivity() throws ParseException {
-        if (edittextactivityname.getText().toString().length() >= 2) {
-            if (enterdiscription.getText().toString().length() >= 10) {
+        if (Connectivity_Checking.isConnectingToInternet()) {
 
 
-                int int_month = 0;
+            if (edittextactivityname.getText().toString().length() >= 2) {
+                if (enterdiscription.getText().toString().length() >= 10) {
+
+
+                    int int_month = 0;
 //                year = spinnerforyear.getSelectedItem().toString();
 //                month = spinnerformonth.getSelectedItem().toString();
 //                day = spinnerforday.getSelectedItem().toString();
-                 hour = spinnerforhour.getSelectedItem().toString();
+                    hour = spinnerforhour.getSelectedItem().toString();
 
 
 
 
-                /*************** Time Stamp Start********************/
+                    /*************** Time Stamp Start********************/
 
-                String dateString = dateTextView.getText().toString()+" "+hour+":00"+":00"+" "+"GMT";
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
+                    String dateString = dateTextView.getText().toString()+" "+hour+":00"+":00"+" "+"GMT";
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
 
                     Date date1 = dateFormat.parse(dateString );
                     unixTime = (long) date1.getTime()/1000;
                     Log.e("Timestamp527",String.valueOf(unixTime));
 
-                /********************* Time Stamp End ***************/
-                /********************* TimeZone Start ***************/
-                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
-                        Locale.getDefault());
-                Date currentLocalTime = calendar.getTime();
-                DateFormat date = new SimpleDateFormat("Z");
-                String localTime = date.format(currentLocalTime);
+                    /********************* Time Stamp End ***************/
+                    /********************* TimeZone Start ***************/
+                    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"),
+                            Locale.getDefault());
+                    Date currentLocalTime = calendar.getTime();
+                    DateFormat date = new SimpleDateFormat("Z");
+                    String localTime = date.format(currentLocalTime);
 
-                String sign = localTime.substring(0, 1);
-                String hr = localTime.substring(1, 3);
-                String min = localTime.substring(3, 5);
+                    String sign = localTime.substring(0, 1);
+                    String hr = localTime.substring(1, 3);
+                    String min = localTime.substring(3, 5);
 
-                int res = (Integer.parseInt(hr) * 60) + Integer.parseInt(min);
-                if (sign.equals("+")) {
-                    res = -res;
-                } else {
-                    res = +res;
-                }
-                /********************* TimeZone End ***************/
-
-                if (checkBoxforeveryone.isChecked()) {
-                    availability = "public";
-                    gender = "";
-
-                } else {
-                    availability = "private";
-                    if (checkBoxformen.isChecked()) {
-                        gender = "male";
+                    int res = (Integer.parseInt(hr) * 60) + Integer.parseInt(min);
+                    if (sign.equals("+")) {
+                        res = -res;
                     } else {
-                        gender = "female";
+                        res = +res;
                     }
-                }
-                if (checkboxcurrent.isChecked()) {
+                    /********************* TimeZone End ***************/
 
-                 total_address = checked_current_address;
+                    if (checkBoxforeveryone.isChecked()) {
+                        availability = "public";
+                        gender = "";
+
+                    } else {
+                        availability = "private";
+                        if (checkBoxformen.isChecked()) {
+                            gender = "male";
+                        } else {
+                            gender = "female";
+                        }
+                    }
+                    if (checkboxcurrent.isChecked()) {
+
+                        total_address = checked_current_address;
+                    } else {
+
+                        total_address = geo_autocomplete.getText().toString();
+
+                    }
+
+                    title = edittextactivityname.getText().toString();
+                    description = enterdiscription.getText().toString();
+                    cost = edit_cost.getText().toString();
+                    limit = edit_limit.getText().toString();
+                    age_start = age1.getText().toString();
+                    age_end = age2.getText().toString();
+
+                    Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + unixTime + "\n" + title + "\n" + total_address + "\n" + latitude
+                            + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
+
+
+                    if (android.os.Build.VERSION.SDK_INT > 9) {
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                        StrictMode.setThreadPolicy(policy);
+                    }
+
+                    JSONObject jsonObjSend = new JSONObject();
+                    try {
+                        jsonObjSend.put("activity_availability", availability);//nari1
+                        jsonObjSend.put("activity_description", description); //2
+                        jsonObjSend.put("activity_duration", duration);       //3
+                        jsonObjSend.put("activity_icon", icon);               //4
+                        jsonObjSend.put("activity_time", unixTime);              //5
+                        jsonObjSend.put("activity_timezoneoffset", res);       //6
+                        jsonObjSend.put("activity_title", title);              //7
+                        jsonObjSend.put("address", total_address);             //8
+                        jsonObjSend.put("lat", latitude);                      //9
+                        jsonObjSend.put("lon", longitude);                     //10
+                        jsonObjSend.put("participant_age_end", age_end);       //11
+                        jsonObjSend.put("participant_age_start", age_start);   //12
+                        jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
+                        jsonObjSend.put("participant_gender", gender);         //14
+                        jsonObjSend.put("participant_limit", limit);           //15
+                        jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
+
+                        Log.i(TAG, jsonObjSend.toString(16));
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
+
+
+                    JSONObject json = null;
+                    try {
+                        json = new JSONObject(String.valueOf(jsonObjRecv));
+                        activity_id1 = json.getString("activityid");
+                        edit_activity_id.putString("activity_id", activity_id1);
+                        edit_activity_id.commit();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    JSONObject json_LL = null;
+                    try {
+                        json_LL = json.getJSONObject("response");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    try {
+                        str_value = json_LL.getString("message");
+
+                        if (str_value.equals("Added Successfully")) {
+
+                            fragmentManager = getFragmentManager();
+                            doFileUpload();
+                            Mygroup mygroup = new Mygroup();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.flContent, mygroup)
+                                    .addToBackStack(null)
+                                    .commit();
+
+                            Toast.makeText(getActivity(), "Activity has been created.", Toast.LENGTH_LONG).show();
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
                 } else {
-
-                    total_address = geo_autocomplete.getText().toString();
-
+                    Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
                 }
-
-                title = edittextactivityname.getText().toString();
-                description = enterdiscription.getText().toString();
-                cost = edit_cost.getText().toString();
-                limit = edit_limit.getText().toString();
-                age_start = age1.getText().toString();
-                age_end = age2.getText().toString();
-
-                Log.e("Complete Data:", availability + "\n" + description + "\n" + duration + "\n" + 0 + "\n" + res + "\n" + unixTime + "\n" + title + "\n" + total_address + "\n" + latitude
-                        + "\n" + longitude + "\n" + age_start + "\n" + age_end + "\n" + cost + "\n" + limit + "\n" + gender);
-
-
-                if (android.os.Build.VERSION.SDK_INT > 9) {
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                }
-
-                JSONObject jsonObjSend = new JSONObject();
-                try {
-                    jsonObjSend.put("activity_availability", availability);//nari1
-                    jsonObjSend.put("activity_description", description); //2
-                    jsonObjSend.put("activity_duration", duration);       //3
-                    jsonObjSend.put("activity_icon", icon);               //4
-                    jsonObjSend.put("activity_time", unixTime);              //5
-                    jsonObjSend.put("activity_timezoneoffset", res);       //6
-                    jsonObjSend.put("activity_title", title);              //7
-                    jsonObjSend.put("address", total_address);             //8
-                    jsonObjSend.put("lat", latitude);                      //9
-                    jsonObjSend.put("lon", longitude);                     //10
-                    jsonObjSend.put("participant_age_end", age_end);       //11
-                    jsonObjSend.put("participant_age_start", age_start);   //12
-                    jsonObjSend.put("participant_cost", cost + currency_symbol.getSelectedItem().toString());             //13
-                    jsonObjSend.put("participant_gender", gender);         //14
-                    jsonObjSend.put("participant_limit", limit);           //15
-                    jsonObjSend.put("userid", user_id.getString("userid", "null")); //16
-
-                    Log.i(TAG, jsonObjSend.toString(16));
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
-
-
-                JSONObject json = null;
-                try {
-                    json = new JSONObject(String.valueOf(jsonObjRecv));
-                    activity_id1 = json.getString("activityid");
-                    edit_activity_id.putString("activity_id", activity_id1);
-                    edit_activity_id.commit();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                JSONObject json_LL = null;
-                try {
-                    json_LL = json.getJSONObject("response");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                try {
-                    str_value = json_LL.getString("message");
-
-                    if (str_value.equals("Added Successfully")) {
-
-                        fragmentManager = getFragmentManager();
-                        doFileUpload();
-                        Mygroup mygroup = new Mygroup();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.flContent, mygroup)
-                                .addToBackStack(null)
-                                .commit();
-
-                        Toast.makeText(getActivity(), "Activity has been created.", Toast.LENGTH_LONG).show();
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
             } else {
-                Toast.makeText(getActivity(), "Description at least you have to enter 10 characters!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
             }
+
+
         } else {
-            Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
         }
+
     }
 
     private void setListViewAdapter() {
@@ -747,6 +801,9 @@ public class Screen19 extends Fragment {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+
 
         if (isKitKat && resultCode != Activity.RESULT_CANCELED) {
 
@@ -960,6 +1017,17 @@ public class Screen19 extends Fragment {
     {
         InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void onRestart()
+    {
+        super.getActivity().onBackPressed();
+        Fragment frg = null;
+        frg = getFragmentManager().findFragmentByTag("screen19");
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
     }
 }
 

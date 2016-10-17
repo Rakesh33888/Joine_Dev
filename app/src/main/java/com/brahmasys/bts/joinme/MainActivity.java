@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
 
 
-         Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
+       //  Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
 
 
 
@@ -438,236 +438,239 @@ public class MainActivity extends Activity implements View.OnClickListener {
         already_member.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Connectivity_Checking.isConnectingToInternet()) {
+                    if (android.os.Build.VERSION.SDK_INT > 9) {
+                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                        StrictMode.setThreadPolicy(policy);
+                    }
+                    final Dialog dialog = new Dialog(MainActivity.this);
+                    // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.setContentView(R.layout.layout_xml);
 
-                if (android.os.Build.VERSION.SDK_INT > 9) {
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                }
-                final Dialog dialog = new Dialog(MainActivity.this);
-                // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.setContentView(R.layout.layout_xml);
-
-                dialog.show();
-                b4 = (Button) dialog.findViewById(R.id.button4);
-                final EditText email = (EditText) dialog.findViewById(R.id.editText);
-                final EditText pass = (EditText) dialog.findViewById(R.id.editText2);
-
-
-                b4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
-                                .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-
-                        if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
-
-                            //Progress Dialog
-                            progressDialog =ProgressDialog.show(MainActivity.this, null, null, true);
-                            progressDialog.setIndeterminate(true);
-                            progressDialog.setCancelable(false);
-                            progressDialog.setContentView(R.layout.custom_progress);
-                            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                            if (android.os.Build.VERSION.SDK_INT > 9) {
-                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                                StrictMode.setThreadPolicy(policy);
-                            }
-                            JSONObject jsonObjSend = new JSONObject();
-                            try {
-                                // Add key/value pairs
-                                jsonObjSend.put("device_token",token_id.getString("token","null"));
-                                jsonObjSend.put("device_type", device_type);
-                                jsonObjSend.put("deviceid", deviceuid);
-                                jsonObjSend.put("login_type", login_type);
-                                jsonObjSend.put("social_id", social_id);
-                                jsonObjSend.put("lat", latitude);
-                                jsonObjSend.put("lon", longitude);
-                                jsonObjSend.put("email", email.getText().toString());
-                                jsonObjSend.put("password", pass.getText().toString());
-                                //  hideDialog();
-                                Log.i(TAG1, jsonObjSend.toString(9));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
+                    dialog.show();
+                    b4 = (Button) dialog.findViewById(R.id.button4);
+                    final EditText email = (EditText) dialog.findViewById(R.id.editText);
+                    final EditText pass = (EditText) dialog.findViewById(R.id.editText2);
 
 
-                            JSONObject json = null;
-                            try {
-                                json = new JSONObject(String.valueOf(jsonObjRecv));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                    b4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                            JSONObject json_LL = null;
-                            try {
-                                json_LL = json.getJSONObject("response");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
 
+                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
 
-                            JSONObject response = null;
-                            try {
-                                response = json.getJSONObject("data");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                //Progress Dialog
+                                progressDialog = ProgressDialog.show(MainActivity.this, null, null, true);
+                                progressDialog.setIndeterminate(true);
+                                progressDialog.setCancelable(false);
+                                progressDialog.setContentView(R.layout.custom_progress);
+                                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+                                if (android.os.Build.VERSION.SDK_INT > 9) {
+                                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                                    StrictMode.setThreadPolicy(policy);
+                                }
+                                JSONObject jsonObjSend = new JSONObject();
+                                try {
+                                    // Add key/value pairs
+                                    jsonObjSend.put("device_token", token_id.getString("token", "null"));
+                                    jsonObjSend.put("device_type", device_type);
+                                    jsonObjSend.put("deviceid", deviceuid);
+                                    jsonObjSend.put("login_type", login_type);
+                                    jsonObjSend.put("social_id", social_id);
+                                    jsonObjSend.put("lat", latitude);
+                                    jsonObjSend.put("lon", longitude);
+                                    jsonObjSend.put("email", email.getText().toString());
+                                    jsonObjSend.put("password", pass.getText().toString());
+                                    //  hideDialog();
+                                    Log.i(TAG1, jsonObjSend.toString(9));
 
-                            try {
-
-                                String verify = response.getString("isverified");
-                                String str_value = json_LL.getString("message");
-                                String profile_pic = response.getString("profile_pic");
-
-                                edit_profile_pic.putString("profile_pic",profile_pic);
-                                edit_profile_pic.commit();
-                                userid = json_LL.getString("userid");
-
-
-                                if (str_value.equals("User Login Successful")) {
-                                    if (verify.equals("true")) {
-
-                                        edit_userid.putString("userid", userid);
-                                        edit_userid.commit();
-
-                                        AsyncHttpClient client = new AsyncHttpClient();
-                                        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
-                                                new AsyncHttpResponseHandler() {
-                                                    // When the response returned by REST has Http response code '200'
-
-                                                    public void onSuccess(String response) {
-                                                        // Hide Progress Dialog
-                                                        //  prgDialog.hide();
-                                                        try {
-                                                            // Extract JSON Object from JSON returned by REST WS
-                                                            JSONObject obj = new JSONObject(response);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
 
 
-                                                            JSONObject json = null;
+                                JSONObject json = null;
+                                try {
+                                    json = new JSONObject(String.valueOf(jsonObjRecv));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                JSONObject json_LL = null;
+                                try {
+                                    json_LL = json.getJSONObject("response");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                JSONObject response = null;
+                                try {
+                                    response = json.getJSONObject("data");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                try {
+
+                                    String verify = response.getString("isverified");
+                                    String str_value = json_LL.getString("message");
+                                    String profile_pic = response.getString("profile_pic");
+
+                                    edit_profile_pic.putString("profile_pic", profile_pic);
+                                    edit_profile_pic.commit();
+                                    userid = json_LL.getString("userid");
+
+
+                                    if (str_value.equals("User Login Successful")) {
+                                        if (verify.equals("true")) {
+
+                                            edit_userid.putString("userid", userid);
+                                            edit_userid.commit();
+
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+
+                                                        public void onSuccess(String response) {
+                                                            // Hide Progress Dialog
+                                                            //  prgDialog.hide();
                                                             try {
-                                                                json = new JSONObject(String.valueOf(obj));
+                                                                // Extract JSON Object from JSON returned by REST WS
+                                                                JSONObject obj = new JSONObject(response);
+
+
+                                                                JSONObject json = null;
+                                                                try {
+                                                                    json = new JSONObject(String.valueOf(obj));
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+
+
+                                                                /************************* UserDetails start **************************/
+                                                                JSONObject userdetails = null;
+                                                                try {
+                                                                    userdetails = json.getJSONObject("details");
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+
+                                                                try {
+                                                                    //Getting information form the Json Response object
+                                                                    String firstname_user = userdetails.getString("fname");
+                                                                    String lastname_user = userdetails.getString("lname");
+
+                                                                    //Save the data in sharedPreference
+                                                                    edit_user_detals.putString("firstname", firstname_user);
+                                                                    edit_user_detals.putString("lastname", lastname_user);
+                                                                    edit_user_detals.commit();
+
+
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+
+                                                                JSONArray cast = userdetails.getJSONArray("user_pic");
+                                                                edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                                                                edit_user_pic.commit();
+
+                                                                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                                                List<String> allid = new ArrayList<String>();
+                                                                List<String> allurl = new ArrayList<String>();
+
+                                                                for (int i = 0; i < cast.length(); i++) {
+                                                                    JSONObject actor = cast.getJSONObject(i);
+                                                                    String id = actor.getString("id");
+                                                                    String url = actor.getString("url");
+                                                                    allid.add(id);
+                                                                    allurl.add(url);
+                                                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                                                    Log.d("Type", cast.getString(i));
+                                                                }
+                                                                for (int j = 0; j < allid.size(); j++) {
+                                                                    edit_user_pic.putString("id_" + j, allid.get(j));
+                                                                    edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                                                                }
+                                                                edit_user_pic.commit();
+                                                                edit_user_pic.commit();
+
+
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
                                                             }
 
 
-                                                            /************************* UserDetails start **************************/
-                                                            JSONObject userdetails = null;
-                                                            try {
-                                                                userdetails = json.getJSONObject("details");
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
+                                                            Intent i = new Intent(getApplicationContext(), Screen16.class);
+                                                            startActivity(i);
+                                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                            finish();
+                                                            session.setLogin(true);
+                                                            Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                                                            toast.setGravity(Gravity.CENTER, 0, 0);
+                                                            toast.show();
+                                                            dialog.dismiss();
+                                                            progressDialog.dismiss();
 
-                                                            try {
-                                                                //Getting information form the Json Response object
-                                                                String firstname_user = userdetails.getString("fname");
-                                                                String lastname_user = userdetails.getString("lname");
-
-                                                                //Save the data in sharedPreference
-                                                                edit_user_detals.putString("firstname", firstname_user);
-                                                                edit_user_detals.putString("lastname", lastname_user);
-                                                                edit_user_detals.commit();
-
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-
-                                                            JSONArray cast = userdetails.getJSONArray("user_pic");
-                                                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                                                            edit_user_pic.commit();
-
-                                                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                                            List<String> allid = new ArrayList<String>();
-                                                            List<String> allurl = new ArrayList<String>();
-
-                                                            for (int i = 0; i < cast.length(); i++) {
-                                                                JSONObject actor = cast.getJSONObject(i);
-                                                                String id = actor.getString("id");
-                                                                String url = actor.getString("url");
-                                                                allid.add(id);
-                                                                allurl.add(url);
-                                                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                                                Log.d("Type", cast.getString(i));
-                                                            }
-                                                            for (int j = 0; j < allid.size(); j++) {
-                                                                edit_user_pic.putString("id_" + j, allid.get(j));
-                                                                edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                                                            }
-                                                            edit_user_pic.commit();
-                                                            edit_user_pic.commit();
-
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
                                                         }
 
-
-                                                                        Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                                                        startActivity(i);
-                                                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                                                        finish();
-                                                                        session.setLogin(true);
-                                                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
-                                                                        toast.setGravity(Gravity.CENTER, 0, 0);
-                                                                        toast.show();
-                                                                        dialog.dismiss();
-                                                                        progressDialog.dismiss();
-
-                                                    }
-
-                                                });
+                                                    });
 
 
+                                        } else {
+                                            Intent i = new Intent(getApplicationContext(), Screen3a.class);
+                                            startActivity(i);
+                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                            Toast.makeText(MainActivity.this, "Please verify your account...!", Toast.LENGTH_LONG).show();
 
+                                            progressDialog.dismiss();
+                                        }
                                     } else {
-                                        Intent i = new Intent(getApplicationContext(), Screen3a.class);
-                                        startActivity(i);
-                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                        Toast.makeText(MainActivity.this, "Please verify your account...!", Toast.LENGTH_LONG).show();
-
+                                        Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
                                         progressDialog.dismiss();
                                     }
-                                } else {
-                                    Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
-                                    progressDialog.dismiss();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
 
 
-                        } else
+                            } else
 
-                        {
+                            {
 //                            progressDialog.dismiss();
-                            Toast toast = Toast.makeText(getApplicationContext(), "Enter Credentials...! ", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
+                                Toast toast = Toast.makeText(getApplicationContext(), "Enter Credentials...! ", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
 
+                            }
                         }
-                    }
 
-                });
-                // dialog.show();
+                    });
+                    // dialog.show();
 
-
+                } else {
+                    Splashscreen dia = new Splashscreen();
+                    dia.Connectivity_Dialog_with_refresh(MainActivity.this);
+                }
             }
         });
         mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Connectivity_Checking.isConnectingToInternet()) {
                 if (v == mail) {
                     final Dialog dialog = new Dialog(MainActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -836,6 +839,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     dialog.show();
 
                 }
+            } else {
+                Splashscreen dia = new Splashscreen();
+                dia.Connectivity_Dialog_with_refresh(MainActivity.this);
+            }
             }
         });
     }

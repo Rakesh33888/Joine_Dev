@@ -173,34 +173,42 @@ public class Single_group_Message extends Fragment    {
             @Override
             public void onClick(View v) {
 
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                dialog.setContentView(R.layout.custom_dialog);
-                dialog.getWindow().setBackgroundDrawable(
-                        new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-                yes = (Button) dialog.findViewById(R.id.yes);
-                no = (Button) dialog.findViewById(R.id.no);
-                yes.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-
-                        FnLeaveChat();
+                if (Connectivity_Checking.isConnectingToInternet()) {
 
 
-                       dialog.dismiss();
-                    }
-                });
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                    final Dialog dialog = new Dialog(getActivity());
+                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    dialog.setContentView(R.layout.custom_dialog);
+                    dialog.getWindow().setBackgroundDrawable(
+                            new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                    yes = (Button) dialog.findViewById(R.id.yes);
+                    no = (Button) dialog.findViewById(R.id.no);
+                    yes.setOnClickListener(new View.OnClickListener() {
 
+                        @Override
+                        public void onClick(View v) {
+
+                            FnLeaveChat();
+                            dialog.dismiss();
+                        }
+                    });
+                    no.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+
+
+                } else {
+                    Splashscreen dia = new Splashscreen();
+                    dia.Connectivity_Dialog_with_refresh(getActivity());
+                    progressDialog.dismiss();
+                }
 
 
 
@@ -214,95 +222,106 @@ public class Single_group_Message extends Fragment    {
       //  String act_id = activity_id.getString("activity_id", "");
       //  String act_id ="5762432ed72fc30d6853e39b";
         //populate the date from the activity
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(URL_GetActivityDetailsForChat + act_id,
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
 
-                    public void onSuccess(String response) {
-                        // Hide Progress Dialog
-                        //  prgDialog.hide();
-                        try {
-                            // Extract JSON Object from JSON returned by REST WS
-                            JSONObject obj = new JSONObject(response);
+        if (Connectivity_Checking.isConnectingToInternet()) {
 
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(URL_GetActivityDetailsForChat + act_id,
+                    new AsyncHttpResponseHandler() {
+                        // When the response returned by REST has Http response code '200'
 
-                            JSONObject json = null;
+                        public void onSuccess(String response) {
+                            // Hide Progress Dialog
+                            //  prgDialog.hide();
                             try {
-                                json = new JSONObject(String.valueOf(obj));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                // Extract JSON Object from JSON returned by REST WS
+                                JSONObject obj = new JSONObject(response);
 
 
-                            /************************* UserDetails start **************************/
-                            JSONObject apiResponse = null;
-                            try {
-                                apiResponse = json.getJSONObject("response");
-                                Log.i("GetDetailsForChat",String.valueOf(apiResponse));
-                                String ststus =apiResponse.getString("status");
-                                if(ststus.equals("200")){
-                                    JSONArray arrGroup = json.getJSONArray("group_list");
-
-                                    String activutyImage = json.getString("activity_pic");
-                                    String txtActivityName = json.getString("activity_title");
-                                    Integer txtActivityTime = json.getInt("activity_time");
-                                    String txtAddress = json.getString("activity_address");
-
-                                    Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).placeholder(R.drawable.butterfly)
-                                            .resize(60, 60)
-                                            .centerCrop().into(createrimage);
-
-                                    tvActivityName.setText(txtActivityName);
-
-                                    long unixSeconds = Long.parseLong(String.valueOf(txtActivityTime));
-                                    Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
-                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                                    String value = sdf.format(date2);
+                                JSONObject json = null;
+                                try {
+                                    json = new JSONObject(String.valueOf(obj));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
 
-                                    tvActivityTime.setText(String.valueOf(value));
+                                /************************* UserDetails start **************************/
+                                JSONObject apiResponse = null;
+                                try {
+                                    apiResponse = json.getJSONObject("response");
+                                    Log.i("GetDetailsForChat",String.valueOf(apiResponse));
+                                    String ststus =apiResponse.getString("status");
+                                    if(ststus.equals("200")){
+                                        JSONArray arrGroup = json.getJSONArray("group_list");
+
+                                        String activutyImage = json.getString("activity_pic");
+                                        String txtActivityName = json.getString("activity_title");
+                                        Integer txtActivityTime = json.getInt("activity_time");
+                                        String txtAddress = json.getString("activity_address");
+
+                                        Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).placeholder(R.drawable.butterfly)
+                                                .into(createrimage);
+
+                                        tvActivityName.setText(txtActivityName);
+
+                                        long unixSeconds = Long.parseLong(String.valueOf(txtActivityTime));
+                                        Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+                                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                        sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                        String value = sdf.format(date2);
 
 
-                                    tvActivityAddress.setText(txtAddress);
-
-                                    for(int i=0; i<arrGroup.length(); i++) {
+                                        tvActivityTime.setText(String.valueOf(value));
 
 
-                                        JSONObject row = arrGroup.getJSONObject(i);
-                                        if(row.getBoolean("isowner")){
-                                            tvHostedByName.setText(row.getString("user_name"));
-                                            Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
-                                                    .resize(30, 30)
-                                                    .centerCrop().into(owner);
+                                        tvActivityAddress.setText(txtAddress);
+
+                                        for(int i=0; i<arrGroup.length(); i++) {
+
+
+                                            JSONObject row = arrGroup.getJSONObject(i);
+                                            if(row.getBoolean("isowner")){
+                                                tvHostedByName.setText(row.getString("user_name"));
+                                                Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
+                                                        .into(owner);
+                                            }
+                                            else
+                                            {
+                                                Book book = new Book();
+                                                book.setImageUrl(row.getString("profile_pic"));
+                                                other_user_id.add(row.getString(userid));
+                                                books.add(book);
+
+                                            }
+
                                         }
-                                        else
-                                        {
-                                            Book book = new Book();
-                                            book.setImageUrl(row.getString("profile_pic"));
-                                            other_user_id.add(row.getString(userid));
-                                            books.add(book);
-
-                                        }
-
+                                        adapter.notifyDataSetChanged();
+                                        progressDialog.dismiss();
                                     }
-                                    adapter.notifyDataSetChanged();
-                                    progressDialog.dismiss();
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
 
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            progressDialog.dismiss();
                         }
-                        progressDialog.dismiss();
-                    }
-                });
+                    });
+
+
+
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
+        }
+
+
 
 
         return v;

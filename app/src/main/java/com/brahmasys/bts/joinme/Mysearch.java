@@ -459,7 +459,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
     //Calling API in this fn to save the User Preference
     public  void FnPostRequest(String distanceStr,String select_date,String user_id){
-
+        if(Connectivity_Checking.isConnectingToInternet()) {
         new Custom_Progress(getActivity());
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -499,6 +499,10 @@ public class Mysearch extends android.support.v4.app.Fragment {
             json_LL = json.getJSONObject("message");
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
         }
 
     }

@@ -26,6 +26,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by ajay on 7/23/2016.
  */
@@ -89,11 +91,10 @@ public class ReportFragment extends android.support.v4.app.Fragment {
         buttonsnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editTextproblem.getText().toString().length()>2) {
 
+                if (Connectivity_Checking.isConnectingToInternet()) {
 
-
-
+                    if (editTextproblem.getText().toString().length()>2) {
 
                         JSONObject jsonObjSend = new JSONObject();
                         try {
@@ -139,14 +140,20 @@ public class ReportFragment extends android.support.v4.app.Fragment {
                         }
 
 
-
-
                     }
 
-                else
-                {
-                    Toast.makeText(getActivity(), "Please describe the problem...!", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Please describe the problem...!", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } else {
+                    Splashscreen dia = new Splashscreen();
+                    dia.Connectivity_Dialog_with_refresh(getActivity());
+
                 }
+
             }
         });
 

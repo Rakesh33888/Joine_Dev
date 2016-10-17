@@ -92,89 +92,99 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         report_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager=getFragmentManager();
-                ReportFragment report =new ReportFragment();
+                fragmentManager = getFragmentManager();
+                ReportFragment report = new ReportFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.flContent,report)
+                        .replace(R.id.flContent, report)
                         .addToBackStack(null)
                         .commit();
             }
         });
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + owner_id,
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
+        if (Connectivity_Checking.isConnectingToInternet()) {
 
-                    public void onSuccess(String response) {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + owner_id,
+                    new AsyncHttpResponseHandler() {
+                        // When the response returned by REST has Http response code '200'
 
-                        try {
-                            // Extract JSON Object from JSON returned by REST WS
-                            JSONObject obj = new JSONObject(response);
-                            JSONObject json = null;
-                            try {
-                                json = new JSONObject(String.valueOf(obj));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            /************************* UserDetails start **************************/
-                            JSONObject userdetails = null;
-                            try {
-                                userdetails = json.getJSONObject("details");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        public void onSuccess(String response) {
 
                             try {
-                                //Getting information form the Json Response object
-                                firstname = userdetails.getString("fname");
-                                lastname = userdetails.getString("lname");
-                                about = userdetails.getString("about");
-                                age.setText(userdetails.getString("age"));
-                                name.setText(firstname + " " + lastname);
-                                description.setText(about);
-                               // owner_name.setText("Hello"+" "+userdetails.getString("fname")+"!");
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            JSONArray cast = userdetails.getJSONArray("user_pic");
+                                // Extract JSON Object from JSON returned by REST WS
+                                JSONObject obj = new JSONObject(response);
+                                JSONObject json = null;
+                                try {
+                                    json = new JSONObject(String.valueOf(obj));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
 
-                            for (int i = 0; i < cast.length(); i++) {
-                                JSONObject actor = cast.getJSONObject(i);
+                                /************************* UserDetails start **************************/
+                                JSONObject userdetails = null;
+                                try {
+                                    userdetails = json.getJSONObject("details");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
-                                String url = actor.getString("url");
+                                try {
+                                    //Getting information form the Json Response object
+                                    firstname = userdetails.getString("fname");
+                                    lastname = userdetails.getString("lname");
+                                    about = userdetails.getString("about");
+                                    age.setText(userdetails.getString("age"));
+                                    name.setText(firstname + " " + lastname);
+                                    description.setText(about);
+                                    // owner_name.setText("Hello"+" "+userdetails.getString("fname")+"!");
 
-                                url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
-                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
-                                Log.d("Type", cast.getString(i));
-                            }
-                            for (String name : url_maps.keySet()) {
-                                TextSliderView textSliderView = new TextSliderView(getActivity());
-                                // initialize a SliderLayout
-                                textSliderView.image(url_maps.get(name))
-                                        .setScaleType(BaseSliderView.ScaleType.Fit)
-                                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                                                                      @Override
-                                                                      public void onSliderClick(BaseSliderView baseSliderView) {
-                                                                          // some method
+                                JSONArray cast = userdetails.getJSONArray("user_pic");
+
+
+                                for (int i = 0; i < cast.length(); i++) {
+                                    JSONObject actor = cast.getJSONObject(i);
+
+                                    String url = actor.getString("url");
+
+                                    url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
+                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                    Log.d("Type", cast.getString(i));
+                                }
+                                for (String name : url_maps.keySet()) {
+                                    TextSliderView textSliderView = new TextSliderView(getActivity());
+                                    // initialize a SliderLayout
+                                    textSliderView.image(url_maps.get(name))
+                                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                                                          @Override
+                                                                          public void onSliderClick(BaseSliderView baseSliderView) {
+                                                                              // some method
+                                                                          }
                                                                       }
-                                                                  }
-                                        );
-                                mDemoSlider.addSlider(textSliderView);
+                                            );
+                                    mDemoSlider.addSlider(textSliderView);
 
+                                }
+                                progressDialog.dismiss();
+                                //pd.hide();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            progressDialog.dismiss();
-                            //pd.hide();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                });
+                    });
+
+
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
+        }
+
 
         return  v;
     }

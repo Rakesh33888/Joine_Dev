@@ -177,7 +177,16 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         btnJoineActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FnJoinActivvity();
+
+                if (Connectivity_Checking.isConnectingToInternet()) {
+
+                    FnJoinActivvity();
+
+                } else {
+                    Splashscreen dia = new Splashscreen();
+                    dia.Connectivity_Dialog_with_refresh(getActivity());
+                    progressDialog.dismiss();
+                }
                  }
         });
 
@@ -213,132 +222,135 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                         .commit();
 
 
-
-
             }
         });
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + 0 + "/" + 0,
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http response code '200'
-
-                    public void onSuccess(String response) {
-                        // Hide Progress Dialog
-                        //  prgDialog.hide();
-                        try {
-                            // Extract JSON Object from JSON returned by REST WS
-                            JSONObject obj = new JSONObject(response);
+        if (Connectivity_Checking.isConnectingToInternet()) {
 
 
-                            JSONObject json = null;
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + 0 + "/" + 0,
+                    new AsyncHttpResponseHandler() {
+                        // When the response returned by REST has Http response code '200'
+
+                        public void onSuccess(String response) {
+                            // Hide Progress Dialog
+                            //  prgDialog.hide();
                             try {
-                                json = new JSONObject(String.valueOf(obj));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                // Extract JSON Object from JSON returned by REST WS
+                                JSONObject obj = new JSONObject(response);
 
 
-                            /************************* UserDetails start **************************/
-                            JSONObject userdetails = null;
-                            try {
-                                userdetails = json.getJSONObject("act_details");
-
-                                Log.w("ACTIVITY DETAILS", String.valueOf(userdetails));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                //Getting information form the Json Response object
-                                String cost = userdetails.getString("activity_cost");
-                                String distance = userdetails.getString("activity_distance");
-                                String duration = userdetails.getString("activity_duration");
-                                String limit = userdetails.getString("participant_limit");
-                                String activity_name = userdetails.getString("activity_name");
-                                String owner_name = userdetails.getString("activity_owner_name");
-                                String owner_pic = userdetails.getString("activity_owner_pic");
-                                String rating = userdetails.getString("activity_rating");
-                                String review = userdetails.getString("activity_review");
-                                String time = userdetails.getString("activity_time");
-                                String activity_address=userdetails.getString("activity_Adress");
-                                String joined = userdetails.getString("participant_joined");
-                                String icon1 = userdetails.getString("acitivity_icon");
-                                owner_id = userdetails.getString("activity_owner_id");
-                                String activity_id = userdetails.getString("activity_id");
-
-                                acitvityname.setText(activity_name);
-                                distancefromnearby.setText(distance+" at "+activity_address);
-                                owner_name1.setText("Created by " + owner_name);
-                                uptopeoples.setText("Up to " + limit + " peoples:");
-                                currentpeoples.setText("Currently have " + joined);
-                                costtext.setText("Cost " + cost);
-                                timetext.setText("Takes " + duration + "  hours");
-
-                                //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
-                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly)
-                                        .resize(60, 60)
-                                        .centerCrop().into(icon);
-                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly)
-                                        .resize(60, 60)
-                                        .centerCrop()
-                                        .into(createrimage);
-
-                                long unixSeconds = Long.parseLong(time);
-                                Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
-                                sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                                String value = sdf.format(date2);
-
-
-
-                                timetextview.setText(value);
-                                reviews.setText(review + " reviews");
-                                minimumRating.setRating(Float.parseFloat(rating));
-
-
-                                JSONArray cast = userdetails.getJSONArray("activity_pics");
-
-
-                                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                List<String> allid = new ArrayList<String>();
-                                List<String> allurl = new ArrayList<String>();
-
-                                for (int i = 0; i < cast.length(); i++) {
-                                    JSONObject actor = cast.getJSONObject(i);
-                                    String id = actor.getString("id");
-                                    String url = actor.getString("url");
-                                    allid.add(id);
-                                    url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
-                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-                                    Log.d("Type", cast.getString(i));
+                                JSONObject json = null;
+                                try {
+                                    json = new JSONObject(String.valueOf(obj));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
 
-                                for (String name : url_maps.keySet()) {
-                                    TextSliderView textSliderView = new TextSliderView(getActivity());
-                                    // initialize a SliderLayout
-                                    textSliderView.image(url_maps.get(name))
-                                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
-                                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                                                                          @Override
-                                                                          public void onSliderClick(BaseSliderView baseSliderView) {
-                                                                              // some method
+
+                                /************************* UserDetails start **************************/
+                                JSONObject userdetails = null;
+                                try {
+                                    userdetails = json.getJSONObject("act_details");
+
+                                    Log.w("ACTIVITY DETAILS", String.valueOf(userdetails));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                try {
+                                    //Getting information form the Json Response object
+                                    String cost = userdetails.getString("activity_cost");
+                                    String distance = userdetails.getString("activity_distance");
+                                    String duration = userdetails.getString("activity_duration");
+                                    String limit = userdetails.getString("participant_limit");
+                                    String activity_name = userdetails.getString("activity_name");
+                                    String owner_name = userdetails.getString("activity_owner_name");
+                                    String owner_pic = userdetails.getString("activity_owner_pic");
+                                    String rating = userdetails.getString("activity_rating");
+                                    String review = userdetails.getString("activity_review");
+                                    String time = userdetails.getString("activity_time");
+                                    String activity_address=userdetails.getString("activity_Adress");
+                                    String joined = userdetails.getString("participant_joined");
+                                    String icon1 = userdetails.getString("acitivity_icon");
+                                    owner_id = userdetails.getString("activity_owner_id");
+                                    String activity_id = userdetails.getString("activity_id");
+
+                                    acitvityname.setText(activity_name);
+                                    distancefromnearby.setText(distance+" at "+activity_address);
+                                    owner_name1.setText("Created by " + owner_name);
+                                    uptopeoples.setText("Up to " + limit + " peoples:");
+                                    currentpeoples.setText("Currently have " + joined);
+                                    costtext.setText("Cost " + cost);
+                                    timetext.setText("Takes " + duration + "  hours");
+
+                                    //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
+                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
+                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
+
+                                    long unixSeconds = Long.parseLong(time);
+                                    Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                    String value = sdf.format(date2);
+
+
+
+                                    timetextview.setText(value);
+                                    reviews.setText(review + " reviews");
+                                    minimumRating.setRating(Float.parseFloat(rating));
+
+
+                                    JSONArray cast = userdetails.getJSONArray("activity_pics");
+
+
+                                    //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                    List<String> allid = new ArrayList<String>();
+                                    List<String> allurl = new ArrayList<String>();
+
+                                    for (int i = 0; i < cast.length(); i++) {
+                                        JSONObject actor = cast.getJSONObject(i);
+                                        String id = actor.getString("id");
+                                        String url = actor.getString("url");
+                                        allid.add(id);
+                                        url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
+                                        //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+                                        Log.d("Type", cast.getString(i));
+                                    }
+
+                                    for (String name : url_maps.keySet()) {
+                                        TextSliderView textSliderView = new TextSliderView(getActivity());
+                                        // initialize a SliderLayout
+                                        textSliderView.image(url_maps.get(name))
+                                                .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                                                .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                                                              @Override
+                                                                              public void onSliderClick(BaseSliderView baseSliderView) {
+                                                                                  // some method
+                                                                              }
                                                                           }
-                                                                      }
-                                            );
-                                    mDemoSlider.addSlider(textSliderView);
+                                                );
+                                        mDemoSlider.addSlider(textSliderView);
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            progressDialog.dismiss();
                         }
-                        progressDialog.dismiss();
-                    }
-                });
+                    });
+
+
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
+        }
+
         return v;
     }
 

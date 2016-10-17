@@ -122,7 +122,8 @@
                     android:layout_weight="0.06"
                     android:layout_below="@+id/frameLayout5"
                     android:layout_centerHorizontal="true"
-                    android:layout_alignStart="@+id/frameLayout5">
+                    android:layout_alignStart="@+id/frameLayout5"
+                    android:layout_marginTop="15dp">
 
                     <ImageView
                         android:layout_width="47dp"
@@ -190,7 +191,7 @@
                     android:background="#24ededed"
                     android:id="@+id/createrprlfram"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="0.06"
                     android:layout_below="@+id/frameLayoutactity"
                     android:layout_alignParentStart="true">
