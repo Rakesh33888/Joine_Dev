@@ -61,9 +61,10 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     FragmentManager fragmentManager;
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
+    private static final String LAT_LNG = "lat_lng";
     public static final String URL_AddMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/";
-    SharedPreferences user_id,activity_id;
-    SharedPreferences.Editor edit_userid,edit_activity_id;
+    SharedPreferences user_id,activity_id,lat_lng;
+    SharedPreferences.Editor edit_userid,edit_activity_id,edit_lat_lng;
     String lat="0",lon="0";
     RatingBar minimumRating;
     private SliderLayout mDemoSlider;
@@ -119,7 +120,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
-
+        lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
+        edit_lat_lng = lat_lng.edit();
         mDemoSlider = (SliderLayout) v.findViewById(R.id.slider);
 
         url_maps = new HashMap<String, String>();
@@ -251,7 +253,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         if (Connectivity_Checking.isConnectingToInternet()) {
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + 0 + "/" + 0,
+            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + lat_lng.getString("lng", "0.0") + "/" +lat_lng.getString("lat", "0.0"),
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 

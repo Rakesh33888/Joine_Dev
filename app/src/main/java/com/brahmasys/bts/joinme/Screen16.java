@@ -124,7 +124,7 @@ public class Screen16 extends AppCompatActivity implements
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client2;
+  //  private GoogleApiClient client2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,8 +156,8 @@ public class Screen16 extends AppCompatActivity implements
         edit_lat_lng.putString("lng", String.valueOf(longitude));
         edit_lat_lng.commit();
 
-        lat = lat_lng.getString("lat", "0000");
-        lon = lat_lng.getString("lng", "0000");
+        lat = lat_lng.getString("lat", "0.0");
+        lon = lat_lng.getString("lng", "0.0");
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
@@ -198,7 +198,7 @@ public class Screen16 extends AppCompatActivity implements
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        //client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -211,21 +211,21 @@ public class Screen16 extends AppCompatActivity implements
         super.onStart();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client2.connect();
+       // client2.connect();
         GetUserData();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Screen16 Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client2, viewAction);
+//        Action viewAction = Action.newAction(
+//                Action.TYPE_VIEW, // TODO: choose an action type.
+//                "Screen16 Page", // TODO: Define a title for the content shown.
+//                // TODO: If you have web page content that matches this app activity's content,
+//                // make sure this auto-generated web page URL is correct.
+//                // Otherwise, set the URL to null.
+//                Uri.parse("http://host/path"),
+//                // TODO: Make sure this auto-generated app URL is correct.
+//                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
+//        );
+//        AppIndex.AppIndexApi.start(client2, viewAction);
     }
 
     @Override
@@ -833,17 +833,17 @@ public void GetUserData()
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Screen16 Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client2, viewAction);
-        client2.disconnect();
+//        Action viewAction = Action.newAction(
+//                Action.TYPE_VIEW, // TODO: choose an action type.
+//                "Screen16 Page", // TODO: Define a title for the content shown.
+//                // TODO: If you have web page content that matches this app activity's content,
+//                // make sure this auto-generated web page URL is correct.
+//                // Otherwise, set the URL to null.
+//                Uri.parse("http://host/path"),
+//                // TODO: Make sure this auto-generated app URL is correct.
+//                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
+//        );
+//        AppIndex.AppIndexApi.end(client2, viewAction);
+//        client2.disconnect();
     }
 }

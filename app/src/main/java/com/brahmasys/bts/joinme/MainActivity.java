@@ -17,7 +17,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.Settings;
+
+
 import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -33,51 +34,69 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-
-
 import android.widget.TextView;
-
 import android.widget.Toast;
 
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
+
 public class MainActivity extends Activity implements View.OnClickListener {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    Button facebook, mail,b4,b5;
+    Button facebook_btn, mail,b4,b5;
     Button already_member,show;
     SessionManager session;
     RelativeLayout relativemain;
-
+   // Button fbMyProfileButton;
     TextView  tv_profile_name ;
 
-//    LoginButton loginButton;
+   LoginButton loginButton;
 //
-//    CallbackManager callbackManager;
-   // private AccessTokenTracker accessTokenTracker;
+   CallbackManager callbackManager;
+   private AccessTokenTracker accessTokenTracker;
 
     String email_json,username_json, socialId_json;
+
+
 
 
     private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
     private static final String TAG = "SignUp";
     private static final String URL = "http://52.37.136.238/JoinMe/User.svc/SignUp";
-
     private static final String TAG1 = "Login";
     private static final String URL1 = "http://52.37.136.238/JoinMe/User.svc/Login";
+    private static final String TAG2 = "ResgisterSocialMedia";
+    private static final String URL2 = "http://52.37.136.238/JoinMe/User.svc/ResgisterwithSocialMedia";
+
    public  static final String TOKEN_ID = "token";
 
     String deviceuid,device_type="android";
@@ -98,27 +117,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-    //    FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
-
-
+        AppEventsLogger.activateApp(this);
        //  Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
 
 
 
         // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
 
-        //AppEventsLogger.activateApp(this);
+
 
 
         Marshmallow_Permissions.verifyStoragePermissions(MainActivity.this);
        // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-
         tv_profile_name = (TextView) findViewById(R.id.textView31);
+       // fbMyProfileButton = (Button) findViewById(R.id.details);
+        facebook_btn = (Button) findViewById(R.id.facebook);
 
-        facebook = (Button) findViewById(R.id.facebook);
         mail = (Button) findViewById(R.id.mail);
         session = new SessionManager(getApplicationContext());
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
@@ -140,11 +158,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         relativemain = (RelativeLayout) findViewById(R.id.relativemain);
         /******* Facebook *******/
-//        callbackManager = CallbackManager.Factory.create();
-//        loginButton = (LoginButton) findViewById(R.id.login_button);
-//      //  loginButton.setReadPermissions(Arrays.asList("public_profile", "user_friends", "email", "user_birthday"));
-//        loginButton.setReadPermissions(Arrays.asList("user_birthday"));
-        facebook.setOnClickListener((View.OnClickListener) MainActivity.this);
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_friends"));
+       // loginButton.setReadPermissions(Arrays.asList("user_birthday"));
+         facebook_btn.setOnClickListener((View.OnClickListener) MainActivity.this);
         relativemain.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent ev) {
@@ -165,6 +183,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 tv_profile_name.setText(facebook_det.getString("email","null"));
             }
         });
+
+//        facebook_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+
+
+
 //        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 //
 //            @Override
@@ -174,19 +203,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                    @Override
 //                    public void onCompleted(JSONObject object, GraphResponse response) {
 //
-//                        final JSONObject json = response.getJSONObject();
-//                        Log.e("LoginActivity", response.toString());
+//                      //  final JSONObject json = response.getJSONObject();
+//                        Log.e("LoginActivity", object.toString());
 //
 //                        try {
-//                            if (json != null) {
-//                                String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + json.getString("id");
-//                                email_json = json.getString("email");
-//                                final String username_json = json.getString("name");
-//                                final String socialId_json = json.getString("id");
-//                                final String gender = json.getString("gender");
+//                            if (object != null) {
+//                              //  String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + json.getString("id");
+//                                email_json = object.getString("email");
+//                                final String username_json = object.getString("name");
+//                                final String socialId_json = object.getString("id");
+//                                final String gender = object.getString("gender");
 //                             //   final String dob    =json.getString("birthday");
-//                                final String firstname = json.getString("first_name");
-//                                final String lastname = json.getString("last_name");
+//                                final String firstname = object.getString("first_name");
+//                                final String lastname = object.getString("last_name");
 //                                edit_facebook_det.putString("email", email_json);
 //                                edit_facebook_det.commit();
 //                                Log.e("email", email_json);
@@ -230,7 +259,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
 
-        deviceuid = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceuid = android.provider.Settings.Secure.getString(MainActivity.this.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(MainActivity.this,Screen16.class);
@@ -289,6 +318,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     }
+
+
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -342,36 +374,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //callbackManager.onActivityResult(requestCode, resultCode, data);
-//        loginButton.performClick();
-//        if(AccessToken.getCurrentAccessToken() != null){
-//            // LoginManager.getInstance().logOut();
-//
-//            Intent intent = getIntent();
-//            finish();
-//            overridePendingTransition(0, 0);
-//            intent.addFlags(Intent.FLAG_FROM_BACKGROUND);//FLAG_ACTIVITY_NO_ANIMATION
-//            startActivity(intent);
-//            finish();
-//
-//
-//
-//
-//        }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, requestCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
     }
 
+
     public void onClick(View v) {
-        if (v == facebook) {
-        //   loginButton.performClick();
-//            if(AccessToken.getCurrentAccessToken() != null){
-//
-//
-//                // LoginManager.getInstance().logOut();
-//
-//            }
+        if (v == facebook_btn) {
+
+           loginButton.performClick();
+            if(AccessToken.getCurrentAccessToken() != null){
+
+
+
+
+            }
         }
     }
     @Override
@@ -434,6 +453,202 @@ public class MainActivity extends Activity implements View.OnClickListener {
             edit_lat_lng.putString("lat",String.valueOf(latitude));
             edit_lat_lng.putString("lng", String.valueOf(longitude));
             edit_lat_lng.commit();
+
+        loginButton.setLoginBehavior(LoginBehavior.WEB_ONLY);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = loginResult.getAccessToken();
+                Profile profile = Profile.getCurrentProfile();
+
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.e("Result", String.valueOf(object));
+
+                        try {
+                            String email = object.getString("email");
+                            String id = object.getString("id");
+                            String gender = object.getString("gender");
+                            String imageurl = "https://graph.facebook.com/" + id + "/picture?type=large";
+                            String firstname = object.getString("first_name");
+                            String lastname = object.getString("last_name");
+
+                            // tv_profile_name.setText(gender);
+
+
+
+                            JSONObject jsonObjSend = new JSONObject();
+                            try {
+                                // Add key/value pairs
+                                jsonObjSend.put("device_token", token_id.getString("token", "null"));
+                                jsonObjSend.put("device_type", device_type);
+                                jsonObjSend.put("deviceid", deviceuid);
+                                jsonObjSend.put("login_type", "fb");
+                                jsonObjSend.put("social_id", id);
+                                jsonObjSend.put("lat", latitude);
+                                jsonObjSend.put("lon", longitude);
+                                jsonObjSend.put("email", "");
+                                jsonObjSend.put("password", "");
+                                //  hideDialog();
+                                Log.i(TAG1, jsonObjSend.toString(9));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL1, jsonObjSend);
+
+                            JSONObject json = null;
+                            try {
+                                json = new JSONObject(String.valueOf(jsonObjRecv));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            JSONObject json_LL = null;
+                            try {
+                                json_LL = json.getJSONObject("response");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            JSONObject response1 = null;
+                            try {
+                                response1 = json.getJSONObject("data");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                String str_value = json_LL.getString("message");
+                                String profile_pic = response1.getString("profile_pic");
+                                edit_profile_pic.putString("profile_pic", profile_pic);
+                                edit_profile_pic.commit();
+                                userid = json_LL.getString("userid");
+                                if (str_value.equals("User Login Successful")) {
+                                        edit_userid.putString("userid", userid);
+                                        edit_userid.commit();
+                                                        Intent i = new Intent(getApplicationContext(), Screen16.class);
+                                                        startActivity(i);
+                                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                        finish();
+                                                        session.setLogin(true);
+                                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                                        toast.show();
+                                                //        progressDialog.dismiss();
+                                } else {
+
+                                    Toast.makeText(MainActivity.this, "Available", Toast.LENGTH_SHORT).show();
+
+                                    JSONObject jsonObjSend1 = new JSONObject();
+                                    try {
+                                        // Add key/value pairs
+//                                        Log.e("Token", token_id.getString("token", "null"));
+//                                        Log.e("device_type", device_type);
+//                                        Log.e("deviceuid", deviceuid);
+//                                        Log.e("Lat", String.valueOf(latitude));
+//                                        Log.e("Lng",String.valueOf(longitude));
+//                                        Log.e("socialid", id);
+//                                        Log.e("email", email);
+//                                        Log.e("firstname", firstname);
+//                                        Log.e("lastname", lastname);
+//                                        Log.e("gender", gender);
+//                                        Log.e("Profile", imageurl);
+
+                                        jsonObjSend1.put("device_token", token_id.getString("token", "null"));
+                                        jsonObjSend1.put("device_type", device_type);
+                                        jsonObjSend1.put("deviceid", deviceuid);
+                                        jsonObjSend1.put("email", email);
+                                        jsonObjSend1.put("firstname", firstname);
+                                        jsonObjSend1.put("dob","10/Jun/1994");
+                                        jsonObjSend1.put("gender",gender);
+                                        jsonObjSend1.put("lastname",lastname);
+                                        jsonObjSend1.put("lat", String.valueOf(latitude));
+                                        jsonObjSend1.put("lon",String.valueOf(longitude));
+                                        jsonObjSend1.put("pic_url",imageurl);
+                                        jsonObjSend1.put("social_id",id);
+
+                                        Log.i(TAG2, jsonObjSend1.toString(12));
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    JSONObject jsonObjRecv1 = HttpClient.SendHttpPost(URL2, jsonObjSend1);
+
+
+                                    JSONObject json1 = null;
+                                    try {
+                                        json1 = new JSONObject(String.valueOf(jsonObjRecv1));
+                                       String  User_id = json1.getString("userid");
+                                        if (!User_id.equals(""))
+                                        {
+                                            edit_userid.putString("userid", User_id);
+                                            edit_userid.commit();
+
+                                            Intent i = new Intent(getApplicationContext(), Screen16.class);
+                                            startActivity(i);
+                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                            finish();
+                                            session.setLogin(true);
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT);
+                                            toast.setGravity(Gravity.CENTER, 0, 0);
+                                            toast.show();
+
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //  LoginManager.getInstance().logOut();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+
+/**
+ * AccessTokenTracker to manage logout
+ *
+ */
+                accessTokenTracker = new AccessTokenTracker() {
+
+                    @Override
+                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                        if (currentAccessToken == null) {
+                            //   tv_profile_name.setText("");
+                            //  iv_profile_pic.setImageResource(R.drawable.a);
+                        }
+
+                    }
+                };
+
+            }
+
+            @Override
+            public void onCancel() {
+            }
+            @Override
+            public void onError(FacebookException error) {
+            }
+        });
+
+
 
         already_member.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -670,6 +885,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 if (Connectivity_Checking.isConnectingToInternet()) {
                 if (v == mail) {
                     final Dialog dialog = new Dialog(MainActivity.this);
@@ -866,6 +1084,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
+
+
+
 
 
 }
