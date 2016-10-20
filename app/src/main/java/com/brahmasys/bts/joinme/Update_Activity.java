@@ -285,10 +285,30 @@ public class Update_Activity extends Fragment {
                 not_everyone.setVisibility(View.VISIBLE);
                 checkBoxforeveryone.setClickable(true);
                 checkBoxnotforeveryone.setClickable(false);
-                age1.setText(userdetails.getString("participant_age_start"));
-                age2.setText(userdetails.getString("participant_age_end"));
-//                seekBarforage.setMaxValue(Integer.parseInt(userdetails.getString("participant_age_end")));
-//                seekBarforage.setMinValue(Integer.parseInt(userdetails.getString("participant_age_start")))
+
+                String start_age = userdetails.getString("participant_age_start");
+                String End_age = userdetails.getString("participant_age_end");
+
+                Log.e("AGES", start_age + "\n" + End_age);
+                age1.setText(start_age);
+                age2.setText(End_age);
+
+
+
+//                seekBarforage.setMinStartValue(Integer.parseInt(userdetails.getString("participant_age_start")));
+//                seekBarforage.setMaxStartValue(Integer.parseInt(userdetails.getString("participant_age_end")));
+//
+//                seekBarforage.setMaxValue(100);
+//                seekBarforage.setMinValue(0);
+
+                seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+                    @Override
+                    public void valueChanged(Number minValue, Number maxValue) {
+                        age1.setText(String.valueOf(minValue));
+                        age2.setText(String.valueOf(maxValue));
+                    }
+                });
+
                 checkBoxforeveryone.setChecked(false);
                  if (userdetails.getString("participant_gender").equals("male"))
                  {
@@ -516,13 +536,6 @@ public class Update_Activity extends Fragment {
         });
         /******************** CheckBox Functionality End*******************/
 
-        seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                age1.setText(String.valueOf(minValue));
-                age2.setText(String.valueOf(maxValue));
-            }
-        });
 
 
         firstimage.setOnClickListener(new View.OnClickListener() {

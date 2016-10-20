@@ -138,7 +138,7 @@ public class Screen3a extends AppCompatActivity {
 
 
         List day_list = new ArrayList<Integer>();
-        day_list.add(0,"Day");
+        day_list.add(0,"Date");
         for (int i = 1; i <= 31; i++)
         {
             day_list.add(Integer.toString(i));

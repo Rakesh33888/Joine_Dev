@@ -16,6 +16,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.StrictMode;
 
 
@@ -61,6 +62,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,7 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     SessionManager session;
     RelativeLayout relativemain;
    // Button fbMyProfileButton;
-    TextView  tv_profile_name ;
+
 
    LoginButton loginButton;
 //
@@ -85,10 +88,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
    private AccessTokenTracker accessTokenTracker;
 
     String email_json,username_json, socialId_json;
-
-
-
-
     private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
     private static final String TAG = "SignUp";
     private static final String URL = "http://52.37.136.238/JoinMe/User.svc/SignUp";
@@ -96,9 +95,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static final String URL1 = "http://52.37.136.238/JoinMe/User.svc/Login";
     private static final String TAG2 = "ResgisterSocialMedia";
     private static final String URL2 = "http://52.37.136.238/JoinMe/User.svc/ResgisterwithSocialMedia";
-
    public  static final String TOKEN_ID = "token";
-
     String deviceuid,device_type="android";
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
@@ -106,7 +103,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static final String LAT_LNG = "lat_lng";
     public  static final String PROFILE_PIC = "profile_pic";
     public  static final String FACEBOOK_DET = "facebook";
-
     SharedPreferences user_id,user_Details,user_pic,lat_lng,token_id,profile_pic,facebook_det;
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng,edit_token_id,edit_profile_pic,edit_facebook_det;
     String userid,social_id=" ",login_type="regular",device_token;
@@ -121,22 +117,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         AppEventsLogger.activateApp(this);
        //  Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
-
-
-
-        // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
-
-
-
-
         Marshmallow_Permissions.verifyStoragePermissions(MainActivity.this);
-       // getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-        tv_profile_name = (TextView) findViewById(R.id.textView31);
-       // fbMyProfileButton = (Button) findViewById(R.id.details);
         facebook_btn = (Button) findViewById(R.id.facebook);
-
         mail = (Button) findViewById(R.id.mail);
         session = new SessionManager(getApplicationContext());
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
@@ -151,12 +134,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         edit_token_id = token_id.edit();
         profile_pic = getSharedPreferences(PROFILE_PIC, MODE_PRIVATE);
         edit_profile_pic = profile_pic.edit();
-
-
         facebook_det = getSharedPreferences(FACEBOOK_DET, MODE_PRIVATE);
         edit_facebook_det = facebook_det.edit();
-
         relativemain = (RelativeLayout) findViewById(R.id.relativemain);
+
         /******* Facebook *******/
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -177,87 +158,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
         already_member = (Button) findViewById(R.id.show);
 
-        tv_profile_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_profile_name.setText(facebook_det.getString("email","null"));
-            }
-        });
-
-//        facebook_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-
-
-
-//        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//
-//                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-//                    @Override
-//                    public void onCompleted(JSONObject object, GraphResponse response) {
-//
-//                      //  final JSONObject json = response.getJSONObject();
-//                        Log.e("LoginActivity", object.toString());
-//
-//                        try {
-//                            if (object != null) {
-//                              //  String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + json.getString("id");
-//                                email_json = object.getString("email");
-//                                final String username_json = object.getString("name");
-//                                final String socialId_json = object.getString("id");
-//                                final String gender = object.getString("gender");
-//                             //   final String dob    =json.getString("birthday");
-//                                final String firstname = object.getString("first_name");
-//                                final String lastname = object.getString("last_name");
-//                                edit_facebook_det.putString("email", email_json);
-//                                edit_facebook_det.commit();
-//                                Log.e("email", email_json);
-//                                Log.e("user", username_json);
-//                                Log.e("id", socialId_json);
-//                                Log.e("gender", gender);
-//                               //Log.e("dob", dob);
-//                               Log.e("last", lastname);
-//                              Log.e("email", email_json);
-//
-//                                Toast.makeText(MainActivity.this, email_json, Toast.LENGTH_SHORT).show();
-//                            }
-//                            //email.setText(email_json);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                });
-//                Bundle parameters = new Bundle();
-//                parameters.putString("fields", "birthday");
-//                request.setParameters(parameters);
-//                request.executeAsync();
-//
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//
-//            }
-//        });
-
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
 
         deviceuid = android.provider.Settings.Secure.getString(MainActivity.this.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
         if (session.isLoggedIn()) {
@@ -269,13 +173,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
         if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, getApplicationContext(), MainActivity.this)) {
-            fetchLocationData();
+            //fetchLocationData();
         }
         else
         {
             requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, PERMISSION_REQUEST_CODE_LOCATION, getApplicationContext(), MainActivity.this);
         }
-
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -284,11 +187,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCCESS)){
                     //Registration success
                     String token = intent.getStringExtra("token");
-
                     edit_token_id.putString("token",token);
                     edit_token_id.commit();
                     //Toast.makeText(getApplicationContext(), "GCM Token:" + token, Toast.LENGTH_LONG).show();
-
                    // token1.setText(token);
                 } else if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)){
                     //Registration error
@@ -315,11 +216,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Intent itent = new Intent(this, GCMRegistrationIntentService.class);
             startService(itent);
         }
-
-
     }
-
-
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -356,49 +253,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             case PERMISSION_REQUEST_CODE_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    fetchLocationData();
-
+                  //  fetchLocationData();
                 } else {
-
                     Toast.makeText(getApplicationContext(),"Permission Denied, You cannot access location data.",Toast.LENGTH_LONG).show();
-
                 }
                 break;
-
         }
     }
-    private void fetchLocationData() {
-
-    }
-
+//    private void fetchLocationData() {
+//
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, requestCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
     }
-
 
     public void onClick(View v) {
         if (v == facebook_btn) {
-
            loginButton.performClick();
             if(AccessToken.getCurrentAccessToken() != null){
-
-
-
-
             }
         }
     }
     @Override
     protected void onResume() {
         super.onResume();
-
-
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
@@ -408,9 +289,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
       //  Toast.makeText(MainActivity.this, token_id.getString("token","null"), Toast.LENGTH_SHORT).show();
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
-
         }else{
-
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setMessage("Please enable GPS to use this application..")
                     .setCancelable(false)
@@ -420,18 +299,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                     Intent callGPSSettingIntent = new Intent(
                                             android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                     startActivity(callGPSSettingIntent);
-
-
                                 }
                             });
 
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
-
         }
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -447,7 +322,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(location != null){
              latitude = location.getLatitude();
              longitude = location.getLongitude();
-
             //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
         }
             edit_lat_lng.putString("lat",String.valueOf(latitude));
@@ -456,7 +330,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         loginButton.setLoginBehavior(LoginBehavior.WEB_ONLY);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = loginResult.getAccessToken();
@@ -475,10 +348,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             String firstname = object.getString("first_name");
                             String lastname = object.getString("last_name");
 
-                            // tv_profile_name.setText(gender);
-
-
-
+                            progressDialog = ProgressDialog.show(MainActivity.this, null, null, true);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setCancelable(false);
+                            progressDialog.setContentView(R.layout.custom_progress);
+                            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             JSONObject jsonObjSend = new JSONObject();
                             try {
                                 // Add key/value pairs
@@ -528,34 +403,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 if (str_value.equals("User Login Successful")) {
                                         edit_userid.putString("userid", userid);
                                         edit_userid.commit();
-                                                        Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                                        startActivity(i);
-                                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                                        finish();
-                                                        session.setLogin(true);
-                                                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
-                                                        toast.setGravity(Gravity.CENTER, 0, 0);
-                                                        toast.show();
-                                                //        progressDialog.dismiss();
+                                    GetUserDetails(userid);
+
+
+
+                                        //progressDialog.dismiss();
                                 } else {
 
-                                    Toast.makeText(MainActivity.this, "Available", Toast.LENGTH_SHORT).show();
-
+                                  //  Toast.makeText(MainActivity.this, "Available", Toast.LENGTH_SHORT).show();
                                     JSONObject jsonObjSend1 = new JSONObject();
                                     try {
                                         // Add key/value pairs
-//                                        Log.e("Token", token_id.getString("token", "null"));
-//                                        Log.e("device_type", device_type);
-//                                        Log.e("deviceuid", deviceuid);
-//                                        Log.e("Lat", String.valueOf(latitude));
-//                                        Log.e("Lng",String.valueOf(longitude));
-//                                        Log.e("socialid", id);
-//                                        Log.e("email", email);
-//                                        Log.e("firstname", firstname);
-//                                        Log.e("lastname", lastname);
-//                                        Log.e("gender", gender);
-//                                        Log.e("Profile", imageurl);
-
                                         jsonObjSend1.put("device_token", token_id.getString("token", "null"));
                                         jsonObjSend1.put("device_type", device_type);
                                         jsonObjSend1.put("deviceid", deviceuid);
@@ -585,20 +443,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                         {
                                             edit_userid.putString("userid", User_id);
                                             edit_userid.commit();
-
-                                            Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                            startActivity(i);
-                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                            finish();
-                                            session.setLogin(true);
-                                            Toast toast = Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT);
-                                            toast.setGravity(Gravity.CENTER, 0, 0);
-                                            toast.show();
-
-                                        }
-                                        else
-                                        {
-
+                                            GetUserDetails(User_id);
+                                           // progressDialog.dismiss();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -620,14 +466,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
                 request.setParameters(parameters);
                 request.executeAsync();
-
-
 /**
  * AccessTokenTracker to manage logout
  *
  */
                 accessTokenTracker = new AccessTokenTracker() {
-
                     @Override
                     protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                         if (currentAccessToken == null) {
@@ -753,97 +596,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                             edit_userid.putString("userid", userid);
                                             edit_userid.commit();
 
-                                            AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
-                                                    new AsyncHttpResponseHandler() {
-                                                        // When the response returned by REST has Http response code '200'
-
-                                                        public void onSuccess(String response) {
-                                                            // Hide Progress Dialog
-                                                            //  prgDialog.hide();
-                                                            try {
-                                                                // Extract JSON Object from JSON returned by REST WS
-                                                                JSONObject obj = new JSONObject(response);
-
-
-                                                                JSONObject json = null;
-                                                                try {
-                                                                    json = new JSONObject(String.valueOf(obj));
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                }
-
-
-                                                                /************************* UserDetails start **************************/
-                                                                JSONObject userdetails = null;
-                                                                try {
-                                                                    userdetails = json.getJSONObject("details");
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                }
-
-                                                                try {
-                                                                    //Getting information form the Json Response object
-                                                                    String firstname_user = userdetails.getString("fname");
-                                                                    String lastname_user = userdetails.getString("lname");
-
-                                                                    //Save the data in sharedPreference
-                                                                    edit_user_detals.putString("firstname", firstname_user);
-                                                                    edit_user_detals.putString("lastname", lastname_user);
-                                                                    edit_user_detals.commit();
-
-
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                }
-
-                                                                JSONArray cast = userdetails.getJSONArray("user_pic");
-                                                                edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                                                                edit_user_pic.commit();
-
-                                                                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                                                List<String> allid = new ArrayList<String>();
-                                                                List<String> allurl = new ArrayList<String>();
-
-                                                                for (int i = 0; i < cast.length(); i++) {
-                                                                    JSONObject actor = cast.getJSONObject(i);
-                                                                    String id = actor.getString("id");
-                                                                    String url = actor.getString("url");
-                                                                    allid.add(id);
-                                                                    allurl.add(url);
-                                                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                                                    Log.d("Type", cast.getString(i));
-                                                                }
-                                                                for (int j = 0; j < allid.size(); j++) {
-                                                                    edit_user_pic.putString("id_" + j, allid.get(j));
-                                                                    edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                                                                }
-                                                                edit_user_pic.commit();
-                                                                edit_user_pic.commit();
-
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-
-
-                                                            Intent i = new Intent(getApplicationContext(), Screen16.class);
-                                                            startActivity(i);
-                                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                                            finish();
-                                                            session.setLogin(true);
-                                                            Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
-                                                            toast.setGravity(Gravity.CENTER, 0, 0);
-                                                            toast.show();
-                                                            dialog.dismiss();
-                                                            progressDialog.dismiss();
-
-                                                        }
-
-                                                    });
-
+                                            GetUserDetails(userid);
+                                          //  progressDialog.dismiss();
 
                                         } else {
                                             Intent i = new Intent(getApplicationContext(), Screen3a.class);
@@ -851,7 +605,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                                             Toast.makeText(MainActivity.this, "Please verify your account...!", Toast.LENGTH_LONG).show();
 
-                                            progressDialog.dismiss();
+                                           progressDialog.dismiss();
                                         }
                                     } else {
                                         Toast.makeText(MainActivity.this, str_value, Toast.LENGTH_LONG).show();
@@ -898,7 +652,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     final EditText email = (EditText) dialog.findViewById(R.id.editText3);
                     final EditText pass = (EditText) dialog.findViewById(R.id.editText4);
 
-
                     b5.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -921,7 +674,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                         progressDialog.setContentView(R.layout.custom_progress);
                                         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
 
                                         AsyncHttpClient client = new AsyncHttpClient();
                                         client.get("http://52.37.136.238/JoinMe/User.svc/CheckUserEmailAvailability/" + email.getText().toString(),
@@ -988,13 +740,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                                                         finish();
                                                                         // Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
                                                                         dialog.dismiss();
-                                                                        progressDialog.dismiss();
+                                                                       // progressDialog.dismiss();
 
                                                                     }
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
                                                                 }
-
 
                                                             } else {
                                                                 progressDialog.dismiss();
@@ -1033,9 +784,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                                     }
                                                 });
 
-
-
-
                                     } else {
 
                                         Toast.makeText(MainActivity.this, "Password must be at least 4 characters. ", Toast.LENGTH_SHORT).show();
@@ -1072,6 +820,86 @@ public class MainActivity extends Activity implements View.OnClickListener {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
     }
 
+    public void GetUserDetails(String userid)
+    {
+
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+                    public void onSuccess(String response) {
+                         try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+                            JSONObject json = null;
+                            try {
+                                json = new JSONObject(String.valueOf(obj));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            /************************* UserDetails start **************************/
+                            JSONObject userdetails = null;
+                            try {
+                                userdetails = json.getJSONObject("details");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                //Getting information form the Json Response object
+                                String firstname_user = userdetails.getString("fname");
+                                String lastname_user = userdetails.getString("lname");
+
+                                //Save the data in sharedPreference
+                                edit_user_detals.putString("firstname", firstname_user);
+                                edit_user_detals.putString("lastname", lastname_user);
+                                edit_user_detals.commit();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            JSONArray cast = userdetails.getJSONArray("user_pic");
+                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                            edit_user_pic.commit();
+                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                            List<String> allid = new ArrayList<String>();
+                            List<String> allurl = new ArrayList<String>();
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String id = actor.getString("id");
+                                String url = actor.getString("url");
+                                allid.add(id);
+                                allurl.add(url);
+                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+                                Log.d("Type", cast.getString(i));
+                            }
+                            for (int j = 0; j < allid.size(); j++) {
+                                edit_user_pic.putString("id_" + j, allid.get(j));
+                                edit_user_pic.putString("url_" + j, allurl.get(j));
+                            }
+                            edit_user_pic.commit();
+                            edit_user_pic.commit();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Intent i = new Intent(getApplicationContext(), Screen16.class);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                        finish();
+                        session.setLogin(true);
+                        Toast toast = Toast.makeText(getApplicationContext(), "Login Succesfull", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        //progressDialog.dismiss();
+                    }
+
+                });
+    }
 
     @Override
     public void onRestart()
@@ -1084,11 +912,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
-
-
-
-
-
 }
 
 

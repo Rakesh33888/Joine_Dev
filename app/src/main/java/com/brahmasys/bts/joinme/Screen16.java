@@ -1,6 +1,5 @@
 package com.brahmasys.bts.joinme;
 
-import android.*;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,11 +11,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.multidex.MultiDex;
@@ -31,12 +28,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,9 +39,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -64,7 +56,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,18 +104,13 @@ public class Screen16 extends AppCompatActivity implements
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
     int pic_list_size = 0;
-    String lat, lon;
+    String lat="0.0", lon="0.0";
     List<String> activity_url;
     Screen19 screen19_fragment;
     TextView name_activity, time_activity, distance_activity;
     List<String> activity_name, distance, time, activity_id, userid_other;
     ProgressDialog pd;
     Double latitude=0.0,longitude=0.0;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-  //  private GoogleApiClient client2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,23 +127,6 @@ public class Screen16 extends AppCompatActivity implements
         edit_user_pic = user_pic.edit();
         lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
-
-
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-           return;
-        }
-        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if(location != null){
-            latitude = location.getLatitude();
-            longitude = location.getLongitude(); }
-        edit_lat_lng.putString("lat",String.valueOf(latitude));
-        edit_lat_lng.putString("lng", String.valueOf(longitude));
-        edit_lat_lng.commit();
-
-        lat = lat_lng.getString("lat", "0.0");
-        lon = lat_lng.getString("lng", "0.0");
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
@@ -171,10 +140,24 @@ public class Screen16 extends AppCompatActivity implements
         time = new ArrayList<String>();
         activity_id = new ArrayList<String>();
         userid_other = new ArrayList<String>();
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        //  Toast.makeText(MainActivity.this, token_id.getString("token","null"), Toast.LENGTH_SHORT).show();
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+        context = this;
+        setListViewAdapter();
+        Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
+     //   LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if(location != null){
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+            edit_lat_lng.putString("lat",String.valueOf(latitude));
+            edit_lat_lng.putString("lng", String.valueOf(longitude));
+            edit_lat_lng.commit();
 
         }else{
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -191,16 +174,20 @@ public class Screen16 extends AppCompatActivity implements
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
         }
+        lat = lat_lng.getString("lat", "0.0");
+        lon = lat_lng.getString("lng", "0.0");
+        GetUserData();
+         reloadactivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // mSwipeStack.resetStack();
+                Getting_Activities();
 
-        context = this;
-        setListViewAdapter();
-        Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
+              //  reloadactivity.setVisibility(View.GONE);
+            }
+        });
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        //client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -209,30 +196,12 @@ public class Screen16 extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-       // client2.connect();
-        GetUserData();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-//        Action viewAction = Action.newAction(
-//                Action.TYPE_VIEW, // TODO: choose an action type.
-//                "Screen16 Page", // TODO: Define a title for the content shown.
-//                // TODO: If you have web page content that matches this app activity's content,
-//                // make sure this auto-generated web page URL is correct.
-//                // Otherwise, set the URL to null.
-//                Uri.parse("http://host/path"),
-//                // TODO: Make sure this auto-generated app URL is correct.
-//                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
-//        );
-//        AppIndex.AppIndexApi.start(client2, viewAction);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         fillWithTestData();
-
     }
 
 public void GetUserData()
@@ -318,37 +287,16 @@ public void GetUserData()
         Splashscreen dia = new Splashscreen();
         dia.Connectivity_Dialog_with_refresh(Screen16.this);
     }
-
-
-
 }
 
     private void fillWithTestData() {
-
-
-//        setSupportActionBar(toolbar);
-      //  ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayShowTitleEnabled(false);
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
-//        reloadactivity= (ImageButton) findViewById(R.id.reloadactivity);
-//        reloadactivity.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
         relativeLayout_share_icon = (RelativeLayout) toolbar.findViewById(R.id.Relativelayout_share_icon);
         shareicon = (ImageView) toolbar.findViewById(R.id.shareicon);
-
         shareicon.setVisibility(View.VISIBLE);
-
-
         shareicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -359,16 +307,10 @@ public void GetUserData()
                 startActivity(sendIntent);
             }
         });
-
-
         like = (ImageView) findViewById(R.id.like);
         dislike = (ImageView) findViewById(R.id.dislike);
-
-
         btninfo = (ImageView) findViewById(R.id.infobutton);
         btninfo.setClickable(true);
-
-
         logo = (ImageView) findViewById(R.id.logo);
         create = (ImageView) findViewById(R.id.createnewactivity);
         create.setOnClickListener(new View.OnClickListener() {
@@ -380,21 +322,15 @@ public void GetUserData()
                         .replace(R.id.flContent, screen19)
                         .addToBackStack(null)
                         .commit();
-
-
             }
         });
-
-
         reltivelayoutlogo = (RelativeLayout) findViewById(R.id.custmtool);
         relativeLayoutmsg = (RelativeLayout) findViewById(R.id.msssg);
         msg = (ImageView) findViewById(R.id.msg);
         msg.setClickable(true);
-
         msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 msg.setBackgroundResource(R.drawable.colourbubble);
                 fragmentManager = getSupportFragmentManager();
                 Messagescreen messagescreen = new Messagescreen();
@@ -409,8 +345,6 @@ public void GetUserData()
          navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
-
-
         navtextview = (TextView) header.findViewById(R.id.navtextview);
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
         editbutton = (Button) header.findViewById(R.id.editbutton);
@@ -421,10 +355,8 @@ public void GetUserData()
 
             }
         });
-
         backlayoutdrawer = (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
         navtextview.setText(user_Details.getString("firstname", "") + "\t" + user_Details.getString("lastname", "null"));
-
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -432,7 +364,6 @@ public void GetUserData()
         pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size", "0"));
         List<String> allid = new ArrayList<String>();
         List<String> allurl = new ArrayList<String>();
-
         for (int j = 0; j < pic_list_size; j++) {
             String id = user_pic.getString("id_" + j, "");
             String url = user_pic.getString("url_" + j, "");
@@ -440,8 +371,6 @@ public void GetUserData()
             allid.add(id);
             allurl.add(url);
         }
-
-
         for (int i = 0; i < allid.size(); i++) {
             if (i == allurl.size() - 1) {
                 //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
@@ -449,8 +378,6 @@ public void GetUserData()
                 Picasso.with(this)
                         .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
                         .placeholder(R.drawable.default_profile)
-                        .resize(90, 90)
-                        .centerCrop()
                         .into(navimage);
                 // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
 
@@ -482,7 +409,6 @@ public void GetUserData()
                 }
             });
 
-
             btninfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -497,9 +423,7 @@ public void GetUserData()
                 }
             });
 
-
     }
-
     public void Activity_Info()
     {
         if (mSwipeStack.getCurrentPosition() >= activity_name.size())
@@ -519,7 +443,6 @@ public void GetUserData()
                     .commit();
         }
     }
-
     public void Getting_Activities()
     {
         if (Connectivity_Checking.isConnectingToInternet()) {
@@ -547,31 +470,40 @@ public void GetUserData()
 
                 if (!json.equals("")) {
                     JSONArray cast = json.getJSONArray("data");
-                    for (int i = 0; i < cast.length(); i++) {
-                        JSONObject actor = cast.getJSONObject(i);
-                        String id = actor.getString("activity_url");
-                        activity_name.add(actor.getString("activity_name"));
-                        distance.add(actor.getString("activity_distance"));
-                        time.add(actor.getString("activity_time"));
-                        activity_id.add(actor.getString("activity_id"));
-                        userid_other.add(actor.getString("userid"));
-                        activity_url.add(id);
-                        Book book = new Book();
-                        book.setName(actor.getString("activity_name"));
-                        book.setImageUrl(actor.getString("activity_url"));
-                        book.setAuthorName(actor.getString("activity_distance"));
-                        book.setIcon_image(actor.getString("acitivity_icon"));
-                        long unixSeconds = Long.parseLong(actor.getString("activity_time"));
-                        Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
-                        sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                        String value = sdf.format(date2);
-                        book.setTime(value);
-                        books.add(book);
+                    if (cast.length()!=0)
+                    {
+                        for (int i = 0; i < cast.length(); i++) {
+                            JSONObject actor = cast.getJSONObject(i);
+                            String id = actor.getString("activity_url");
+                            activity_name.add(actor.getString("activity_name"));
+                            distance.add(actor.getString("activity_distance"));
+                            time.add(actor.getString("activity_time"));
+                            activity_id.add(actor.getString("activity_id"));
+                            userid_other.add(actor.getString("userid"));
+                            activity_url.add(id);
+                            Book book = new Book();
+                            book.setName(actor.getString("activity_name"));
+                            book.setImageUrl(actor.getString("activity_url"));
+                            book.setAuthorName(actor.getString("activity_distance"));
+                            book.setIcon_image(actor.getString("acitivity_icon"));
+                            long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                            Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                            String value = sdf.format(date2);
+                            book.setTime(value);
+                            books.add(book);
 
+                        }
+                        adapter.notifyDataSetChanged();
+                        reloadactivity.setVisibility(View.GONE);
                     }
-                    adapter.notifyDataSetChanged();
+                    else
+                    {
+                        reloadactivity.setVisibility(View.VISIBLE);
+                    }
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -599,7 +531,6 @@ public void GetUserData()
         mSwipeStack.setAdapter(adapter);
         mSwipeStack.setListener(this);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -669,7 +600,6 @@ public void GetUserData()
 
 
     }
-
 
     public void Member_add_to_Group() {
 
@@ -805,13 +735,6 @@ public void GetUserData()
                         try {
 
                             progressDialog.dismiss();
-//                            overridePendingTransition( 0, 0);
-//                            startActivity(getIntent());
-//                            overridePendingTransition( 0, 0);
-                            //    res.setTextColor(Color.GREEN);
-                            //    res.setText("n Response from server : n " + response_str);
-//                            pd.hide();
-//                            pd.dismiss();
 
                             Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
@@ -831,19 +754,5 @@ public void GetUserData()
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-//        Action viewAction = Action.newAction(
-//                Action.TYPE_VIEW, // TODO: choose an action type.
-//                "Screen16 Page", // TODO: Define a title for the content shown.
-//                // TODO: If you have web page content that matches this app activity's content,
-//                // make sure this auto-generated web page URL is correct.
-//                // Otherwise, set the URL to null.
-//                Uri.parse("http://host/path"),
-//                // TODO: Make sure this auto-generated app URL is correct.
-//                Uri.parse("android-app://com.brahmasys.bts.joinme/http/host/path")
-//        );
-//        AppIndex.AppIndexApi.end(client2, viewAction);
-//        client2.disconnect();
     }
 }

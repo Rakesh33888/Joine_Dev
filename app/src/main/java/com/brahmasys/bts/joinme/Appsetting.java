@@ -33,6 +33,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -116,6 +119,8 @@ public class Appsetting extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+        AppEventsLogger.activateApp(getActivity());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -438,7 +443,7 @@ public class Appsetting extends Fragment{
                             // Extract JSON Object from JSON returned by REST WS
                             JSONObject obj = new JSONObject(response);
                             String result=obj.getString("message");
-
+                            LoginManager.getInstance().logOut();
                             session.setLogin(false);
                             edit_user_detals.clear();
                             edit_user_detals.commit();
@@ -477,7 +482,7 @@ public class Appsetting extends Fragment{
                             JSONObject obj = new JSONObject(response);
                             String out = obj.getString("message");
                             if (out.equals("Logged Out Successfully")) {
-
+                                LoginManager.getInstance().logOut();
                                 session.setLogin(false);
                                 edit_user_detals.clear();
                                 edit_user_detals.commit();

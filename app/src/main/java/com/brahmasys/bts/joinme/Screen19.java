@@ -289,92 +289,90 @@ public class Screen19 extends Fragment {
 
 
 
-//        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
-//        //  Toast.makeText(MainActivity.this, token_id.getString("token","null"), Toast.LENGTH_SHORT).show();
-//        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-//            //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
-//
-//        }else{
-//
-//            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-//            alertDialogBuilder.setMessage("Please enable GPS to use this application..")
-//                    .setCancelable(false)
-//                    .setPositiveButton("OK",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    Intent callGPSSettingIntent = new Intent(
-//                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                                    startActivity(callGPSSettingIntent);
-//
-//                                }
-//                            });
-//
-//            AlertDialog alert = alertDialogBuilder.create();
-//            alert.show();
-//
-//        }
-
-        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-        }
-        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-        if(location != null){
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-            //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
-        }
-
-    LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
-
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+        //  Toast.makeText(MainActivity.this, token_id.getString("token","null"), Toast.LENGTH_SHORT).show();
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+            //LocationManager lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
 
-            latitude = latitude;
-            longitude = longitude;
+            }
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if(location != null){
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                //timezone.setText(String.valueOf(latitude) + "\n" + String.valueOf(longitude));
+            }
+
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                //Toast.makeText(this, "GPS is Enabled in your devide", Toast.LENGTH_SHORT).show();
+
+                latitude = latitude;
+                longitude = longitude;
+
+            }
+            else
+            {
+                latitude = latitude2;
+                longitude = longitude2;
+            }
+
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+
+            List<Address> addresses = null;
+            try {
+
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+                if(addresses.size()>0)
+                    if(addresses.size()>0) {
+
+                        complete_address = addresses.get(0).getAddressLine(0);
+                        city = addresses.get(0).getLocality();
+                        state = addresses.get(0).getAdminArea();
+                        zip = addresses.get(0).getPostalCode();
+                        country = addresses.get(0).getCountryName();
+                    }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            checked_current_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
+            current_address.setText(checked_current_address);
+
+        }else{
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+            alertDialogBuilder.setMessage("Please enable GPS to use this application..")
+                    .setCancelable(false)
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent callGPSSettingIntent = new Intent(
+                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivity(callGPSSettingIntent);
+
+                                }
+                            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
 
         }
-        else
-        {
-           latitude = latitude2;
-            longitude = longitude2;
-        }
+
 
 
         /******************** CheckBox Functionality Start*******************/
         checkboxcurrent.setChecked(true);
         checkboxcurrent.setClickable(false);
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
-        List<Address> addresses = null;
-        try {
-
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-            if(addresses.size()>0)
-                if(addresses.size()>0) {
-
-                    complete_address = addresses.get(0).getAddressLine(0);
-                    city = addresses.get(0).getLocality();
-                    state = addresses.get(0).getAdminArea();
-                    zip = addresses.get(0).getPostalCode();
-                    country = addresses.get(0).getCountryName();
-                }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        checked_current_address = complete_address + "," + city + "," + state + "," + zip + "," + country;
-        current_address.setText(checked_current_address);
 
         checkboxcurrent.setOnClickListener(new View.OnClickListener() {
             @Override
