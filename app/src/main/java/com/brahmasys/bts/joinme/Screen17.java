@@ -139,8 +139,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         edit_activity_id.putString("activity_id", aid);
         edit_activity_id.commit();
 
-        edit_userid.putString("userid", uid);
-        edit_userid.commit();
+//        edit_userid.putString("userid", uid);
+//        edit_userid.commit();
 
 
 
@@ -158,13 +158,17 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             public void onClick(View v) {
                 if (Connectivity_Checking.isConnectingToInternet()) {
 
-                    Fragment fragment = null;
-                    switch (v.getId()) {
-                        case R.id.reportactitytext:
-                            fragment = new Fragment();
-                            replaceFragment1(fragment);
-                            break;
-                    }
+                    Fragment reportfrgmnt = new ReportFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("screen", "screen17");
+                    bundle.putString("userid", uid);
+                    bundle.putString("activityid",aid);
+                    bundle.putString("owner_id","null");
+                    reportfrgmnt.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, reportfrgmnt);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
 
                 } else {
                     Splashscreen dia = new Splashscreen();
@@ -272,6 +276,11 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     e.printStackTrace();
                                 }
 
+                                JSONObject message_responce = null;
+                                message_responce = json.getJSONObject("response");
+                                edit_userid.putString("userid", message_responce.getString("userid"));
+                                edit_userid.commit();
+
 
                                 /************************* UserDetails start **************************/
                                 JSONObject userdetails = null;
@@ -300,6 +309,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     icon1 = userdetails.getString("acitivity_icon");
                                     owner_id = userdetails.getString("activity_owner_id");
                                     String activity_id = userdetails.getString("activity_id");
+
+
 
                                     acitvityname.setText(activity_name);
                                     distancefromnearby.setText( distance+" at "+ activity_address);
@@ -410,13 +421,6 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     public void onPageScrollStateChanged(int state) {
     }
 
-    private void replaceFragment1(Fragment fragmen) {
-        Fragment reportfrgmnt = new ReportFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.flContent, reportfrgmnt);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
 //    private void FnJoinActivvity() {
 //        String userid = user_id.getString("userid", "");

@@ -103,7 +103,8 @@ import java.util.TimeZone;
 
 public class Screen19 extends Fragment {
 
-
+    GeoSearchResult result;
+    Geocoder coder;
     TextView dateTextView;
     ImageView dateButton;
     FragmentManager fragmentManager;
@@ -157,7 +158,7 @@ public class Screen19 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_screen19, container, false);
-
+        coder = new Geocoder(getActivity());
         MultiDex.install(getActivity());
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -844,7 +845,6 @@ public class Screen19 extends Fragment {
         Button cancel  = (Button) emailDialog.findViewById(R.id.cancel);
 
         geo_autocomplete_clear = (ImageView) emailDialog.findViewById(R.id.geo_autocomplete_clear);
-
         geo_autocomplete = (DelayAutoCompleteTextView) emailDialog.findViewById(R.id.geo_autocomplete);
         geo_autocomplete.setThreshold(THRESHOLD);
         geo_autocomplete.setAdapter(new GeoAutoCompleteAdapter(getContext())); // 'this' is Activity instance
@@ -852,22 +852,37 @@ public class Screen19 extends Fragment {
         geo_autocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
+                result  = (GeoSearchResult) adapterView.getItemAtPosition(position);
                 geo_autocomplete.setText(result.getAddress());
+             Log.e("String Addree", String.valueOf(result.getAddress()));
 
-
-                Geocoder coder = new Geocoder(getActivity());
                 try {
-                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 0);
-                    for (Address add : adresses) {
-                        //Controls to ensure it is right address such as country etc.
-                        longitude1 = add.getLongitude();
-                        latitude1 = add.getLatitude();
-                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+
+                    String locationName = result.getAddress();
+                    List<Address> addressList = coder.getFromLocationName(locationName, 5);
+                    if (addressList != null && addressList.size() > 0) {
+                        latitude1 = (int) (addressList.get(0).getLatitude() );
+                        longitude1 = (int) (addressList.get(0).getLongitude() );
+                        Log.e("ADDRESS LIST",String.valueOf(latitude1)+"\n"+String.valueOf(longitude1));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+//               try {
+//                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 0);
+//                    for (Address add : adresses) {
+//                        //Controls to ensure it is right address such as country etc.
+//                        longitude1 = add.getLongitude();
+//                        latitude1 = add.getLatitude();
+//
+//                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+//                    }
+//                   // Log.e("ADDRESS LIST",String.valueOf(longitude1)+"\n"+String.valueOf(latitude1));
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
 
                 double earthRadius = 3958.75;

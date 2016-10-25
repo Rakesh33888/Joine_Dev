@@ -20,6 +20,7 @@ import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -117,6 +118,46 @@ public class Screen16 extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen16);
 
+
+        /************* Notification Handling Start  *********************/
+        String type = getIntent().getStringExtra("type");
+        String notif_user_id = getIntent().getStringExtra("user_id");
+        String notif_activity_id = getIntent().getStringExtra("activity_id");
+        String notif_time   = getIntent().getStringExtra("time");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+      //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+           if (type != null)
+           {
+            if (type.equals("rating")||type.equals("review"))
+            {
+                Notification_Screen favoritesFragment = new Notification_Screen();
+                Bundle bundle = new Bundle();
+                bundle.putString("userid",notif_user_id);
+                bundle.putString("activityid",notif_activity_id);
+                bundle.putString("type",type);
+                bundle.putString("time",notif_time);
+                favoritesFragment.setArguments(bundle);
+                        fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, favoritesFragment)
+                        .addToBackStack(null).commit();
+            }
+
+            else
+            {
+                Screen17 screen17 = new Screen17();
+                Bundle bundle = new Bundle();
+                bundle.putString("userid",notif_user_id);
+                bundle.putString("activityid",notif_activity_id);
+                screen17.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, screen17)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+           }
+        /************* Notification Handling End  *********************/
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
         user_id = getSharedPreferences(USERID, MODE_PRIVATE);
@@ -180,10 +221,29 @@ public class Screen16 extends AppCompatActivity implements
          reloadactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // mSwipeStack.resetStack();
-                Getting_Activities();
+                progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        Getting_Activities();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
 
-              //  reloadactivity.setVisibility(View.GONE);
+                            }
+                        });
+
+                    }
+                }).start();
+
+
             }
         });
 
@@ -342,6 +402,15 @@ public void GetUserData()
 
             }
         });
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Home = new Intent(Screen16.this,Screen16.class);
+                startActivity(Home);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                finish();
+            }
+        });
          navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
@@ -446,6 +515,7 @@ public void GetUserData()
     public void Getting_Activities()
     {
         if (Connectivity_Checking.isConnectingToInternet()) {
+
             JSONObject jsonObjSend = new JSONObject();
             try {
                 // Add key/value pairs
@@ -497,6 +567,7 @@ public void GetUserData()
                         }
                         adapter.notifyDataSetChanged();
                         reloadactivity.setVisibility(View.GONE);
+
                     }
                     else
                     {
@@ -622,8 +693,9 @@ public void GetUserData()
                                 String result = obj.getString("message");
                                 if (result.equals("Updated Successfully")) {
                                     fragmentManager = getSupportFragmentManager();
-                                    Single_group_Message update_activity = new Single_group_Message();
+                                    Screen17 update_activity = new Screen17();
                                     Bundle bundle = new Bundle();
+                                    bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()-1));
                                     bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()-1));
                                     update_activity.setArguments(bundle);
                                     fragmentManager.beginTransaction()

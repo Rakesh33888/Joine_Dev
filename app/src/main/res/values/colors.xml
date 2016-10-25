@@ -5,5 +5,6 @@
     <color name="prgrs">#095E7C</color>
     <color name="progrs1">#82ADBD</color>
     <color name="ratingbar">#F5AF48</color>
+    <color name="ratingbar_normal">#8b8a8a</color>
     <color name="radiobutton_color">#005F99</color>
 </resources>

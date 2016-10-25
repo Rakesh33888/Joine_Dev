@@ -1,15 +1,19 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,12 +96,17 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         report_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager = getFragmentManager();
-                ReportFragment report = new ReportFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, report)
-                        .addToBackStack(null)
-                        .commit();
+                Fragment reportfrgmnt = new ReportFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("screen", "screen13");
+                bundle.putString("userid", "null");
+                bundle.putString("activityid","null");
+                bundle.putString("owner_id",owner_id);
+                reportfrgmnt.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.flContent, reportfrgmnt);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         if (Connectivity_Checking.isConnectingToInternet()) {
@@ -218,4 +227,28 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
 
     public void onPageScrollStateChanged(int state) {
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    Intent i = new Intent(getActivity(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
 }

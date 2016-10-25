@@ -6,7 +6,9 @@
     <string name="Messages">Messages</string>
     <string name="underlinedText"><u>Report Activity</u></string>
     <string name="underlinedText1"><u>Update Activity</u></string>
-
+    <string name="did_not_go"><u> I "didn\'t" go</u></string>
+    <string name="remind_later"><u>Remind me later</u></string>
+    <string name="skip"><u>Skip</u></string>
     <string name="facebook_App_id">1824054824539410</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

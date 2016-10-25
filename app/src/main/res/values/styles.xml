@@ -65,7 +65,7 @@
     <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
         <item name="android:background">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/bel_lightgrey_text</item>
+        <item name="colorControlActivated">@color/mdtp_white</item>
     </style>
 
 

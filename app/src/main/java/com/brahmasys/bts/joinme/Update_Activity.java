@@ -261,14 +261,15 @@ public class Update_Activity extends Fragment {
             current_address.setText(userdetails.getString("activity_Adress"));
             long unixSeconds = Long.parseLong(userdetails.getString("activity_time"));
             Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // the format of your date
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // the format of your date
             SimpleDateFormat sdf1 = new SimpleDateFormat("HH");
             sdf1.setTimeZone(TimeZone.getTimeZone("GMT"));
             sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
             String formattedDate = sdf.format(date2);
             String formattedDate1 = sdf1.format(date2);
             dateTextView.setText(formattedDate);
-            spinnerforhour.setSelection(Integer.parseInt(formattedDate1) - 1);
+            Log.e("Time",formattedDate1);
+            spinnerforhour.setSelection(Integer.parseInt(formattedDate1)+1);
             Icon_url = userdetails.getString("acitivity_icon");
 
 
@@ -286,28 +287,21 @@ public class Update_Activity extends Fragment {
                 checkBoxforeveryone.setClickable(true);
                 checkBoxnotforeveryone.setClickable(false);
 
-                String start_age = userdetails.getString("participant_age_start");
-                String End_age = userdetails.getString("participant_age_end");
+//                Log.e("AGES", start_age + "\n" + End_age);
+                age1.setText(userdetails.getString("participant_age_start"));
+                age2.setText(userdetails.getString("participant_age_end"));
 
-                Log.e("AGES", start_age + "\n" + End_age);
-                age1.setText(start_age);
-                age2.setText(End_age);
-
-
-
-//                seekBarforage.setMinStartValue(Integer.parseInt(userdetails.getString("participant_age_start")));
-//                seekBarforage.setMaxStartValue(Integer.parseInt(userdetails.getString("participant_age_end")));
-//
-//                seekBarforage.setMaxValue(100);
-//                seekBarforage.setMinValue(0);
-
+                seekBarforage.setMinStartValue(Integer.parseInt(userdetails.getString("participant_age_start")));
+                seekBarforage.setMaxStartValue(Integer.parseInt(userdetails.getString("participant_age_end")));
                 seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
                     @Override
                     public void valueChanged(Number minValue, Number maxValue) {
-                        age1.setText(String.valueOf(minValue));
-                        age2.setText(String.valueOf(maxValue));
+//                        age1.setText(String.valueOf(minValue));
+//                        age2.setText(String.valueOf(maxValue));
                     }
                 });
+
+
 
                 checkBoxforeveryone.setChecked(false);
                  if (userdetails.getString("participant_gender").equals("male"))
@@ -329,6 +323,15 @@ public class Update_Activity extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+        seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                age1.setText(String.valueOf(minValue));
+                age2.setText(String.valueOf(maxValue));
+            }
+        });
 
         // user details which user wants to update//
 
@@ -738,7 +741,6 @@ public class Update_Activity extends Fragment {
                 /*************** Time Stamp Start********************/
                 String dateString = dateTextView.getText().toString()+" "+hour+":00"+":00"+" "+"GMT";
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
-
                 Date date1 = dateFormat.parse(dateString );
                 unixTime = (long) date1.getTime()/1000;
                 Log.e("Timestamp527", String.valueOf(unixTime));
@@ -937,17 +939,31 @@ public class Update_Activity extends Fragment {
                 GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
                 geo_autocomplete.setText(result.getAddress());
                 Geocoder coder = new Geocoder(getActivity());
+
                 try {
-                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 0);
-                    for (Address add : adresses) {
-                        //Controls to ensure it is right address such as country etc.
-                        longitude1 = add.getLongitude();
-                        latitude1 = add.getLatitude();
-                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+
+                    String locationName = result.getAddress();
+                    List<Address> addressList = coder.getFromLocationName(locationName, 5);
+                    if (addressList != null && addressList.size() > 0) {
+                        latitude1 = (int) (addressList.get(0).getLatitude() );
+                        longitude1 = (int) (addressList.get(0).getLongitude() );
+                        Log.e("ADDRESS LIST",String.valueOf(latitude1)+"\n"+String.valueOf(longitude1));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+//                try {
+//                    ArrayList<Address> adresses = (ArrayList<Address>) coder.getFromLocationName(result.getAddress(), 0);
+//                    for (Address add : adresses) {
+//                        //Controls to ensure it is right address such as country etc.
+//                        longitude1 = add.getLongitude();
+//                        latitude1 = add.getLatitude();
+//                        // Toast.makeText(getActivity(), String.valueOf(longitude1) + "\n" + String.valueOf(latitude1), Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
 
                 double earthRadius = 3958.75;

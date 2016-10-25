@@ -103,6 +103,7 @@ public class Single_group_Message extends Fragment    {
         owner   = (CircularImageView) v.findViewById(R.id.hosted);
         Bundle bundle = this.getArguments();
         act_id  = bundle.getString("activityid","0");
+        userid = bundle.getString("userid","0");
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
 
 
@@ -166,6 +167,7 @@ public class Single_group_Message extends Fragment    {
 
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
+
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
         tvleave_chat.setPaintFlags(tvleave_chat.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -250,7 +252,9 @@ public class Single_group_Message extends Fragment    {
                                 JSONObject apiResponse = null;
                                 try {
                                     apiResponse = json.getJSONObject("response");
-                                    Log.i("GetDetailsForChat",String.valueOf(apiResponse));
+                                    Log.e("GetDetailsForChat", String.valueOf(apiResponse));
+//                                    edit_userid.putString("userid", apiResponse.getString("userid"));
+//                                    edit_userid.commit();
                                     String ststus =apiResponse.getString("status");
                                     if(ststus.equals("200")){
                                         JSONArray arrGroup = json.getJSONArray("group_list");

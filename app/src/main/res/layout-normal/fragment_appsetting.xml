@@ -55,7 +55,7 @@
 
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
-    android:layout_marginBottom="30dp">
+    android:layout_marginBottom="60dp">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -116,7 +116,8 @@
         android:background="@drawable/bigbox"
         android:id="@+id/frameLayout_notification"
 
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -160,7 +161,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nearby"
+                android:text="New activity nearby"
                 android:layout_marginLeft="10dp"
                 android:paddingTop="9dp"
                 android:id="@+id/near_by" />
@@ -354,13 +355,12 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="52dp"
         android:id="@+id/linearlayoutterm"
-        android:background="@drawable/bigbox"
-        android:layout_marginTop="5dp">
+        android:background="@drawable/bigbox"  >
 
         <TextView
             android:layout_width="wrap_content"
@@ -368,17 +368,18 @@
             android:text="Terms of service"
             android:textSize="18dp"
             android:textColor="#C3C3C3"
-            android:layout_gravity="center_vertical"
+
             android:paddingStart="10dp"
             android:id="@+id/termsofservices"
-            android:layout_marginTop="15dp" />
-    </LinearLayout>
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="52dp"
         android:id="@+id/logout"
+        android:layout_marginTop="10dp"
         android:background="@drawable/bigbox">
 
         <TextView
@@ -387,18 +388,16 @@
             android:text="Log out"
             android:textColor="#B6B6B6"
             android:textSize="18dp"
-            android:layout_gravity="center_vertical"
             android:paddingStart="10dp"
             android:id="@+id/textView13"
-            android:layout_marginTop="15dp" />
-    </LinearLayout>
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/report"
-
         android:id="@+id/button11"
         android:layout_marginTop="20dp" />
 
@@ -408,8 +407,7 @@
         android:id="@+id/button12"
         android:background="@drawable/delete"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-       />
+        android:layout_marginTop="10dp"  />
 
 </LinearLayout>
     </ScrollView>

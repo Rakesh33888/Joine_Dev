@@ -57,7 +57,7 @@ public class Appsetting extends Fragment{
     int min_range1= 0;
     int initialvalues1 = 0;
 
-    RelativeLayout incButton11,incButton12;
+    RelativeLayout incButton11,incButton12,logout,linearLayoutterm;
     LinearLayout decButton11,decButton12;
     private TextView hours,mins;
    // ProgressDialog pd;
@@ -69,7 +69,7 @@ public class Appsetting extends Fragment{
     Spinner dropdown;
     ArrayList customarraylist;
     FragmentManager fragmentManager;
-    LinearLayout logout,linearLayoutterm,backlayoutappsetting;
+    LinearLayout backlayoutappsetting;
     ImageView shareicon;
     SessionManager session;
     Button yes,no;
@@ -274,7 +274,7 @@ public class Appsetting extends Fragment{
 
         miles = (RadioButton) v.findViewById(R.id.miles);
         km = (RadioButton) v.findViewById(R.id.km);
-        linearLayoutterm= (LinearLayout) v.findViewById(R.id.linearlayoutterm);
+        linearLayoutterm= (RelativeLayout) v.findViewById(R.id.linearlayoutterm);
         linearLayoutterm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,7 +298,7 @@ public class Appsetting extends Fragment{
 
 
         });
-        logout = (LinearLayout) v.findViewById(R.id.logout);
+        logout = (RelativeLayout) v.findViewById(R.id.logout);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -354,13 +354,17 @@ public class Appsetting extends Fragment{
         btnreport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = null;
-                switch (v.getId()) {
-                    case R.id.button11:
-                        fragment = new ReportFragment();
-                        replaceFragment(fragment);
-                        break;
-                }
+                Fragment reportfragment=new ReportFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("screen", "setting");
+                bundle.putString("userid", "null");
+                bundle.putString("activityid","null");
+                bundle.putString("owner_id","null");
+                reportfragment.setArguments(bundle);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent,reportfragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
             }
         });
         btndelt= (Button) v.findViewById(R.id.button12);
@@ -661,13 +665,6 @@ public class Appsetting extends Fragment{
 
 
 
-    private void replaceFragment(Fragment frg) {
-        Fragment reportfragment=new ReportFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.flContent,reportfragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

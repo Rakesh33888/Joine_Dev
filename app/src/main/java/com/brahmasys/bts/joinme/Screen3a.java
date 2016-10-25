@@ -80,12 +80,13 @@ public class Screen3a extends AppCompatActivity {
     HttpEntity resEntity;
 
     Double latitude=0.0,longitude=0.0;
+    public  static final String TOKEN_ID = "token";
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
 
-    SharedPreferences user_id,user_Details,user_pic;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
+    SharedPreferences user_id,user_Details,user_pic,token_id;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_token_id;
 
     private static final String TAG = "UserRegister";
     private static final String URL = "http://52.37.136.238/JoinMe/User.svc/UserRegister";
@@ -112,7 +113,8 @@ public class Screen3a extends AppCompatActivity {
         edit_user_detals = user_Details.edit();
         user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
         edit_user_pic = user_pic.edit();
-
+        token_id = getSharedPreferences(TOKEN_ID, MODE_PRIVATE);
+        edit_token_id = token_id.edit();
 
         firstname = (EditText) findViewById(R.id.firstname);
         lastname = (EditText) findViewById(R.id.lastname);
@@ -130,6 +132,7 @@ public class Screen3a extends AppCompatActivity {
         day = (Spinner) findViewById(R.id.spinner1);
         month = (Spinner) findViewById(R.id.spinner2);
         year = (Spinner) findViewById(R.id.spinner3);
+
 
 
 
@@ -263,7 +266,7 @@ public class Screen3a extends AppCompatActivity {
                                 // Add key/value pairs
                                 jsonObjSend.put("confermationcode", conformation_code.getText().toString());
                                 jsonObjSend.put("deviceid", deviceuid);
-                                jsonObjSend.put("device_token", device_token);
+                                jsonObjSend.put("device_token",token_id.getString("token","0000"));
                                 jsonObjSend.put("device_type", device_type);
                                 jsonObjSend.put("discription", share.getText().toString());
                                 jsonObjSend.put("dob", birth);

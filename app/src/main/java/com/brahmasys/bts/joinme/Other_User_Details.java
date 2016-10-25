@@ -163,13 +163,17 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         reporttext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = null;
-                switch (v.getId()) {
-                    case R.id.reportactitytext:
-                        fragment = new Fragment();
-                        replaceFragment1(fragment);
-                        break;
-                }
+                Fragment reportfrgmnt = new ReportFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("screen", "other_user_details");
+                bundle.putString("userid", uid);
+                bundle.putString("activityid",aid);
+                bundle.putString("owner_id","null");
+                reportfrgmnt.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.flContent, reportfrgmnt);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
@@ -383,13 +387,6 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     public void onPageScrollStateChanged(int state) {
     }
 
-    private void replaceFragment1(Fragment fragmen) {
-        Fragment reportfrgmnt = new ReportFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.flContent, reportfrgmnt);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     private void FnJoinActivvity() {
         String userid = user_id.getString("userid", "");

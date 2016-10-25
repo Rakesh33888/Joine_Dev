@@ -152,7 +152,7 @@ public class Messagescreen extends Fragment{
 
                 Single_group_Message single_group_message = new Single_group_Message();
                 Bundle bundle = new Bundle();
-               // bundle.putString("userid", alluserid.get(position));
+                bundle.putString("userid", user_id.getString("userid","null"));
                 bundle.putString("activityid", allid.get(position));
                 single_group_message.setArguments(bundle);
                 fragmentManager.beginTransaction()

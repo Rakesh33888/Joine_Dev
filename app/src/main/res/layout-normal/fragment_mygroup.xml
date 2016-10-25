@@ -66,12 +66,11 @@
                 android:focusable="true"
                 android:clickable="true"/>
             <Button
-                android:layout_width="155dp"
-                android:layout_height="161dp"
-                android:layout_marginTop="7dp"
+                android:layout_width="170dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/createalbum"
-                android:id="@+id/createnewactivity"
-                android:layout_marginRight="15dp"/>
+                android:id="@+id/createnewactivity" />
         </LinearLayout>
     </ScrollView>
 

@@ -172,7 +172,7 @@
             android:id="@+id/editText9"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:hint="Type here"
+            android:hint="Type a message"
             android:textColorHint="#ffffff"
             android:gravity="left|top"
             android:paddingRight="10dp"

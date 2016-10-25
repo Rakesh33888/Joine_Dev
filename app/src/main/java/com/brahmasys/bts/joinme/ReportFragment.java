@@ -43,10 +43,17 @@ public class ReportFragment extends android.support.v4.app.Fragment {
     SharedPreferences.Editor edit_userid,edit_activity_id;
     private static final String TAG1 = "Feedback";
     private static final String URL1 = "http://52.37.136.238/JoinMe/Activity.svc/Feedback";
+    String screen="null",userid,activityid,ownerid;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.reportfragment,container,false);
+
+        Bundle bundle = this.getArguments();
+        screen = bundle.getString("screen", "null");
+        userid=bundle.getString("userid", "null");
+        ownerid = bundle.getString("owner_id","null");
+        activityid =bundle.getString("activityid", "null");
         user_id  = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
@@ -63,14 +70,52 @@ public class ReportFragment extends android.support.v4.app.Fragment {
         buttoncncl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = null;
-                switch (v.getId()) {
-                    case R.id.buttoncancel:
-                        fragment = new Fragment();
-                        replaceFragment(fragment);
-                        break;
-                }
+                if (screen.equals("setting")) {
+                    Fragment appsetting = new Appsetting();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, appsetting);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } else if (screen.equals("screen17")) {
+                    Fragment screen17 = new Screen17();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid", userid);
+                    bundle.putString("activityid",activityid);
+                    screen17.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, screen17);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
 
+                } else if (screen.equals("screen13")) {
+
+                    Fragment screen13 = new Screen13();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("owner_id",ownerid);
+                    screen13.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, screen13);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } else if (screen.equals("other_user_details")) {
+
+                    Fragment appsetting = new Other_User_Details();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid", userid);
+                    bundle.putString("activityid",activityid);
+                    appsetting.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, appsetting);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                } else {
+                    Intent Home = new Intent(getActivity(), Screen16.class);
+                    startActivity(Home);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                    getActivity().finish();
+
+                }
             }
         });
 
@@ -83,7 +128,7 @@ public class ReportFragment extends android.support.v4.app.Fragment {
             }
 
             private void hideKeyboard(View view) {
-                InputMethodManager in = (InputMethodManager)getActivity(). getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });

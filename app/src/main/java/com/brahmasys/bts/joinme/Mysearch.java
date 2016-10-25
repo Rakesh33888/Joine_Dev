@@ -245,7 +245,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                                                         c3.setClickable(true);
 
                                                     }
-                                                    else if (date.equals("nari1")) {
+                                                    else if (date.equals("1")) {
                                                         c1.setChecked(false);
                                                         c2.setChecked(true);
                                                         c3.setChecked(false);
@@ -403,7 +403,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                 if (v==c2){
                     c1.setChecked(false);
                     c3.setChecked(false);
-                    dateSelection = "nari1";
+                    dateSelection = "1";
                     c2.setClickable(false);
                     c1.setClickable(true);
                     c3.setClickable(true);
