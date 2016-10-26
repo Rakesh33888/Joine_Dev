@@ -75,7 +75,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-public class Update_Activity extends Fragment {
+public class Update_Activity extends Fragment  {
     TextView dateTextView;
     ImageView dateButton;
     RelativeLayout search_layout;
@@ -97,7 +97,7 @@ public class Update_Activity extends Fragment {
     ArrayList<String> data;
     long unixTime=0;
     int image;
-    String gender = "",Icon_url;
+    String gender = "",Icon_url,start_age="0",end_age="100";
     String duration = "0", icon = "0", title, address, age_start, age_end, cost = "0", limit = "0", description;
     double latitude = 0.0, longitude = 0.0, latitude1, longitude1, latitude2, longitude2;
     String complete_address, city, state, zip, country, total_address;
@@ -170,6 +170,15 @@ public class Update_Activity extends Fragment {
         delet_activity = (Button) v.findViewById(R.id.delete_activity);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
         allurl = new ArrayList<String>();
+
+
+        seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                age1.setText(String.valueOf(minValue));
+                age2.setText(String.valueOf(maxValue));
+            }
+        });
 
         /*************************** Spinner Functionality Start ***********************/
 
@@ -288,18 +297,16 @@ public class Update_Activity extends Fragment {
                 checkBoxnotforeveryone.setClickable(false);
 
 //                Log.e("AGES", start_age + "\n" + End_age);
-                age1.setText(userdetails.getString("participant_age_start"));
-                age2.setText(userdetails.getString("participant_age_end"));
+//                age1.setText(userdetails.getString("participant_age_start"));
+//                age2.setText(userdetails.getString("participant_age_end"));
 
-                seekBarforage.setMinStartValue(Integer.parseInt(userdetails.getString("participant_age_start")));
-                seekBarforage.setMaxStartValue(Integer.parseInt(userdetails.getString("participant_age_end")));
-                seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-                    @Override
-                    public void valueChanged(Number minValue, Number maxValue) {
-//                        age1.setText(String.valueOf(minValue));
-//                        age2.setText(String.valueOf(maxValue));
-                    }
-                });
+                seekBarforage.setLeft(10);
+                seekBarforage.setRight(80);
+
+//                seekBarforage.setMinValue(Integer.parseInt(userdetails.getString("participant_age_start")));
+//                seekBarforage.setMaxValue(Integer.parseInt(userdetails.getString("participant_age_end")));
+
+
 
 
 
@@ -325,13 +332,6 @@ public class Update_Activity extends Fragment {
         }
 
 
-        seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                age1.setText(String.valueOf(minValue));
-                age2.setText(String.valueOf(maxValue));
-            }
-        });
 
         // user details which user wants to update//
 
@@ -1075,7 +1075,7 @@ private void doFileUpload(){
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
@@ -1086,6 +1086,9 @@ private void doFileUpload(){
             }
         });
     }
+
+
+
     public class DateListener implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

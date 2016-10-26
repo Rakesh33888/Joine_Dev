@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
@@ -50,14 +51,18 @@ public class Notification_Screen extends Fragment {
 
 
     TextView did_not_go,remind_later,skip,activity_name1;
-    EditText activity_fedback;
+    TextView review_did_not_go,review_remind_later,review_skip,review_activity_name;
+    EditText activity_fedback,review_activity_fedback;
     RatingBar ratingBar;
-    LinearLayout rating_action,rating_submission;
-    Button submit;
-    String user_id,activity_id,type,activity_name,url;
-    CircularImageView activity_image;
+    LinearLayout rating_action,rating_submission,review_submission,review_action;
+    Button submit,review_submit;
+    String user_id,activity_id,type,activity_name="null",url="null",time;
+    CircularImageView activity_image,review_activity_image;
     private static final String TAG = "SendFeedBack";
-    private static final String URL = "http://52.37.136.238/JoinMe/Setting.svc/SendFeedBack";
+    private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/Feedback";
+    private static final String REVIEW_TAG = "ReviewActivity";
+    private static final String REVIEW_URL = "http://52.37.136.238/JoinMe/Activity.svc/ReviewActivity";
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.notification_screen,container,false);
@@ -69,7 +74,7 @@ public class Notification_Screen extends Fragment {
         user_id      = bundle.getString("userid", "0");
         activity_id  = bundle.getString("activityid","0");
         type         = bundle.getString("type","null");
-
+        time         = bundle.getString("time","null");
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + user_id + "/" + activity_id + "/" + 0 + "/" +0,
                 new AsyncHttpResponseHandler() {
@@ -113,6 +118,233 @@ public class Notification_Screen extends Fragment {
                                     Log.d("Type", cast.getString(i));
 
                                 }
+//                                 Log.e("ACTIVITY NAME", activity_name);
+//                                 Log.e("ACTIVITY PICK URL",url);
+
+                                if (type.equals("rating")) {
+                                    final Dialog dialog = new Dialog(getActivity());
+                                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                                    dialog.setContentView(R.layout.rating_subscribe);
+                                    dialog.setCancelable(false);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
+                                    did_not_go = (TextView) dialog.findViewById(R.id.did_not_go);
+                                    remind_later = (TextView) dialog.findViewById(R.id.remind_later);
+                                    skip = (TextView) dialog.findViewById(R.id.skip);
+                                    ratingBar = (RatingBar) dialog.findViewById(R.id.rating_bar);
+                                    rating_action = (LinearLayout) dialog.findViewById(R.id.rating_action);
+                                    rating_submission = (LinearLayout) dialog.findViewById(R.id.rating_submission);
+                                    submit = (Button) dialog.findViewById(R.id.submit);
+                                    activity_fedback = (EditText)dialog.findViewById(R.id.activity_feedback);
+                                    activity_image  = (CircularImageView) dialog.findViewById(R.id.image_of_activity);
+                                    activity_name1  = (TextView) dialog.findViewById(R.id.activity_name);
+
+                                    if (time.equals("later"))
+                                    {
+                                        remind_later.setVisibility(View.GONE);
+                                    }
+
+                                    activity_name1.setText(activity_name);
+                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
+                                    skip.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                            startActivity(home);
+                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                            getActivity().finish();
+                                        }
+                                    });
+                                    remind_later.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterRating/" + user_id + "/" + activity_id,
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+
+                                                        public void onSuccess(String response) {
+
+                                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                                            startActivity(home);
+                                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                            getActivity().finish();
+
+                                                        }
+                                                    });
+                                        }
+                                    });
+                                    ratingBar.setOnTouchListener(new View.OnTouchListener() {
+                                        public boolean onTouch(View view, MotionEvent event) {
+                                            float touchPositionX = event.getX();
+                                            float width = ratingBar.getWidth();
+                                            float starsf = (touchPositionX / width) * 5.0f;
+                                            int stars = (int) starsf + 1;
+                                            ratingBar.setRating(stars);
+                                            rating_action.setVisibility(View.GONE);
+                                            rating_submission.setVisibility(View.VISIBLE);
+                                            ratingBar.setFocusable(false);
+                                            ratingBar.setClickable(false);
+                                            ratingBar.setEnabled(false);
+                                            ratingBar.setActivated(false);
+                                            ratingBar.setIsIndicator(false);
+
+                                            Log.e("Rating", String.valueOf(stars));
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RateActivity/" + user_id + "/" + activity_id + "/" + stars,
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+                                                        public void onSuccess(String response) {
+
+                                                            Log.e("Rating responce",String.valueOf(response));
+                                                        }
+                                                    });
+                                            return true;
+                                        }
+                                    });
+
+                                    submit.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            if (activity_fedback.getText().toString().length() > 10) {
+                                                JSONObject jsonObjSend = new JSONObject();
+                                                try {
+                                                    // Add key/value pairs
+                                                    jsonObjSend.put("activityid", activity_id);
+                                                    jsonObjSend.put("feedback_message", activity_fedback.getText().toString());
+                                                    jsonObjSend.put("userid", user_id);
+                                                    //  hideDialog();
+                                                    Log.i(TAG, jsonObjSend.toString(3));
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
+                                                JSONObject json = null;
+                                                try {
+                                                    json = new JSONObject(String.valueOf(jsonObjRecv));
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                Intent home = new Intent(getActivity(), Screen16.class);
+                                                startActivity(home);
+                                                getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                getActivity().finish();
+
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(getActivity(), "Atleast you have to enter 10 characters...! ", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                                if(type.equals("review"))
+                                {
+                                    final Dialog dialog = new Dialog(getActivity());
+                                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                                    dialog.setContentView(R.layout.review_activity);
+                                    dialog.setCancelable(false);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
+                                    review_did_not_go = (TextView) dialog.findViewById(R.id.review_did_not_go);
+                                    review_remind_later = (TextView) dialog.findViewById(R.id.review_remind_later);
+                                    review_skip = (TextView) dialog.findViewById(R.id.review_skip);
+
+                                    review_action = (LinearLayout) dialog.findViewById(R.id.review_action);
+                                    review_submission = (LinearLayout) dialog.findViewById(R.id.review_submission);
+                                    review_submit = (Button) dialog.findViewById(R.id.review_submit);
+                                    review_activity_fedback = (EditText)dialog.findViewById(R.id.review_activity_feedback);
+                                    review_activity_image  = (CircularImageView) dialog.findViewById(R.id.review_image_of_activity);
+                                    review_activity_name  = (TextView) dialog.findViewById(R.id.review_activity_name);
+
+                                    if (time.equals("later"))
+                                    {
+                                        review_remind_later.setVisibility(View.GONE);
+                                    }
+
+                                    review_activity_name.setText(activity_name);
+                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(review_activity_image);
+                                    review_skip.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                            startActivity(home);
+                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                            getActivity().finish();
+                                        }
+                                    });
+                                    review_remind_later.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterReview/" + user_id + "/" + activity_id,
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+
+                                                        public void onSuccess(String response) {
+
+                                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                                            startActivity(home);
+                                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                            getActivity().finish();
+
+                                                        }
+                                                    });
+                                        }
+                                    });
+
+                                    review_activity_fedback.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            review_action.setVisibility(View.GONE);
+                                            review_submission.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                                    review_submit.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (review_activity_fedback.getText().toString().length() > 10) {
+                                                JSONObject jsonObjSend = new JSONObject();
+                                                try {
+                                                    // Add key/value pairs
+                                                    jsonObjSend.put("activityid", activity_id);
+                                                    jsonObjSend.put("review", review_activity_fedback.getText().toString());
+                                                    jsonObjSend.put("userid", user_id);
+                                                    //  hideDialog();
+                                                    Log.i(REVIEW_TAG, jsonObjSend.toString(3));
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                                JSONObject jsonObjRecv = HttpClient.SendHttpPost(REVIEW_URL, jsonObjSend);
+                                                JSONObject json = null;
+                                                try {
+                                                    json = new JSONObject(String.valueOf(jsonObjRecv));
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                Intent home = new Intent(getActivity(), Screen16.class);
+                                                startActivity(home);
+                                                getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                getActivity().finish();
+
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(getActivity(), "Atleast you have to enter 10 characters...! ", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -125,115 +357,7 @@ public class Notification_Screen extends Fragment {
                     }
                 });
 
-        if (type.equals("rating")) {
-            final Dialog dialog = new Dialog(getActivity());
-            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            dialog.setContentView(R.layout.rating_subscribe);
-            dialog.setCancelable(false);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-            did_not_go = (TextView) dialog.findViewById(R.id.did_not_go);
-            remind_later = (TextView) dialog.findViewById(R.id.remind_later);
-            skip = (TextView) dialog.findViewById(R.id.skip);
-            ratingBar = (RatingBar) dialog.findViewById(R.id.rating_bar);
-            rating_action = (LinearLayout) dialog.findViewById(R.id.rating_action);
-            rating_submission = (LinearLayout) dialog.findViewById(R.id.rating_submission);
-            submit = (Button) dialog.findViewById(R.id.submit);
-            activity_fedback = (EditText)dialog.findViewById(R.id.activity_feedback);
-            activity_image  = (CircularImageView) dialog.findViewById(R.id.image_of_activity);
-            activity_name1  = (TextView) dialog.findViewById(R.id.activity_name);
-            activity_name1.setText(activity_name);
 
-//            Log.e("ACTIVITY NAME", activity_name);
-//            Log.e("ACTIVITY PICK URL",url);
-            Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
-            skip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent home = new Intent(getActivity(), Screen16.class);
-                    startActivity(home);
-                    getActivity().finish();
-                }
-            });
-            remind_later.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterRating/" + user_id + "/" + activity_id,
-                            new AsyncHttpResponseHandler() {
-                                // When the response returned by REST has Http response code '200'
-
-                                public void onSuccess(String response) {
-
-                                    Intent home = new Intent(getActivity(), Screen16.class);
-                                    startActivity(home);
-                                    getActivity().finish();
-
-                                }
-                            });
-                }
-            });
-            ratingBar.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View view, MotionEvent event) {
-                    float touchPositionX = event.getX();
-                    float width = ratingBar.getWidth();
-                    float starsf = (touchPositionX / width) * 5.0f;
-                    int stars = (int) starsf + 1;
-                    ratingBar.setRating(stars);
-                    rating_action.setVisibility(View.GONE);
-                    rating_submission.setVisibility(View.VISIBLE);
-                    ratingBar.setFocusable(false);
-                    ratingBar.setClickable(false);
-                    Log.e("Rating", String.valueOf(stars));
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://52.37.136.238/JoinMe/Activity.svc/RateActivity/" + user_id + "/" + activity_id + "/" + stars,
-                            new AsyncHttpResponseHandler() {
-                                // When the response returned by REST has Http response code '200'
-                                public void onSuccess(String response) {
-
-                                }
-                            });
-                    return true;
-                }
-            });
-
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    JSONObject jsonObjSend = new JSONObject();
-                    try {
-                        // Add key/value pairs
-                        jsonObjSend.put("activityid", activity_id);
-                        jsonObjSend.put("feedback_message", activity_fedback.getText().toString());
-                        jsonObjSend.put("userid", user_id);
-                        //  hideDialog();
-                        Log.i(TAG, jsonObjSend.toString(3));
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    JSONObject jsonObjRecv = HttpClient.SendHttpPost(URL, jsonObjSend);
-                    JSONObject json = null;
-                    try {
-                        json = new JSONObject(String.valueOf(jsonObjRecv));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Intent home = new Intent(getActivity(), Screen16.class);
-                    startActivity(home);
-                    getActivity().finish();
-                }
-            });
-        }
-        else
-        {
-
-        }
         return v;
     }
 

@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="400dp"
+    android:layout_width="320dp"
 
     android:layout_gravity="center"
     android:layout_height="wrap_content"
@@ -10,7 +10,7 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:layout_width="400dp"
+        android:layout_width="320dp"
         android:background="#fff"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
@@ -27,29 +27,30 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:gravity="center"
-                    android:id="@+id/activityreview"
-                    android:textColor="#acacac"
-                    android:text="How was the activty "/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="name"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textColor="#acacac"
-                    android:id="@+id/activity_name" />
+                    android:id="@+id/review_activity_name" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:id="@+id/activityreview"
+                    android:textColor="#acacac"
+                    android:text=" activity review  "/>
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" ?"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textColor="#acacac"
                     android:id="@+id/textView31" />
 
@@ -59,13 +60,13 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal">
 
             <com.github.siyamed.shapeimageview.CircularImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/image_of_activity"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/review_image_of_activity"
                 android:visibility="visible"
                 android:src="@drawable/butterfly"
                 />
@@ -73,25 +74,28 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal">
-            <RatingBar
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:stepSize="0.5"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:progressTint="@color/ratingbar"
-                android:id="@+id/rating_bar"
-                style="?android:attr/ratingBarStyleIndicator" />
-        </RelativeLayout>
+                android:layout_marginTop="25dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColorHint="#acacac"
+                android:hint="Enter your review...."
+                android:paddingBottom="5dp"
+                android:id="@+id/review_activity_feedback"
+                android:background="@drawable/edit_text_2"
+                android:layout_gravity="center"/>
+                   </RelativeLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rating_action"
-            android:layout_marginTop="20dp"
+            android:id="@+id/review_action"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="20dp">
 
             <TextView
@@ -100,55 +104,43 @@
                 android:text="@string/did_not_go"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/did_not_go" />
+                android:id="@+id/review_did_not_go" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/remind_later"
                 android:layout_weight="1"
-                android:id="@+id/remind_later" />
+                android:id="@+id/review_remind_later" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/skip"
                 android:layout_weight="1"
-                android:id="@+id/skip" />
+                android:id="@+id/review_skip" />
         </LinearLayout>
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:id="@+id/rating_submission"
+            android:id="@+id/review_submission"
             android:visibility="gone"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:layout_height="match_parent">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColorHint="#acacac"
-                android:hint="How was the activity? Would you recommend it? Any suggestion for improvements?"
-                android:paddingBottom="10dp"
-                android:id="@+id/activity_feedback"
-                android:background="@drawable/edit_text_2"
-                android:layout_gravity="center"/>
 
             <Button
-                android:layout_width="150dp"
-                android:layout_height="60dp"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
                 android:text="submite"
-                android:id="@+id/submit"
-                android:textSize="20dp"
+                android:id="@+id/review_submit"
+                android:textSize="18dp"
                 android:textColor="#fff"
                 android:background="@drawable/custom_button1"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

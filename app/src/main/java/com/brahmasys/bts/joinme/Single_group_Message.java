@@ -52,7 +52,7 @@ public class Single_group_Message extends Fragment    {
     private static final String URL_GetActivityDetailsForChat = "http://52.37.136.238/JoinMe/Activity.svc/GetActivityDetailsForChat/";
     ProgressDialog progressDialog;
     private  CircularImageView listimage;
-
+    FragmentManager fragmentManager;
 
     private static final String IMAGE_BASE_URL = "http://52.37.136.238/JoinMe/";
 
@@ -60,7 +60,7 @@ public class Single_group_Message extends Fragment    {
     CircularImageView createrimage,owner;
     HorizontalListView participants_list;
     Button yes,no;
-    String act_id,userid;
+    String act_id,userid,owner_id="0000";
     ImageView shareicon;
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
@@ -282,11 +282,10 @@ public class Single_group_Message extends Fragment    {
                                         tvActivityAddress.setText(txtAddress);
 
                                         for(int i=0; i<arrGroup.length(); i++) {
-
-
-                                            JSONObject row = arrGroup.getJSONObject(i);
-                                            if(row.getBoolean("isowner")){
+                                           JSONObject row = arrGroup.getJSONObject(i);
+                                            if(row.getString("isowner").equals("true")){
                                                 tvHostedByName.setText(row.getString("user_name"));
+                                                owner_id = row.getString("userid");
                                                 Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
                                                         .into(owner);
                                             }
@@ -294,9 +293,8 @@ public class Single_group_Message extends Fragment    {
                                             {
                                                 Book book = new Book();
                                                 book.setImageUrl(row.getString("profile_pic"));
-                                                other_user_id.add(row.getString(userid));
+                                                other_user_id.add(row.getString("userid"));
                                                 books.add(book);
-
                                             }
 
                                         }
@@ -324,8 +322,34 @@ public class Single_group_Message extends Fragment    {
             dia.Connectivity_Dialog_with_refresh(getActivity());
             progressDialog.dismiss();
         }
-
-
+owner.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        fragmentManager = getFragmentManager();
+        Screen13 screen13 = new Screen13();
+        Bundle bundle = new Bundle();
+        bundle.putString("owner_id", owner_id);
+        screen13.setArguments(bundle);
+        fragmentManager.beginTransaction()
+                .replace(R.id.flContent, screen13)
+                .addToBackStack(null)
+                .commit();
+    }
+});
+ participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        fragmentManager = getFragmentManager();
+        Screen13 screen13 = new Screen13();
+        Bundle bundle = new Bundle();
+        bundle.putString("owner_id", other_user_id.get(position));
+        screen13.setArguments(bundle);
+        fragmentManager.beginTransaction()
+                .replace(R.id.flContent, screen13)
+                .addToBackStack(null)
+                .commit();
+     }
+    });
 
 
         return v;

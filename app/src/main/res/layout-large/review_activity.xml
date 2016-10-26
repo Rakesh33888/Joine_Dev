@@ -20,21 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:gravity="center"
-                    android:id="@+id/activityreview"
-                    android:textColor="#acacac"
-                    android:text="How was the activty "/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -43,7 +35,16 @@
                     android:text="name"
                     android:textSize="25dp"
                     android:textColor="#acacac"
-                    android:id="@+id/activity_name" />
+                    android:id="@+id/review_activity_name" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:id="@+id/activityreview"
+                    android:textColor="#acacac"
+                    android:text=" activity review  "/>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,7 +66,7 @@
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/image_of_activity"
+                android:id="@+id/review_image_of_activity"
                 android:visibility="visible"
                 android:src="@drawable/butterfly"
                 />
@@ -75,57 +76,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal">
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:stepSize="0.5"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:progressTint="@color/ratingbar"
-                android:id="@+id/rating_bar"
-                style="?android:attr/ratingBarStyleIndicator" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rating_action"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/did_not_go"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/did_not_go" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/remind_later"
-                android:layout_weight="1"
-                android:id="@+id/remind_later" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/skip"
-                android:layout_weight="1"
-                android:id="@+id/skip" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:id="@+id/rating_submission"
-            android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_height="match_parent">
-
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -133,22 +83,64 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColorHint="#acacac"
-                android:hint="How was the activity? Would you recommend it? Any suggestion for improvements?"
+                android:hint="Enter your review...."
                 android:paddingBottom="10dp"
-                android:id="@+id/activity_feedback"
+                android:id="@+id/review_activity_feedback"
                 android:background="@drawable/edit_text_2"
                 android:layout_gravity="center"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/review_action"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/did_not_go"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/review_did_not_go" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_later"
+                android:layout_weight="1"
+                android:id="@+id/review_remind_later" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skip"
+                android:layout_weight="1"
+                android:id="@+id/review_skip" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/review_submission"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="match_parent">
+
 
             <Button
-                android:layout_width="150dp"
-                android:layout_height="60dp"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
                 android:text="submite"
-                android:id="@+id/submit"
+                android:id="@+id/review_submit"
                 android:textSize="20dp"
                 android:textColor="#fff"
                 android:background="@drawable/custom_button1"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
