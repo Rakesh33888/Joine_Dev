@@ -16,12 +16,12 @@
         "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable/abc_btn_colored_material.xml"
     },
     {
-        "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable/abc_spinner_textfield_background_material.xml",
-        "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable/abc_spinner_textfield_background_material.xml"
-    },
-    {
         "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable/abc_item_background_holo_light.xml",
         "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable/abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable/abc_spinner_textfield_background_material.xml",
+        "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable/abc_spinner_textfield_background_material.xml"
     },
     {
         "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable/messenger_button_blue_bg_round.xml",

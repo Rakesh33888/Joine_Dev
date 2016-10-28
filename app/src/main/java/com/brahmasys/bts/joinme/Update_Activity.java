@@ -445,7 +445,6 @@ public class Update_Activity extends Fragment  {
 
 
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
-
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             latitude = latitude;
             longitude = longitude;

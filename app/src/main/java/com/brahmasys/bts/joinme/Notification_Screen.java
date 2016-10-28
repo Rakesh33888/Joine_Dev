@@ -147,6 +147,27 @@ public class Notification_Screen extends Fragment {
 
                                     activity_name1.setText(activity_name);
                                     Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
+
+
+                                    did_not_go.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/JoinActivity/" + user_id + "/" + activity_id+ "/" +"false",
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+
+                                                        public void onSuccess(String response) {
+                                                            Log.e("DIDN'T",String.valueOf(response));
+                                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                                            startActivity(home);
+                                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                            getActivity().finish();
+
+                                                        }
+                                                    });
+                                        }
+                                    });
                                     skip.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -270,6 +291,26 @@ public class Notification_Screen extends Fragment {
 
                                     review_activity_name.setText(activity_name);
                                     Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(review_activity_image);
+
+                                    review_did_not_go.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/JoinActivity/" + user_id + "/" + activity_id + "/" + "false",
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+
+                                                        public void onSuccess(String response) {
+                                                            Log.e("DIDN'T", String.valueOf(response));
+                                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                                            startActivity(home);
+                                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                            getActivity().finish();
+
+                                                        }
+                                                    });
+                                        }
+                                    });
                                     review_skip.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {

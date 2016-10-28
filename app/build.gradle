@@ -70,4 +70,7 @@ dependencies {
     //  compile 'com.facebook.android:facebook-android-sdk:4.16.0'
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
     compile project(':facebook')
+    compile ('io.socket:socket.io-client:0.8.1') {
+        exclude group: 'org.json', module: 'json'
+    }
 }

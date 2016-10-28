@@ -1,18 +1,26 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,12 +28,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.brahmasys.bts.joinme.message.ChatApplication;
+//import com.brahmasys.bts.joinme.message.LoginActivity;
+import com.brahmasys.bts.joinme.message.Message;
+import com.brahmasys.bts.joinme.message.MessageAdapter;
 import com.devsmart.android.ui.HorizontalListView;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
@@ -36,10 +52,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
+
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 
 public class Single_group_Message extends Fragment    {
@@ -53,10 +76,7 @@ public class Single_group_Message extends Fragment    {
     ProgressDialog progressDialog;
     private  CircularImageView listimage;
     FragmentManager fragmentManager;
-
     private static final String IMAGE_BASE_URL = "http://52.37.136.238/JoinMe/";
-
-
     CircularImageView createrimage,owner;
     HorizontalListView participants_list;
     Button yes,no;
@@ -73,11 +93,35 @@ public class Single_group_Message extends Fragment    {
     Context context;
     private OnFragmentInteractionListener mListener;
 
+    /********************Chat********************/
+    private static final int REQUEST_LOGIN = 0;
+    private static final int TYPING_TIMER_LENGTH = 600;
+    private RecyclerView mMessagesView;
+    private EditText mInputMessageView;
+    private List<Message> mMessages = new ArrayList<Message>();
+    private RecyclerView.Adapter mAdapter;
+    private boolean mTyping = false;
+    private Handler mTypingHandler = new Handler();
+    private String mUsername;
+    private Socket mSocket;
+    private Boolean isConnected = true;
+    ImageView send_btn;
+    String sender_id,group_id;
+    String user_porfile,UserName;
+    private static final String CHAT_USER="chat_username";
+    SharedPreferences chat_username;
+    SharedPreferences.Editor edit_chat_username;
+    /********************Chat********************/
+
     public Single_group_Message() {
         // Required empty public constructor
     }
    //TextView name;
-
+   @Override
+   public void onAttach(Activity activity) {
+       super.onAttach(activity);
+       mAdapter = new MessageAdapter(activity, mMessages);
+   }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,11 +130,32 @@ public class Single_group_Message extends Fragment    {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+       /********************Chat********************/
+       setHasOptionsMenu(true);
+
+       ChatApplication app = (ChatApplication) getActivity().getApplication();
+       mSocket = app.getSocket();
+
+      // mSocket.on(Socket.EVENT_CONNECT,onConnect);
+//       mSocket.on(Socket.EVENT_DISCONNECT,onDisconnect);
+//       mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+//       mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+         mSocket.on("GetGroupMessages", onNewMessage);
+      //   mSocket.on("sendchat","580a10ecd72fc609f0a96d26","nari","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYKqEN07gWQ_AYkBbvkt4IxsvTUNEx1ODRHd_GvcjdeuN49acGA", "580a1c68d72fc609f0a97181", message);
+//       mSocket.on("user joined", onUserJoined);
+//       mSocket.on("user left", onUserLeft);
+//       mSocket.on("typing", onTyping);
+//       mSocket.on("stop typing", onStopTyping);
+//       mSocket.connect();
+        mSocket.on("getmessages",getMessage);
+         mSocket.connect();
+   //      mSocket.emit("joingroup", "580a10ecd72fc609f0a96d26", "580a1c68d72fc609f0a97181");
+      // startSignIn();
+       /********************Chat********************/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
-
         progressDialog =ProgressDialog.show(getActivity(), null, null, true);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -98,22 +163,31 @@ public class Single_group_Message extends Fragment    {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View v = inflater.inflate(R.layout.fragment_single_group__message, container, false);
-         // v.setBackgroundResource(R.drawable.colourbubble);
-
         owner   = (CircularImageView) v.findViewById(R.id.hosted);
         Bundle bundle = this.getArguments();
         act_id  = bundle.getString("activityid","0");
         userid = bundle.getString("userid","0");
+        sender_id = userid;
+        group_id = act_id;
+        Log.e("Join Group", group_id + "\n" + sender_id);
+        /**************Join Group ****************/
+        mSocket.emit("joingroup", sender_id, group_id);
+        /**************Join Group ****************/
+
+        chat_username = getActivity().getSharedPreferences(CHAT_USER,getActivity().MODE_PRIVATE);
+        edit_chat_username = chat_username.edit();
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
-
-
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
-
         other_user_id=new ArrayList<String>();
-
         createrimage.setClickable(true);
+        send_btn = (ImageView) v.findViewById(R.id.send_button);
+        /********************Chat********************/
+
+        /********************Chat********************/
+
+
         createrimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,20 +228,10 @@ public class Single_group_Message extends Fragment    {
                     }
                 }
 
-
             }
         });
-
-
-
-
-
-
-
-
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
-
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
         edit_activity_id = activity_id.edit();
         tvleave_chat.setPaintFlags(tvleave_chat.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -204,31 +268,21 @@ public class Single_group_Message extends Fragment    {
                         }
                     });
 
-
-
                 } else {
                     Splashscreen dia = new Splashscreen();
                     dia.Connectivity_Dialog_with_refresh(getActivity());
                     progressDialog.dismiss();
                 }
 
-
-
-
             }
         });
         context=getActivity();
         setListViewAdapter();
 
-      //  String userid = user_id.getString("userid", "");
-      //  String act_id = activity_id.getString("activity_id", "");
-      //  String act_id ="5762432ed72fc30d6853e39b";
-        //populate the date from the activity
-
-        if (Connectivity_Checking.isConnectingToInternet()) {
+       if (Connectivity_Checking.isConnectingToInternet()) {
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get(URL_GetActivityDetailsForChat + act_id,
+            client.get(URL_GetActivityDetailsForChat + act_id+"/"+userid,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -243,6 +297,8 @@ public class Single_group_Message extends Fragment    {
                                 JSONObject json = null;
                                 try {
                                     json = new JSONObject(String.valueOf(obj));
+
+                                    group_id  = json.getString("activityid");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -256,6 +312,7 @@ public class Single_group_Message extends Fragment    {
 //                                    edit_userid.putString("userid", apiResponse.getString("userid"));
 //                                    edit_userid.commit();
                                     String ststus =apiResponse.getString("status");
+                                     sender_id = userid;
                                     if(ststus.equals("200")){
                                         JSONArray arrGroup = json.getJSONArray("group_list");
 
@@ -288,6 +345,13 @@ public class Single_group_Message extends Fragment    {
                                                 owner_id = row.getString("userid");
                                                 Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
                                                         .into(owner);
+                                                if(userid.equals(owner_id))
+                                                {
+                                                    UserName = row.getString("user_name");
+                                                    user_porfile=row.getString("profile_pic");
+                                                    edit_chat_username.putString("chat_username",UserName);
+                                                    edit_chat_username.commit();
+                                                }
                                             }
                                             else
                                             {
@@ -295,6 +359,14 @@ public class Single_group_Message extends Fragment    {
                                                 book.setImageUrl(row.getString("profile_pic"));
                                                 other_user_id.add(row.getString("userid"));
                                                 books.add(book);
+                                                if(userid.equals(row.getString("userid")))
+                                                {
+                                                    UserName = row.getString("user_name");
+                                                    user_porfile=row.getString("profile_pic");
+
+                                                    edit_chat_username.putString("chat_username",UserName);
+                                                    edit_chat_username.commit();
+                                                }
                                             }
 
                                         }
@@ -312,6 +384,8 @@ public class Single_group_Message extends Fragment    {
                                 e.printStackTrace();
                             }
                             progressDialog.dismiss();
+
+
                         }
                     });
 
@@ -354,6 +428,442 @@ owner.setOnClickListener(new View.OnClickListener() {
 
         return v;
     }
+
+
+    /********************Chat********************/
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSocket.disconnect();
+//        mSocket.off(Socket.EVENT_CONNECT, onConnect);
+//        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+//        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+//        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+          mSocket.off("GetGroupMessages", onNewMessage);
+          mSocket.off("getmessages",getMessage);
+//        mSocket.off("user joined", onUserJoined);
+//        mSocket.off("user left", onUserLeft);
+//        mSocket.off("typing", onTyping);
+//        mSocket.off("stop typing", onStopTyping);
+
+    }
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mMessagesView = (RecyclerView) view.findViewById(R.id.messages);
+        mMessagesView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mMessagesView.setAdapter(mAdapter);
+
+        mInputMessageView = (EditText) view.findViewById(R.id.message_input);
+        mInputMessageView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int id, KeyEvent event) {
+                if (id == R.id.send || id == EditorInfo.IME_NULL) {
+                    attemptSend();
+                    return true;
+                }
+                return false;
+            }
+        });
+        mInputMessageView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (null == mUsername) return;
+                if (!mSocket.connected()) return;
+
+                if (!mTyping) {
+                    mTyping = true;
+                    mSocket.emit("typing");
+                }
+
+//                mTypingHandler.removeCallbacks(onTypingTimeout);
+//                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        send_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                mSocket.emit("sendchat", "580a10ecd72fc609f0a96d26", "nari", " ", "580a1c68d72fc609f0a97181", "message");
+//                addMessage("nari", "message");
+                attemptSend();
+            }
+        });
+//        ImageView sendButton = (ImageView) view.findViewById(R.id.send_button);
+//        sendButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                attemptSend();
+//            }
+//        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Activity.RESULT_OK != resultCode) {
+            getActivity().finish();
+            return;
+        }
+
+//        mUsername = data.getStringExtra("username");
+//        int numUsers = data.getIntExtra("numUsers", 1);
+
+//        addLog(getResources().getString(R.string.message_welcome));
+//        addParticipantsLog(numUsers);
+    }
+
+//    private void addLog(String message) {
+//        mMessages.add(new Message.Builder(Message.TYPE_LOG)
+//                .message(message).build());
+//        mAdapter.notifyItemInserted(mMessages.size() - 1);
+//        scrollToBottom();
+//    }
+//
+//    private void addParticipantsLog(int numUsers) {
+//        addLog(getResources().getQuantityString(R.plurals.message_participants, numUsers, numUsers));
+//    }
+
+    private void addMessage(String username, String message , String profileurl,String chat_time) {
+
+        mMessages.add(new Message.Builder(Message.TYPE_MESSAGE)
+                .username(username).message(message).ProfileUrl(profileurl).ChatTime(chat_time).build());
+
+        mAdapter.notifyItemInserted(mMessages.size() - 1);
+        scrollToBottom();
+    }
+
+    private void addMessage1(String username, String message, String profileurl,String chat_time) {
+
+        mMessages.add(new Message.Builder(Message.TYPE_MESSAGE_USER)
+                .username(username).message(message).ProfileUrl(profileurl).ChatTime(chat_time).build());
+
+        mAdapter.notifyItemInserted(mMessages.size() - 1);
+        scrollToBottom();
+    }
+//    private void addTyping(String username) {
+//        mMessages.add(new Message.Builder(Message.TYPE_ACTION)
+//                .username(username).build());
+//        mAdapter.notifyItemInserted(mMessages.size() - 1);
+//        scrollToBottom();
+//    }
+//
+//    private void removeTyping(String username) {
+//        for (int i = mMessages.size() - 1; i >= 0; i--) {
+//            Message message = mMessages.get(i);
+//            if (message.getType() == Message.TYPE_ACTION && message.getUsername().equals(username)) {
+//                mMessages.remove(i);
+//                mAdapter.notifyItemRemoved(i);
+//            }
+//        }
+//    }
+
+    private void attemptSend() {
+       // if (null == mUsername) return;
+      //  if (!mSocket.connected()) return;
+
+        mTyping = false;
+        String message = mInputMessageView.getText().toString().trim();
+        if (TextUtils.isEmpty(message)) {
+            mInputMessageView.requestFocus();
+            return;
+        }
+        else {
+            mInputMessageView.setText("");
+           // addMessage(UserName, message, user_porfile);
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("hh:mm: aa");
+            String Chat_Time = df.format(c.getTime());
+            addMessage1(UserName, message, user_porfile,Chat_Time);
+            // perform the sending message attempt.
+            // mSocket.emit("send", message);
+            mSocket.emit("sendchat", sender_id, UserName, user_porfile, group_id, message);
+        }
+    }
+
+//    private void startSignIn() {
+//        mUsername = null;
+//        Intent intent = new Intent(getActivity(), LoginActivity.class);
+//        startActivityForResult(intent, REQUEST_LOGIN);
+//    }
+
+//    private void leave() {
+//        mUsername = null;
+//        mSocket.disconnect();
+//        mSocket.connect();
+//        startSignIn();
+//    }
+
+    private void scrollToBottom() {
+        mMessagesView.scrollToPosition(mAdapter.getItemCount() - 1);
+    }
+//
+//    private Emitter.Listener onConnect = new Emitter.Listener() {
+//        @Override
+//        public void call(Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if(!isConnected) {
+//                       // if(null!=mUsername)
+//                        //    mSocket.emit("add user", mUsername);
+//                        mSocket.emit("connection");
+//                        Toast.makeText(getActivity().getApplicationContext(), "connect", Toast.LENGTH_LONG).show();
+//                        isConnected = true;
+//                    }
+//                }
+//            });
+//        }
+//    };
+//
+//    private Emitter.Listener onDisconnect = new Emitter.Listener() {
+//        @Override
+//        public void call(Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    isConnected = false;
+//                    Toast.makeText(getActivity().getApplicationContext(),
+//                            "disconnect", Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    };
+//
+//    private Emitter.Listener onConnectError = new Emitter.Listener() {
+//        @Override
+//        public void call(Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Toast.makeText(getActivity().getApplicationContext(),
+//                            "error_connect", Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    };
+
+    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (!args.equals("")) {
+                if (getActivity()!=null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+//                    JSONObject data = (JSONObject) args[0];
+                            JSONArray data1 = (JSONArray) args[0];
+                            Log.e("RESULT", String.valueOf(data1));
+                            String username = null;
+                            String message = null;
+                            String profile_url = null;
+                            String s_senderid=null;
+                            String chat_time=null;
+                            for (int i = 0; i < data1.length(); i++) {
+
+                                JSONObject jsonobject = null;
+                                try {
+                                    jsonobject = (JSONObject) data1.get(i);
+
+                                    s_senderid=jsonobject.optString("senderid");
+                                    username = jsonobject.getString("s_username");
+                                    message = jsonobject.getString("message");
+                                    profile_url = jsonobject.getString("u_userpic");
+
+                                    String dtStart = jsonobject.getString("timestamp");
+                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                                    try {
+                                        Date date = format.parse(dtStart);
+                                        System.out.println(date);
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+                                        chat_time = dateFormat.format(date);
+                                    } catch (ParseException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                        if (sender_id!=null && sender_id.equals(s_senderid))
+                        {
+                            addMessage1(username, message,profile_url,chat_time);
+                        }
+                        else {
+                                //removeTyping(username);
+                                addMessage(username, message,profile_url,chat_time);
+                                 }
+                            }
+
+                        }
+                    });
+                    return;
+                }
+            }
+        }
+    };
+
+    private Emitter.Listener getMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (!args.equals("")) {
+                if (getActivity()!=null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                          JSONObject data = (JSONObject) args[0];
+                         //   JSONArray data1 = (JSONArray) args[0];
+                            Log.e("RESULT", String.valueOf(data));
+                            String username = null;
+                            String message = null;
+                            String profile_url = null;
+                            String s_senderid=null;
+                            String chat_time=null;
+                            try {
+                                s_senderid=data.optString("senderid");
+                                username = data.getString("s_username");
+                                message = data.getString("message");
+                                profile_url = data.getString("u_userpic");
+
+                                String dtStart = data.getString("timestamp");
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                                try {
+                                    Date date = format.parse(dtStart);
+                                    System.out.println(date);
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+                                    chat_time = dateFormat.format(date);
+                                } catch (ParseException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                                if (sender_id!=null && sender_id.equals(s_senderid))
+                                {
+                                    addMessage1(username, message,profile_url,chat_time);
+                                }
+                                else {
+                                    //removeTyping(username);
+                                    addMessage(username, message,profile_url,chat_time);
+                              }
+                          // }
+
+                        }
+                    });
+                    return;
+                }
+            }
+        }
+    };
+//    private Emitter.Listener onUserJoined = new Emitter.Listener() {
+//        @Override
+//        public void call(final Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    JSONObject data = (JSONObject) args[0];
+//                    String username;
+//                    int numUsers;
+//                    try {
+//                        username = data.getString("username");
+//                        numUsers = data.getInt("numUsers");
+//                    } catch (JSONException e) {
+//                        return;
+//                    }
+//
+//                    addLog(getResources().getString(R.string.message_user_joined, username));
+//                    addParticipantsLog(numUsers);
+//                }
+//            });
+//        }
+//    };
+//
+//    private Emitter.Listener onUserLeft = new Emitter.Listener() {
+//        @Override
+//        public void call(final Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    JSONObject data = (JSONObject) args[0];
+//                    String username;
+//                    int numUsers;
+//                    try {
+//                        username = data.getString("username");
+//                        numUsers = data.getInt("numUsers");
+//                    } catch (JSONException e) {
+//                        return;
+//                    }
+//
+//                    addLog(getResources().getString(R.string.message_user_left, username));
+//                    addParticipantsLog(numUsers);
+//                    removeTyping(username);
+//                }
+//            });
+//        }
+//    };
+//
+//    private Emitter.Listener onTyping = new Emitter.Listener() {
+//        @Override
+//        public void call(final Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    JSONObject data = (JSONObject) args[0];
+//                    String username;
+//                    try {
+//                        username = data.getString("username");
+//                    } catch (JSONException e) {
+//                        return;
+//                    }
+//                    addTyping(username);
+//                }
+//            });
+//        }
+//    };
+//
+//    private Emitter.Listener onStopTyping = new Emitter.Listener() {
+//        @Override
+//        public void call(final Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    JSONObject data = (JSONObject) args[0];
+//                    String username;
+//                    try {
+//                        username = data.getString("username");
+//                    } catch (JSONException e) {
+//                        return;
+//                    }
+//                    removeTyping(username);
+//                }
+//            });
+//        }
+//    };
+//
+//    private Runnable onTypingTimeout = new Runnable() {
+//        @Override
+//        public void run() {
+//            if (!mTyping) return;
+//
+//            mTyping = false;
+//            mSocket.emit("stop typing");
+//        }
+//    };
+    /********************Chat********************/
 
     private void setListViewAdapter() {
         books = new ArrayList<Book>();
