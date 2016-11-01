@@ -161,9 +161,9 @@
                 android:imeActionId="@+id/send"
                 android:imeActionLabel="@string/action_send"
                 android:imeOptions="actionSend"
-                android:inputType="text"
+                android:inputType="textNoSuggestions"
                 android:maxLines="1"
-                android:singleLine="true"/>
+                android:singleLine="true"><requestFocus /></EditText>
             <ImageView
                 android:id="@+id/send_button"
                 android:layout_width="wrap_content"

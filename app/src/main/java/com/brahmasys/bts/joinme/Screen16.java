@@ -218,6 +218,7 @@ public class Screen16 extends AppCompatActivity implements
         lat = lat_lng.getString("lat", "0.0");
         lon = lat_lng.getString("lng", "0.0");
         GetUserData();
+        userStatus(user_id.getString("userid","000"),"true");
          reloadactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -611,6 +612,8 @@ public void GetUserData()
         } else {
             super.onBackPressed();
         }
+
+        userStatus(user_id.getString("userid","0000"),"false");
     }
 
     @Override
@@ -821,6 +824,31 @@ public void GetUserData()
 
     }
 
+    public void userStatus(String userid,String status)
+    {
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://52.37.136.238/JoinMe/Setting.svc/UserOnline/" + userid + "/" + status,
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+                            String result = obj.getString("message");
+
+                            Log.e("STATUS RESULT",result);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                });
+    }
 
     @Override
     public void onStop() {

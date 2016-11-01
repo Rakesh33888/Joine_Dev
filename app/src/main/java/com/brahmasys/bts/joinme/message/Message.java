@@ -28,12 +28,6 @@ public class Message {
     public String getProfileUrl(){return mProfile_url;};
     public String getChat_time(){return chat_time;}
 
-//    public String getuserUsername() {
-//        return userUsername;
-//    };
-//    public String getuserMessage() {
-//        return userMessage;
-//    };
     public static class Builder {
         private final int mType;
         private String mUsername,userUsername,mProfile_url,chat_time;
@@ -64,15 +58,6 @@ public class Message {
         chat_time=chatTime;
         return this;
     }
-//        public Builder userusername(String userusername) {
-//            userUsername = userusername;
-//            return this;
-//        }
-//
-//        public Builder usermessage(String usermessage) {
-//            userMessage = usermessage;
-//            return this;
-//        }
 
         public Message build() {
             Message message = new Message();

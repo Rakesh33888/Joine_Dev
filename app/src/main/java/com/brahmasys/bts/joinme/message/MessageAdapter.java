@@ -83,7 +83,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         private TextView mMessageView,mMessageView1;
         CircularImageView profile_url,profile_url1;
 
-
         public ViewHolder(View itemView) {
             super(itemView);
             chat_username = context.getSharedPreferences(CHAT_USER, context.MODE_PRIVATE);
@@ -97,7 +96,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             mMessageView = (TextView) itemView.findViewById(R.id.message);
             profile_url = (CircularImageView) itemView.findViewById(R.id.chat_profile);
             chat_time   = (TextView) itemView.findViewById(R.id.chat_time);
-
 
         }
 

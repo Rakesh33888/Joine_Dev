@@ -18,8 +18,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextUtils;
+
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -102,7 +104,7 @@ public class Single_group_Message extends Fragment    {
     private RecyclerView.Adapter mAdapter;
     private boolean mTyping = false;
     private Handler mTypingHandler = new Handler();
-    private String mUsername;
+    //private String mUsername;
     private Socket mSocket;
     private Boolean isConnected = true;
     ImageView send_btn;
@@ -134,23 +136,16 @@ public class Single_group_Message extends Fragment    {
        setHasOptionsMenu(true);
 
        ChatApplication app = (ChatApplication) getActivity().getApplication();
-       mSocket = app.getSocket();
-
-      // mSocket.on(Socket.EVENT_CONNECT,onConnect);
-//       mSocket.on(Socket.EVENT_DISCONNECT,onDisconnect);
-//       mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-//       mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-         mSocket.on("GetGroupMessages", onNewMessage);
-      //   mSocket.on("sendchat","580a10ecd72fc609f0a96d26","nari","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYKqEN07gWQ_AYkBbvkt4IxsvTUNEx1ODRHd_GvcjdeuN49acGA", "580a1c68d72fc609f0a97181", message);
-//       mSocket.on("user joined", onUserJoined);
-//       mSocket.on("user left", onUserLeft);
-//       mSocket.on("typing", onTyping);
-//       mSocket.on("stop typing", onStopTyping);
-//       mSocket.connect();
+        mSocket = app.getSocket();
+        mSocket.on("GetGroupMessages", onNewMessage);
+        mSocket.on("typing", onTyping);
         mSocket.on("getmessages",getMessage);
-         mSocket.connect();
-   //      mSocket.emit("joingroup", "580a10ecd72fc609f0a96d26", "580a1c68d72fc609f0a97181");
-      // startSignIn();
+        mSocket.connect();
+      // mSocket.on("user joined", onUserJoined);
+//       mSocket.on("user left", onUserLeft);
+        // mSocket.on("stop typing", onStopTyping);
+
+
        /********************Chat********************/
     }
 
@@ -411,20 +406,19 @@ owner.setOnClickListener(new View.OnClickListener() {
     }
 });
  participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        fragmentManager = getFragmentManager();
-        Screen13 screen13 = new Screen13();
-        Bundle bundle = new Bundle();
-        bundle.putString("owner_id", other_user_id.get(position));
-        screen13.setArguments(bundle);
-        fragmentManager.beginTransaction()
-                .replace(R.id.flContent, screen13)
-                .addToBackStack(null)
-                .commit();
+     @Override
+     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+         fragmentManager = getFragmentManager();
+         Screen13 screen13 = new Screen13();
+         Bundle bundle = new Bundle();
+         bundle.putString("owner_id", other_user_id.get(position));
+         screen13.setArguments(bundle);
+         fragmentManager.beginTransaction()
+                 .replace(R.id.flContent, screen13)
+                 .addToBackStack(null)
+                 .commit();
      }
-    });
-
+ });
 
         return v;
     }
@@ -436,16 +430,12 @@ owner.setOnClickListener(new View.OnClickListener() {
         super.onDestroy();
 
         mSocket.disconnect();
-//        mSocket.off(Socket.EVENT_CONNECT, onConnect);
-//        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-//        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
-//        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
           mSocket.off("GetGroupMessages", onNewMessage);
           mSocket.off("getmessages",getMessage);
 //        mSocket.off("user joined", onUserJoined);
 //        mSocket.off("user left", onUserLeft);
-//        mSocket.off("typing", onTyping);
-//        mSocket.off("stop typing", onStopTyping);
+          mSocket.off("typing", onTyping);
+       //   mSocket.off("stop typing", onStopTyping);
 
     }
 
@@ -469,45 +459,64 @@ owner.setOnClickListener(new View.OnClickListener() {
                 return false;
             }
         });
-        mInputMessageView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (null == mUsername) return;
-                if (!mSocket.connected()) return;
-
-                if (!mTyping) {
-                    mTyping = true;
-                    mSocket.emit("typing");
-                }
-
+//        mInputMessageView.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//             //   if (null == mUsername) return;
+//                if (!mSocket.connected()) return;
+//
+//                if (!mTyping) {
+//                    mTyping = true;
+//                    mSocket.emit("ontyping","leo");
+//                }
+//
 //                mTypingHandler.removeCallbacks(onTypingTimeout);
 //                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
-            }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
 
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
 
+//        mInputMessageView.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//             //   if (null == mUsername) return;
+//                if (!mSocket.connected()) return;
+//
+//                if (!mTyping) {
+//                    mTyping = true;
+//                    mSocket.emit("ontyping","narendra");
+//                }
+//
+//
+////                mTypingHandler.removeCallbacks(onTypingTimeout);
+////                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mSocket.emit("sendchat", "580a10ecd72fc609f0a96d26", "nari", " ", "580a1c68d72fc609f0a97181", "message");
-//                addMessage("nari", "message");
+//                removeTyping("narendra");
                 attemptSend();
+
             }
         });
-//        ImageView sendButton = (ImageView) view.findViewById(R.id.send_button);
-//        sendButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                attemptSend();
-//            }
-//        });
+
     }
 
     @Override
@@ -521,17 +530,17 @@ owner.setOnClickListener(new View.OnClickListener() {
 //        mUsername = data.getStringExtra("username");
 //        int numUsers = data.getIntExtra("numUsers", 1);
 
-//        addLog(getResources().getString(R.string.message_welcome));
+    //     addLog(getResources().getString(R.string.message_welcome));
 //        addParticipantsLog(numUsers);
     }
 
-//    private void addLog(String message) {
-//        mMessages.add(new Message.Builder(Message.TYPE_LOG)
-//                .message(message).build());
-//        mAdapter.notifyItemInserted(mMessages.size() - 1);
-//        scrollToBottom();
-//    }
-//
+    private void addLog(String message) {
+        mMessages.add(new Message.Builder(Message.TYPE_LOG)
+                .message(message).build());
+        mAdapter.notifyItemInserted(mMessages.size() - 1);
+        scrollToBottom();
+    }
+
 //    private void addParticipantsLog(int numUsers) {
 //        addLog(getResources().getQuantityString(R.plurals.message_participants, numUsers, numUsers));
 //    }
@@ -553,22 +562,22 @@ owner.setOnClickListener(new View.OnClickListener() {
         mAdapter.notifyItemInserted(mMessages.size() - 1);
         scrollToBottom();
     }
-//    private void addTyping(String username) {
-//        mMessages.add(new Message.Builder(Message.TYPE_ACTION)
-//                .username(username).build());
-//        mAdapter.notifyItemInserted(mMessages.size() - 1);
-//        scrollToBottom();
-//    }
-//
-//    private void removeTyping(String username) {
-//        for (int i = mMessages.size() - 1; i >= 0; i--) {
-//            Message message = mMessages.get(i);
-//            if (message.getType() == Message.TYPE_ACTION && message.getUsername().equals(username)) {
-//                mMessages.remove(i);
-//                mAdapter.notifyItemRemoved(i);
-//            }
-//        }
-//    }
+    private void addTyping(String username) {
+        mMessages.add(new Message.Builder(Message.TYPE_ACTION)
+                .username(username).build());
+        mAdapter.notifyItemInserted(mMessages.size() - 1);
+        scrollToBottom();
+    }
+
+    private void removeTyping(String username) {
+        for (int i = mMessages.size() - 1; i >= 0; i--) {
+            Message message = mMessages.get(i);
+            if (message.getType() == Message.TYPE_ACTION && message.getUsername().equals(username)) {
+                mMessages.remove(i);
+                mAdapter.notifyItemRemoved(i);
+            }
+        }
+    }
 
     private void attemptSend() {
        // if (null == mUsername) return;
@@ -582,78 +591,18 @@ owner.setOnClickListener(new View.OnClickListener() {
         }
         else {
             mInputMessageView.setText("");
-           // addMessage(UserName, message, user_porfile);
             Calendar c = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("hh:mm: aa");
             String Chat_Time = df.format(c.getTime());
             addMessage1(UserName, message, user_porfile,Chat_Time);
-            // perform the sending message attempt.
-            // mSocket.emit("send", message);
             mSocket.emit("sendchat", sender_id, UserName, user_porfile, group_id, message);
         }
     }
 
-//    private void startSignIn() {
-//        mUsername = null;
-//        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//        startActivityForResult(intent, REQUEST_LOGIN);
-//    }
-
-//    private void leave() {
-//        mUsername = null;
-//        mSocket.disconnect();
-//        mSocket.connect();
-//        startSignIn();
-//    }
 
     private void scrollToBottom() {
         mMessagesView.scrollToPosition(mAdapter.getItemCount() - 1);
     }
-//
-//    private Emitter.Listener onConnect = new Emitter.Listener() {
-//        @Override
-//        public void call(Object... args) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if(!isConnected) {
-//                       // if(null!=mUsername)
-//                        //    mSocket.emit("add user", mUsername);
-//                        mSocket.emit("connection");
-//                        Toast.makeText(getActivity().getApplicationContext(), "connect", Toast.LENGTH_LONG).show();
-//                        isConnected = true;
-//                    }
-//                }
-//            });
-//        }
-//    };
-//
-//    private Emitter.Listener onDisconnect = new Emitter.Listener() {
-//        @Override
-//        public void call(Object... args) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    isConnected = false;
-//                    Toast.makeText(getActivity().getApplicationContext(),
-//                            "disconnect", Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        }
-//    };
-//
-//    private Emitter.Listener onConnectError = new Emitter.Listener() {
-//        @Override
-//        public void call(Object... args) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Toast.makeText(getActivity().getApplicationContext(),
-//                            "error_connect", Toast.LENGTH_LONG).show();
-//                }
-//            });
-//        }
-//    };
 
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
@@ -663,7 +612,6 @@ owner.setOnClickListener(new View.OnClickListener() {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                    JSONObject data = (JSONObject) args[0];
                             JSONArray data1 = (JSONArray) args[0];
                             Log.e("RESULT", String.valueOf(data1));
                             String username = null;
@@ -684,6 +632,7 @@ owner.setOnClickListener(new View.OnClickListener() {
 
                                     String dtStart = jsonobject.getString("timestamp");
                                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                                    format.setTimeZone(TimeZone.getTimeZone("GMT"));
                                     try {
                                         Date date = format.parse(dtStart);
                                         System.out.println(date);
@@ -699,10 +648,11 @@ owner.setOnClickListener(new View.OnClickListener() {
                                 }
                         if (sender_id!=null && sender_id.equals(s_senderid))
                         {
+
                             addMessage1(username, message,profile_url,chat_time);
                         }
                         else {
-                                //removeTyping(username);
+
                                 addMessage(username, message,profile_url,chat_time);
                                  }
                             }
@@ -739,6 +689,7 @@ owner.setOnClickListener(new View.OnClickListener() {
 
                                 String dtStart = data.getString("timestamp");
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+                                format.setTimeZone(TimeZone.getTimeZone("GMT"));
                                 try {
                                     Date date = format.parse(dtStart);
                                     System.out.println(date);
@@ -754,10 +705,11 @@ owner.setOnClickListener(new View.OnClickListener() {
 
                                 if (sender_id!=null && sender_id.equals(s_senderid))
                                 {
+
                                     addMessage1(username, message,profile_url,chat_time);
                                 }
                                 else {
-                                    //removeTyping(username);
+
                                     addMessage(username, message,profile_url,chat_time);
                               }
                           // }
@@ -816,25 +768,31 @@ owner.setOnClickListener(new View.OnClickListener() {
 //        }
 //    };
 //
-//    private Emitter.Listener onTyping = new Emitter.Listener() {
-//        @Override
-//        public void call(final Object... args) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
+    private Emitter.Listener onTyping = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            Log.e("TYPING",String.valueOf(args));
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 //                    JSONObject data = (JSONObject) args[0];
+//                    Log.e("TYPING",String.valueOf(data));
 //                    String username;
 //                    try {
 //                        username = data.getString("username");
 //                    } catch (JSONException e) {
 //                        return;
 //                    }
-//                    addTyping(username);
-//                }
-//            });
-//        }
-//    };
-//
+//                    if (!UserName.equals("leo"))
+//                    {
+                    addTyping("leo");
+            //    }
+
+                }
+            });
+        }
+    };
+
 //    private Emitter.Listener onStopTyping = new Emitter.Listener() {
 //        @Override
 //        public void call(final Object... args) {
@@ -853,16 +811,16 @@ owner.setOnClickListener(new View.OnClickListener() {
 //            });
 //        }
 //    };
-//
-//    private Runnable onTypingTimeout = new Runnable() {
-//        @Override
-//        public void run() {
-//            if (!mTyping) return;
-//
-//            mTyping = false;
-//            mSocket.emit("stop typing");
-//        }
-//    };
+
+    private Runnable onTypingTimeout = new Runnable() {
+        @Override
+        public void run() {
+            if (!mTyping) return;
+
+            mTyping = false;
+           // mSocket.emit("stop typing");
+        }
+    };
     /********************Chat********************/
 
     private void setListViewAdapter() {

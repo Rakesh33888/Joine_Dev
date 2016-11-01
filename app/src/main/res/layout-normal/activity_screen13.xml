@@ -157,38 +157,38 @@
         android:paddingLeft="5dp"
         android:id="@+id/textView18"
         android:alpha="0.8"/>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/smallbox1"
-        android:layout_margin="8dp"
-        android:layout_weight="0.69"
-        android:weightSum="1">
+    <!-- <LinearLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:background="@drawable/smallbox1"
+         android:layout_margin="8dp"
+         android:layout_weight="0.69"
+         android:weightSum="1">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:id="@+id/editText9"
-            android:paddingTop="5dp"
-            android:paddingLeft="10dp"
-            android:hint="Type a message"
-            android:textColorHint="#ffffff"
-            android:gravity="left|top"
-            android:paddingRight="10dp"
-            android:inputType="textMultiLine|textCapSentences"
-            android:layout_marginBottom="9dp"
-            android:textColor="#ffffff"
-            android:background="@null"
-           />
-    </LinearLayout>
+         <EditText
+             android:layout_width="match_parent"
+             android:layout_height="120dp"
+             android:id="@+id/editText9"
+             android:paddingTop="5dp"
+             android:paddingLeft="10dp"
+             android:hint="Type a message"
+             android:textColorHint="#ffffff"
+             android:gravity="left|top"
+             android:paddingRight="10dp"
+             android:inputType="textMultiLine|textCapSentences"
+             android:layout_marginBottom="9dp"
+             android:textColor="#ffffff"
+             android:background="@null"
+            />
+     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/send_msg"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="@drawable/send_msg"
+         android:id="@+id/button"
+         android:layout_gravity="center_horizontal" />  -->
 
 
 

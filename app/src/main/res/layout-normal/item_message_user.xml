@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="vertical"
     android:paddingTop="@dimen/spacing">
     <LinearLayout
@@ -11,64 +10,59 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/spacing"
         android:layout_gravity="right">
-     <!--   <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
+
+         <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cardview_bg"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:cardview="http://schemas.android.com/tools"
             card_view:cardCornerRadius="6dp"
             card_view:cardElevation="6dp"
             android:paddingTop="@dimen/spacing"
             android:layout_gravity="center"
-            cardview:cardBackgroundColor="#005F99" > -->
+             card_view:cardBackgroundColor="#005F99"
+             android:layout_weight="1">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/spacing"
-        android:background="@drawable/chat_layout_shape"
-        android:layout_gravity="center|right"
-        android:weightSum="1">
         <LinearLayout
-            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/username"
-                android:textColor="?android:textColorPrimary"
-                android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:layout_alignParentLeft="true" />
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/username"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="15dp"/>
+                <TextView
+                    android:id="@+id/message"
+                    style="?android:textAppearanceMedium"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                     />
+            </LinearLayout>
             <TextView
                 android:id="@+id/chat_time"
-                android:layout_width="wrap_content"
-                android:textColor="#ffffff"
-                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:layout_alignParentRight="true" />
+                android:layout_marginTop="5dp"
+                android:textColor="#CFCFCF"
+                android:textSize="10dp"/>
+
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-        <TextView
-            android:id="@+id/message"
-            style="?android:textAppearanceMedium"
-            android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"/>
-        </RelativeLayout>
-    </LinearLayout>
-      <!-- </android.support.v7.widget.CardView> -->
+       </android.support.v7.widget.CardView>
+
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -77,7 +71,7 @@
             android:visibility="visible"
             android:background="@drawable/roundbg"
             android:layout_gravity="right" />
-</LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

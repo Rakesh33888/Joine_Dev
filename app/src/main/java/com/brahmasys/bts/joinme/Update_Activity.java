@@ -297,11 +297,10 @@ public class Update_Activity extends Fragment  {
                 checkBoxnotforeveryone.setClickable(false);
 
 //                Log.e("AGES", start_age + "\n" + End_age);
-//                age1.setText(userdetails.getString("participant_age_start"));
-//                age2.setText(userdetails.getString("participant_age_end"));
+                age1.setText(userdetails.getString("participant_age_start"));
+                age2.setText(userdetails.getString("participant_age_end"));
 
-                seekBarforage.setLeft(10);
-                seekBarforage.setRight(80);
+
 
 //                seekBarforage.setMinValue(Integer.parseInt(userdetails.getString("participant_age_start")));
 //                seekBarforage.setMaxValue(Integer.parseInt(userdetails.getString("participant_age_end")));
