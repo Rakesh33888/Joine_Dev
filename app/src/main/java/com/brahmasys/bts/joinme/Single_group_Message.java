@@ -62,6 +62,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -113,6 +115,8 @@ public class Single_group_Message extends Fragment    {
     private static final String CHAT_USER="chat_username";
     SharedPreferences chat_username;
     SharedPreferences.Editor edit_chat_username;
+    TextWatcher input_watcher;
+    boolean response_typing_add = false;
     /********************Chat********************/
 
     public Single_group_Message() {
@@ -459,6 +463,7 @@ owner.setOnClickListener(new View.OnClickListener() {
                 return false;
             }
         });
+
 //        mInputMessageView.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -467,47 +472,52 @@ owner.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onTextChanged(CharSequence s, int start, int before, int count) {
 //             //   if (null == mUsername) return;
-//                if (!mSocket.connected()) return;
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (!mSocket.connected()){ return;}
 //
 //                if (!mTyping) {
 //                    mTyping = true;
-//                    mSocket.emit("ontyping","leo");
+//                    mSocket.emit("ontyping",UserName,group_id);
 //                }
 //
 //                mTypingHandler.removeCallbacks(onTypingTimeout);
 //                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
 //            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
 //        });
 
 
-//        mInputMessageView.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//             //   if (null == mUsername) return;
-//                if (!mSocket.connected()) return;
-//
-//                if (!mTyping) {
-//                    mTyping = true;
-//                    mSocket.emit("ontyping","narendra");
-//                }
-//
-//
-////                mTypingHandler.removeCallbacks(onTypingTimeout);
-////                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
+          input_watcher = new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!mSocket.connected()){ return;}
+
+                if (!mTyping) {
+                    mTyping = true;
+                    mSocket.emit("ontyping",UserName,group_id);
+                }
+
+                mTypingHandler.removeCallbacks(onTypingTimeout);
+                mTypingHandler.postDelayed(onTypingTimeout, TYPING_TIMER_LENGTH);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // your logic here
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // your logic here
+            }
+        };
+        mInputMessageView.addTextChangedListener(input_watcher);
+
+
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -590,12 +600,15 @@ owner.setOnClickListener(new View.OnClickListener() {
             return;
         }
         else {
-            mInputMessageView.setText("");
+
             Calendar c = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("hh:mm: aa");
             String Chat_Time = df.format(c.getTime());
             addMessage1(UserName, message, user_porfile,Chat_Time);
             mSocket.emit("sendchat", sender_id, UserName, user_porfile, group_id, message);
+            mInputMessageView.removeTextChangedListener(input_watcher);
+            mInputMessageView.setText("");
+            mInputMessageView.addTextChangedListener(input_watcher);
         }
     }
 
@@ -771,22 +784,39 @@ owner.setOnClickListener(new View.OnClickListener() {
     private Emitter.Listener onTyping = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            Log.e("TYPING",String.valueOf(args));
+            Log.e("TYPING",String.valueOf(args[0]));
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-//                    JSONObject data = (JSONObject) args[0];
-//                    Log.e("TYPING",String.valueOf(data));
-//                    String username;
-//                    try {
-//                        username = data.getString("username");
-//                    } catch (JSONException e) {
-//                        return;
-//                    }
-//                    if (!UserName.equals("leo"))
-//                    {
-                    addTyping("leo");
-            //    }
+                   final String username = String.valueOf(args[0]);
+                    if (!UserName.equals(username))
+                    {
+                        if (!response_typing_add) {
+                            addTyping(username);
+                            response_typing_add=true;
+                        }
+                        final Runnable setImageRunnable = new Runnable() {
+                            public void run() {
+                                removeTyping(username);
+                            }
+                        };
+
+                        TimerTask task = new TimerTask(){
+                            public void run() {
+                                getActivity().runOnUiThread(setImageRunnable);
+                                response_typing_add =false;
+                            }
+                        };
+
+                        Timer timer = new Timer();
+                        timer.schedule(task, 2000);
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });
 
                 }
             });
@@ -819,6 +849,7 @@ owner.setOnClickListener(new View.OnClickListener() {
 
             mTyping = false;
            // mSocket.emit("stop typing");
+           //removeTyping("Leo typing");
         }
     };
     /********************Chat********************/
