@@ -143,11 +143,11 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         uid = bundle.getString("userid", "0");
         aid  = bundle.getString("activityid","0");
 
-        edit_activity_id.putString("activity_id", aid);
-        edit_activity_id.commit();
-
-        edit_userid.putString("userid", uid);
-        edit_userid.commit();
+//        edit_activity_id.putString("activity_id", aid);
+//        edit_activity_id.commit();
+//
+//        edit_userid.putString("userid", uid);
+//        edit_userid.commit();
 
 
 

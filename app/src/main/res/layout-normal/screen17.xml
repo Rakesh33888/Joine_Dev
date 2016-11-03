@@ -185,7 +185,7 @@
             android:layout_marginBottom="9dp"
             android:textColor="#FFFBFB"
             android:layout_marginLeft="80dp"
-            android:text="1 Km away "
+            android:text="0 Km away "
             android:layout_gravity="left" />
 
             </FrameLayout>
@@ -214,7 +214,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Created by Ajay"
+                    android:text="Created by "
                     android:layout_marginLeft="79dp"
                     android:layout_marginTop="15dp"
                     android:textColor="#FFFBFB"
@@ -240,7 +240,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="13 reviews"
+                    android:text="0 reviews"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
                     android:singleLine="true"
@@ -279,7 +279,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Up to 6 People:"
+                android:text="Up to 0 People:"
                 android:id="@+id/uptopeoples"
                 android:textSize="14dp"
 
@@ -291,7 +291,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Currently have 3"
+                android:text="Currently have 0"
                 android:textColor="#FFFBFB"
                 android:textSize="14dp"
                  android:layout_marginLeft="5dp"
@@ -310,7 +310,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cost $67"
+                android:text="Cost $0"
                 android:textColor="#FFFBFB"
                 android:textSize="14dp"
                 android:singleLine="true"
@@ -331,7 +331,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takes 2 hours,"
+                android:text="Takes 0 hours,"
                 android:id="@+id/timetext"
                 android:singleLine="true"
                 android:textSize="14dp"

@@ -735,6 +735,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                                                         edit_userid.putString("userid", userid);
                                                                         edit_userid.commit();
                                                                         Intent i1 = new Intent(getApplicationContext(), Screen3a.class);
+                                                                               i1.putExtra("mailId",email.getText().toString());
                                                                         startActivity(i1);
                                                                         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                                                                         finish();

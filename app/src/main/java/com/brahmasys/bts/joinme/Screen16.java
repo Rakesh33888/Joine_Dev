@@ -144,7 +144,7 @@ public class Screen16 extends AppCompatActivity implements
 
             else
             {
-                Screen17 screen17 = new Screen17();
+                Other_User_Details screen17 = new Other_User_Details();
                 Bundle bundle = new Bundle();
                 bundle.putString("userid",notif_user_id);
                 bundle.putString("activityid",notif_activity_id);

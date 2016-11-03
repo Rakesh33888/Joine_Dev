@@ -203,7 +203,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Created by Ajay"
+                        android:text="Created by "
                         android:layout_marginLeft="130dp"
                         android:singleLine="true"
                         android:layout_marginTop="15dp"
@@ -228,7 +228,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="13 reviews"
+                        android:text="0 reviews"
                         android:singleLine="true"
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="10dp"
@@ -264,7 +264,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Up to 6 People:"
+                        android:text="Up to 0 People:"
                         android:id="@+id/uptopeoples"
                         android:textSize="20dp"
                         android:singleLine="true"
@@ -276,7 +276,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Currently have 3"
+                        android:text="Currently have 0"
                         android:textColor="#FFFBFB"
                         android:singleLine="true"
                         android:textSize="20dp"
@@ -297,7 +297,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cost $67"
+                        android:text="Cost $0"
                         android:textColor="#FFFBFB"
                         android:textSize="20dp"
                         android:singleLine="true"
@@ -318,7 +318,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Takes 2 hours,"
+                        android:text="Takes 0 hours,"
                         android:id="@+id/timetext"
                         android:singleLine="true"
                         android:textSize="20dp"

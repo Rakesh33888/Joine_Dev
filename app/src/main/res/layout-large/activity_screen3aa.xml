@@ -79,28 +79,48 @@
         android:layout_below="@+id/firstname"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
-    <EditText
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="90dp"
-        android:inputType="number"
         android:paddingLeft="15sp"
         android:background="@drawable/smallbox"
-        android:cursorVisible="true"
-        android:textColorHint="#C1C1C1"
-        android:maxLength="4"
-        android:hint="Conformation code"
-        android:textSize="16dp"
-        android:numeric="integer"
-        android:id="@+id/conformation_code"
         android:layout_marginTop="1dp"
         android:layout_below="@+id/lastname"
         android:layout_alignStart="@+id/lastname"
-        android:layout_alignEnd="@+id/lastname" />
+        android:layout_alignEnd="@+id/lastname"
+        android:orientation="horizontal"
+        android:id="@+id/conformation_code_layout">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="85dp"
+            android:inputType="number"
+            android:cursorVisible="true"
+            android:textColorHint="#C1C1C1"
+            android:maxLength="4"
+            android:hint="Conformation code"
+            android:textSize="16dp"
+            android:numeric="integer"
+            android:id="@+id/conformation_code"
+            android:background="@null"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resend"
+            android:id="@+id/resend_code"
+            android:textColor="#C1C1C1"
+            android:textSize="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textIsSelectable="true" />
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_below="@+id/conformation_code"
+        android:layout_below="@+id/conformation_code_layout"
         android:layout_marginTop="1dp"
         android:background="@drawable/smallbox"
         android:layout_alignParentEnd="true"

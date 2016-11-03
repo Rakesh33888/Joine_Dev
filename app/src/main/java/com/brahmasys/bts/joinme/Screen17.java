@@ -278,8 +278,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
                                 JSONObject message_responce = null;
                                 message_responce = json.getJSONObject("response");
-                                edit_userid.putString("userid", message_responce.getString("userid"));
-                                edit_userid.commit();
+                                //edit_userid.putString("userid", message_responce.getString("userid"));
+                                //edit_userid.commit();
 
 
                                 /************************* UserDetails start **************************/

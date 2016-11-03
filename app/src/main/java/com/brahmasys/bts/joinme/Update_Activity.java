@@ -28,10 +28,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -78,7 +80,7 @@ import java.util.TimeZone;
 public class Update_Activity extends Fragment  {
     TextView dateTextView;
     ImageView dateButton;
-    RelativeLayout search_layout;
+    RelativeLayout search_layout,touch_event;
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname, enterdiscription, edit_cost, edit_limit,current_address;
     Button update_activity, delet_activity;
@@ -169,9 +171,16 @@ public class Update_Activity extends Fragment  {
         update_activity = (Button) v.findViewById(R.id.update_activity);
         delet_activity = (Button) v.findViewById(R.id.delete_activity);
         enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
+        touch_event    = (RelativeLayout)v.findViewById(R.id.touch_outside);
         allurl = new ArrayList<String>();
 
-
+        touch_event.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                hideKeyboard(view);
+                return false;
+            }
+        });
         seekBarforage.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
             public void valueChanged(Number minValue, Number maxValue) {
@@ -184,7 +193,7 @@ public class Update_Activity extends Fragment  {
 
         List hours = new ArrayList<Integer>();
         hours.add(0, "");
-        for (int i = 0; i < 23; i++) {
+        for (int i = 23; i >=0; i--) {
             hours.add(Integer.toString(i));
 
         }
@@ -1085,7 +1094,11 @@ private void doFileUpload(){
         });
     }
 
-
+    protected void hideKeyboard(View view)
+    {
+        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 
     public class DateListener implements DatePickerDialog.OnDateSetListener {
         @Override

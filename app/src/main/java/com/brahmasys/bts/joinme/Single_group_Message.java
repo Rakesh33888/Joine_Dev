@@ -162,6 +162,7 @@ public class Single_group_Message extends Fragment    {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View v = inflater.inflate(R.layout.fragment_single_group__message, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         owner   = (CircularImageView) v.findViewById(R.id.hosted);
         Bundle bundle = this.getArguments();
         act_id  = bundle.getString("activityid","0");

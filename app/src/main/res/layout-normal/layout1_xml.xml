@@ -9,9 +9,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-
-        android:maxLength="35"
+        android:inputType="textEmailAddress"
         android:drawableLeft="@drawable/emailicon"
         android:layout_marginTop="50dp"
         android:textColor="#fff"
@@ -31,7 +29,6 @@
         android:inputType="textPassword"
         android:backgroundTint="#d5ffffff"
         android:textColor="#fff"
-        android:maxLength="10"
         android:singleLine="true"
         android:drawablePadding="25dp"
         android:paddingStart="10dp"

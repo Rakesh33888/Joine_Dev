@@ -30,6 +30,7 @@ public class GCMPushReceiverService extends GcmListenerService {
         JSONObject json=null;
         try {
              json = new JSONObject(String.valueOf(data.getString("payload")));
+            Log.e("RESULT",String.valueOf(json));
             activity_id = json.getString("activtyid");
             userId = json.getString("userid");
             type = json.getString("type");

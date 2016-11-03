@@ -19,7 +19,10 @@
             android:background="#F9F9F9"
             android:layout_height="819dp"
             android:layout_marginBottom="20dp"
-            tools:context="com.brahmasys.bts.joinme.Screen19">
+            tools:context="com.brahmasys.bts.joinme.Screen19"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:id="@+id/touch_outside">
 
 
             <com.github.siyamed.shapeimageview.CircularImageView
@@ -242,7 +245,9 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:padding="10dp"
-                            />
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:editable="false"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -556,7 +561,7 @@
                 android:paddingEnd="7dp"
                 android:maxLines="4"
                 android:minLines="1"
-                android:inputType="textCapSentences|text|textMultiLine|"
+                android:inputType="textCapSentences|text|textMultiLine"
                 android:textColorHint="#A5A5A5"
                 android:paddingTop="5dp"
                 android:layout_below="@+id/linearLayoutforlimit"
