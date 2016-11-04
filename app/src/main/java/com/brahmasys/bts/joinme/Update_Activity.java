@@ -322,17 +322,22 @@ public class Update_Activity extends Fragment  {
                  if (userdetails.getString("participant_gender").equals("male"))
                  {
                     checkBoxformen.setChecked(true);
-                     checkBoxforwomen.setChecked(false);
-                     checkBoxforwomen.setClickable(true);
-                     checkBoxformen.setClickable(false);
+//                     checkBoxforwomen.setChecked(false);
+//                     checkBoxforwomen.setClickable(true);
+//                     checkBoxformen.setClickable(false);
 
+                 }
+                 else if(userdetails.getString("participant_gender").equals("both"))
+                 {
+                     checkBoxformen.setChecked(true);
+                     checkBoxforwomen.setChecked(true);
                  }
                 else
                  {
                     checkBoxforwomen.setChecked(true);
-                     checkBoxformen.setChecked(false);
-                     checkBoxforwomen.setClickable(false);
-                     checkBoxformen.setClickable(true);
+//                     checkBoxformen.setChecked(false);
+//                     checkBoxforwomen.setClickable(false);
+//                     checkBoxformen.setClickable(true);
                  }
                  }
         } catch (JSONException e) {
@@ -524,9 +529,9 @@ public class Update_Activity extends Fragment  {
             @Override
             public void onClick(View v) {
                 if (v == checkBoxforwomen) {
-                    checkBoxformen.setChecked(false);
-                    checkBoxforwomen.setClickable(false);
-                    checkBoxformen.setClickable(true);
+                    checkBoxforwomen.setChecked(true);
+//                    checkBoxforwomen.setClickable(false);
+//                    checkBoxformen.setClickable(true);
 
                 }
 
@@ -536,9 +541,9 @@ public class Update_Activity extends Fragment  {
             @Override
             public void onClick(View v) {
                 if (v == checkBoxformen) {
-                    checkBoxforwomen.setChecked(false);
-                    checkBoxforwomen.setClickable(true);
-                    checkBoxformen.setClickable(false);
+                    checkBoxformen.setChecked(true);
+//                    checkBoxforwomen.setClickable(true);
+//                    checkBoxformen.setClickable(false);
 
                 }
 
@@ -778,10 +783,17 @@ public class Update_Activity extends Fragment  {
 
                 } else {
                     availability = "private";
-                    if (checkBoxformen.isChecked()) {
-                        gender = "male";
-                    } else {
+
+                    if (checkBoxformen.isChecked() && checkBoxforwomen.isChecked())
+                    {
+                        gender = "both";
+                    }
+                    else if (checkBoxforwomen.isChecked()) {
                         gender = "female";
+                    }
+                    else
+                    {
+                        gender = "male";
                     }
                 }
                 if (checkboxcurrent.isChecked()) {

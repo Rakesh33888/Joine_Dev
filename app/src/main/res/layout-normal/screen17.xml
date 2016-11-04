@@ -152,9 +152,8 @@
                 android:textSize="16dp"
                 android:layout_weight="1"
                 android:singleLine="true"
-
                 android:textColor="#FFFBFB"
-                android:text="Rafting"/>
+                android:text=""/>
 
 
 
@@ -162,7 +161,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Today at 17:00"
+            android:text=""
             android:textSize="13dp"
             android:singleLine="true"
             android:layout_marginBottom="7dp"
@@ -185,7 +184,7 @@
             android:layout_marginBottom="9dp"
             android:textColor="#FFFBFB"
             android:layout_marginLeft="80dp"
-            android:text="0 Km away "
+            android:text=""
             android:layout_gravity="left" />
 
             </FrameLayout>
@@ -240,7 +239,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 reviews"
+                    android:text=""
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
                     android:singleLine="true"

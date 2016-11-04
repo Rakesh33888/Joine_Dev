@@ -221,9 +221,10 @@
         android:hint="Some thing you want to share..."
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/frameLayout4"
-        android:inputType="textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:layout_below="@+id/frameLayout4"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

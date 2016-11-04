@@ -386,6 +386,10 @@ public class Notification_Screen extends Fragment {
                                     });
 
                                 }
+                                else
+                                {
+
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

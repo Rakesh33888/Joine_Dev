@@ -128,21 +128,7 @@ public class Screen16 extends AppCompatActivity implements
       //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
            if (type != null)
            {
-            if (type.equals("rating")||type.equals("review"))
-            {
-                Notification_Screen favoritesFragment = new Notification_Screen();
-                Bundle bundle = new Bundle();
-                bundle.putString("userid",notif_user_id);
-                bundle.putString("activityid",notif_activity_id);
-                bundle.putString("type",type);
-                bundle.putString("time",notif_time);
-                favoritesFragment.setArguments(bundle);
-                        fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, favoritesFragment)
-                        .addToBackStack(null).commit();
-            }
-
-            else
+            if(type.equals("activity"))
             {
                 Other_User_Details screen17 = new Other_User_Details();
                 Bundle bundle = new Bundle();
@@ -154,6 +140,19 @@ public class Screen16 extends AppCompatActivity implements
                         .addToBackStack(null)
                         .commit();
 
+            }
+            else // if (type.equals("rating")||type.equals("review"))
+            {
+                Notification_Screen favoritesFragment = new Notification_Screen();
+                Bundle bundle = new Bundle();
+                bundle.putString("userid",notif_user_id);
+                bundle.putString("activityid",notif_activity_id);
+                bundle.putString("type",type);
+                bundle.putString("time",notif_time);
+                favoritesFragment.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, favoritesFragment)
+                        .addToBackStack(null).commit();
             }
            }
         /************* Notification Handling End  *********************/

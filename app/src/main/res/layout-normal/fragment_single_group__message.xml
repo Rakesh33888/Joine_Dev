@@ -1,5 +1,5 @@
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:id="@+id/header"
+        android:isScrollContainer="false"
         android:background="@drawable/group_header_bg">
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="70dp"
@@ -145,13 +146,15 @@
         android:scrollbarStyle="outsideOverlay"
         android:layout_below="@+id/header"
         /> -->
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false"
-        android:layout_below="@+id/header">
+        android:layout_below="@+id/header"
+         >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,19 +190,17 @@
             android:id="@+id/messages"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+
             android:background="#e2e1e1"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentStart="false"
+            android:isScrollContainer="false"
+            android:layout_above="@+id/linearLayout"
+            android:layout_below="@+id/linearLayout"/>
 
-            android:layout_above="@+id/linearLayout" />
-       
     </RelativeLayout>
-
-
-</RelativeLayout>
-
+</LinearLayout>

@@ -26,7 +26,8 @@ public class Splashscreen extends Activity{
        // Checking if ShortCut was already added
         sharedPreferences = getPreferences(MODE_PRIVATE);
         boolean shortCutWasAlreadyAdded = sharedPreferences.getBoolean(PREF_KEY_SHORTCUT_ADDED, false);
-        if (!shortCutWasAlreadyAdded) createShortcutIcon();
+//        if (!shortCutWasAlreadyAdded)
+//            createShortcutIcon();
     }
 
     @Override
