@@ -567,6 +567,7 @@
                 android:gravity="left|top"
                 android:maxLines="4"
                 android:minLines="1"
+                android:maxLength="400"
                 android:inputType="textCapSentences|text|textMultiLine"
                 android:paddingEnd="7dp"
                 android:textColorHint="#A5A5A5"

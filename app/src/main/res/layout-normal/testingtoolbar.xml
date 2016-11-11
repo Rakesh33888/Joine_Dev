@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/newcolor"
-        android:fitsSystemWindows="true"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
+        app:popupTheme="@style/AppTheme.PopupOverlay" >
 
         <include layout="@layout/custom_toolbar"
             android:layout_gravity="center"
@@ -28,8 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="right|center"
-            android:layout_marginRight="13dp"
-            >
+            android:layout_marginRight="13dp"  >
 
         </include>
 

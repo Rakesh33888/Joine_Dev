@@ -1,188 +1,259 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/single_group"
-    android:background="#ffffff"
-    tools:context="com.brahmasys.bts.joinme.Single_group_Message">
-
-
-    <RelativeLayout
+    android:fillViewport="true"
+    android:scrollbars="none">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:id="@+id/header"
-        android:background="@drawable/group_header_bg">
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/createrimage1"
-            android:layout_margin="10dp"
-            android:src="@drawable/butterfly"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/single_group"
+        android:background="#ffffff"
+        tools:context="com.brahmasys.bts.joinme.Single_group_Message">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Rafting"
-            android:textColor="#ffffff"
-            android:id="@+id/textView25"
-            android:layout_alignTop="@+id/createrimage1"
-            android:layout_toEndOf="@+id/createrimage1"
-            android:textSize="30dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Today at: 17:00"
-            android:textColor="#ffffff"
-            android:id="@+id/textView26"
-            android:layout_below="@+id/textView25"
-            android:layout_alignStart="@+id/textView25"
-            android:layout_marginTop="5dp"
-            android:textSize="20dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:id="@+id/header"
+            android:isScrollContainer="false"
+            android:background="@drawable/group_header_bg">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2Km away:5th avenue 170"
-            android:id="@+id/textView27"
-            android:textColor="#ffffff"
-            android:layout_below="@+id/textView26"
-            android:layout_alignStart="@+id/textView26"
-            android:layout_marginTop="5dp"
-            android:textSize="20dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leave Chat"
-            android:id="@+id/leave_chat"
-            android:layout_alignTop="@+id/textView25"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="23dp"
-            android:textSize="20dp"
-            android:onClick="true" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom">
 
-        <LinearLayout
-            android:orientation="horizontal"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Participents"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="#ffffff"
+                        android:id="@+id/textView29"
+                        android:layout_marginLeft="10dp" />
+                    <com.devsmart.android.ui.HorizontalListView
+                        android:id="@+id/participants_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical|bottom"
+                        android:layout_marginLeft="5dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hosted by"
+                            android:textColor="#ffffff"
+                            android:layout_gravity="center"
+                            android:id="@+id/textView30" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Leo"
+                            android:textColor="#ffffff"
+                            android:layout_gravity="center"
+                            android:id="@+id/name"
+                            android:layout_marginLeft="3dp" />
+                    </LinearLayout>
+
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/hosted"
+                        android:layout_gravity="center"
+                        android:src="@drawable/butterfly"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:id="@+id/createrimage1"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/butterfly"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#ffffff"
+                        android:textSize="25dp"
+                        android:id="@+id/textView25"
+                        android:layout_alignTop="@+id/createrimage1"
+                        android:layout_toEndOf="@+id/createrimage1"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:scrollHorizontally="true"
+                        android:scrollbars = "horizontal"
+                        android:nestedScrollingEnabled="true"
+                        android:maxLines="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Today at: 0:00"
+                        android:textColor="#ffffff"
+                        android:id="@+id/textView26"
+                        android:layout_below="@+id/textView25"
+                        android:layout_alignStart="@+id/textView25"
+                        android:layout_marginTop="5dp"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0Km away:0 avenue 0"
+                        android:id="@+id/textView27"
+                        android:textColor="#ffffff"
+                        android:ellipsize="marquee"
+                        android:scrollHorizontally="true"
+                        android:scrollbars = "vertical"
+                        android:layout_below="@+id/textView26"
+                        android:layout_alignStart="@+id/textView26"
+                        android:layout_marginTop="5dp"
+                        android:maxLines="3"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Leave Chat"
+                        android:id="@+id/leave_chat"
+                        android:layout_alignTop="@+id/textView25"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="23dp"
+                        android:paddingTop="10dp"
+                        android:layout_gravity="center_horizontal|left"
+                        android:textSize="18dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+        <!-- <android.support.v7.widget.RecyclerView
+             android:id="@+id/messages"
+             android:layout_width="match_parent"
+             android:layout_height="fill_parent"
+              android:background="#e2e1e1"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:scrollbars="vertical"
+             android:scrollbarStyle="outsideOverlay"
+             android:layout_below="@+id/header"
+             /> -->
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/createrimage1"
-            android:layout_alignParentStart="true">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Participents"
-                    android:layout_gravity="center"
-                    android:textColor="#ffffff"
-                    android:id="@+id/textView29"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="20dp" />
-                <com.devsmart.android.ui.HorizontalListView
-                    android:id="@+id/participants_list"
-                    android:layout_width="match_parent"
-                    android:clickable="true"
-                    android:layout_height="match_parent"
-
-                    android:layout_gravity="center" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_weight="1"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hosted by"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:id="@+id/textView30"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Leo"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center"
-                    android:id="@+id/name"
-                    android:layout_marginLeft="3dp"
-                    android:textSize="20dp" />
-                <com.github.siyamed.shapeimageview.CircularImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/hosted"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/butterfly"/>
-
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/linearLayout">
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/header"
+            >
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/editText5"
-                android:hint="Type here"
-                android:inputType="textNoSuggestions"
-                android:background="@drawable/edit_text_2"
-                android:layout_alignParentStart="true"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/linearLayout"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <EditText
+                    android:id="@+id/message_input"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/prompt_message"
+                    android:imeActionId="@+id/send"
+                    android:imeActionLabel="@string/action_send"
+                    android:imeOptions="actionSend"
+                    android:background="@null"
+                    android:inputType="textNoSuggestions|textMultiLine|textImeMultiLine"
+                    android:windowSoftInputMode="adjustPan|adjustResize"
+                    android:maxLines="5"
+                    android:singleLine="true"><requestFocus /></EditText>
+                <ImageView
+                    android:id="@+id/send_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:src="@drawable/send_btn"
+                    android:contentDescription="@string/action_send"/>
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/messages"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                android:background="#e2e1e1"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:scrollbars="vertical"
+                android:scrollbarStyle="outsideOverlay"
                 android:layout_alignParentTop="true"
-                android:layout_weight="6.14"
-                android:layout_marginLeft="15dp" />
+                android:layout_alignParentStart="false"
+                android:isScrollContainer="false"
+                android:layout_above="@+id/linearLayout"
+                android:layout_below="@+id/linearLayout"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:id="@+id/imageView2"
-                android:layout_weight="1"
-                android:src="@drawable/send_btn"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/editText5"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp" />
-        </LinearLayout>
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/chat"
-            android:background="#e2e1e1"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="162dp"
-            android:layout_above="@+id/linearLayout" />
-    </RelativeLayout>
-
-
-</FrameLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

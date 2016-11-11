@@ -86,6 +86,7 @@
                     android:layout_width="match_parent"
                     custom:pager_animation="Accordion"
                     custom:auto_cycle="true"
+                    android:background="@drawable/butterfly"
                     custom:indicator_visibility="visible"
                     custom:pager_animation_span="1100"
                     android:layout_height="225dp"/>
@@ -252,7 +253,7 @@
 
         <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:background="#24ededed"
             android:id="@+id/listactivityframe"
             android:layout_gravity="center_horizontal"
@@ -330,14 +331,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Takes 0 hours,"
+                android:text="Description:"
                 android:id="@+id/timetext"
-                android:singleLine="true"
+
                 android:textSize="14dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="70dp"
                 android:textColor="#FFFBFB"
-                android:layout_gravity="left|top" />
+                android:layout_gravity="left|top"
+                android:layout_marginBottom="25dp" />
 
 
         </FrameLayout>

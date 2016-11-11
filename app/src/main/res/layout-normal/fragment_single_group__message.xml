@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,66 +16,21 @@
         android:id="@+id/header"
         android:isScrollContainer="false"
         android:background="@drawable/group_header_bg">
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:id="@+id/createrimage1"
-            android:layout_margin="10dp"
-            android:src="@drawable/butterfly"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Rafting"
-            android:textColor="#ffffff"
-            android:textSize="19dp"
-            android:id="@+id/textView25"
-            android:layout_alignTop="@+id/createrimage1"
-            android:layout_toEndOf="@+id/createrimage1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Today at: 17:00"
-            android:textColor="#ffffff"
-            android:id="@+id/textView26"
-            android:layout_below="@+id/textView25"
-            android:layout_alignStart="@+id/textView25"
-            android:layout_marginTop="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2Km away:5th avenue 170"
-            android:id="@+id/textView27"
-            android:textColor="#ffffff"
-            android:layout_below="@+id/textView26"
-            android:layout_alignStart="@+id/textView26"
-            android:layout_marginTop="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leave Chat"
-            android:id="@+id/leave_chat"
-            android:layout_alignTop="@+id/textView25"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="23dp" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/createrimage1"
-            android:layout_alignParentStart="true">
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="220dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="15dp">
+                android:layout_gravity="bottom">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,7 +60,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -131,6 +86,94 @@
                     android:layout_gravity="center"
                     android:src="@drawable/butterfly"/>
 
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/createrimage1"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/butterfly"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    android:id="@+id/textView25"
+                    android:layout_alignTop="@+id/createrimage1"
+                    android:layout_toEndOf="@+id/createrimage1"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:scrollHorizontally="true"
+                    android:scrollbars = "horizontal"
+                    android:nestedScrollingEnabled="true"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today at: 0:00"
+                    android:textColor="#ffffff"
+                    android:id="@+id/textView26"
+                    android:layout_below="@+id/textView25"
+                    android:layout_alignStart="@+id/textView25"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0Km away:0 avenue 0"
+                    android:id="@+id/textView27"
+                    android:textColor="#ffffff"
+                    android:ellipsize="marquee"
+                    android:scrollHorizontally="true"
+                    android:scrollbars = "vertical"
+                    android:layout_below="@+id/textView26"
+                    android:layout_alignStart="@+id/textView26"
+                    android:layout_marginTop="5dp"
+                    android:maxLines="3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Leave Chat"
+                    android:id="@+id/leave_chat"
+                    android:layout_alignTop="@+id/textView25"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="23dp"
+                    android:paddingTop="10dp"
+                    android:layout_gravity="center_horizontal|left" />
             </LinearLayout>
         </LinearLayout>
 
@@ -175,14 +218,15 @@
                 android:imeActionId="@+id/send"
                 android:imeActionLabel="@string/action_send"
                 android:imeOptions="actionSend"
-                android:inputType="textNoSuggestions"
+                android:background="@null"
+                android:inputType="textNoSuggestions|textMultiLine|textImeMultiLine"
                 android:windowSoftInputMode="adjustPan|adjustResize"
-                android:maxLines="1"
+                android:maxLines="5"
                 android:singleLine="true"><requestFocus /></EditText>
             <ImageView
                 android:id="@+id/send_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:src="@drawable/send_btn"
                 android:contentDescription="@string/action_send"/>
         </LinearLayout>
@@ -203,4 +247,5 @@
             android:layout_below="@+id/linearLayout"/>
 
     </RelativeLayout>
+
 </LinearLayout>

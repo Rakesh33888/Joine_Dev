@@ -3,7 +3,7 @@
 <ScrollView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/scrollView"
+
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
 
@@ -17,6 +17,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:background="#F9F9F9"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/scrollView"
     tools:context="com.brahmasys.bts.joinme.Screen3a">
 
 
@@ -225,11 +226,12 @@
         android:layout_height="200dp"
         android:id="@+id/share"
         android:background="@drawable/bigbox"
-        android:paddingLeft="15dp"
+        android:padding="15dp"
         android:cursorVisible="true"
         android:textColorHint="#C1C1C1"
         android:textSize="16dp"
         android:maxLength="400"
+        android:maxLines="4"
         android:inputType="textCapSentences|textMultiLine"
         android:hint="Some thing you want to share..."
         android:layout_below="@+id/frameLayout4"

@@ -9,7 +9,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="15dp">
 
         <TextView
@@ -19,7 +18,7 @@
             android:id="@+id/congatulaton_text"
             android:gravity="center"
             android:textColor="#f4717171"
-            android:text="Congratulation,you have completed an activity - Rafting!"
+            android:text="Congratulation,you have completed an activity - "
             />
 
     </RelativeLayout>
