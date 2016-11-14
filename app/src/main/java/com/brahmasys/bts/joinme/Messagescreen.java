@@ -49,9 +49,13 @@ public class Messagescreen extends Fragment{
     List<String> allid;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.activity_messagescreen,container,false);
+
+        Toolbar refTool = ((Screen16)getActivity()).toolbar;
+        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
+        shareicon.setVisibility(View.GONE);
 
         progressDialog =ProgressDialog.show(getActivity(), null, null, true);
         progressDialog.setIndeterminate(true);
@@ -65,6 +69,12 @@ public class Messagescreen extends Fragment{
         backlayoutmessge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 Intent i=new Intent(getContext(),Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
@@ -79,9 +89,7 @@ public class Messagescreen extends Fragment{
 
             }
         });
-        Toolbar refTool = ((Screen16)getActivity()).toolbar;
-        shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
-        shareicon.setVisibility(View.GONE);
+
 
 
         context=getActivity();
@@ -184,6 +192,12 @@ public class Messagescreen extends Fragment{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setContentView(R.layout.custom_progress);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);

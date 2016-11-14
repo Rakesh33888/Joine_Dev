@@ -13,16 +13,19 @@ import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,17 +55,20 @@ public class Notification_Screen extends Fragment {
 
     TextView did_not_go,remind_later,skip,activity_name1;
     TextView review_did_not_go,review_remind_later,review_skip,review_activity_name;
+    TextView whoshowed_skip,whoshowed_remind_later,whoshowed_activityname;
     EditText activity_fedback,review_activity_fedback;
     RatingBar ratingBar;
+    ListView peoples_who_showed;
     LinearLayout rating_action,rating_submission,review_submission,review_action;
     Button submit,review_submit;
     String user_id,activity_id,type,activity_name="null",url="null",time;
-    CircularImageView activity_image,review_activity_image;
+    CircularImageView activity_image,review_activity_image,whoshowed_activity_image;
     private static final String TAG = "SendFeedBack";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/Feedback";
     private static final String REVIEW_TAG = "ReviewActivity";
     private static final String REVIEW_URL = "http://52.37.136.238/JoinMe/Activity.svc/ReviewActivity";
-
+    private ArrayList<Book> books;
+    private ArrayAdapter<Book> adapter;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.notification_screen,container,false);
@@ -389,6 +395,119 @@ public class Notification_Screen extends Fragment {
                                 else
                                 {
 
+
+                                    final Dialog dialog = new Dialog(getActivity());
+                                    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                                    dialog.setContentView(R.layout.activity_compliting);
+                                    dialog.setCancelable(false);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
+                                    peoples_who_showed = (ListView)dialog.findViewById(R.id.peoples_who_showed);
+                                    whoshowed_remind_later = (TextView) dialog.findViewById(R.id.remindme_congratulation);
+                                    whoshowed_skip = (TextView) dialog.findViewById(R.id.skip_congatulation);
+                                    whoshowed_activity_image  = (CircularImageView) dialog.findViewById(R.id.image_activity_congatulation);
+                                    whoshowed_activityname    = (TextView) dialog.findViewById(R.id.congatulaton_text);
+                                  //  setListViewAdapter();
+                                    if (time.equals("later"))
+                                    {
+                                        whoshowed_remind_later.setVisibility(View.GONE);
+                                    }
+
+                                    whoshowed_activityname.setText(whoshowed_activityname.getText() + activity_name);
+                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(whoshowed_activity_image);
+
+
+                                    whoshowed_skip.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                            startActivity(home);
+                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                            getActivity().finish();
+                                        }
+                                    });
+                                    whoshowed_remind_later.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterReview/" + user_id + "/" + activity_id,
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+
+                                                        public void onSuccess(String response) {
+
+                                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                                            startActivity(home);
+                                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                            getActivity().finish();
+
+                                                        }
+                                                    });
+                                        }
+                                    });
+
+
+
+
+
+                                    AsyncHttpClient client = new AsyncHttpClient();
+                                    client.get("http://52.37.136.238/JoinMe/User.svc/GetActivityMambers/" + user_id + "/" + activity_id,
+                                            new AsyncHttpResponseHandler() {
+                                                // When the response returned by REST has Http response code '200'
+                                                public void onSuccess(String response) {
+                                                    try {
+                                                        // Extract JSON Object from JSON returned by REST WS
+                                                        JSONObject obj = new JSONObject(response);
+                                                        JSONObject json = null;
+                                                        try {
+                                                            json = new JSONObject(String.valueOf(obj));
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                        /************************* UserDetails start **************************/
+                                                        JSONArray cast = json.getJSONArray("users");
+
+                                                        //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                                        List<String> allid = new ArrayList<String>();
+                                                        List<String> allurl = new ArrayList<String>();
+                                                        for (int i = 0; i < cast.length(); i++) {
+                                                            JSONObject actor = cast.getJSONObject(i);
+                                                            String id = actor.getString("userid");
+                                                            String url = actor.getString("username");
+                                                            allid.add(id);
+                                                            allurl.add(url);
+
+
+                                                            Book book = new Book();
+                                                            book.setName(actor.getString("activity_name"));
+                                                            book.setImageUrl(actor.getString("activity_url"));
+                                                            // book.setAuthorName(formattedDate);
+
+                                                            books.add(book);
+                                                            //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+                                                            Log.d("Type", cast.getString(i));
+
+
+                                                        }
+                                                        getActivity().runOnUiThread(new Runnable() {
+                                                            public void run() {
+                                                                adapter.notifyDataSetChanged();
+                                                            }
+                                                        });
+                                                        Log.e("USERNAMES", String.valueOf(allurl));
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+
+                                                }
+
+                                            });
+                                    setListViewAdapter();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -405,5 +524,20 @@ public class Notification_Screen extends Fragment {
 
         return v;
     }
+    private void setListViewAdapter() {
+        if (Connectivity_Checking.isConnectingToInternet()) {
+
+
+            books = new ArrayList<Book>();
+            adapter = new Custom_WhoShowedUp(getActivity(), R.layout.custom_whoshowed, books);
+            peoples_who_showed.setAdapter(adapter);
+
+
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+        }
+    }
+
 
 }

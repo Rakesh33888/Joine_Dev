@@ -39,7 +39,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
     public static final String ACTIVITYID = "activity_id";
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
-    String firstname="join",lastname="me",about="null",owner_id;
+    String firstname="join",lastname="me",about="null",owner_id,where, screen;
     TextView report_text,name,age,description,owner_name;
     ImageView shareicon;
   //  ProgressDialog pd;
@@ -47,6 +47,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
     HashMap<String,String> url_maps;
     FragmentManager fragmentManager;
     ProgressDialog progressDialog;
+    Bundle bundle;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,9 +81,10 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
 
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
         owner_id = bundle.getString("owner_id", "0");
-
+        where    = bundle.getString("where", "0");
+        screen   =bundle.getString("screen","0");
         report_text.setPaintFlags(report_text.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         name  = (TextView) v.findViewById(R.id.textView19);
         description = (TextView) v.findViewById(R.id.textView18);
@@ -96,17 +98,50 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         report_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment reportfrgmnt = new ReportFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("screen", "screen13");
-                bundle.putString("userid", "null");
-                bundle.putString("activityid","null");
-                bundle.putString("owner_id",owner_id);
-                reportfrgmnt.setArguments(bundle);
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.flContent, reportfrgmnt);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if (screen.equals("screen17")) {
+                    Fragment reportfrgmnt = new ReportFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("screen", "screen13");
+                    bundle1.putString("userid", bundle.getString("userid", "0"));
+                    bundle1.putString("activityid", bundle.getString("activityid", "0"));
+                    bundle1.putString("owner_id", owner_id);
+                    bundle1.putString("where", "mygroups");
+                    reportfrgmnt.setArguments(bundle1);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, reportfrgmnt);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+                if (screen.equals("other_user_details"))
+                {
+                    Fragment reportfrgmnt = new ReportFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("screen", screen);
+                    bundle1.putString("userid", bundle.getString("userid", "0"));
+                    bundle1.putString("activityid", bundle.getString("activityid", "0"));
+                    bundle1.putString("owner_id", owner_id);
+                    bundle1.putString("where", bundle.getString("where","0"));
+                    reportfrgmnt.setArguments(bundle1);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, reportfrgmnt);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+                if (screen.equals("single_group_message"))
+                {
+                    Fragment reportfrgmnt = new ReportFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("screen", screen);
+                    bundle1.putString("userid", bundle.getString("userid", "0"));
+                    bundle1.putString("activityid", bundle.getString("activityid", "0"));
+                    bundle1.putString("owner_id", owner_id);
+                    bundle1.putString("where", bundle.getString("where","0"));
+                    reportfrgmnt.setArguments(bundle1);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, reportfrgmnt);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
             }
         });
         if (Connectivity_Checking.isConnectingToInternet()) {
@@ -240,10 +275,48 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Intent i = new Intent(getActivity(), Screen16.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                    getActivity().finish();
+//                    Intent i = new Intent(getActivity(), Screen16.class);
+//                    startActivity(i);
+//                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+//                    getActivity().finish();
+                    if (screen.equals("screen17")) {
+                        FragmentManager fragmentManager = getFragmentManager();
+                        Screen17 mygroup = new Screen17();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("userid",bundle.getString("userid","0"));
+                        bundle1.putString("activityid",bundle.getString("activityid","0"));
+                        bundle1.putString("where",where);
+                        mygroup.setArguments(bundle1);
+                        fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+                    }
+                    if (screen.equals("other_user_details"))
+                    {
+                        FragmentManager fragmentManager = getFragmentManager();
+                        Other_User_Details mygroup = new Other_User_Details();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("userid",bundle.getString("userid","0"));
+                        bundle1.putString("activityid",bundle.getString("activityid","0"));
+                        bundle1.putString("where", bundle.getString("where","0"));
+                      //  bundle1.putString("where",where);
+                        mygroup.setArguments(bundle1);
+                        fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+
+                    }
+                    if (screen.equals("single_group_message"))
+                    {
+                        Fragment reportfrgmnt = new Single_group_Message();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("screen", screen);
+                        bundle1.putString("userid", bundle.getString("userid", "0"));
+                        bundle1.putString("activityid", bundle.getString("activityid", "0"));
+                        bundle1.putString("owner_id", owner_id);
+                        bundle1.putString("where", bundle.getString("where","0"));
+                        reportfrgmnt.setArguments(bundle1);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent, reportfrgmnt);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
                     return true;
                 }
                 return false;

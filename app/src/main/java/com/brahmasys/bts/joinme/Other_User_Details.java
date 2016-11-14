@@ -69,11 +69,11 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     ProgressDialog progressDialog;
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
-    String lat="0",lon="0";
+    String lat="0",lon="0",description;
     RatingBar minimumRating;
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
-    String uid,aid,owner_id;
+    String uid,aid,owner_id,where,screen;
 
 
 
@@ -107,15 +107,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         reviews     = (TextView) v.findViewById(R.id.reviews);
         minimumRating = (RatingBar)v.findViewById(R.id.myRatingBar);
         backlayout_user_detail= (LinearLayout) v.findViewById(R.id.backlayout_user_detail);
-        backlayout_user_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
-            }
-        });
+
 
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
@@ -142,7 +134,8 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         Bundle bundle = this.getArguments();
         uid = bundle.getString("userid", "0");
         aid  = bundle.getString("activityid","0");
-
+        where = bundle.getString("where","0");
+        screen = bundle.getString("screen", "0");
 //        edit_activity_id.putString("activity_id", aid);
 //        edit_activity_id.commit();
 //
@@ -150,7 +143,34 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 //        edit_userid.commit();
 
 
-
+        backlayout_user_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (where.equals("single_group_message"))
+                {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    Single_group_Message mygroup  = new Single_group_Message();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("userid",uid);
+                    bundle.putString("activityid",aid);
+                    bundle.putString("where","single_group_message");
+                    mygroup.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+                }else
+                {
+                    progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setContentView(R.layout.custom_progress);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    Intent i = new Intent(getActivity(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                }
+            }
+        });
 
         imageViewbck.setClickable(true);
         imageViewbck.setOnClickListener(new View.OnClickListener() {
@@ -163,11 +183,13 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         reporttext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Fragment reportfrgmnt = new ReportFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("screen", "other_user_details");
+                bundle.putString("screen", screen);
                 bundle.putString("userid", uid);
                 bundle.putString("activityid",aid);
+                bundle.putString("where",where);
                 bundle.putString("owner_id","null");
                 reportfrgmnt.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -219,6 +241,10 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                 Screen13 screen13 = new Screen13();
                 Bundle bundle = new Bundle();
                 bundle.putString("owner_id", owner_id);
+                bundle.putString("userid",uid);
+                bundle.putString("activityid",aid);
+                bundle.putString("where",where);
+                bundle.putString("screen",screen);
                 screen13.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.flContent, screen13)
@@ -279,14 +305,14 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                     String icon1 = userdetails.getString("acitivity_icon");
                                     owner_id = userdetails.getString("activity_owner_id");
                                     String activity_id = userdetails.getString("activity_id");
-
+                                    description = userdetails.getString("activity_Description");
                                     acitvityname.setText(activity_name);
                                     distancefromnearby.setText(distance+" at "+activity_address);
                                     owner_name1.setText("Created by " + owner_name);
                                     uptopeoples.setText("Up to " + limit + " peoples:");
                                     currentpeoples.setText("Currently have " + joined);
                                     costtext.setText("Cost " + cost);
-                                    timetext.setText("Takes " + duration + "  hours");
+                                    timetext.setText("Description:  " + description);
 
                                     //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
                                     Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
@@ -463,10 +489,29 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Intent i = new Intent(getActivity(), Screen16.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                    getActivity().finish();
+                    if (where.equals("single_group_message"))
+                    {
+                        FragmentManager fragmentManager = getFragmentManager();
+                        Single_group_Message mygroup  = new Single_group_Message();
+                        Bundle bundle=new Bundle();
+                        bundle.putString("userid",uid);
+                        bundle.putString("activityid",aid);
+                        bundle.putString("where","single_group_message");
+                        mygroup.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+                    }else
+                    {
+                        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setContentView(R.layout.custom_progress);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        Intent i = new Intent(getActivity(), Screen16.class);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                        getActivity().finish();
+                    }
                     return true;
                 }
                 return false;

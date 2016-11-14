@@ -43,17 +43,19 @@ public class ReportFragment extends android.support.v4.app.Fragment {
     SharedPreferences.Editor edit_userid,edit_activity_id;
     private static final String TAG1 = "Feedback";
     private static final String URL1 = "http://52.37.136.238/JoinMe/Activity.svc/Feedback";
-    String screen="null",userid,activityid,ownerid;
+    String screen="null",userid,activityid,ownerid,where;
+    Bundle bundle;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.reportfragment,container,false);
+        View v= inflater.inflate(R.layout.reportfragment, container, false);
 
-        Bundle bundle = this.getArguments();
-        screen = bundle.getString("screen", "null");
+         bundle = this.getArguments();
+        screen = bundle.getString("screen", "0");
         userid=bundle.getString("userid", "null");
         ownerid = bundle.getString("owner_id","null");
         activityid =bundle.getString("activityid", "null");
+        where = bundle.getString("where", "0");
         user_id  = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
@@ -70,6 +72,8 @@ public class ReportFragment extends android.support.v4.app.Fragment {
         buttoncncl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Screen",screen);
+                hideKeyboard(v);
                 if (screen.equals("setting")) {
                     Fragment appsetting = new Appsetting();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -78,38 +82,79 @@ public class ReportFragment extends android.support.v4.app.Fragment {
                     transaction.commit();
                 } else if (screen.equals("screen17")) {
                     Fragment screen17 = new Screen17();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("userid", userid);
-                    bundle.putString("activityid",activityid);
-                    screen17.setArguments(bundle);
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString("userid", userid);
+                    bundle2.putString("activityid",activityid);
+                    bundle2.putString("where",where);
+                    screen17.setArguments(bundle2);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.flContent, screen17);
                     transaction.addToBackStack(null);
                     transaction.commit();
 
                 } else if (screen.equals("screen13")) {
+                    if (where.equals("mygroups")){
+                        Fragment screen13 = new Screen13();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("owner_id",ownerid);
+                        bundle1.putString("screen","screen17");
+                        bundle1.putString("userid",userid);
+                        bundle1.putString("activityid",activityid);
+                        bundle1.putString("where",where);
+                        screen13.setArguments(bundle1);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent, screen13);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                    if (where.equals("other_user_details"))
+                    {
+                        Fragment screen13 = new Screen13();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("owner_id",ownerid);
+                        bundle1.putString("screen","other_user_details");
+                        bundle1.putString("userid",userid);
+                        bundle1.putString("activityid",activityid);
+                        bundle1.putString("where",where);
+                        screen13.setArguments(bundle1);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent, screen13);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
 
-                    Fragment screen13 = new Screen13();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("owner_id",ownerid);
-                    screen13.setArguments(bundle);
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.flContent, screen13);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+
                 } else if (screen.equals("other_user_details")) {
 
                     Fragment appsetting = new Other_User_Details();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("userid", userid);
-                    bundle.putString("activityid",activityid);
-                    appsetting.setArguments(bundle);
+                    Bundle bundle3 = new Bundle();
+                    bundle3.putString("screen","other_user_details");
+                    bundle3.putString("userid",userid);
+                    bundle3.putString("activityid",activityid);
+                    bundle3.putString("where",where);
+                    appsetting.setArguments(bundle3);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.flContent, appsetting);
                     transaction.addToBackStack(null);
                     transaction.commit();
 
-                } else {
+                }
+                else if (where.equals("single_group_message"))
+                {
+                    Fragment screen13 = new Screen13();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("owner_id",ownerid);
+                    bundle1.putString("screen","single_group_message");
+                    bundle1.putString("userid",userid);
+                    bundle1.putString("activityid",activityid);
+                    bundle1.putString("where",where);
+                    screen13.setArguments(bundle1);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.flContent, screen13);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+                else {
                     Intent Home = new Intent(getActivity(), Screen16.class);
                     startActivity(Home);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
@@ -136,7 +181,7 @@ public class ReportFragment extends android.support.v4.app.Fragment {
         buttonsnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                hideKeyboard(v);
                 if (Connectivity_Checking.isConnectingToInternet()) {
 
                     if (editTextproblem.getText().toString().length()>2) {
@@ -166,13 +211,11 @@ public class ReportFragment extends android.support.v4.app.Fragment {
                                 Toast toast = Toast.makeText(getContext(), "Thank you for your Feedback!", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
-                                Fragment fragment = null;
-                                switch (v.getId()) {
-                                    case R.id.buttonsend:
-                                        fragment = new Fragment();
-                                        replaceFragment(fragment);
-                                        break;
-                                }
+
+                                    Intent Home = new Intent(getActivity(), Screen16.class);
+                                    startActivity(Home);
+                                    getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                    getActivity().finish();
 
                             }
                             else
@@ -204,13 +247,7 @@ public class ReportFragment extends android.support.v4.app.Fragment {
 
         return v;
     }
-    private void replaceFragment(Fragment fragment) {
-        Fragment appsetting=new Appsetting();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.flContent, appsetting);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+
 
     @Override
     public void onResume() {
@@ -221,16 +258,103 @@ public class ReportFragment extends android.support.v4.app.Fragment {
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-
+                hideKeyboard(v);
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Intent i = new Intent(getActivity(), Screen16.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                    getActivity().finish();
+                    if (screen.equals("setting")) {
+                        Fragment appsetting = new Appsetting();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent, appsetting);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    } else if (screen.equals("screen17")) {
+                        Fragment screen17 = new Screen17();
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("userid", userid);
+                        bundle2.putString("activityid",activityid);
+                        bundle2.putString("where",where);
+                        screen17.setArguments(bundle2);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent, screen17);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
+                    } else if (screen.equals("screen13")) {
+                        if (where.equals("mygroups")){
+                            Fragment screen13 = new Screen13();
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString("owner_id",ownerid);
+                            bundle1.putString("screen","screen17");
+                            bundle1.putString("userid",userid);
+                            bundle1.putString("activityid",activityid);
+                            bundle1.putString("where",where);
+                            screen13.setArguments(bundle1);
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.flContent, screen13);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                        if (where.equals("other_user_details"))
+                        {
+                            Fragment screen13 = new Screen13();
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString("owner_id",ownerid);
+                            bundle1.putString("screen","other_user_details");
+                            bundle1.putString("userid",userid);
+                            bundle1.putString("activityid",activityid);
+                            bundle1.putString("where",where);
+                            screen13.setArguments(bundle1);
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.flContent, screen13);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                        if (where.equals("single_group_message"))
+                        {
+                            Fragment screen13 = new Screen13();
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString("owner_id",ownerid);
+                            bundle1.putString("screen","single_group_message");
+                            bundle1.putString("userid",userid);
+                            bundle1.putString("activityid",activityid);
+                            bundle1.putString("where",where);
+                            screen13.setArguments(bundle1);
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.flContent, screen13);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+
+                    } else if (screen.equals("other_user_details")) {
+
+                        Fragment appsetting = new Other_User_Details();
+                        Bundle bundle3 = new Bundle();
+                        bundle3.putString("screen","other_user_details");
+                        bundle3.putString("userid",userid);
+                        bundle3.putString("activityid",activityid);
+                        bundle3.putString("where",where);
+                        appsetting.setArguments(bundle3);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent, appsetting);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
+                    } else {
+                        Intent Home = new Intent(getActivity(), Screen16.class);
+                        startActivity(Home);
+                        getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                        getActivity().finish();
+
+                    }
                     return true;
                 }
                 return false;
             }
         });
     }
+    protected void hideKeyboard(View view)
+    {
+        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
 }

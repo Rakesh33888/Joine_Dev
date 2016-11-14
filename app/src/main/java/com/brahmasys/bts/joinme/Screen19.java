@@ -18,6 +18,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -150,6 +151,7 @@ public class Screen19 extends Fragment {
     public static final int PICK_IMAGE1 = 1;
     public static final int PICK_IMAGE2 = 2;
     public static final int PICK_IMAGE3 = 3;
+    String pick1="null",pick2="null",pick3="null";
     String imgPath;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
@@ -204,7 +206,6 @@ public class Screen19 extends Fragment {
         age1 = (TextView) v.findViewById(R.id.age1);
         age2 = (TextView) v.findViewById(R.id.age2);
         create  = (Button) v.findViewById(R.id.createbutton);
-        enterdiscription = (EditText) v.findViewById(R.id.enter_discription);
 
         search_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +236,7 @@ public class Screen19 extends Fragment {
                 dpd.setAccentColor(Color.parseColor("#9C27B0"));
                 dpd.setTitle("Date Picker");
                 dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
-
+                spinnerforhour.setSelection(0);
             }
         });
 
@@ -277,6 +278,9 @@ public class Screen19 extends Fragment {
                 for (int i = 0; i < allurl.size(); i++) {
                     if (i == spinnericon.getSelectedItemPosition()) {
                         icon = allurl.get(i);
+                    }
+                    else {
+                        icon="/ActivityIcons/coffee.png";
                     }
                 }
             }
@@ -413,7 +417,6 @@ public class Screen19 extends Fragment {
                     not_everyone.setVisibility(View.GONE);
                     checkBoxforeveryone.setClickable(false);
                     checkBoxnotforeveryone.setClickable(true);
-
                 }
 
             }
@@ -434,12 +437,12 @@ public class Screen19 extends Fragment {
         });
 
         checkBoxforwomen.setChecked(true);
-        checkBoxforwomen.setClickable(false);
+        //checkBoxforwomen.setClickable(false);
         checkBoxforwomen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v == checkBoxforwomen) {
-                    checkBoxforwomen.setChecked(true);
+                   // checkBoxforwomen.setChecked(true);
 //                    checkBoxforwomen.setClickable(false);
 //                    checkBoxformen.setClickable(true);
                 }
@@ -450,7 +453,7 @@ public class Screen19 extends Fragment {
             @Override
             public void onClick(View v) {
                 if (v == checkBoxformen) {
-                     checkBoxformen.setChecked(true);
+                     //checkBoxformen.setChecked(true);
 //                    checkBoxforwomen.setClickable(true);
 //                    checkBoxformen.setClickable(false);
                 }
@@ -537,7 +540,10 @@ public class Screen19 extends Fragment {
         final int current_day = Integer.parseInt(formattedDate.substring(8, 10));
         final int current_hour = Integer.parseInt(formattedDate.substring(11, 13));
 
-
+        String date_for_hour = dateTextView.getText().toString();
+        String[] output = date_for_hour.split("/");
+        System.out.println(output[0]);
+        Log.e("DATE",output[0]);
     /*************************** Spinner Functionality Start ***********************/
 
         List year_list = new ArrayList<Integer>();
@@ -549,16 +555,19 @@ public class Screen19 extends Fragment {
             }
         }
 
-        List hours = new ArrayList<Integer>();
-        hours.add(0, "");
-        for (int i =23; i >=0; i--) {
-             hours.add(Integer.toString(i));
-
-        }
-        ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
-        spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerArrayAdapter4.notifyDataSetChanged();
-        spinnerforhour.setAdapter(spinnerArrayAdapter4);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.times_format));
+        spinnerforhour.setAdapter(adapter1);
+//        List hours = new ArrayList<Integer>();
+//        hours.add(0, "");
+//        for (int i =0; i <=23; i++) {
+//             hours.add(Integer.toString(i));
+//
+//        }
+//        ArrayAdapter<Integer> spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+//        spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerArrayAdapter4.notifyDataSetChanged();
+//        spinnerforhour.setAdapter(spinnerArrayAdapter4);
+        Log.e("Position", String.valueOf(spinnerforhour.getSelectedItemPosition()));
 
         ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, currency);
         currency_symbol.setAdapter(adapter_currency);
@@ -611,18 +620,18 @@ public class Screen19 extends Fragment {
 
     public void CreateActivity() throws ParseException {
         if (Connectivity_Checking.isConnectingToInternet()) {
-
+            Log.e("Position", String.valueOf(spinnerforhour.getSelectedItemPosition()));
          if (!edittextactivityname.getText().toString().equals("")&& !enterdiscription.getText().toString().equals("") && !dateTextView.getText().toString().equals("Select date")
                  && !edit_cost.getText().toString().equals("") && !edit_limit.getText().toString().equals("") ) {
-             if (edittextactivityname.getText().toString().length() >= 2) {
-                 if (enterdiscription.getText().toString().length() >= 10) {
+             if (edittextactivityname.getText().toString().length() >= 2 ) {
+                 if (enterdiscription.getText().toString().length() >= 10 && edittextactivityname.getText().toString().length()<400) {
 
 
                      int int_month = 0;
 //                year = spinnerforyear.getSelectedItem().toString();
 //                month = spinnerformonth.getSelectedItem().toString();
 //                day = spinnerforday.getSelectedItem().toString();
-                     hour = spinnerforhour.getSelectedItem().toString();
+                     hour = String.valueOf(spinnerforhour.getSelectedItemPosition());
 
 
                      /*************** Time Stamp Start********************/
@@ -674,11 +683,16 @@ public class Screen19 extends Fragment {
                          }
                      }
                      if (checkboxcurrent.isChecked()) {
-
                          total_address = checked_current_address;
                      } else {
 
-                         total_address = geo_autocomplete.getText().toString();
+                         if (!text_search_address.getText().toString().equals("Search Address"))
+                         {
+                             total_address = geo_autocomplete.getText().toString();
+                         }else
+                         {
+                             total_address = "address";
+                         }
 
                      }
 
@@ -699,6 +713,8 @@ public class Screen19 extends Fragment {
                      }
 
                      JSONObject jsonObjSend = new JSONObject();
+
+
                      try {
                          jsonObjSend.put("activity_availability", availability);//nari1
                          jsonObjSend.put("activity_description", description); //2
@@ -752,7 +768,10 @@ public class Screen19 extends Fragment {
                          if (str_value.equals("Added Successfully")) {
 
                              fragmentManager = getFragmentManager();
-                             doFileUpload();
+                             if (pick1.equals("1") || pick2.equals("2") ||pick3.equals("3")) {
+                                 doFileUpload();
+                             }
+
                              Mygroup mygroup = new Mygroup();
                              fragmentManager.beginTransaction()
                                      .replace(R.id.flContent, mygroup)
@@ -821,16 +840,18 @@ public class Screen19 extends Fragment {
 
 
             if (requestCode == PICK_IMAGE1) {
-
+                pick1 = "1";
                 selectedImagePath = uri;
                 firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
 
             }
             if (requestCode == PICK_IMAGE2) {
+                pick2="2";
                 selectedImagePath2 = uri;
                 secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
             }
             if (requestCode == PICK_IMAGE3) {
+                pick3 = "3";
                 selectedImagePath3 = uri;
                 thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
             } else {
@@ -854,7 +875,23 @@ public class Screen19 extends Fragment {
        // final EditText editFriendsEmail = (EditText)emailDialog.findViewById(R.id.editEmailAddFriendEmail);
         Button btnAccept = (Button)emailDialog.findViewById(R.id.done);
         Button cancel  = (Button) emailDialog.findViewById(R.id.cancel);
+        ImageView   logo = (ImageView) emailDialog.findViewById(R.id.imageView5);
 
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog= ProgressDialog.show(getActivity(), null,null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Intent Home = new Intent(getActivity(),Screen16.class);
+                startActivity(Home);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                getActivity().finish();
+            }
+        });
         geo_autocomplete_clear = (ImageView) emailDialog.findViewById(R.id.geo_autocomplete_clear);
         geo_autocomplete = (DelayAutoCompleteTextView) emailDialog.findViewById(R.id.geo_autocomplete);
         geo_autocomplete.setThreshold(THRESHOLD);
@@ -1018,6 +1055,12 @@ public class Screen19 extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setContentView(R.layout.custom_progress);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);

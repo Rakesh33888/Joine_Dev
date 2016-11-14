@@ -27,7 +27,7 @@
 
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="80dp"
-                android:layout_height="75dp"
+                android:layout_height="80dp"
                 android:id="@+id/firstimage"
                 android:visibility="visible"
                 android:src="@drawable/picture"
@@ -36,7 +36,7 @@
                 android:layout_alignParentTop="true"/>
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="80dp"
-                android:layout_height="75dp"
+                android:layout_height="80dp"
                 android:id="@+id/secondimage"
                 android:visibility="visible"
                 android:src="@drawable/picture"
@@ -45,7 +45,7 @@
                 android:layout_alignParentTop="true"/>
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:layout_width="80dp"
-                android:layout_height="75dp"
+                android:layout_height="80dp"
                 android:id="@+id/thrdimage"
                 android:visibility="visible"
                 android:src="@drawable/picture"
@@ -94,10 +94,11 @@
 
                 <Spinner
                     android:id="@+id/spinnericon"
-                    android:layout_width="49dp"
+                    android:layout_width="60dp"
                     android:layout_marginLeft="230dp"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:minWidth="60dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -126,7 +127,7 @@
                     >
 
                     <RelativeLayout
-                        android:layout_width="160dp"
+                        android:layout_width="140dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/relativeLayout"
                         android:layout_centerVertical="true">
@@ -561,6 +562,7 @@
                 android:paddingEnd="7dp"
                 android:maxLines="4"
                 android:minLines="1"
+                android:maxLength="400"
                 android:inputType="textCapSentences|text|textMultiLine"
                 android:textColorHint="#A5A5A5"
                 android:paddingTop="5dp"

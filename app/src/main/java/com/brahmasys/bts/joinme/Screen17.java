@@ -54,7 +54,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     LinearLayout backlayout_screen_17;
     ImageView shareicon;
     RatingBar myratingBar;
-    String activity_name,cost,distance,duration,limit,owner_name,owner_pic,rating,review,activity_address,time,joined,icon1;
+    String activity_name,cost,distance,duration,limit,owner_name,owner_pic,rating,review,activity_address,time,joined,icon1,description;
     Button btnJoineActivity;
     TextView reporttext,updatetext;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
@@ -69,7 +69,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
     RatingBar minimumRating;
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
-    String uid,aid,owner_id;
+    String uid,aid,owner_id,Where;
     ProgressDialog progressDialog;
     JSONObject obj;
 
@@ -104,15 +104,8 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         minimumRating = (RatingBar)v.findViewById(R.id.myRatingBar);
         icon = (ImageView) v.findViewById(R.id.imageViewrfting);
         backlayout_screen_17= (LinearLayout) v.findViewById(R.id.backlayoutscreen17);
-        backlayout_screen_17.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Screen16.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                getActivity().finish();
-            }
-        });
+
+
 
 
 
@@ -134,24 +127,40 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
         Bundle bundle = this.getArguments();
           uid = bundle.getString("userid", "0");
-          aid  = bundle.getString("activityid","0");
+          aid  = bundle.getString("activityid", "0");
+          Where= bundle.getString("where","0");
 
         edit_activity_id.putString("activity_id", aid);
         edit_activity_id.commit();
 
+        backlayout_screen_17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Where.equals("mygroups")) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    Mygroup mygroup  = new Mygroup();
+                    fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+
+                }
+                if (Where.equals("single_group_message"))
+                {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    Single_group_Message mygroup  = new Single_group_Message();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("userid",uid);
+                    bundle.putString("activityid",aid);
+                    bundle.putString("where","single_group_message");
+                    mygroup.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+
+                }
+            }
+        });
 //        edit_userid.putString("userid", uid);
 //        edit_userid.commit();
 
 
 
-
-        imageViewbck.setClickable(true);
-        imageViewbck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         reporttext.setClickable(true);
         reporttext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +173,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                     bundle.putString("userid", uid);
                     bundle.putString("activityid",aid);
                     bundle.putString("owner_id","null");
+                    bundle.putString("where","mygroups");
                     reportfrgmnt.setArguments(bundle);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.flContent, reportfrgmnt);
@@ -199,6 +209,10 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                     Update_Activity update_activity =new Update_Activity();
                     Bundle args = new Bundle();
                     args.putString("accountDetails", String.valueOf(obj));
+                    args.putString("userid",uid);
+                    args.putString("activityid",aid);
+                    args.putString("where","mygroups");
+                    args.putString("screen","screen17");
                     update_activity.setArguments(args);
                     fragmentManager.beginTransaction()
                             .replace(R.id.flContent,update_activity)
@@ -241,6 +255,10 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                 Screen13 screen13 = new Screen13();
                 Bundle bundle = new Bundle();
                 bundle.putString("owner_id", owner_id);
+                bundle.putString("userid",uid);
+                bundle.putString("activityid",aid);
+                bundle.putString("where","mygroups");
+                bundle.putString("screen","screen17");
                 screen13.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.flContent, screen13)
@@ -308,6 +326,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     joined = userdetails.getString("participant_joined");
                                     icon1 = userdetails.getString("acitivity_icon");
                                     owner_id = userdetails.getString("activity_owner_id");
+                                    description = userdetails.getString("activity_Description");
                                     String activity_id = userdetails.getString("activity_id");
 
 
@@ -318,7 +337,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     uptopeoples.setText("Up to " + limit + " peoples:");
                                     currentpeoples.setText("Currently have " + joined);
                                     costtext.setText("Cost " + cost);
-                                    timetext.setText("Takes " + duration + "  hours");
+                                    timetext.setText("Description: " + description );
 
                                     //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
                                     Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
@@ -465,10 +484,24 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Intent i = new Intent(getActivity(), Screen16.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                    getActivity().finish();
+                    if (Where.equals("mygroups")) {
+                        FragmentManager fragmentManager = getFragmentManager();
+                        Mygroup mygroup  = new Mygroup();
+                        fragmentManager.beginTransaction().replace(R.id.flContent,mygroup).commit();
+                        getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    }
+                    if (Where.equals("single_group_message"))
+                    {
+                        FragmentManager fragmentManager = getFragmentManager();
+                        Single_group_Message mygroup  = new Single_group_Message();
+                        Bundle bundle=new Bundle();
+                        bundle.putString("userid",uid);
+                        bundle.putString("activityid",aid);
+                        bundle.putString("where","single_group_message");
+                        mygroup.setArguments(bundle);
+                        fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+
+                    }
                     return true;
                 }
                 return false;

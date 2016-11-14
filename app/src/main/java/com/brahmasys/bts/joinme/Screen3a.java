@@ -25,11 +25,14 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +64,7 @@ public class Screen3a extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView imageView;
     Button continue_btn;
+    RelativeLayout touch;
     CircularImageView circle_image;
     EditText firstname, lastname, conformation_code,share;
     android.support.v7.app.ActionBar actionBar;
@@ -133,7 +137,13 @@ public class Screen3a extends AppCompatActivity {
         day = (Spinner) findViewById(R.id.spinner1);
         month = (Spinner) findViewById(R.id.spinner2);
         year = (Spinner) findViewById(R.id.spinner3);
-
+        touch = (RelativeLayout) findViewById(R.id.scrollView);
+        touch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(v);
+            }
+        });
         Bundle extras = getIntent().getExtras();
         final String mailId = extras.getString("mailId");
         resend.setOnClickListener(new View.OnClickListener() {
@@ -264,7 +274,7 @@ public class Screen3a extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
+                hideKeyboard(v);
                 if (Connectivity_Checking.isConnectingToInternet()) {
 
                     if (select_image == 1) {
@@ -601,6 +611,11 @@ public class Screen3a extends AppCompatActivity {
         catch (Exception ex){
             Log.e("Debug", "error: " + ex.getMessage(), ex);
         }
+    }
+    protected void hideKeyboard(View view)
+    {
+        InputMethodManager in = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     public boolean onKeyDown(int Keycode, KeyEvent event) {

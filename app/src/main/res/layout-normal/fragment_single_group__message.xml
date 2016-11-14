@@ -220,7 +220,7 @@
                 android:imeOptions="actionSend"
                 android:background="@null"
                 android:inputType="textNoSuggestions|textMultiLine|textImeMultiLine"
-                android:windowSoftInputMode="adjustPan|adjustResize"
+                android:windowSoftInputMode="adjustPan|adjustResize|stateHidden"
                 android:maxLines="5"
                 android:singleLine="true"><requestFocus /></EditText>
             <ImageView

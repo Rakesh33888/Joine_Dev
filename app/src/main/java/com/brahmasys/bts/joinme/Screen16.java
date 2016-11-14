@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,15 +32,20 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -112,7 +118,8 @@ public class Screen16 extends AppCompatActivity implements
     List<String> activity_name, distance, time, activity_id, userid_other;
     ProgressDialog pd;
     Double latitude=0.0,longitude=0.0;
-
+    TextView whoshowed_skip,whoshowed_remind_later,whoshowed_activityname;
+    ListView peoples_who_showed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -351,7 +358,26 @@ public void GetUserData()
 
     private void fillWithTestData() {
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+
+        };
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         relativeLayout_share_icon = (RelativeLayout) toolbar.findViewById(R.id.Relativelayout_share_icon);
@@ -367,6 +393,8 @@ public void GetUserData()
                 startActivity(sendIntent);
             }
         });
+
+
         like = (ImageView) findViewById(R.id.like);
         dislike = (ImageView) findViewById(R.id.dislike);
         btninfo = (ImageView) findViewById(R.id.infobutton);
@@ -405,10 +433,33 @@ public void GetUserData()
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent Home = new Intent(Screen16.this,Screen16.class);
-                startActivity(Home);
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                finish();
+
+                progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        Intent Home = new Intent(Screen16.this,Screen16.class);
+                        startActivity(Home);
+                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                        finish();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+
+                            }
+                        });
+
+                    }
+                }).start();
+
+
             }
         });
          navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -466,6 +517,10 @@ public void GetUserData()
                 public void onClick(View v) {
                     mSwipeStack.swipeTopViewToLeft();
                     mSwipeStack.setRotation(View.DRAWING_CACHE_QUALITY_AUTO);
+                    if (mSwipeStack.getCurrentPosition() >= activity_name.size())
+                    {
+                        Toast.makeText(Screen16.this, "There is no activity...!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -497,7 +552,7 @@ public void GetUserData()
     {
         if (mSwipeStack.getCurrentPosition() >= activity_name.size())
         {
-            Toast.makeText(Screen16.this, "There is no activities", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Screen16.this, "There is no activity...!", Toast.LENGTH_SHORT).show();
         }
         else {
             fragmentManager = getSupportFragmentManager();
@@ -505,6 +560,8 @@ public void GetUserData()
             Bundle bundle = new Bundle();
             bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()));
             bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()));
+            bundle.putString("screen","other_user_details");
+            bundle.putString("where","null");
             other_user.setArguments(bundle);
             fragmentManager.beginTransaction()
                     .replace(R.id.flContent, other_user)
@@ -612,7 +669,7 @@ public void GetUserData()
             super.onBackPressed();
         }
 
-        userStatus(user_id.getString("userid","0000"),"false");
+        userStatus(user_id.getString("userid", "0000"), "false");
     }
 
     @Override
@@ -677,7 +734,7 @@ public void GetUserData()
     public void Member_add_to_Group() {
 
         if (mSwipeStack.getCurrentPosition() >= activity_name.size()) {
-            Toast.makeText(Screen16.this, "There is no activity", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Screen16.this, "There is no activity...!", Toast.LENGTH_SHORT).show();
         }
         else {
 
@@ -695,7 +752,7 @@ public void GetUserData()
                                 String result = obj.getString("message");
                                 if (result.equals("Updated Successfully")) {
                                     fragmentManager = getSupportFragmentManager();
-                                    Screen17 update_activity = new Screen17();
+                                    Other_User_Details update_activity = new Other_User_Details();
                                     Bundle bundle = new Bundle();
                                     bundle.putString("userid", userid_other.get(mSwipeStack.getCurrentPosition()-1));
                                     bundle.putString("activityid", activity_id.get(mSwipeStack.getCurrentPosition()-1));
@@ -713,7 +770,6 @@ public void GetUserData()
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
 
                         }
                     });

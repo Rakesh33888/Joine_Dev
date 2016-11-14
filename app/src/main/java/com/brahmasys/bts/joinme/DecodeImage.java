@@ -15,7 +15,7 @@ public class DecodeImage {
             o.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(path, o);
             // The new size we want to scale to
-            final int REQUIRED_SIZE = 70;
+            final int REQUIRED_SIZE = 60;
 
             // Find the correct scale value. It should be the power of 2.
             int scale = 1;
@@ -25,6 +25,7 @@ public class DecodeImage {
             // Decode with inSampleSize
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
+           // o2.inJustDecodeBounds = true;
             return BitmapFactory.decodeFile(path, o2);
         } catch (Throwable e) {
             e.printStackTrace();

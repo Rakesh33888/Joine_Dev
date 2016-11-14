@@ -496,6 +496,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         already_member.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (Connectivity_Checking.isConnectingToInternet()) {
                     if (android.os.Build.VERSION.SDK_INT > 9) {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -517,19 +518,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     b4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            progressDialog = ProgressDialog.show(MainActivity.this, null, null, true);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setCancelable(false);
+                            progressDialog.setContentView(R.layout.custom_progress);
+                            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
-                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-
+//                            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+//                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                            hideKeyboard(v);
                             if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
 
                                 //Progress Dialog
-                                progressDialog = ProgressDialog.show(MainActivity.this, null, null, true);
-                                progressDialog.setIndeterminate(true);
-                                progressDialog.setCancelable(false);
-                                progressDialog.setContentView(R.layout.custom_progress);
-                                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                                 if (android.os.Build.VERSION.SDK_INT > 9) {
                                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -601,6 +602,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                                         } else {
                                             Intent i = new Intent(getApplicationContext(), Screen3a.class);
+                                            i.putExtra("mailId",email.getText().toString());
                                             startActivity(i);
                                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                                             Toast.makeText(MainActivity.this, "Please verify your account...!", Toast.LENGTH_LONG).show();
@@ -619,7 +621,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             } else
 
                             {
-//                            progressDialog.dismiss();
+                                progressDialog.dismiss();
                                 Toast toast = Toast.makeText(getApplicationContext(), "Enter Credentials...! ", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
@@ -655,10 +657,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     b5.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            progressDialog =ProgressDialog.show(MainActivity.this, null, null, true);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setCancelable(false);
+                            progressDialog.setContentView(R.layout.custom_progress);
+                            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
-                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-
+//                            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+//                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                            hideKeyboard(v);
                             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
                             CharSequence inputStr = email.getText().toString();
                             Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -668,12 +676,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 if (matcher.matches()) {
                                     if (pass.getText().toString().trim().length() >= 4) {
 
-                                        progressDialog =ProgressDialog.show(MainActivity.this, null, null, true);
-                                        progressDialog.setIndeterminate(true);
-                                        progressDialog.setCancelable(false);
-                                        progressDialog.setContentView(R.layout.custom_progress);
-                                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                                         AsyncHttpClient client = new AsyncHttpClient();
                                         client.get("http://52.37.136.238/JoinMe/User.svc/CheckUserEmailAvailability/" + email.getText().toString(),
@@ -786,17 +788,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                                 });
 
                                     } else {
-
+                                        progressDialog.dismiss();
                                         Toast.makeText(MainActivity.this, "Password must be at least 4 characters. ", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-
+                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Invalid Mail Id.", Toast.LENGTH_SHORT).show();
                                 }
 
                             } else {
-
-                                Toast toast = Toast.makeText(getApplicationContext(), "Invalid connection", Toast.LENGTH_SHORT);
+                                progressDialog.dismiss();
+                                Toast toast = Toast.makeText(getApplicationContext(), "Enter your details...!", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
                             }
@@ -830,7 +832,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
                     public void onSuccess(String response) {
-                         try {
+                        try {
                             // Extract JSON Object from JSON returned by REST WS
                             JSONObject obj = new JSONObject(response);
                             JSONObject json = null;
@@ -900,6 +902,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     }
 
                 });
+    }
+    protected void hideKeyboard(View view)
+    {
+        InputMethodManager in = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override

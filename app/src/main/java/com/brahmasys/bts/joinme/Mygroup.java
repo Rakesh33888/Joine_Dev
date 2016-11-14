@@ -148,7 +148,12 @@ public class Mygroup extends Fragment{
         backlayoutgroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 Intent i = new Intent(getContext(), Screen16.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
@@ -224,6 +229,7 @@ public class Mygroup extends Fragment{
                 Bundle bundle = new Bundle();
                 bundle.putString("userid", alluserid.get(position));
                 bundle.putString("activityid",allactivityid.get(position));
+                bundle.putString("where","mygroups");
                 screen17.setArguments(bundle);
                 fragmentManager.beginTransaction()
                         .replace(R.id.flContent, screen17)
@@ -373,6 +379,12 @@ public class Mygroup extends Fragment{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setContentView(R.layout.custom_progress);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             Intent i = new Intent(getActivity(), Screen16.class);
                             startActivity(i);
                             getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);

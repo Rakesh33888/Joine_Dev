@@ -23,6 +23,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -117,6 +118,7 @@ public class Single_group_Message extends Fragment    {
     SharedPreferences.Editor edit_chat_username;
     TextWatcher input_watcher;
     boolean response_typing_add = false;
+    String isowner="false";
     /********************Chat********************/
 
     public Single_group_Message() {
@@ -179,57 +181,47 @@ public class Single_group_Message extends Fragment    {
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
-        shareicon.setVisibility(View.GONE);
+        shareicon.setVisibility(View.VISIBLE);
         other_user_id=new ArrayList<String>();
         createrimage.setClickable(true);
         send_btn = (ImageView) v.findViewById(R.id.send_button);
-        /********************Chat********************/
 
         /********************Chat********************/
 
+        /********************Chat********************/
 
-        createrimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Screen17 screen17 = new Screen17();
-                FragmentManager fm = getFragmentManager();
-                Bundle bundle=new Bundle();
-                bundle.putString("userid",userid);
-                bundle.putString("activityid",act_id);
-                screen17.setArguments(bundle);
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.replace(R.id.flContent, screen17);
-                transaction.commit();
 
-            }
-        });
+
         tvActivityName= (TextView) v.findViewById(R.id.textView25);
+        tvActivityName.setMovementMethod(new ScrollingMovementMethod());
+
         tvActivityTime= (TextView) v.findViewById(R.id.textView26);
         tvleave_chat= (TextView) v.findViewById(R.id.leave_chat);
         listimage= (CircularImageView)v.findViewById(R.id.participants);
         tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
+        tvActivityAddress.setMovementMethod(new ScrollingMovementMethod());
         tvHostedByName = (TextView) v.findViewById(R.id.name);
         participants_list = (HorizontalListView) v. findViewById(R.id.participants_list);
-        participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (int i=0;i<other_user_id.size();i++){
-                    if (position==other_user_id.indexOf(other_user_id.get(i))){
-
-                        Screen13 screen13 = new Screen13();
-                        FragmentManager fm1 = getFragmentManager();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("userid",other_user_id.get(i));
-                        screen13.setArguments(bundle);
-                        FragmentTransaction transaction = fm1.beginTransaction();
-                        transaction.replace(R.id.flContent, screen13);
-                        transaction.commit();
-
-                    }
-                }
-
-            }
-        });
+//        participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                for (int i=0;i<other_user_id.size();i++){
+//                    if (position==other_user_id.indexOf(other_user_id.get(i))){
+//
+//                        Screen13 screen13 = new Screen13();
+//                        FragmentManager fm1 = getFragmentManager();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("userid",other_user_id.get(i));
+//                        screen13.setArguments(bundle);
+//                        FragmentTransaction transaction = fm1.beginTransaction();
+//                        transaction.replace(R.id.flContent, screen13);
+//                        transaction.commit();
+//
+//                    }
+//                }
+//
+//            }
+//        });
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
@@ -340,13 +332,16 @@ public class Single_group_Message extends Fragment    {
 
                                         for(int i=0; i<arrGroup.length(); i++) {
                                            JSONObject row = arrGroup.getJSONObject(i);
+
                                             if(row.getString("isowner").equals("true")){
                                                 tvHostedByName.setText(row.getString("user_name"));
                                                 owner_id = row.getString("userid");
+
                                                 Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
                                                         .into(owner);
                                                 if(userid.equals(owner_id))
                                                 {
+                                                    isowner = row.getString("isowner");
                                                     UserName = row.getString("user_name");
                                                     user_porfile=row.getString("profile_pic");
                                                     edit_chat_username.putString("chat_username",UserName);
@@ -361,6 +356,7 @@ public class Single_group_Message extends Fragment    {
                                                 books.add(book);
                                                 if(userid.equals(row.getString("userid")))
                                                 {
+                                                    isowner = row.getString("isowner");
                                                     UserName = row.getString("user_name");
                                                     user_porfile=row.getString("profile_pic");
 
@@ -403,6 +399,10 @@ owner.setOnClickListener(new View.OnClickListener() {
         Screen13 screen13 = new Screen13();
         Bundle bundle = new Bundle();
         bundle.putString("owner_id", owner_id);
+        bundle.putString("userid", userid);
+        bundle.putString("activityid", act_id);
+        bundle.putString("where", "single_group_message");
+        bundle.putString("screen","single_group_message");
         screen13.setArguments(bundle);
         fragmentManager.beginTransaction()
                 .replace(R.id.flContent, screen13)
@@ -417,6 +417,10 @@ owner.setOnClickListener(new View.OnClickListener() {
          Screen13 screen13 = new Screen13();
          Bundle bundle = new Bundle();
          bundle.putString("owner_id", other_user_id.get(position));
+         bundle.putString("userid", userid);
+         bundle.putString("activityid", act_id);
+         bundle.putString("where", "single_group_message");
+         bundle.putString("screen","single_group_message");
          screen13.setArguments(bundle);
          fragmentManager.beginTransaction()
                  .replace(R.id.flContent, screen13)
@@ -424,6 +428,42 @@ owner.setOnClickListener(new View.OnClickListener() {
                  .commit();
      }
  });
+
+
+        createrimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isowner.equals("true")) {
+                    Screen17 screen17 = new Screen17();
+                    FragmentManager fm = getFragmentManager();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid", userid);
+                    bundle.putString("activityid", act_id);
+                    bundle.putString("where", "single_group_message");
+                    bundle.putString("screen","other_user_details");
+                    screen17.setArguments(bundle);
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.flContent, screen17);
+                    transaction.commit();
+                }
+                else
+                {
+                    Other_User_Details screen17 = new Other_User_Details();
+                    FragmentManager fm = getFragmentManager();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid", userid);
+                    bundle.putString("activityid", act_id);
+                    bundle.putString("where", "single_group_message");
+                    bundle.putString("screen","other_user_details");
+                    screen17.setArguments(bundle);
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.flContent, screen17);
+                    transaction.commit();
+                }
+
+            }
+        });
 
         return v;
     }

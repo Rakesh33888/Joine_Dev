@@ -116,6 +116,7 @@ public class Update_Activity extends Fragment  {
     public static final int PICK_IMAGE1 = 1;
     public static final int PICK_IMAGE2 = 2;
     public static final int PICK_IMAGE3 = 3;
+    String pick1="null",pick2="null",pick3="null";
     String owerid;
     HttpEntity resEntity;
     private ArrayList<Book> books;
@@ -126,7 +127,7 @@ public class Update_Activity extends Fragment  {
     List<String> allurl;
     FragmentManager fragmentManager;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
+    Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -190,17 +191,19 @@ public class Update_Activity extends Fragment  {
         });
 
         /*************************** Spinner Functionality Start ***********************/
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.times_format));
+        spinnerforhour.setAdapter(adapter1);
 
-        List hours = new ArrayList<Integer>();
-        hours.add(0, "");
-        for (int i = 23; i >=0; i--) {
-            hours.add(Integer.toString(i));
-
-        }
-        spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
-        spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerArrayAdapter4.notifyDataSetChanged();
-        spinnerforhour.setAdapter(spinnerArrayAdapter4);
+//        List hours = new ArrayList<Integer>();
+//        hours.add(0, "");
+//        for (int i = 0; i<=23; i++) {
+//            hours.add(Integer.toString(i));
+//
+//        }
+//        spinnerArrayAdapter4 = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, hours);
+//        spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerArrayAdapter4.notifyDataSetChanged();
+//        spinnerforhour.setAdapter(spinnerArrayAdapter4);
 
 
 
@@ -219,21 +222,26 @@ public class Update_Activity extends Fragment  {
         try {
             userdetails = jsonObject.getJSONObject("act_details");
             JSONArray cast = userdetails.getJSONArray("activity_pics");
+
+            Log.e("LENGTH",String.valueOf(cast.length()));
             for (int i = 0; i < cast.length(); i++) {
                 JSONObject actor = cast.getJSONObject(i);
                 String id = actor.getString("id");
                 String url = actor.getString("url");
-                if (i==0)
+                if (i==cast.length()-1)
                 {
-                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).into(firstimage);
+                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
+                        .centerCrop().into(firstimage);
                 }
-                if(i==1)
+                if(i==cast.length()-2)
                 {
-                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).into(secondimage);
+                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
+                            .centerCrop().into(secondimage);
                 }
-                if (i==2)
+                if (i==cast.length()-3)
                 {
-                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).into(thirdimage);
+                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
+                            .centerCrop().into(thirdimage);
                 }
                 Log.e("Activity Url", cast.getString(i));
             }
@@ -287,7 +295,7 @@ public class Update_Activity extends Fragment  {
             String formattedDate1 = sdf1.format(date2);
             dateTextView.setText(formattedDate);
             Log.e("Time",formattedDate1);
-            spinnerforhour.setSelection(Integer.parseInt(formattedDate1)+1);
+            spinnerforhour.setSelection(Integer.parseInt(formattedDate1));
             Icon_url = userdetails.getString("acitivity_icon");
 
 
@@ -411,6 +419,9 @@ public class Update_Activity extends Fragment  {
                                     spinnericon.setSelection(allurl.indexOf(allurl.get(i)));
 
                                 }
+                               else {
+                                   icon="/ActivityIcons/coffee.png";
+                               }
 
                             }
                             Log.d("Type", String.valueOf(allurl));
@@ -529,7 +540,7 @@ public class Update_Activity extends Fragment  {
             @Override
             public void onClick(View v) {
                 if (v == checkBoxforwomen) {
-                    checkBoxforwomen.setChecked(true);
+                 //   checkBoxforwomen.setChecked(true);
 //                    checkBoxforwomen.setClickable(false);
 //                    checkBoxformen.setClickable(true);
 
@@ -541,7 +552,7 @@ public class Update_Activity extends Fragment  {
             @Override
             public void onClick(View v) {
                 if (v == checkBoxformen) {
-                    checkBoxformen.setChecked(true);
+                //    checkBoxformen.setChecked(true);
 //                    checkBoxforwomen.setClickable(true);
 //                    checkBoxformen.setClickable(false);
 
@@ -747,7 +758,7 @@ public class Update_Activity extends Fragment  {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                hour = (String) spinnerforhour.getSelectedItem();
+                hour = String.valueOf(spinnerforhour.getSelectedItemPosition());
 
 
                 /*************** Time Stamp Start********************/
@@ -814,7 +825,13 @@ public class Update_Activity extends Fragment  {
                     total_address = current_address.getText().toString();
                 } else {
 
-                    total_address = geo_autocomplete.getText().toString();
+                    if (!text_search_address.getText().toString().equals("Search Address"))
+                    {
+                        total_address = geo_autocomplete.getText().toString();
+                    }else
+                    {
+                        total_address = "address";
+                    }
 
                 }
 
@@ -870,7 +887,9 @@ public class Update_Activity extends Fragment  {
                     if (message.equals("Updated Successfully")) {
 
                         fragmentManager = getFragmentManager();
-                        doFileUpload();
+                        if (pick1.equals("1") || pick2.equals("2") ||pick3.equals("3")) {
+                            doFileUpload();
+                        }
                         Mygroup mygroup = new Mygroup();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.flContent, mygroup)
@@ -917,15 +936,18 @@ public class Update_Activity extends Fragment  {
 
 
             if (requestCode == PICK_IMAGE1) {
+                pick1 = "1";
                 selectedImagePath = uri;
                 firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
 
             }
             if (requestCode == PICK_IMAGE2) {
+                pick2 = "2";
                 selectedImagePath2 = uri;
                 secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
             }
             if (requestCode == PICK_IMAGE3) {
+                pick3 = "3";
                 selectedImagePath3 = uri;
                 thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
             } else {
@@ -946,7 +968,23 @@ public class Update_Activity extends Fragment  {
 
         Button btnAccept = (Button)emailDialog.findViewById(R.id.done);
         Button cancel  = (Button) emailDialog.findViewById(R.id.cancel);
+        ImageView   logo = (ImageView) emailDialog.findViewById(R.id.imageView5);
 
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog= ProgressDialog.show(getActivity(), null,null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Intent Home = new Intent(getActivity(),Screen16.class);
+                startActivity(Home);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                getActivity().finish();
+            }
+        });
         geo_autocomplete_clear = (ImageView) emailDialog.findViewById(R.id.geo_autocomplete_clear);
 
         geo_autocomplete = (DelayAutoCompleteTextView) emailDialog.findViewById(R.id.geo_autocomplete);
@@ -1091,14 +1129,22 @@ private void doFileUpload(){
         super.onResume();
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        bundle = this.getArguments();
+        final String screen   =bundle.getString("screen","0");
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Intent i = new Intent(getActivity(), Screen16.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
-                    getActivity().finish();
+                    if (screen.equals("screen17")) {
+                        FragmentManager fragmentManager = getFragmentManager();
+                        Screen17 mygroup = new Screen17();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("userid",bundle.getString("userid","0"));
+                        bundle1.putString("activityid",bundle.getString("activityid","0"));
+                        bundle1.putString("where",bundle.getString("where","0"));
+                        mygroup.setArguments(bundle1);
+                        fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
+                    }
                     return true;
                 }
                 return false;

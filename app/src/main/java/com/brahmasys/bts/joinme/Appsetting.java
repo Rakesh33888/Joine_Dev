@@ -544,13 +544,17 @@ public class Appsetting extends Fragment{
                                 {
                                     dropdown.setSelection(0);
                                 }
-                                else if (Message_list.equals("Only from groups"))
+                                else if (Message_list.equals("only from groups"))
                                 {
                                     dropdown.setSelection(1);
                                 }
-                                else
+                                else if (Message_list.equals("none"))
                                 {
                                     dropdown.setSelection(2);
+                                }
+                                else
+                                {
+                                    dropdown.setSelection(0);
                                 }
                                 Log.e("User Settings",String.valueOf(dataObj));
                                 if (distance_km.equals("K") || distance_km.equals("k")) {
@@ -611,14 +615,22 @@ public class Appsetting extends Fragment{
         if(km.isChecked()){
             distance="K";
         }
-        String message_list;
+        String message_list="null";
         if (String.valueOf(dropdown.getSelectedItem()).equals("All messages"))
         {
             message_list = "all messages";
         }
+        else if (String.valueOf(dropdown.getSelectedItem()).equals("Only from groups"))
+        {
+            message_list = "only from groups";
+        }
+        else if (String.valueOf(dropdown.getSelectedItem()).equals("None"))
+        {
+            message_list = "none";
+        }
         else
         {
-            message_list = String.valueOf(dropdown.getSelectedItem());
+            message_list = "all messages";
         }
 
             JSONObject jsonObjSend = new JSONObject();
