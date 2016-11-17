@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -33,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,7 +55,10 @@ import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import com.squareup.picasso.Transformation;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.apache.http.HttpEntity;
@@ -128,6 +134,8 @@ public class Update_Activity extends Fragment  {
     FragmentManager fragmentManager;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     Bundle bundle;
+    int Pic_length=0;
+    List<String> allid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -222,26 +230,77 @@ public class Update_Activity extends Fragment  {
         try {
             userdetails = jsonObject.getJSONObject("act_details");
             JSONArray cast = userdetails.getJSONArray("activity_pics");
-
+            allid = new ArrayList<String>();
             Log.e("LENGTH",String.valueOf(cast.length()));
             for (int i = 0; i < cast.length(); i++) {
                 JSONObject actor = cast.getJSONObject(i);
                 String id = actor.getString("id");
-                String url = actor.getString("url");
+                final String url = actor.getString("url");
+               allid.add(id);
+                Pic_length = cast.length();
                 if (i==cast.length()-1)
                 {
-                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
-                        .centerCrop().into(firstimage);
+//                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
+//                        .centerCrop().into(firstimage);
+
+
+                    Picasso.with(context)
+                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                            .placeholder(R.drawable.butterfly)
+                            .resize(75, 75)
+                            .into(firstimage, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 }
                 if(i==cast.length()-2)
                 {
-                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
-                            .centerCrop().into(secondimage);
+//                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
+//                            .centerCrop().into(secondimage);
+
+                    Picasso.with(context)
+                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                            .placeholder(R.drawable.butterfly)
+                            .resize(75, 75)
+
+                            .into(secondimage, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 }
                 if (i==cast.length()-3)
                 {
-                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
-                            .centerCrop().into(thirdimage);
+//                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
+//                            .centerCrop().into(thirdimage);
+                    Picasso.with(context)
+                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                            .placeholder(R.drawable.butterfly)
+                            .resize(75, 75)
+
+                            .into(thirdimage, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 }
                 Log.e("Activity Url", cast.getString(i));
             }
@@ -295,7 +354,7 @@ public class Update_Activity extends Fragment  {
             String formattedDate1 = sdf1.format(date2);
             dateTextView.setText(formattedDate);
             Log.e("Time",formattedDate1);
-            spinnerforhour.setSelection(Integer.parseInt(formattedDate1));
+            spinnerforhour.setSelection(Integer.parseInt(formattedDate1)+1);
             Icon_url = userdetails.getString("acitivity_icon");
 
 
@@ -306,13 +365,14 @@ public class Update_Activity extends Fragment  {
                 not_everyone.setVisibility(View.GONE);
                 checkBoxforeveryone.setClickable(false);
                 checkBoxnotforeveryone.setClickable(true);
+                checkBoxforeveryone.setEnabled(false);
             }
             else {
                 checkBoxnotforeveryone.setChecked(true);
                 not_everyone.setVisibility(View.VISIBLE);
                 checkBoxforeveryone.setClickable(true);
                 checkBoxnotforeveryone.setClickable(false);
-
+                checkBoxnotforeveryone.setEnabled(false);
 //                Log.e("AGES", start_age + "\n" + End_age);
                 age1.setText(userdetails.getString("participant_age_start"));
                 age2.setText(userdetails.getString("participant_age_end"));
@@ -478,7 +538,7 @@ public class Update_Activity extends Fragment  {
         }
         /******************** CheckBox Functionality Start*******************/
         checkboxcurrent.setChecked(true);
-
+        checkboxcurrent.setEnabled(false);
         checkboxcurrent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -503,6 +563,7 @@ public class Update_Activity extends Fragment  {
                     current_address.setVisibility(View.GONE);
                     checkboxcurrent.setClickable(true);
                     checkBoxaddress.setClickable(false);
+                    checkboxcurrent.setEnabled(true);
                 }
 
             }
@@ -516,7 +577,7 @@ public class Update_Activity extends Fragment  {
                     not_everyone.setVisibility(View.GONE);
                     checkBoxforeveryone.setClickable(false);
                     checkBoxnotforeveryone.setClickable(true);
-
+                    checkBoxnotforeveryone.setEnabled(true);
                 }
 
             }
@@ -530,6 +591,7 @@ public class Update_Activity extends Fragment  {
                     not_everyone.setVisibility(View.VISIBLE);
                     checkBoxforeveryone.setClickable(true);
                     checkBoxnotforeveryone.setClickable(false);
+                    checkBoxforeveryone.setEnabled(true);
                 }
 
             }
@@ -656,7 +718,19 @@ public class Update_Activity extends Fragment  {
                         Looper.prepare();
                         // do the thing that takes a long time
                         try {
-                            UpdateActivity();
+
+
+                            if(checkboxcurrent.isChecked()) {
+                                UpdateActivity();
+                            }
+                            if (checkBoxaddress.isChecked()) {
+                                if (!text_search_address.getText().toString().equals("Search Address")) {
+                                    UpdateActivity();
+                                }else
+                                {
+                                    Toast.makeText(getActivity(), "Please fill all the details...!", Toast.LENGTH_LONG).show();
+                                }
+                            }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -748,6 +822,11 @@ public class Update_Activity extends Fragment  {
     }
 
     public void UpdateActivity() throws ParseException {
+        if (Connectivity_Checking.isConnectingToInternet()) {
+            Log.e("Position", String.valueOf(spinnerforhour.getSelectedItemPosition()));
+            if (!edittextactivityname.getText().toString().equals("")&& !enterdiscription.getText().toString().equals("") && !dateTextView.getText().toString().equals("Select date")
+                    && !edit_cost.getText().toString().equals("") && !edit_limit.getText().toString().equals("") && spinnerforhour.getSelectedItemPosition()-1>=0  ) {
+                if (!edit_limit.getText().toString().equals("0")) {
         if (edittextactivityname.getText().toString().length() >= 2) {
             if (enterdiscription.getText().toString().length() >= 10) {
 //
@@ -758,7 +837,7 @@ public class Update_Activity extends Fragment  {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                hour = String.valueOf(spinnerforhour.getSelectedItemPosition());
+                hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
 
 
                 /*************** Time Stamp Start********************/
@@ -911,6 +990,23 @@ public class Update_Activity extends Fragment  {
             }
         } else {
             Toast.makeText(getActivity(), "Activity name at least you have to enter 2 characters!", Toast.LENGTH_LONG).show();
+        }
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Participants limit should be grater than zero...!", Toast.LENGTH_LONG).show();
+                }
+            }
+            else
+            {
+                Toast.makeText(getActivity(), "Please fill all the details...!", Toast.LENGTH_LONG).show();
+            }
+
+
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
         }
     }
 
@@ -1093,8 +1189,8 @@ public class Update_Activity extends Fragment  {
 private void doFileUpload(){
 
     String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
-    for (int i=0;i<3;i++) {
-        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id.getString("activity_id","");
+    for (int i=0;i<Pic_length;i++) {
+        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityPic/" + activity_id.getString("activity_id","")+"/"+allid.get(i);
         try {
             org.apache.http.client.HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urlString);

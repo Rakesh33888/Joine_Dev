@@ -10,7 +10,7 @@ public class Book {
     private String authorName;
     private String time;
     private String icon_image;
-
+    boolean selected = false;
     public String getName() {
         return name;
     }
@@ -45,5 +45,16 @@ public class Book {
     public  void setIcon_image(String icon_image)
     {
         this.icon_image = icon_image;
+    }
+
+
+    public boolean isSelected()
+    {
+        return selected;
+    }
+
+    public void setSelected(boolean selected)
+    {
+        this.selected = selected;
     }
 }

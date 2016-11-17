@@ -35,6 +35,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -60,15 +61,18 @@ public class Notification_Screen extends Fragment {
     RatingBar ratingBar;
     ListView peoples_who_showed;
     LinearLayout rating_action,rating_submission,review_submission,review_action;
-    Button submit,review_submit;
+    Button submit,review_submit,whoshowed_submit;
     String user_id,activity_id,type,activity_name="null",url="null",time;
     CircularImageView activity_image,review_activity_image,whoshowed_activity_image;
     private static final String TAG = "SendFeedBack";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/Feedback";
     private static final String REVIEW_TAG = "ReviewActivity";
     private static final String REVIEW_URL = "http://52.37.136.238/JoinMe/Activity.svc/ReviewActivity";
+    private static final String WHOSHOWED_TAG = "WhoShowedUp";
+    private static final String WHOSHOWED_URL = "http://52.37.136.238/JoinMe/Activity.svc/WhoShowedUp";
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
+    List<String> allid;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.notification_screen,container,false);
@@ -152,8 +156,20 @@ public class Notification_Screen extends Fragment {
                                     }
 
                                     activity_name1.setText(activity_name);
-                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
+                                    //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
+                                    Picasso.with(getActivity())
+                                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                                            .placeholder(R.drawable.butterfly)
+                                            .into(activity_image, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
 
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                }
+                                            });
 
                                     did_not_go.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -296,8 +312,20 @@ public class Notification_Screen extends Fragment {
                                     }
 
                                     review_activity_name.setText(activity_name);
-                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(review_activity_image);
+                                  //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(review_activity_image);
+                                    Picasso.with(getActivity())
+                                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                                            .placeholder(R.drawable.butterfly)
+                                            .into(review_activity_image, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
 
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                }
+                                            });
                                     review_did_not_go.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -403,6 +431,7 @@ public class Notification_Screen extends Fragment {
                                     dialog.setCancelable(false);
                                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                     dialog.show();
+                                    whoshowed_submit = (Button) dialog.findViewById(R.id.submitte_congratulation);
                                     peoples_who_showed = (ListView)dialog.findViewById(R.id.peoples_who_showed);
                                     whoshowed_remind_later = (TextView) dialog.findViewById(R.id.remindme_congratulation);
                                     whoshowed_skip = (TextView) dialog.findViewById(R.id.skip_congatulation);
@@ -415,9 +444,21 @@ public class Notification_Screen extends Fragment {
                                     }
 
                                     whoshowed_activityname.setText(whoshowed_activityname.getText() + activity_name);
-                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(whoshowed_activity_image);
+                                  //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(whoshowed_activity_image);
 
+                                    Picasso.with(getActivity())
+                                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                                            .placeholder(R.drawable.butterfly)
+                                            .into(whoshowed_activity_image, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
 
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                }
+                                            });
                                     whoshowed_skip.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -432,7 +473,7 @@ public class Notification_Screen extends Fragment {
                                         public void onClick(View v) {
 
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterReview/" + user_id + "/" + activity_id,
+                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterWhoShowedUp/" + user_id + "/" + activity_id,
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
 
@@ -471,7 +512,7 @@ public class Notification_Screen extends Fragment {
                                                         JSONArray cast = json.getJSONArray("users");
 
                                                         //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                                        List<String> allid = new ArrayList<String>();
+                                                                  allid = new ArrayList<String>();
                                                         List<String> allurl = new ArrayList<String>();
                                                         for (int i = 0; i < cast.length(); i++) {
                                                             JSONObject actor = cast.getJSONObject(i);
@@ -482,8 +523,9 @@ public class Notification_Screen extends Fragment {
 
 
                                                             Book book = new Book();
-                                                            book.setName(actor.getString("activity_name"));
-                                                            book.setImageUrl(actor.getString("activity_url"));
+                                                            book.setName(actor.getString("username"));
+                                                            book.setImageUrl(actor.getString("userimage"));
+                                                            book.setSelected(false);
                                                             // book.setAuthorName(formattedDate);
 
                                                             books.add(book);
@@ -508,6 +550,52 @@ public class Notification_Screen extends Fragment {
 
                                             });
                                     setListViewAdapter();
+
+                                    whoshowed_submit.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            StringBuffer responseText = new StringBuffer();
+                                            //responseText.append("The following were selected...\n");
+
+                                            ArrayList<Book> stateList = books;
+
+                                            for(int i=0;i<stateList.size();i++)
+                                            {
+                                                Book state = stateList.get(i);
+
+                                                if(state.isSelected())
+                                                {
+                                                    responseText.append(allid.get(i));
+                                                }
+                                            }
+
+                                            JSONObject jsonObjSend = new JSONObject();
+                                            try {
+                                                // Add key/value pairs
+                                                jsonObjSend.put("activityid", activity_id);
+                                                jsonObjSend.put("userids", responseText);
+
+                                                Log.i(WHOSHOWED_TAG, jsonObjSend.toString(2));
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            JSONObject jsonObjRecv = HttpClient.SendHttpPost(WHOSHOWED_URL, jsonObjSend);
+                                            JSONObject json = null;
+                                            try {
+                                                json = new JSONObject(String.valueOf(jsonObjRecv));
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            Intent home = new Intent(getActivity(), Screen16.class);
+                                            startActivity(home);
+                                            getActivity().overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                            getActivity().finish();
+
+                                        }
+                                    });
+
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

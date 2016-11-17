@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
@@ -52,6 +53,18 @@ public class Custom_WhoShowedUp extends ArrayAdapter<Book>  {
             holder = new ViewHolder(convertView);
             // set tag for holder
             convertView.setTag(holder);
+
+            holder.selection.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    CheckBox cb = (CheckBox) v;
+                    Book _state = (Book) cb.getTag();
+
+//                Toast.makeText(getApplicationContext(), "Clicked on Checkbox: " + cb.getText() + " is " + cb.isChecked(),
+//                        Toast.LENGTH_LONG).show();
+
+                    _state.setSelected(cb.isChecked());
+                }
+            });
         } else {
             // if holder created, get tag from view
             holder = (ViewHolder) convertView.getTag();
@@ -61,11 +74,14 @@ public class Custom_WhoShowedUp extends ArrayAdapter<Book>  {
 
            holder.name.setText(book.getName());
         //  holder.authorName.setText(book.getAuthorName());
-
         Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).placeholder(R.drawable.butterfly)
                 .into(holder.image);
         //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
 
+        Book state = items_check.get(position);
+       // holder.selection.setText(state.getName());
+        holder.selection.setChecked(state.isSelected());
+        holder.selection.setTag(state);
 
 
         return convertView;

@@ -31,6 +31,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -337,12 +338,27 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     uptopeoples.setText("Up to " + limit + " peoples:");
                                     currentpeoples.setText("Currently have " + joined);
                                     costtext.setText("Cost " + cost);
-                                    timetext.setText("Description: " + description );
+                                    timetext.setText("Description: " + description);
 
                                     //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
                                     Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
-                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
+                                    //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
+                                    Picasso.with(getActivity())
+                                            .load("http://52.37.136.238/JoinMe/" + owner_pic) // thumbnail url goes here
+                                            .placeholder(R.drawable.butterfly)
+                                            .resize(200,200)
+                                            .centerCrop()
+                                            .skipMemoryCache()
+                                            .into(createrimage, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
 
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                }
+                                            });
 
 
                                     long unixSeconds = Long.parseLong(time);

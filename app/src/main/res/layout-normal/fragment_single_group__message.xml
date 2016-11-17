@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:id="@+id/header"
+
         android:isScrollContainer="false"
         android:background="@drawable/group_header_bg">
 
@@ -112,7 +112,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"
+                android:layout_weight="0.8"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp">
 
@@ -178,6 +178,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+
    <!-- <android.support.v7.widget.RecyclerView
         android:id="@+id/messages"
         android:layout_width="match_parent"
@@ -205,24 +206,28 @@
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
             android:id="@+id/linearLayout"
+            android:background="#ffffff"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:ems="10"
             android:paddingRight="@dimen/activity_horizontal_margin">
 
             <EditText
                 android:id="@+id/message_input"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="@string/prompt_message"
-                android:imeActionId="@+id/send"
-                android:imeActionLabel="@string/action_send"
-                android:imeOptions="actionSend"
+                android:ems="10"
                 android:background="@null"
-                android:inputType="textNoSuggestions|textMultiLine|textImeMultiLine"
+                android:inputType="textNoSuggestions|textMultiLine|textCapSentences"
                 android:windowSoftInputMode="adjustPan|adjustResize|stateHidden"
                 android:maxLines="5"
                 android:singleLine="true"><requestFocus /></EditText>
+                <!--android:imeActionId="@+id/send"-->
+                <!--android:imeActionLabel="@string/action_send"-->
+                <!--android:imeOptions="actionSend"-->
+
             <ImageView
                 android:id="@+id/send_button"
                 android:layout_width="wrap_content"
@@ -234,12 +239,11 @@
             android:id="@+id/messages"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-
             android:background="#e2e1e1"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:scrollbars="vertical"
-            android:scrollbarStyle="outsideOverlay"
+
+            android:scrollbars="none"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="false"
             android:isScrollContainer="false"

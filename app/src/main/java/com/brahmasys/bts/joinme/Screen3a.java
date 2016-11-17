@@ -278,196 +278,206 @@ public class Screen3a extends AppCompatActivity {
                 if (Connectivity_Checking.isConnectingToInternet()) {
 
                     if (select_image == 1) {
-                        if (firstname.getText().toString().length() >= 2) {
-                            if (share.getText().toString().length() >= 10) {
+                        if (!String.valueOf(day.getSelectedItem()).equals("Date")&& !String.valueOf(month.getSelectedItem()).equals("Month")&& !String.valueOf(year.getSelectedItem()).equals("Year"))
+                        {
+                            if (firstname.getText().toString().length() >= 2) {
+                                if (share.getText().toString().length() >= 10) {
 
-                                progressDialog = ProgressDialog.show(Screen3a.this, null, null, true);
-                                progressDialog.setIndeterminate(true);
-                                progressDialog.setCancelable(false);
-                                progressDialog.setContentView(R.layout.custom_progress);
-                                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                if (male.isChecked()) {
-                                    gender = "male";
-                                } else {
-                                    gender = "female";
-                                }
-                                String ye = (String) year.getSelectedItem();
-                                String mon = (String) month.getSelectedItem();
-                                String da = (String) day.getSelectedItem();
-                                String birth = da + "/" + mon + "/" + ye;
-
-                                if (android.os.Build.VERSION.SDK_INT > 9) {
-                                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                                    StrictMode.setThreadPolicy(policy);
-                                }
-
-                                JSONObject jsonObjSend = new JSONObject();
-                                try {
-                                    // Add key/value pairs
-                                    jsonObjSend.put("confermationcode", conformation_code.getText().toString());
-                                    jsonObjSend.put("deviceid", deviceuid);
-                                    jsonObjSend.put("device_token", token_id.getString("token", "0000"));
-                                    jsonObjSend.put("device_type", device_type);
-                                    jsonObjSend.put("discription", share.getText().toString());
-                                    jsonObjSend.put("dob", birth);
-                                    jsonObjSend.put("fname", firstname.getText().toString());
-                                    jsonObjSend.put("gender", gender);
-                                    jsonObjSend.put("lat", latitude);
-                                    jsonObjSend.put("lname", lastname.getText().toString());
-                                    jsonObjSend.put("lon", longitude);
-                                    jsonObjSend.put("registration_type", registration_type);
-                                    jsonObjSend.put("userid", user_id.getString("userid", "null"));
-                                    //  hideDialog();
-                                    Log.i(TAG, jsonObjSend.toString(13));
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
-
-
-                                JSONObject json = null;
-                                try {
-                                    json = new JSONObject(String.valueOf(jsonObjRecv));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                JSONObject json_LL = null;
-                                try {
-                                    json_LL = json.getJSONObject("response");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                                try {
-                                    String str_value = json_LL.getString("message");
-
-                                    userid = json_LL.getString("userid");
-
-
-                                    if (str_value.equals("Updated Successfully")) {
-
-                                        edit_userid.putString("userid", userid);
-                                        edit_userid.commit();
-
-                                        AsyncHttpClient client = new AsyncHttpClient();
-                                        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
-                                                new AsyncHttpResponseHandler() {
-                                                    // When the response returned by REST has Http response code '200'
-
-                                                    public void onSuccess(String response) {
-                                                        // Hide Progress Dialog
-                                                        //  prgDialog.hide();
-                                                        try {
-                                                            // Extract JSON Object from JSON returned by REST WS
-                                                            JSONObject obj = new JSONObject(response);
-
-
-                                                            JSONObject json = null;
-                                                            try {
-                                                                json = new JSONObject(String.valueOf(obj));
-
-                                                                Log.w("GetDetails", String.valueOf(json));
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-
-
-                                                            /************************* UserDetails start **************************/
-                                                            JSONObject userdetails = null;
-                                                            try {
-                                                                userdetails = json.getJSONObject("details");
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-
-                                                            try {
-                                                                //Getting information form the Json Response object
-                                                                String firstname_user = userdetails.getString("fname");
-                                                                String lastname_user = userdetails.getString("lname");
-
-                                                                //Save the data in sharedPreference
-                                                                edit_user_detals.putString("firstname", firstname_user);
-                                                                edit_user_detals.putString("lastname", lastname_user);
-                                                                edit_user_detals.commit();
-
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-
-                                                            JSONArray cast = userdetails.getJSONArray("user_pic");
-                                                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                                                            edit_user_pic.commit();
-
-                                                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                                            List<String> allid = new ArrayList<String>();
-                                                            List<String> allurl = new ArrayList<String>();
-
-                                                            for (int i = 0; i < cast.length(); i++) {
-                                                                JSONObject actor = cast.getJSONObject(i);
-                                                                String id = actor.getString("id");
-                                                                String url = actor.getString("url");
-                                                                allid.add(id);
-                                                                allurl.add(url);
-                                                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                                                Log.d("Type", cast.getString(i));
-                                                            }
-                                                            for (int j = 0; j < allid.size(); j++) {
-                                                                edit_user_pic.putString("id_" + j, allid.get(j));
-                                                                edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                                                            }
-                                                            edit_user_pic.commit();
-                                                            edit_user_pic.commit();
-
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                        session.setLogin(true);
-                                                        Intent i1 = new Intent(getApplicationContext(), Screen16.class);
-                                                        startActivity(i1);
-                                                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                                                        finish();
-
-                                                        progressDialog.dismiss();
-                                                    }
-                                                });
-
-
+                                    progressDialog = ProgressDialog.show(Screen3a.this, null, null, true);
+                                    progressDialog.setIndeterminate(true);
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.setContentView(R.layout.custom_progress);
+                                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    if (male.isChecked()) {
+                                        gender = "male";
                                     } else {
-                                        Toast.makeText(Screen3a.this, str_value, Toast.LENGTH_LONG).show();
-                                        progressDialog.dismiss();
+                                        gender = "female";
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                    String ye = (String) year.getSelectedItem();
+                                    String mon = (String) month.getSelectedItem();
+                                    String da = (String) day.getSelectedItem();
+                                    String birth = da + "/" + mon + "/" + ye;
 
-                            }
-                            else
-                            {
-                                Toast toast = Toast.makeText(Screen3a.this, "Description must be having at least 10 characters...!", Toast.LENGTH_SHORT);
+                                    if (android.os.Build.VERSION.SDK_INT > 9) {
+                                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                                        StrictMode.setThreadPolicy(policy);
+                                    }
+
+                                    JSONObject jsonObjSend = new JSONObject();
+                                    try {
+                                        // Add key/value pairs
+                                        jsonObjSend.put("confermationcode", conformation_code.getText().toString());
+                                        jsonObjSend.put("deviceid", deviceuid);
+                                        jsonObjSend.put("device_token", token_id.getString("token", "0000"));
+                                        jsonObjSend.put("device_type", device_type);
+                                        jsonObjSend.put("discription", share.getText().toString());
+                                        jsonObjSend.put("dob", birth);
+                                        jsonObjSend.put("fname", firstname.getText().toString());
+                                        jsonObjSend.put("gender", gender);
+                                        jsonObjSend.put("lat", latitude);
+                                        jsonObjSend.put("lname", lastname.getText().toString());
+                                        jsonObjSend.put("lon", longitude);
+                                        jsonObjSend.put("registration_type", registration_type);
+                                        jsonObjSend.put("userid", user_id.getString("userid", "null"));
+                                        //  hideDialog();
+                                        Log.i(TAG, jsonObjSend.toString(13));
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    JSONObject jsonObjRecv = com.brahmasys.bts.joinme.HttpClient.SendHttpPost(URL, jsonObjSend);
+
+
+                                    JSONObject json = null;
+                                    try {
+                                        json = new JSONObject(String.valueOf(jsonObjRecv));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    JSONObject json_LL = null;
+                                    try {
+                                        json_LL = json.getJSONObject("response");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+                                    try {
+                                        String str_value = json_LL.getString("message");
+
+                                        userid = json_LL.getString("userid");
+
+
+                                        if (str_value.equals("Updated Successfully")) {
+
+                                            edit_userid.putString("userid", userid);
+                                            edit_userid.commit();
+
+                                            AsyncHttpClient client = new AsyncHttpClient();
+                                            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+                                                    new AsyncHttpResponseHandler() {
+                                                        // When the response returned by REST has Http response code '200'
+
+                                                        public void onSuccess(String response) {
+                                                            // Hide Progress Dialog
+                                                            //  prgDialog.hide();
+                                                            try {
+                                                                // Extract JSON Object from JSON returned by REST WS
+                                                                JSONObject obj = new JSONObject(response);
+
+
+                                                                JSONObject json = null;
+                                                                try {
+                                                                    json = new JSONObject(String.valueOf(obj));
+
+                                                                    Log.w("GetDetails", String.valueOf(json));
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+
+
+                                                                /************************* UserDetails start **************************/
+                                                                JSONObject userdetails = null;
+                                                                try {
+                                                                    userdetails = json.getJSONObject("details");
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+
+                                                                try {
+                                                                    //Getting information form the Json Response object
+                                                                    String firstname_user = userdetails.getString("fname");
+                                                                    String lastname_user = userdetails.getString("lname");
+
+                                                                    //Save the data in sharedPreference
+                                                                    edit_user_detals.putString("firstname", firstname_user);
+                                                                    edit_user_detals.putString("lastname", lastname_user);
+                                                                    edit_user_detals.commit();
+
+
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+
+                                                                JSONArray cast = userdetails.getJSONArray("user_pic");
+                                                                edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                                                                edit_user_pic.commit();
+
+                                                                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                                                List<String> allid = new ArrayList<String>();
+                                                                List<String> allurl = new ArrayList<String>();
+
+                                                                for (int i = 0; i < cast.length(); i++) {
+                                                                    JSONObject actor = cast.getJSONObject(i);
+                                                                    String id = actor.getString("id");
+                                                                    String url = actor.getString("url");
+                                                                    allid.add(id);
+                                                                    allurl.add(url);
+                                                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+
+                                                                    Log.d("Type", cast.getString(i));
+                                                                }
+                                                                for (int j = 0; j < allid.size(); j++) {
+                                                                    edit_user_pic.putString("id_" + j, allid.get(j));
+                                                                    edit_user_pic.putString("url_" + j, allurl.get(j));
+
+                                                                }
+                                                                edit_user_pic.commit();
+                                                                edit_user_pic.commit();
+
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                            session.setLogin(true);
+                                                            Intent i1 = new Intent(getApplicationContext(), Screen16.class);
+                                                            startActivity(i1);
+                                                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+                                                            finish();
+
+                                                            progressDialog.dismiss();
+                                                        }
+                                                    });
+
+
+                                        } else {
+                                            Toast.makeText(Screen3a.this, str_value, Toast.LENGTH_LONG).show();
+                                            progressDialog.dismiss();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                } else {
+                                    Toast toast = Toast.makeText(Screen3a.this, "Description must be having at least 10 characters...!", Toast.LENGTH_SHORT);
+                                    View view = toast.getView();
+
+                                    view.setBackgroundResource(R.drawable.smallbox1);
+                                    TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
+                                    col.setTextColor(Color.RED);
+                                    toast.show();
+                                }
+                            } else {
+                                Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters...!", Toast.LENGTH_SHORT);
                                 View view = toast.getView();
 
                                 view.setBackgroundResource(R.drawable.smallbox1);
                                 TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                                 col.setTextColor(Color.RED);
                                 toast.show();
+                                //progressDialog.dismiss();
                             }
-                        } else {
-                            Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters...!", Toast.LENGTH_SHORT);
+                        }else
+                        {
+                            Toast toast = Toast.makeText(Screen3a.this, "Please Choose birthday...!", Toast.LENGTH_SHORT);
                             View view = toast.getView();
 
                             view.setBackgroundResource(R.drawable.smallbox1);
                             TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
                             col.setTextColor(Color.RED);
                             toast.show();
-                            //progressDialog.dismiss();
                         }
                     } else {
                         Toast toast = Toast.makeText(Screen3a.this, "Please choose a photo...!", Toast.LENGTH_SHORT);

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,10 +53,24 @@ public class SwipeStackAdapter extends ArrayAdapter<Book> {
         holder.authorName.setText(book.getAuthorName());
         holder.time.setText(book.getTime());
         Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getIcon_image()).into(holder.icon);
-        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).fit().noFade().centerCrop()
-                .into(holder.image);
-        //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
-       /// pd.hide();
+//        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).fit().noFade().centerCrop()
+//                .into(holder.image);
+
+        Picasso.with(getContext())
+                .load("http://52.37.136.238/JoinMe/" + book.getImageUrl()) // thumbnail url goes here
+                .placeholder(R.drawable.butterfly)
+                .fit().noFade().centerCrop()
+                .into(holder.image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
+
         return convertView;
     }
 

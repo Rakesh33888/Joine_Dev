@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -48,10 +49,26 @@ public class Groups_CustomAdapter extends ArrayAdapter<Book> {
         holder.name.setText(book.getName());
         holder.authorName.setText(book.getAuthorName());
 
-        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).placeholder(R.drawable.butterfly)
+
+        Picasso.with(getContext())
+                .load("http://52.37.136.238/JoinMe/" + book.getImageUrl()) // thumbnail url goes here
+                .placeholder(R.drawable.butterfly)
                 .resize(100, 100)
-                .centerCrop().into(holder.image);
-        //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
+                .into(holder.image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
+
+//        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).placeholder(R.drawable.butterfly)
+//                .resize(100, 100)
+//                .centerCrop().into(holder.image);
+
 
         return convertView;
     }

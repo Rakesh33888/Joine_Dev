@@ -32,6 +32,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -316,7 +317,24 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
                                     //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
                                     Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
-                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
+                                  //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
+
+                                    Picasso.with(getActivity())
+                                            .load("http://52.37.136.238/JoinMe/" + owner_pic) // thumbnail url goes here
+                                            .placeholder(R.drawable.butterfly)
+                                            .resize(100,100)
+                                            .centerCrop()
+                                            .skipMemoryCache()
+                                            .into(createrimage, new Callback() {
+                                                @Override
+                                                public void onSuccess() {
+
+                                                }
+
+                                                @Override
+                                                public void onError() {
+                                                }
+                                            });
 
                                     long unixSeconds = Long.parseLong(time);
                                     Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
@@ -415,58 +433,92 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
 
     private void FnJoinActivvity() {
-        String userid = user_id.getString("userid", "");
+        final String userid = user_id.getString("userid", "");
+
 
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(URL_AddMemberToGroup + userid + "/" + aid,
+        client.get("http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/" +userid + "/" + aid,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
-                    public void onSuccess(String response)
-                    {
+                    public void onSuccess(String response) {
 
                         try {
                             // Extract JSON Object from JSON returned by REST WS
                             JSONObject obj = new JSONObject(response);
 
                             String result = obj.getString("message");
-
-                            if (result.equals("Updated Successfully"))
-
-                            {
-
+                            if (result.equals("Updated Successfully")) {
                                 fragmentManager = getFragmentManager();
                                 Single_group_Message update_activity = new Single_group_Message();
-
                                 Bundle bundle = new Bundle();
-                                bundle.putString("activityid", aid);
+                                bundle.putString("userid", userid);
+                                bundle.putString("activityid",aid);
                                 update_activity.setArguments(bundle);
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.flContent, update_activity)
                                         .addToBackStack(null)
                                         .commit();
 
-                            }
-                            else
-                            {
+                            } else {
 
                                 Toast.makeText(getActivity(), "String was not recognized as a valid DateTime.", Toast.LENGTH_SHORT).show();
 
                             }
-                        }catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-
-
-
-
 
                     }
                 });
 
+
+
+
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        client.get(URL_AddMemberToGroup + userid + "/" + aid,
+//                new AsyncHttpResponseHandler() {
+//                    // When the response returned by REST has Http response code '200'
+//
+//                    public void onSuccess(String response)
+//                    {
+//
+//                        try {
+//                            // Extract JSON Object from JSON returned by REST WS
+//                            JSONObject obj = new JSONObject(response);
+//
+//                            String result = obj.getString("message");
+//
+//                            if (result.equals("Updated Successfully"))
+//
+//                            {
+//
+//                                fragmentManager = getFragmentManager();
+//                                Single_group_Message update_activity = new Single_group_Message();
+//
+//                                Bundle bundle = new Bundle();
+//                                bundle.putString("activityid", aid);
+//                                update_activity.setArguments(bundle);
+//                                fragmentManager.beginTransaction()
+//                                        .replace(R.id.flContent, update_activity)
+//                                        .addToBackStack(null)
+//                                        .commit();
+//
+//                            }
+//                            else
+//                            {
+//
+//                                Toast.makeText(getActivity(), "String was not recognized as a valid DateTime.", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                        }catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                });
+//
 
 
     }

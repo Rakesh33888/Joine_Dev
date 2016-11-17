@@ -39,6 +39,7 @@
         <item>Dec</item>
     </string-array>
     <string-array name="times_format">
+        <item> </item>
         <item>0:00</item><item>1:00</item>
         <item>2:00</item><item>3:00</item>
         <item>4:00</item><item>5:00</item>

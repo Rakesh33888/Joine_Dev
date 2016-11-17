@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
@@ -54,15 +55,30 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Book book = getItem(position);
+        final Book book = getItem(position);
 
         holder.name.setText(book.getName());
         holder.authorName.setText(book.getAuthorName());
+        final ViewHolder finalHolder = holder;
+        Picasso.with(getContext())
+                .load("http://52.37.136.238/JoinMe/" + book.getImageUrl()) // thumbnail url goes here
+                .placeholder(R.drawable.butterfly)
+                .resize(200,200)
+                .into(holder.image, new Callback() {
+                    @Override
+                    public void onSuccess() {
 
-        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).resize(200, 200)
-                .centerCrop().placeholder(R.drawable.butterfly).into(holder.image);
 
-        //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
+//        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).resize(200, 200)
+//                .centerCrop().placeholder(R.drawable.butterfly).into(holder.image);
+
+
 
         return convertView;
     }

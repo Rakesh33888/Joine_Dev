@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,15 +30,19 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +54,7 @@ import com.devsmart.android.ui.HorizontalListView;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -97,7 +103,8 @@ public class Single_group_Message extends Fragment    {
     private ArrayAdapter<Book> adapter;
     Context context;
     private OnFragmentInteractionListener mListener;
-
+    RelativeLayout header_hide;
+    LinearLayout root_single_message;
     /********************Chat********************/
     private static final int REQUEST_LOGIN = 0;
     private static final int TYPING_TIMER_LENGTH = 600;
@@ -119,6 +126,7 @@ public class Single_group_Message extends Fragment    {
     TextWatcher input_watcher;
     boolean response_typing_add = false;
     String isowner="false";
+
     /********************Chat********************/
 
     public Single_group_Message() {
@@ -176,7 +184,7 @@ public class Single_group_Message extends Fragment    {
         mSocket.emit("joingroup", sender_id, group_id);
         /**************Join Group ****************/
 
-        chat_username = getActivity().getSharedPreferences(CHAT_USER,getActivity().MODE_PRIVATE);
+        chat_username = getActivity().getSharedPreferences(CHAT_USER, getActivity().MODE_PRIVATE);
         edit_chat_username = chat_username.edit();
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
@@ -185,9 +193,36 @@ public class Single_group_Message extends Fragment    {
         other_user_id=new ArrayList<String>();
         createrimage.setClickable(true);
         send_btn = (ImageView) v.findViewById(R.id.send_button);
-
+        header_hide = (RelativeLayout) v.findViewById(R.id.header);
+        root_single_message = (LinearLayout) v.findViewById(R.id.single_group);
         /********************Chat********************/
 
+        root_single_message.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                root_single_message.getWindowVisibleDisplayFrame(r);
+                int screenHeight =    root_single_message.getRootView().getHeight();
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                int keypadHeight = screenHeight - r.bottom;
+
+                Log.d("", "keypadHeight = " + keypadHeight);
+
+
+                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is                      perhaps enough to determine keypad height.
+                    // keyboard is opened
+                  //   Log.e("keyboard open", "keyboard open");
+                    header_hide.setVisibility(View.GONE);
+
+                } else {
+                  //  Log.e("keyboard closed", "keyboard closed");
+                    // keyboard is closed
+                    header_hide.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         /********************Chat********************/
 
 
@@ -313,9 +348,25 @@ public class Single_group_Message extends Fragment    {
                                         Integer txtActivityTime = json.getInt("activity_time");
                                         String txtAddress = json.getString("activity_address");
 
-                                        Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).placeholder(R.drawable.butterfly)
-                                                .into(createrimage);
+//                                        Picasso.with(getContext()).load(IMAGE_BASE_URL + activutyImage).placeholder(R.drawable.butterfly)
+//                                                .into(createrimage);
 
+                                        Picasso.with(getContext())
+                                                .load(IMAGE_BASE_URL + activutyImage) // thumbnail url goes here
+                                                .placeholder(R.drawable.butterfly)
+                                                .resize(200, 200)
+                                                .centerCrop()
+                                                .skipMemoryCache()
+                                                .into(createrimage, new Callback() {
+                                                    @Override
+                                                    public void onSuccess() {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onError() {
+                                                    }
+                                                });
                                         tvActivityName.setText(txtActivityName);
 
                                         long unixSeconds = Long.parseLong(String.valueOf(txtActivityTime));
@@ -337,10 +388,30 @@ public class Single_group_Message extends Fragment    {
                                                 tvHostedByName.setText(row.getString("user_name"));
                                                 owner_id = row.getString("userid");
 
-                                                Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
-                                                        .into(owner);
+
+//                                                Picasso.with(getContext()).load(IMAGE_BASE_URL + row.getString("profile_pic")).placeholder(R.drawable.butterfly)
+//                                                        .into(owner);
+
+
+                                                Picasso.with(getContext())
+                                                        .load(IMAGE_BASE_URL + row.getString("profile_pic")) // thumbnail url goes here
+                                                        .placeholder(R.drawable.butterfly)
+                                                        .resize(50, 50)
+                                                        .centerCrop()
+                                                        .skipMemoryCache()
+                                                        .into(owner, new Callback() {
+                                                            @Override
+                                                            public void onSuccess() {
+
+                                                            }
+
+                                                            @Override
+                                                            public void onError() {
+                                                            }
+                                                        });
                                                 if(userid.equals(owner_id))
                                                 {
+                                                    tvleave_chat.setEnabled(false);
                                                     isowner = row.getString("isowner");
                                                     UserName = row.getString("user_name");
                                                     user_porfile=row.getString("profile_pic");
@@ -493,18 +564,24 @@ owner.setOnClickListener(new View.OnClickListener() {
         mMessagesView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMessagesView.setAdapter(mAdapter);
 
+
         mInputMessageView = (EditText) view.findViewById(R.id.message_input);
         mInputMessageView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int id, KeyEvent event) {
-                if (id == R.id.send || id == EditorInfo.IME_NULL) {
-                    attemptSend();
-                    return true;
-                }
+//                if (id == R.id.send || id == EditorInfo.IME_NULL) {
+//                    attemptSend();
+//                    return true;
+//                }
                 return false;
             }
         });
-
+//        mInputMessageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                header_hide.setVisibility(View.GONE);
+//            }
+//        });
 //        mInputMessageView.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence s, int start, int count, int after) {

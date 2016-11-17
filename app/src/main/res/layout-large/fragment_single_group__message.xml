@@ -118,7 +118,7 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.9"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp">
 
@@ -220,17 +220,18 @@
                 <EditText
                     android:id="@+id/message_input"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="@string/prompt_message"
-                    android:imeActionId="@+id/send"
-                    android:imeActionLabel="@string/action_send"
-                    android:imeOptions="actionSend"
                     android:background="@null"
-                    android:inputType="textNoSuggestions|textMultiLine|textImeMultiLine"
+                    android:inputType="textNoSuggestions|textMultiLine|textCapCharacters"
                     android:windowSoftInputMode="adjustPan|adjustResize"
                     android:maxLines="5"
                     android:singleLine="true"><requestFocus /></EditText>
+                   <!-- android:imeActionId="@+id/send"
+                    android:imeActionLabel="@string/action_send"
+                    android:imeOptions="actionSend" -->
+
                 <ImageView
                     android:id="@+id/send_button"
                     android:layout_width="wrap_content"
@@ -246,7 +247,7 @@
                 android:background="#e2e1e1"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
-                android:scrollbars="vertical"
+                android:scrollbars="none"
                 android:scrollbarStyle="outsideOverlay"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="false"

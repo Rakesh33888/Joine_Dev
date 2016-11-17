@@ -18,7 +18,7 @@
             android:id="@+id/action"
             style="?android:textAppearanceMedium"
             android:textColor="?android:textColorSecondary"
-            android:text=""
+            android:text="@string/user_action_typing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/spacing"

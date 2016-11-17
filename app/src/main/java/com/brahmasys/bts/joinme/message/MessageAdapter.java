@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.brahmasys.bts.joinme.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -124,8 +125,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public void setProfileurl(String profileUrl)
         {
             if (null == profile_url) return;
-            Picasso.with(context).load("http://52.37.136.238/JoinMe/" + profileUrl).placeholder(R.drawable.butterfly)
-                    .into(profile_url);
+//            Picasso.with(context).load("http://52.37.136.238/JoinMe/" + profileUrl).placeholder(R.drawable.butterfly)
+//                    .into(profile_url);
+
+            Picasso.with(context)
+                    .load("http://52.37.136.238/JoinMe/" + profileUrl) // thumbnail url goes here
+                    .placeholder(R.drawable.butterfly)
+                    .resize(90, 90)
+                    .noFade().centerCrop()
+                    .into(profile_url, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                        }
+                    });
 
         }
         public  void setChatTime(String chatTime)

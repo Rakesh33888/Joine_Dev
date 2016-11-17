@@ -21,9 +21,12 @@ import android.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -42,13 +45,17 @@ public class HttpClient {
 			HttpPost httpPostRequest = new HttpPost(URL);
 
 			StringEntity se;
-			se = new StringEntity(jsonObjSend.toString());
+			se = new StringEntity(jsonObjSend.toString(),HTTP.UTF_8);
 
 			// Set HTTP parameters
 			httpPostRequest.setEntity(se);
+		//	httpPostRequest.setEntity(new UrlEncodedFormEntity(, "UTF-8"));
 			httpPostRequest.setHeader("Accept", "application/json");
-			httpPostRequest.setHeader("Content-type", "application/json");
+			httpPostRequest.setHeader("Content-type", "application/json;charset=UTF-8");
+			httpPostRequest.setHeader("charset", "utf-8");
 		 	httpPostRequest.setHeader("Accept-Encoding", "gzip"); // only set this parameter if you would like to use gzip compression
+
+
 
 			long t = System.currentTimeMillis();
 			HttpResponse response = (HttpResponse) httpclient.execute(httpPostRequest);
@@ -60,6 +67,7 @@ public class HttpClient {
 			if (entity != null) {
 				// Read the content stream
 				InputStream instream = entity.getContent();
+
 				Header contentEncoding = response.getFirstHeader("Content-Encoding");
 				if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
 					instream = new GZIPInputStream(instream);
@@ -67,6 +75,7 @@ public class HttpClient {
 
 				// convert content stream to a String
 				String resultString= convertStreamToString(instream);
+				//String resultString = EntityUtils.toString(entity, HTTP.UTF_8);
 				instream.close();
 			 //resultString = resultString.substring(nari1,resultString.length()-nari1); // remove wrapping "[" and "]"
 

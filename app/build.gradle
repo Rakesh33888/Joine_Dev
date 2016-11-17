@@ -80,6 +80,8 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
     compile 'org.apache.commons:commons-collections4:4.0'
     compile 'testfairy:testfairy-android-sdk:1.1.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+
 
 }
 

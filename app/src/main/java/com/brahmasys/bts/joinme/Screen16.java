@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
@@ -120,6 +121,7 @@ public class Screen16 extends AppCompatActivity implements
     Double latitude=0.0,longitude=0.0;
     TextView whoshowed_skip,whoshowed_remind_later,whoshowed_activityname;
     ListView peoples_who_showed;
+    List<String> allid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -482,7 +484,7 @@ public void GetUserData()
             StrictMode.setThreadPolicy(policy);
         }
         pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size", "0"));
-        List<String> allid = new ArrayList<String>();
+         allid = new ArrayList<String>();
         List<String> allurl = new ArrayList<String>();
         for (int j = 0; j < pic_list_size; j++) {
             String id = user_pic.getString("id_" + j, "");
@@ -495,10 +497,29 @@ public void GetUserData()
             if (i == allurl.size() - 1) {
                 //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
                 //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
+//                Picasso.with(this)
+//                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
+//                        .placeholder(R.drawable.default_profile)
+//                        .into(navimage);
+
+
                 Picasso.with(this)
-                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
-                        .placeholder(R.drawable.default_profile)
-                        .into(navimage);
+                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i)) // thumbnail url goes here
+                        .placeholder(R.drawable.butterfly)
+                        .resize(200,200)
+                        .noFade()
+                        .into(navimage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
+
                 // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
 
             }
@@ -844,7 +865,7 @@ public void GetUserData()
 
         File file1 = new File(selectedPath1);
 
-        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/" + user_id.getString("userid", "null");
+        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserPic/" + user_id.getString("userid", "null")+"/"+allid.get(0);
         try {
             org.apache.http.client.HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urlString);
