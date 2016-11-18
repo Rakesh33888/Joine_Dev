@@ -174,7 +174,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                     bundle.putString("userid", uid);
                     bundle.putString("activityid",aid);
                     bundle.putString("owner_id","null");
-                    bundle.putString("where","mygroups");
+                    bundle.putString("where",Where);
                     reportfrgmnt.setArguments(bundle);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.flContent, reportfrgmnt);
@@ -212,7 +212,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                     args.putString("accountDetails", String.valueOf(obj));
                     args.putString("userid",uid);
                     args.putString("activityid",aid);
-                    args.putString("where","mygroups");
+                    args.putString("where",Where);
                     args.putString("screen","screen17");
                     update_activity.setArguments(args);
                     fragmentManager.beginTransaction()
@@ -258,7 +258,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                 bundle.putString("owner_id", owner_id);
                 bundle.putString("userid",uid);
                 bundle.putString("activityid",aid);
-                bundle.putString("where","mygroups");
+                bundle.putString("where",Where);
                 bundle.putString("screen","screen17");
                 screen13.setArguments(bundle);
                 fragmentManager.beginTransaction()
@@ -513,7 +513,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                         Bundle bundle=new Bundle();
                         bundle.putString("userid",uid);
                         bundle.putString("activityid",aid);
-                        bundle.putString("where","single_group_message");
+                        bundle.putString("where",Where);
                         mygroup.setArguments(bundle);
                         fragmentManager.beginTransaction().replace(R.id.flContent, mygroup).commit();
 

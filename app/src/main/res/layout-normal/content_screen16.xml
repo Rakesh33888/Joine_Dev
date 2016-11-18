@@ -168,6 +168,7 @@
         android:background="@drawable/create"
         android:id="@+id/createnewactivity"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
         android:layout_below="@+id/dislike"
         android:layout_centerHorizontal="true" />
 

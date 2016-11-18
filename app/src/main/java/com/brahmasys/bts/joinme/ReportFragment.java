@@ -122,6 +122,21 @@ public class ReportFragment extends android.support.v4.app.Fragment {
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
+                   if (where.equals("single_group_message"))
+                    {
+                        Fragment screen13 = new Screen13();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("owner_id",ownerid);
+                        bundle1.putString("screen","single_group_message");
+                        bundle1.putString("userid",userid);
+                        bundle1.putString("activityid",activityid);
+                        bundle1.putString("where",where);
+                        screen13.setArguments(bundle1);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.flContent, screen13);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
 
 
                 } else if (screen.equals("other_user_details")) {

@@ -255,7 +255,7 @@ public class Screen16 extends AppCompatActivity implements
 
             }
         });
-
+        fillWithTestData();
     }
     @Override
     protected void attachBaseContext(Context base) {
@@ -270,7 +270,7 @@ public class Screen16 extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        fillWithTestData();
+
     }
 
 public void GetUserData()
@@ -618,37 +618,39 @@ public void GetUserData()
 
                 if (!json.equals("")) {
                     JSONArray cast = json.getJSONArray("data");
-                    if (cast.length()!=0)
-                    {
-                        for (int i = 0; i < cast.length(); i++) {
-                            JSONObject actor = cast.getJSONObject(i);
-                            String id = actor.getString("activity_url");
-                            activity_name.add(actor.getString("activity_name"));
-                            distance.add(actor.getString("activity_distance"));
-                            time.add(actor.getString("activity_time"));
-                            activity_id.add(actor.getString("activity_id"));
-                            userid_other.add(actor.getString("userid"));
-                            activity_url.add(id);
-                            Book book = new Book();
-                            book.setName(actor.getString("activity_name"));
-                            book.setImageUrl(actor.getString("activity_url"));
-                            book.setAuthorName(actor.getString("activity_distance"));
-                            book.setIcon_image(actor.getString("acitivity_icon"));
-                            long unixSeconds = Long.parseLong(actor.getString("activity_time"));
-                            Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
-                            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                            String value = sdf.format(date2);
-                            book.setTime(value);
-                            books.add(book);
+                    if(!cast.equals("")) {
+                        if (cast.length() != 0) {
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                String id = actor.getString("activity_url");
+                                activity_name.add(actor.getString("activity_name"));
+                                distance.add(actor.getString("activity_distance"));
+                                time.add(actor.getString("activity_time"));
+                                activity_id.add(actor.getString("activity_id"));
+                                userid_other.add(actor.getString("userid"));
+                                activity_url.add(id);
+                                Book book = new Book();
+                                book.setName(actor.getString("activity_name"));
+                                book.setImageUrl(actor.getString("activity_url"));
+                                book.setAuthorName(actor.getString("activity_distance"));
+                                book.setIcon_image(actor.getString("acitivity_icon"));
+                                long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                                Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                String value = sdf.format(date2);
+                                book.setTime(value);
+                                books.add(book);
 
+                            }
+                            adapter.notifyDataSetChanged();
+                            reloadactivity.setVisibility(View.GONE);
+
+                        } else {
+                            reloadactivity.setVisibility(View.VISIBLE);
                         }
-                        adapter.notifyDataSetChanged();
-                        reloadactivity.setVisibility(View.GONE);
-
                     }
-                    else
-                    {
+                    else {
                         reloadactivity.setVisibility(View.VISIBLE);
                     }
                 }

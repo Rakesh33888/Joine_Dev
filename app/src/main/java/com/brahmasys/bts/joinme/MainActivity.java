@@ -3,6 +3,7 @@ package com.brahmasys.bts.joinme;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,9 +13,11 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.StrictMode;
@@ -510,6 +513,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     dialog.setContentView(R.layout.layout_xml);
 
                     dialog.show();
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            Rect r = new Rect();
+                            relativemain.getWindowVisibleDisplayFrame(r);
+                            int screenHeight =    relativemain.getRootView().getHeight();
+                            int keypadHeight = screenHeight - r.bottom;
+                          if (keypadHeight > screenHeight * 0.15)
+                          {
+                                ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                                 .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                            }
+
+                        }
+                    });
                     b4 = (Button) dialog.findViewById(R.id.button4);
                     final EditText email = (EditText) dialog.findViewById(R.id.editText);
                     final EditText pass = (EditText) dialog.findViewById(R.id.editText2);
@@ -528,6 +546,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
 //                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                             hideKeyboard(v);
+
                             if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
 
                                 //Progress Dialog
@@ -650,6 +669,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.setContentView(R.layout.layout1_xml);
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            Rect r = new Rect();
+                            relativemain.getWindowVisibleDisplayFrame(r);
+                            int screenHeight =    relativemain.getRootView().getHeight();
+                            int keypadHeight = screenHeight - r.bottom;
+                            if (keypadHeight > screenHeight * 0.15)
+                            {
+                                ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                                        .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                            }
+
+                        }
+                    });
                     b5 = (Button) dialog.findViewById(R.id.button5);
                     final EditText email = (EditText) dialog.findViewById(R.id.editText3);
                     final EditText pass = (EditText) dialog.findViewById(R.id.editText4);

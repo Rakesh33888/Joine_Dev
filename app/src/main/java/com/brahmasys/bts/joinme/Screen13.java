@@ -105,7 +105,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
                     bundle1.putString("userid", bundle.getString("userid", "0"));
                     bundle1.putString("activityid", bundle.getString("activityid", "0"));
                     bundle1.putString("owner_id", owner_id);
-                    bundle1.putString("where", "mygroups");
+                    bundle1.putString("where", where);
                     reportfrgmnt.setArguments(bundle1);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.flContent, reportfrgmnt);

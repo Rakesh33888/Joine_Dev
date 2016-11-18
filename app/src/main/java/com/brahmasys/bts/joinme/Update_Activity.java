@@ -199,8 +199,8 @@ public class Update_Activity extends Fragment  {
         });
 
         /*************************** Spinner Functionality Start ***********************/
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.times_format));
-        spinnerforhour.setAdapter(adapter1);
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.times_format));
+//        spinnerforhour.setAdapter(adapter1);
 
 //        List hours = new ArrayList<Integer>();
 //        hours.add(0, "");
@@ -353,8 +353,50 @@ public class Update_Activity extends Fragment  {
             String formattedDate = sdf.format(date2);
             String formattedDate1 = sdf1.format(date2);
             dateTextView.setText(formattedDate);
-            Log.e("Time",formattedDate1);
-            spinnerforhour.setSelection(Integer.parseInt(formattedDate1)+1);
+
+
+            Calendar calander = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
+            String time = simpleDateFormat.format(calander.getTime());
+
+            String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+            List hours =  new ArrayList<String>();;
+            if (formattedDate.equals(current_date))
+            {
+
+                Log.e("Current time", time);
+
+                hours.add(0, "");
+                for (int i =0; i <=23; i++) {
+                    if (i>Integer.parseInt(time))
+                    {
+                        hours.add(i + ":00");
+                    }
+                }
+            }
+            else {
+                hours.add(0, "");
+                for (int i =0; i <=23; i++) {
+                    hours.add(i + ":00");
+
+                }
+            }
+            ArrayAdapter<String> spinnerArrayAdapter4 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, hours);
+            spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerArrayAdapter4.notifyDataSetChanged();
+            spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+            if (formattedDate.equals(current_date))
+            {
+                spinnerforhour.setSelection(Integer.parseInt(formattedDate1)-Integer.parseInt(time));
+
+            }
+            else {
+                spinnerforhour.setSelection(Integer.parseInt(formattedDate1)+1);
+            }
+
+
             Icon_url = userdetails.getString("acitivity_icon");
 
 
@@ -837,8 +879,23 @@ public class Update_Activity extends Fragment  {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
+              //  hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
 
+                String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+                Calendar calander = Calendar.getInstance();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
+                String time = simpleDateFormat.format(calander.getTime());
+
+                if (dateTextView.getText().toString().equals(current_date))
+                {
+                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition()+Integer.parseInt(time));
+
+                }
+                else {
+                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
+
+                }
 
                 /*************** Time Stamp Start********************/
                 String dateString = dateTextView.getText().toString()+" "+hour+":00"+":00"+" "+"GMT";
@@ -1006,7 +1063,7 @@ public class Update_Activity extends Fragment  {
         } else {
             Splashscreen dia = new Splashscreen();
             dia.Connectivity_Dialog_with_refresh(getActivity());
-            progressDialog.dismiss();
+            //progressDialog.dismiss();
         }
     }
 
@@ -1258,7 +1315,39 @@ private void doFileUpload(){
         @Override
         public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
             String date = dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+            Calendar calander = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
+            String time = simpleDateFormat.format(calander.getTime());
+
+            String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+            List hours =  new ArrayList<String>();;
+            if (date.equals(current_date))
+            {
+
+                Log.e("Current time", time);
+
+                hours.add(0, "");
+                for (int i =0; i <=23; i++) {
+                    if (i>Integer.parseInt(time))
+                    {
+                        hours.add(i + ":00");
+                    }
+                }
+            }
+            else {
+                hours.add(0, "");
+                for (int i =0; i <=23; i++) {
+                    hours.add(i + ":00");
+
+                }
+            }
+            ArrayAdapter<String> spinnerArrayAdapter4 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, hours);
+            spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerArrayAdapter4.notifyDataSetChanged();
+            spinnerforhour.setAdapter(spinnerArrayAdapter4);
             dateTextView.setText(date);
+
         }
     }
 }

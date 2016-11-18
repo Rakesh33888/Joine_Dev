@@ -566,6 +566,7 @@ owner.setOnClickListener(new View.OnClickListener() {
 
 
         mInputMessageView = (EditText) view.findViewById(R.id.message_input);
+
         mInputMessageView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int id, KeyEvent event) {

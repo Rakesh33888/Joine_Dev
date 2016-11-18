@@ -494,7 +494,7 @@ public class Screen3a extends AppCompatActivity {
                 } else {
                     Splashscreen dia = new Splashscreen();
                     dia.Connectivity_Dialog_with_refresh(Screen3a.this);
-                    progressDialog.dismiss();
+                  //  progressDialog.dismiss();
                 }
 
             }
