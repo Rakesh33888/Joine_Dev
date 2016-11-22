@@ -82,6 +82,8 @@ public class Single_group_Message extends Fragment    {
     private static final String ARG_PARAM2 = "param2";
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
+    public static final String CHAT_ROOM_OPEN="chat_room_open";
+
     private static final String URL_RemoveMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/RemoveMemberToGroup/";
     private static final String URL_GetActivityDetailsForChat = "http://52.37.136.238/JoinMe/Activity.svc/GetActivityDetailsForChat/";
     ProgressDialog progressDialog;
@@ -93,8 +95,8 @@ public class Single_group_Message extends Fragment    {
     Button yes,no;
     String act_id,userid,owner_id="0000";
     ImageView shareicon;
-    SharedPreferences user_id,activity_id;
-    SharedPreferences.Editor edit_userid,edit_activity_id;
+    SharedPreferences user_id,activity_id,chat_room;
+    SharedPreferences.Editor edit_userid,edit_activity_id,edit_chat_room;
     TextView tvActivityName,tvActivityTime,tvActivityAddress,tvHostedByName,tvleave_chat;
     private String mParam1;
     private String mParam2;
@@ -183,7 +185,12 @@ public class Single_group_Message extends Fragment    {
         /**************Join Group ****************/
         mSocket.emit("joingroup", sender_id, group_id);
         /**************Join Group ****************/
+        chat_room = getActivity().getSharedPreferences(CHAT_ROOM_OPEN,getActivity().MODE_PRIVATE);
+        edit_chat_room = chat_room.edit();
 
+        edit_chat_room.putString("chat_room","open");
+        edit_chat_room.putString("chat_activity",act_id);
+        edit_chat_room.commit();
         chat_username = getActivity().getSharedPreferences(CHAT_USER, getActivity().MODE_PRIVATE);
         edit_chat_username = chat_username.edit();
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
@@ -466,6 +473,10 @@ public class Single_group_Message extends Fragment    {
 owner.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
+
+        edit_chat_room.putString("chat_room","close");
+        edit_chat_room.putString("chat_activity",act_id);
+        edit_chat_room.commit();
         fragmentManager = getFragmentManager();
         Screen13 screen13 = new Screen13();
         Bundle bundle = new Bundle();
@@ -484,6 +495,9 @@ owner.setOnClickListener(new View.OnClickListener() {
  participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
      @Override
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+         edit_chat_room.putString("chat_room","close");
+         edit_chat_room.putString("chat_activity",act_id);
+         edit_chat_room.commit();
          fragmentManager = getFragmentManager();
          Screen13 screen13 = new Screen13();
          Bundle bundle = new Bundle();
@@ -504,7 +518,9 @@ owner.setOnClickListener(new View.OnClickListener() {
         createrimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                edit_chat_room.putString("chat_room","close");
+                edit_chat_room.putString("chat_activity",act_id);
+                edit_chat_room.commit();
                 if (isowner.equals("true")) {
                     Screen17 screen17 = new Screen17();
                     FragmentManager fm = getFragmentManager();
@@ -1035,7 +1051,8 @@ owner.setOnClickListener(new View.OnClickListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
+                    edit_chat_room.putString("chat_room","close");
+                    edit_chat_room.commit();
                     Messagescreen fragment2 = new Messagescreen();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

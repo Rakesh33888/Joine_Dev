@@ -47,8 +47,9 @@ public class Mysearch extends android.support.v4.app.Fragment {
     ProgressDialog progressDialog;
 
     public static String dateSelection = "";
-    String distanceStr,date;
+    String distanceStr="null",date="null";
     private static final String TAG = "SaveUserPreference";
+    public static final String CHAT_ROOM_OPEN="chat_room_open";
     public  static final String URL_SaveUserPreference ="http://52.37.136.238/JoinMe/User.svc/SaveUserPreference";
  //   ProgressDialog pd;
 
@@ -66,8 +67,8 @@ public class Mysearch extends android.support.v4.app.Fragment {
     String select_date;
    
     String Km="",Mile="",dist_type;
-    SharedPreferences searchdistance,selectdate;
-    SharedPreferences.Editor edit_searchdistance,edit_selectdate;
+    SharedPreferences searchdistance,selectdate,chat_room;
+    SharedPreferences.Editor edit_searchdistance,edit_selectdate,edit_chat_room;
     SharedPreferences user_id,user_Details,user_pic,lat_lng;
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
 
@@ -135,7 +136,11 @@ public class Mysearch extends android.support.v4.app.Fragment {
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
 
-
+        chat_room = getActivity().getSharedPreferences(CHAT_ROOM_OPEN, getActivity().MODE_PRIVATE);
+        edit_chat_room = chat_room.edit();
+        edit_chat_room.putString("chat_room","close");
+        edit_chat_room.putString("chat_activity","0");
+        edit_chat_room.commit();
 
         mysearch = (TextView) v.findViewById(R.id.textView6);
         layoutback= (LinearLayout) v.findViewById(R.id.backlayoutsearch);
@@ -145,7 +150,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
 
                 if (!distanceStr.equals(distance.getText().toString())||!date.equals(dateSelection)) {
                     String seekBarValue = Integer.toString(seekBar.getProgress());
-                    FnPostRequest(seekBarValue, dateSelection, user_id.getString("userid", ""));
+                    FnPostRequest(seekBarValue, dateSelection, user_id.getString("userid", "null"));
                     Intent i = new Intent(getContext(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
@@ -293,6 +298,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
         {
             Splashscreen dia = new Splashscreen();
             dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
         }
 
 //        if(Connectivity_Checking.isConnectingToInternet()) {
@@ -503,6 +509,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
         } else {
             Splashscreen dia = new Splashscreen();
             dia.Connectivity_Dialog_with_refresh(getActivity());
+            progressDialog.dismiss();
         }
 
     }
@@ -553,7 +560,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
                    new Custom_Progress(getActivity());
                     String seekBarValue = Integer.toString(seekBar.getProgress());
-                    FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid",""));
+                    FnPostRequest(seekBarValue,dateSelection,user_id.getString("userid","null"));
                     Intent i = new Intent(getActivity(), Screen16.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);

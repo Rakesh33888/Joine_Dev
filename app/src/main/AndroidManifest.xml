@@ -21,7 +21,7 @@
    <!-- <uses-permission android:name="android.permission.READ_CALENDAR"/>-->
     <uses-permission-sdk-23 android:name="android.permission.WRITE_CALENDAR"/>
     <uses-permission-sdk-23 android:name="android.permission.READ_CALENDAR"/>
-
+    <uses-permission android:name="android.permission.GET_TASKS" />
       <uses-permission android:name="android.permission.SET_TIME_ZONE"/>
     <uses-permission-sdk-23 android:name="android.permission.SET_TIME"/>
     <uses-permission-sdk-23  android:name="android.permission.SET_TIME_ZONE"/>

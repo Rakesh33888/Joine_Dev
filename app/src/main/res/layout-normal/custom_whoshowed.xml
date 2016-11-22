@@ -16,6 +16,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:layout_gravity="center"
+        android:padding="5dp"
         android:background="@drawable/roundbg" />
     <TextView
         android:layout_width="wrap_content"

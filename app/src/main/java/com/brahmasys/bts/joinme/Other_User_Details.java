@@ -1,12 +1,17 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -75,7 +80,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     private SliderLayout mDemoSlider;
     HashMap<String,String> url_maps;
     String uid,aid,owner_id,where,screen;
-
+    Double latitude=0.0,longitude=0.0;
 
 
     @Nullable
@@ -255,11 +260,30 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
             }
         });
+
+        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+        }
+        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        if(location != null){
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            // Toast.makeText(getActivity(), (String.valueOf(latitude) + "\n" + String.valueOf(longitude)), Toast.LENGTH_SHORT).show();
+        }
         if (Connectivity_Checking.isConnectingToInternet()) {
 
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + 0 + "/" + 0,
+            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + longitude + "/" + latitude,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 

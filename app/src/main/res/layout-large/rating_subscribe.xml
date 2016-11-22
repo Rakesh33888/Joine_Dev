@@ -142,7 +142,7 @@
             <Button
                 android:layout_width="150dp"
                 android:layout_height="60dp"
-                android:text="submite"
+                android:text="submit"
                 android:id="@+id/submit"
                 android:textSize="20dp"
                 android:textColor="#fff"

@@ -50,6 +50,7 @@ public class Mygroup extends Fragment{
     ImageView image,imageback1;
     FragmentManager fragmentManager;
     LinearLayout backlayoutgroup;
+    public static final String CHAT_ROOM_OPEN="chat_room_open";
     private static final String TAG = "GetMyGroupActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
     ImageView shareicon;
@@ -57,8 +58,8 @@ public class Mygroup extends Fragment{
     private ArrayAdapter<Book> adapter;
     Context context;
     public static final String USERID = "userid";
-    SharedPreferences user_id,user_Details,user_pic,lat_lng;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng;
+    SharedPreferences user_id,user_Details,user_pic,lat_lng,chat_room;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_lat_lng,edit_chat_room;
 
     List<String> allactivityid;
     List<String> alluserid;
@@ -111,7 +112,11 @@ public class Mygroup extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        chat_room = getActivity().getSharedPreferences(CHAT_ROOM_OPEN, getActivity().MODE_PRIVATE);
+        edit_chat_room = chat_room.edit();
+        edit_chat_room.putString("chat_room","close");
+        edit_chat_room.putString("chat_activity","0");
+        edit_chat_room.commit();
         View v= inflater.inflate(R.layout.fragment_mygroup, container, false);
 //        progressDialog =ProgressDialog.show(getActivity(), null, null, true);
 //        progressDialog.setIndeterminate(true);
@@ -200,12 +205,12 @@ public class Mygroup extends Fragment{
             else
             {
                 progressDialog.dismiss();
-                fragmentManager=getFragmentManager();
-                Mygroup screen17 = new Mygroup();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, screen17)
-                        .addToBackStack(null)
-                        .commit();
+//                fragmentManager=getFragmentManager();
+//                Mygroup screen17 = new Mygroup();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.flContent, screen17)
+//                        .addToBackStack(null)
+//                        .commit();
             }
 
                 getActivity().runOnUiThread(new Runnable() {

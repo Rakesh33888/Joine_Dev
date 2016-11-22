@@ -3,7 +3,9 @@
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingTop="@dimen/spacing">
+    android:paddingTop="@dimen/spacing"
+    android:paddingBottom="@dimen/spacing"
+    android:paddingRight="30dp">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"

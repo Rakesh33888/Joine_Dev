@@ -79,9 +79,9 @@ public class Appsetting extends Fragment{
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
-
-    SharedPreferences user_id,user_Details,user_pic;
-    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic;
+    public static final String CHAT_ROOM_OPEN="chat_room_open";
+    SharedPreferences user_id,user_Details,user_pic,chat_room;
+    SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_chat_room;
 
     private String [] prgmNameList={"Notification","Message","New activities near by","Activity reminder","New level"};
 //Add a Comment On 22 AUGUSR 2016
@@ -131,7 +131,11 @@ public class Appsetting extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        chat_room = getActivity().getSharedPreferences(CHAT_ROOM_OPEN, getActivity().MODE_PRIVATE);
+        edit_chat_room = chat_room.edit();
+        edit_chat_room.putString("chat_room","close");
+        edit_chat_room.putString("chat_activity","0");
+        edit_chat_room.commit();
         View v = inflater.inflate(R.layout.fragment_appsetting, container, false);
 
 //        pd = new ProgressDialog(getActivity());

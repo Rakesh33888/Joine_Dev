@@ -114,8 +114,9 @@ public class Update_Activity extends Fragment  {
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
     private static final String LAT_LNG = "lat_lng";
-    SharedPreferences user_id, activity_id, lat_lng;
-    SharedPreferences.Editor edit_userid, edit_activity_id, edit_lat_lng;
+    private static final String SEARCH_LOCATION="search_location";
+    SharedPreferences user_id, activity_id, lat_lng,search_lat_lng;
+    SharedPreferences.Editor edit_userid, edit_activity_id, edit_lat_lng,edit_search_lat_lng;
     private Integer THRESHOLD = 2;
     private ImageView geo_autocomplete_clear;
     private String selectedImagePath = "", selectedImagePath2 = "", selectedImagePath3 = "";
@@ -147,6 +148,9 @@ public class Update_Activity extends Fragment  {
         edit_activity_id = activity_id.edit();
         lat_lng = getActivity().getSharedPreferences(LAT_LNG, getActivity().MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
+        search_lat_lng = getActivity().getSharedPreferences(SEARCH_LOCATION, getActivity().MODE_PRIVATE);
+        edit_search_lat_lng = search_lat_lng.edit();
+
         latitude2 = Double.parseDouble(lat_lng.getString("lat", "0.0"));
         longitude2 = Double.parseDouble(lat_lng.getString("lng", "0.0"));
         search_layout  = (RelativeLayout) v.findViewById(R.id.search_layout);
@@ -963,6 +967,8 @@ public class Update_Activity extends Fragment  {
 
                     if (!text_search_address.getText().toString().equals("Search Address"))
                     {
+                        latitude = Double.parseDouble(search_lat_lng.getString("search_lat","0.0"));
+                        longitude =Double.parseDouble(search_lat_lng.getString("search_lng","0.0"));
                         total_address = geo_autocomplete.getText().toString();
                     }else
                     {
@@ -1159,6 +1165,9 @@ public class Update_Activity extends Fragment  {
                         longitude1 = (int) (addressList.get(0).getLongitude() );
                         Log.e("ADDRESS LIST",String.valueOf(latitude1)+"\n"+String.valueOf(longitude1));
                     }
+                    edit_search_lat_lng.putString("search_lat", String.valueOf(latitude1));
+                    edit_search_lat_lng.putString("search_lng",String.valueOf(longitude1));
+                    edit_search_lat_lng.commit();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

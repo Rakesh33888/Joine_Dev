@@ -131,7 +131,7 @@ public class Notification_Screen extends Fragment {
 //                                 Log.e("ACTIVITY NAME", activity_name);
 //                                 Log.e("ACTIVITY PICK URL",url);
 
-                                if (type.equals("rating")) {
+                                if (type.equals("rating")||type.equals("ratingreminder")) {
                                     final Dialog dialog = new Dialog(getActivity());
                                     dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                                     dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -286,7 +286,7 @@ public class Notification_Screen extends Fragment {
                                         }
                                     });
                                 }
-                                if(type.equals("review"))
+                                else if(type.equals("review")||type.equals("reviewrminder"))
                                 {
                                     final Dialog dialog = new Dialog(getActivity());
                                     dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -420,9 +420,8 @@ public class Notification_Screen extends Fragment {
                                     });
 
                                 }
-                                else
+                                else if(type.equals("showup")||type.equals("showupreminder"))
                                 {
-
 
                                     final Dialog dialog = new Dialog(getActivity());
                                     dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -556,7 +555,7 @@ public class Notification_Screen extends Fragment {
                                         public void onClick(View v) {
                                             StringBuffer responseText = new StringBuffer();
                                             //responseText.append("The following were selected...\n");
-
+                                            JSONArray selected_list = new JSONArray();
                                             ArrayList<Book> stateList = books;
 
                                             for(int i=0;i<stateList.size();i++)
@@ -565,7 +564,8 @@ public class Notification_Screen extends Fragment {
 
                                                 if(state.isSelected())
                                                 {
-                                                    responseText.append(allid.get(i));
+                                                    selected_list.put(allid.get(i));
+                                                    //responseText.append(allid.get(i));
                                                 }
                                             }
 
@@ -573,7 +573,7 @@ public class Notification_Screen extends Fragment {
                                             try {
                                                 // Add key/value pairs
                                                 jsonObjSend.put("activityid", activity_id);
-                                                jsonObjSend.put("userids", responseText);
+                                                jsonObjSend.put("userids", selected_list);
 
                                                 Log.i(WHOSHOWED_TAG, jsonObjSend.toString(2));
 

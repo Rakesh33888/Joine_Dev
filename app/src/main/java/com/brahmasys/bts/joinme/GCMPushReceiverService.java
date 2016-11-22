@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
@@ -24,8 +25,15 @@ import org.json.JSONObject;
  */
 public class GCMPushReceiverService extends GcmListenerService {
     String type,userId,activity_id,time;
+    public static final String CHAT_ROOM_OPEN="chat_room_open";
+    SharedPreferences chat_room;
+    SharedPreferences.Editor edit_chat_room;
     @Override
     public void onMessageReceived(String from, Bundle data) {
+
+        chat_room = getSharedPreferences(CHAT_ROOM_OPEN, MODE_PRIVATE);
+        edit_chat_room = chat_room.edit();
+
 
         JSONObject json=null;
         try {
@@ -36,13 +44,29 @@ public class GCMPushReceiverService extends GcmListenerService {
             type = json.getString("type");
             time = json.getString("time");
             Log.e("ID's",activity_id+"\t"+userId+"\t"+type);
-            Log.e("Notification Responce",String.valueOf(json));
+            Log.e("Notification Response",String.valueOf(json));
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String message = data.getString("message");
+        if (type.equals("chat"))
+        {
+            if (chat_room.getString("chat_room","null").equals("open"))
+            {
+                if (!chat_room.getString("chat_activity","null").equals(activity_id)) {
+                    sendNotification(message);
+                }
 
-        sendNotification(message);
+            }else {
+                sendNotification(message);
+            }
+        }
+        else
+        {
+            sendNotification(message);
+        }
+
+
     }
     private void sendNotification(String message) {
         Intent intent = new Intent(this, Screen16.class);

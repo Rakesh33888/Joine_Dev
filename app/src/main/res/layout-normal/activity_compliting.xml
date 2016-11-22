@@ -98,7 +98,7 @@
         <Button
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:text="submite"
+            android:text="submit"
             android:textSize="18dp"
             android:layout_marginRight="15dp"
             android:textColor="#fff"

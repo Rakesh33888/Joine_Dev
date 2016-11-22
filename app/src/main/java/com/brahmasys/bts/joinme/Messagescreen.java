@@ -95,9 +95,7 @@ public class Messagescreen extends Fragment{
         context=getActivity();
          setListViewAdapter();
 
-
-
-
+        if (Connectivity_Checking.isConnectingToInternet()) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserGroups/" + user_id.getString("userid","000"),
                 new AsyncHttpResponseHandler() {
@@ -149,6 +147,11 @@ public class Messagescreen extends Fragment{
                         }
                     }
                 });
+        } else {
+            Splashscreen dia = new Splashscreen();
+            dia.Connectivity_Dialog_with_refresh(getActivity());
+             progressDialog.dismiss();
+        }
 
         groups_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

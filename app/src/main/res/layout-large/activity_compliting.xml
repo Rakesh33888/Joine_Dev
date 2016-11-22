@@ -99,7 +99,7 @@
         <Button
             android:layout_width="130dp"
             android:layout_height="60dp"
-            android:text="submite"
+            android:text="submit"
             android:textSize="25dp"
             android:layout_marginRight="15dp"
             android:textColor="#fff"

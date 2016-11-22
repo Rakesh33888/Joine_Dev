@@ -1,13 +1,17 @@
 package com.brahmasys.bts.joinme;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentCallbacks2;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -15,6 +19,8 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.multidex.MultiDex;
@@ -76,7 +82,7 @@ public class Screen16 extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener
         , Mysearch.OnFragmentInteractionListener,
         Mygroup.OnFragmentInteractionListener,
-        Appsetting.OnFragmentInteractionListener, SwipeStack.SwipeStackListener {
+        Appsetting.OnFragmentInteractionListener, SwipeStack.SwipeStackListener,ComponentCallbacks2 {
     private static final int PICK_IMAGE_REQUEST = 2;
     ProgressDialog progressDialog;
     private SwipeStack mSwipeStack;
@@ -106,8 +112,9 @@ public class Screen16 extends AppCompatActivity implements
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
     private static final String LAT_LNG = "lat_lng";
-    SharedPreferences user_id, user_Details, user_pic, lat_lng;
-    SharedPreferences.Editor edit_userid, edit_user_detals, edit_user_pic, edit_lat_lng;
+    public static final String CHAT_ROOM_OPEN="chat_room_open";
+    SharedPreferences user_id, user_Details, user_pic, lat_lng,chat_room;
+    SharedPreferences.Editor edit_userid, edit_user_detals, edit_user_pic, edit_lat_lng,edit_chat_room;
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
@@ -122,12 +129,19 @@ public class Screen16 extends AppCompatActivity implements
     TextView whoshowed_skip,whoshowed_remind_later,whoshowed_activityname;
     ListView peoples_who_showed;
     List<String> allid;
+    private CountDownTimer countDownTimer;
+    private boolean timerHasStarted = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen16);
 
+        chat_room = getSharedPreferences(CHAT_ROOM_OPEN,MODE_PRIVATE);
+        edit_chat_room = chat_room.edit();
 
+        edit_chat_room.putString("chat_room","close");
+        edit_chat_room.putString("chat_activity", "0");
+        edit_chat_room.commit();
         /************* Notification Handling Start  *********************/
         String type = getIntent().getStringExtra("type");
         String notif_user_id = getIntent().getStringExtra("user_id");
@@ -137,7 +151,7 @@ public class Screen16 extends AppCompatActivity implements
       //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
            if (type != null)
            {
-            if(type.equals("activity"))
+            if(type.equals("activity")||type.equals("has been updated"))
             {
                 Other_User_Details screen17 = new Other_User_Details();
                 Bundle bundle = new Bundle();
@@ -149,6 +163,18 @@ public class Screen16 extends AppCompatActivity implements
                         .addToBackStack(null)
                         .commit();
 
+            }
+            else if (type.equals("chat"))
+            {
+                Single_group_Message single_group_message = new Single_group_Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("userid",notif_user_id);
+                bundle.putString("activityid",notif_activity_id);
+                single_group_message.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, single_group_message)
+                        .addToBackStack(null)
+                        .commit();
             }
             else // if (type.equals("rating")||type.equals("review"))
             {
@@ -164,6 +190,7 @@ public class Screen16 extends AppCompatActivity implements
                         .addToBackStack(null).commit();
             }
            }
+
         /************* Notification Handling End  *********************/
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -270,7 +297,7 @@ public class Screen16 extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-
+        userStatus(user_id.getString("userid", "0000"), "true");
     }
 
 public void GetUserData()
@@ -355,6 +382,7 @@ public void GetUserData()
     } else {
         Splashscreen dia = new Splashscreen();
         dia.Connectivity_Dialog_with_refresh(Screen16.this);
+
     }
 }
 
@@ -617,6 +645,7 @@ public void GetUserData()
             try {
 
                 if (!json.equals("")) {
+
                     JSONArray cast = json.getJSONArray("data");
                     if(!cast.equals("")) {
                         if (cast.length() != 0) {
@@ -917,7 +946,7 @@ public void GetUserData()
                             JSONObject obj = new JSONObject(response);
                             String result = obj.getString("message");
 
-                            Log.e("STATUS RESULT",result);
+                            Log.e("STATUS RESULT", result);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -929,8 +958,50 @@ public void GetUserData()
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {   }
+    @Override
+    public void onLowMemory() {    }
+    @Override
+    public void onTrimMemory(final int level) {
+        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
+            // app is in background
+            countDownTimer = new MyCountDownTimer(1000000, 1000);
+            if (!timerHasStarted) {
+                countDownTimer.start();
+                timerHasStarted = true;
+            } else {
+                countDownTimer.cancel();
+                timerHasStarted = false;
+            }
+
+        }else {
+            Log.e("Run","not Background running");
+        }
+    }
+    public class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long startTime, long interval) {
+            super(startTime, interval);
+        }
+        @Override
+        public void onFinish() {
+            userStatus(user_id.getString("userid", "0000"), "false");
+            Log.e("Run","finish Background running");
+        }
+        @Override
+        public void onTick(long millisUntilFinished) {        }
+    }
+    @Override
     public void onStop() {
         super.onStop();
 
     }
+
+
 }
