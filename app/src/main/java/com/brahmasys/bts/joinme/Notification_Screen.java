@@ -160,6 +160,7 @@ public class Notification_Screen extends Fragment {
                                     Picasso.with(getActivity())
                                             .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
                                             .placeholder(R.drawable.butterfly)
+                                            .resize(200,200)
                                             .into(activity_image, new Callback() {
                                                 @Override
                                                 public void onSuccess() {
@@ -316,6 +317,7 @@ public class Notification_Screen extends Fragment {
                                     Picasso.with(getActivity())
                                             .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
                                             .placeholder(R.drawable.butterfly)
+                                            .resize(200,200)
                                             .into(review_activity_image, new Callback() {
                                                 @Override
                                                 public void onSuccess() {
@@ -448,6 +450,7 @@ public class Notification_Screen extends Fragment {
                                     Picasso.with(getActivity())
                                             .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
                                             .placeholder(R.drawable.butterfly)
+                                            .resize(200,200)
                                             .into(whoshowed_activity_image, new Callback() {
                                                 @Override
                                                 public void onSuccess() {

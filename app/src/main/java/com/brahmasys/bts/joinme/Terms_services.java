@@ -47,18 +47,22 @@ public class Terms_services extends Fragment {
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Appsetting appsetting= new Appsetting();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent,appsetting);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();
+                } else {
+                    Appsetting appsetting = new Appsetting();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.flContent, appsetting);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
             }
         });
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.e(TAG,"Link Value: "+url);
+                Log.e(TAG, "Link Value: " + url);
                 view.loadUrl(url);
 
                 return true;
@@ -66,7 +70,6 @@ public class Terms_services extends Fragment {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-
 
 
             }

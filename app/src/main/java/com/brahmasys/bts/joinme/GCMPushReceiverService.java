@@ -26,14 +26,17 @@ import org.json.JSONObject;
 public class GCMPushReceiverService extends GcmListenerService {
     String type,userId,activity_id,time;
     public static final String CHAT_ROOM_OPEN="chat_room_open";
-    SharedPreferences chat_room;
-    SharedPreferences.Editor edit_chat_room;
+    public static final String USERID = "userid";
+    SharedPreferences chat_room,user_id;
+    SharedPreferences.Editor edit_chat_room,edit_userid;
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
         chat_room = getSharedPreferences(CHAT_ROOM_OPEN, MODE_PRIVATE);
         edit_chat_room = chat_room.edit();
 
+        user_id =getSharedPreferences(USERID, MODE_PRIVATE);
+        edit_userid = user_id.edit();
 
         JSONObject json=null;
         try {
@@ -51,6 +54,7 @@ public class GCMPushReceiverService extends GcmListenerService {
         String message = data.getString("message");
         if (type.equals("chat"))
         {
+            userId=user_id.getString("userid","null");
             if (chat_room.getString("chat_room","null").equals("open"))
             {
                 if (!chat_room.getString("chat_activity","null").equals(activity_id)) {
@@ -91,6 +95,7 @@ public class GCMPushReceiverService extends GcmListenerService {
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent);
         Log.e("Message",message);
+        Log.e("USERID",userId);
        // PendingIntent  pendingIntent1 =  PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, noBuilder.build()); //0 = ID of notification

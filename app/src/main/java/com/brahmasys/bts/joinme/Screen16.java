@@ -151,7 +151,7 @@ public class Screen16 extends AppCompatActivity implements
       //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
            if (type != null)
            {
-            if(type.equals("activity")||type.equals("has been updated"))
+            if(type.equals("activity")||type.equals("has been updated")||type.equals("reminder"))
             {
                 Other_User_Details screen17 = new Other_User_Details();
                 Bundle bundle = new Bundle();
