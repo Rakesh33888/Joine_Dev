@@ -83,6 +83,7 @@ public class Messagescreen extends Fragment{
         });
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
+
          back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

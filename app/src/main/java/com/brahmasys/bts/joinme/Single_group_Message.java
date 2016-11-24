@@ -83,7 +83,7 @@ public class Single_group_Message extends Fragment    {
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
     public static final String CHAT_ROOM_OPEN="chat_room_open";
-
+    public static final String CONNECTED="isconnected";
     private static final String URL_RemoveMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/RemoveMemberToGroup/";
     private static final String URL_GetActivityDetailsForChat = "http://52.37.136.238/JoinMe/Activity.svc/GetActivityDetailsForChat/";
     ProgressDialog progressDialog;
@@ -95,8 +95,8 @@ public class Single_group_Message extends Fragment    {
     Button yes,no;
     String act_id,userid,owner_id="0000";
     ImageView shareicon;
-    SharedPreferences user_id,activity_id,chat_room;
-    SharedPreferences.Editor edit_userid,edit_activity_id,edit_chat_room;
+    SharedPreferences user_id,activity_id,chat_room,server_connect;
+    SharedPreferences.Editor edit_userid,edit_activity_id,edit_chat_room,edit_server_connect;
     TextView tvActivityName,tvActivityTime,tvActivityAddress,tvHostedByName,tvleave_chat;
     private String mParam1;
     private String mParam2;
@@ -153,6 +153,12 @@ public class Single_group_Message extends Fragment    {
 
        ChatApplication app = (ChatApplication) getActivity().getApplication();
         mSocket = app.getSocket();
+//         mSocket.on(Socket.EVENT_CONNECT,onConnect);
+//         mSocket.on(Socket.EVENT_DISCONNECT,onDisconnect);
+//        mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+//        mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+
+        mSocket.on("connect_status", onConnect_status);
         mSocket.on("GetGroupMessages", onNewMessage);
         mSocket.on("typing", onTyping);
         mSocket.on("getmessages",getMessage);
@@ -181,9 +187,12 @@ public class Single_group_Message extends Fragment    {
         userid = bundle.getString("userid","0");
         sender_id = userid;
         group_id = act_id;
-        Log.e("Join Group", group_id + "\n" + sender_id);
+      //  Log.e("Join Group", group_id + "\n" + sender_id);
+
         /**************Join Group ****************/
-        mSocket.emit("joingroup", sender_id, group_id);
+       mSocket.emit("joingroup", sender_id, group_id);
+        mSocket.emit("connectagain", sender_id, group_id);
+       // mSocket.emit("disconnect", userid);
         /**************Join Group ****************/
         chat_room = getActivity().getSharedPreferences(CHAT_ROOM_OPEN,getActivity().MODE_PRIVATE);
         edit_chat_room = chat_room.edit();
@@ -191,6 +200,10 @@ public class Single_group_Message extends Fragment    {
         edit_chat_room.putString("chat_room","open");
         edit_chat_room.putString("chat_activity",act_id);
         edit_chat_room.commit();
+
+        server_connect = getActivity().getSharedPreferences(CONNECTED,getActivity().MODE_PRIVATE);
+        edit_server_connect = server_connect.edit();
+
         chat_username = getActivity().getSharedPreferences(CHAT_USER, getActivity().MODE_PRIVATE);
         edit_chat_username = chat_username.edit();
         createrimage = (CircularImageView) v.findViewById(R.id.createrimage1);
@@ -342,7 +355,7 @@ public class Single_group_Message extends Fragment    {
                                 JSONObject apiResponse = null;
                                 try {
                                     apiResponse = json.getJSONObject("response");
-                                    Log.e("GetDetailsForChat", String.valueOf(apiResponse));
+                               //     Log.e("GetDetailsForChat", String.valueOf(apiResponse));
 //                                    edit_userid.putString("userid", apiResponse.getString("userid"));
 //                                    edit_userid.commit();
                                     String ststus =apiResponse.getString("status");
@@ -561,9 +574,14 @@ owner.setOnClickListener(new View.OnClickListener() {
     public void onDestroy() {
         super.onDestroy();
 
-        mSocket.disconnect();
+         mSocket.disconnect();
+//        mSocket.off(Socket.EVENT_CONNECT, onConnect);
+//         mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+//        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+//        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
           mSocket.off("GetGroupMessages", onNewMessage);
           mSocket.off("getmessages",getMessage);
+          mSocket.off("connect_status",onConnect_status);
 //        mSocket.off("user joined", onUserJoined);
 //        mSocket.off("user left", onUserLeft);
           mSocket.off("typing", onTyping);
@@ -752,6 +770,88 @@ owner.setOnClickListener(new View.OnClickListener() {
         mMessagesView.scrollToPosition(mAdapter.getItemCount() - 1);
     }
 
+//    private Emitter.Listener onConnect = new Emitter.Listener() {
+//        @Override
+//        public void call(final Object... args) {
+//           // Log.e("CONNCET MESSAGE",String.valueOf(args));
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Log.e("CONNECT MESSAGE", String.valueOf(args));
+//                    if(!isConnected) {
+//                        if(null!=userid)
+//                       //     mSocket.emit("connect", userid);
+//                        Toast.makeText(getActivity().getApplicationContext(),
+//                                R.string.connect, Toast.LENGTH_LONG).show();
+//                        isConnected = true;
+//                    }
+//                }
+//            });
+//        }
+//    };
+    private Emitter.Listener onConnect_status = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            // Log.e("CONNCET MESSAGE",String.valueOf(args));
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e("CONNECT MESSAGE", String.valueOf(args[0]));
+
+                    if (args[0].equals("true"))
+                    {
+//                        Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
+                        isConnected = true;
+                        edit_server_connect.putString("connect",String.valueOf(args[0]));
+                        edit_server_connect.commit();
+                    }
+                    else
+                    {
+                    //    Toast.makeText(getActivity(), "DisConnected", Toast.LENGTH_SHORT).show();
+                        isConnected = false;
+                        edit_server_connect.putString("connect", String.valueOf(args[0]));
+                        edit_server_connect.commit();
+                    }
+//                    if(!isConnected) {
+//                        if(null!=userid)
+//                            //     mSocket.emit("connect", userid);
+//                            Toast.makeText(getActivity().getApplicationContext(),
+//                                    R.string.connect, Toast.LENGTH_LONG).show();
+//                        isConnected = true;
+//                    }
+                }
+            });
+        }
+    };
+//    private Emitter.Listener onDisconnect = new Emitter.Listener() {
+//        @Override
+//        public void call(final Object... args) {
+//
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Log.e("DISCONNECT MESSAGE", String.valueOf(args));
+//                    isConnected = false;
+//                    Toast.makeText(getActivity().getApplicationContext(),
+//                            R.string.disconnect, Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    };
+//
+//    private Emitter.Listener onConnectError = new Emitter.Listener() {
+//        @Override
+//        public void call(Object... args) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Toast.makeText(getActivity().getApplicationContext(),
+//                            R.string.error_connect, Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    };
+
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -761,7 +861,7 @@ owner.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void run() {
                             JSONArray data1 = (JSONArray) args[0];
-                            Log.e("RESULT", String.valueOf(data1));
+                           // Log.e("RESULT", String.valueOf(data1));
                             String username = null;
                             String message = null;
                             String profile_url = null;
@@ -1044,6 +1144,11 @@ owner.setOnClickListener(new View.OnClickListener() {
     public void onResume() {
         super.onResume();
 
+//       if (!isConnected)
+//       {
+//           mSocket.emit("connectagain", sender_id, group_id);
+//       }
+
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -1051,13 +1156,16 @@ owner.setOnClickListener(new View.OnClickListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    edit_chat_room.putString("chat_room","close");
-                    edit_chat_room.commit();
-                    Messagescreen fragment2 = new Messagescreen();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.flContent, fragment2);
-                    fragmentTransaction.commit();
+                        edit_chat_room.putString("chat_room", "close");
+                        edit_chat_room.commit();
+
+                        Messagescreen fragment2 = new Messagescreen();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.flContent, fragment2);
+                        fragmentTransaction.commit();
+                     mSocket.emit("ondisconnect", userid);
+
                     return true;
                 }
                 return false;

@@ -50,7 +50,8 @@
                     android:id="@+id/reportactitytext"
                     android:textSize="20dp"
                     android:clickable="true"
-                    android:textColor="#de212121"
+
+                    android:textColor="#ffffff"
                     android:gravity="center"
                     android:layout_gravity="right|top"
                     android:layout_marginRight="40dp" />

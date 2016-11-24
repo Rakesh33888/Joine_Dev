@@ -151,7 +151,7 @@
                     android:textColor="#ffffff"
                     android:ellipsize="marquee"
                     android:scrollHorizontally="true"
-                    android:scrollbars = "vertical"
+                    android:scrollbars = "none"
                     android:layout_below="@+id/textView26"
                     android:layout_alignStart="@+id/textView26"
                     android:layout_marginTop="5dp"

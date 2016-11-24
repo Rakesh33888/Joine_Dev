@@ -516,6 +516,28 @@ public class Appsetting extends Fragment{
 
                 });
 
+        AsyncHttpClient client1 = new AsyncHttpClient();
+        client1.get("http://52.37.136.238/JoinMe/Setting.svc/UserOnline/" + user_id.getString("userid", "") + "/" + "false",
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http response code '200'
+
+                    public void onSuccess(String response) {
+
+                        try {
+                            // Extract JSON Object from JSON returned by REST WS
+                            JSONObject obj = new JSONObject(response);
+                            String result = obj.getString("message");
+
+                            Log.e("STATUS RESULT", result);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                });
+
 
 
     }
