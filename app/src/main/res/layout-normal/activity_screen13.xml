@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 custom:pager_animation="Accordion"
                 custom:auto_cycle="true"
-                android:background="@drawable/butterfly"
+
                 custom:indicator_visibility="visible"
                 custom:pager_animation_span="1100"
                 android:layout_height="200dp"/>

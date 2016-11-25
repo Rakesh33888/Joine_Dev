@@ -871,7 +871,7 @@ public class Update_Activity extends Fragment  {
         if (Connectivity_Checking.isConnectingToInternet()) {
             Log.e("Position", String.valueOf(spinnerforhour.getSelectedItemPosition()));
             if (!edittextactivityname.getText().toString().equals("")&& !enterdiscription.getText().toString().equals("") && !dateTextView.getText().toString().equals("Select date")
-                    && !edit_cost.getText().toString().equals("") && !edit_limit.getText().toString().equals("") && spinnerforhour.getSelectedItemPosition()-1>=0  ) {
+                     && spinnerforhour.getSelectedItemPosition()-1>=0  ) {
                 if (!edit_limit.getText().toString().equals("0")) {
         if (edittextactivityname.getText().toString().length() >= 2) {
             if (enterdiscription.getText().toString().length() >= 10) {
@@ -979,8 +979,15 @@ public class Update_Activity extends Fragment  {
 
                 title = edittextactivityname.getText().toString();
                 description = enterdiscription.getText().toString();
-                cost = edit_cost.getText().toString();
-                limit = edit_limit.getText().toString();
+                if (!edit_cost.getText().toString().equals("") && !edit_limit.getText().toString().equals("")) {
+                    cost = edit_cost.getText().toString();
+                    limit = edit_limit.getText().toString();
+                }
+                else
+                {
+                    cost="0";
+                    limit="0";
+                }
                 age_start = age1.getText().toString();
                 age_end = age2.getText().toString();
 

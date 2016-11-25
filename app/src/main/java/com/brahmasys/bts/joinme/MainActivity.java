@@ -30,6 +30,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -84,7 +85,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     RelativeLayout relativemain;
    // Button fbMyProfileButton;
 
-
+    final Context c = this;
    LoginButton loginButton;
 //
    CallbackManager callbackManager;
@@ -531,7 +532,71 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     b4 = (Button) dialog.findViewById(R.id.button4);
                     final EditText email = (EditText) dialog.findViewById(R.id.editText);
                     final EditText pass = (EditText) dialog.findViewById(R.id.editText2);
+                    Button forgot_password = (Button) dialog.findViewById(R.id.forgot_password);
 
+                    forgot_password.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+                            View mView = layoutInflaterAndroid.inflate(R.layout.forgot_password, null);
+                            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+                            alertDialogBuilderUserInput.setView(mView);
+
+                            final EditText user_email = (EditText) mView.findViewById(R.id.email_forgot);
+                            alertDialogBuilderUserInput
+                                    .setCancelable(false)
+                                    .setPositiveButton("Reset Password", new DialogInterface.OnClickListener() {
+                                        public void onClick(final DialogInterface dialogBox, int id) {
+                                            // ToDo get user input here
+                                            if (!user_email.getText().toString().equals(""))
+                                            { progressDialog = ProgressDialog.show(MainActivity.this, null, null, true);
+                                                progressDialog.setIndeterminate(true);
+                                                progressDialog.setCancelable(false);
+                                                progressDialog.setContentView(R.layout.custom_progress);
+                                                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                                AsyncHttpClient client = new AsyncHttpClient();
+                                                client.get("http://52.37.136.238/JoinMe/User.svc/ForgotPassword/" +user_email.getText().toString(),
+                                                        new AsyncHttpResponseHandler() {
+                                                            // When the response returned by REST has Http response code '200'
+
+                                                            public void onSuccess(String response) {
+                                                                // Hide Progress Dialog
+                                                                //  prgDialog.hide();
+                                                                try {
+                                                                    // Extract JSON Object from JSON returned by REST WS
+                                                                    JSONObject obj = new JSONObject(response);
+                                                                    String result=obj.getString("message");
+
+                                                                    Toast.makeText(MainActivity.this,result,Toast.LENGTH_SHORT).show();
+                                                                    dialogBox.cancel();
+                                                                    progressDialog.dismiss();
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+
+
+                                                            }});
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(MainActivity.this, "Please enter your Email id...!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    })
+
+                                    .setNegativeButton("Cancel",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialogBox, int id) {
+                                                    dialogBox.cancel();
+                                                }
+                                            });
+
+                            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                            alertDialogAndroid.show();
+                        }
+                    });
 
                     b4.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -620,6 +685,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                           //  progressDialog.dismiss();
 
                                         } else {
+
+                                            edit_userid.putString("userid", userid);
+                                            edit_userid.commit();
                                             Intent i = new Intent(getApplicationContext(), Screen3a.class);
                                             i.putExtra("mailId",email.getText().toString());
                                             startActivity(i);

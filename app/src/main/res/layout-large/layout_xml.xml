@@ -43,4 +43,15 @@
         android:id="@+id/button4"
         android:layout_marginTop="15dp"
         android:layout_gravity="center|bottom" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Forgot password?"
+        android:textColor="#ffffff"
+        android:id="@+id/forgot_password"
+        android:background="@null"
+        android:layout_gravity="center_horizontal"
+        />
 </LinearLayout>

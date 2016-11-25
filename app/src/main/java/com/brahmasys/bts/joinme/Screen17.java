@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.*;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -53,18 +56,18 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class Screen17 extends android.support.v4.app.Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener  {
-    FrameLayout frameLayoutbck,frameLayoutacity;
+    FrameLayout frameLayoutacity;
     ImageView imageView6;
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
   //  Button btnJoineActivity;
 
-    LinearLayout backlayout_screen_17;
+    LinearLayout backlayout_screen_17,frameLayoutbck;
     ImageView shareicon;
     RatingBar myratingBar;
     String activity_name,cost,distance,duration,limit,owner_name,owner_pic,rating,review,activity_address,time,joined,icon1,description;
     Button btnJoineActivity;
-    TextView reporttext,updatetext;
+    TextView reporttext,updatetext,delete_text;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
     FragmentManager fragmentManager;
     public static final String USERID = "userid";
@@ -93,12 +96,13 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
               progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         final View v=inflater.inflate(R.layout.screen17,container,false);
-        frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
+        frameLayoutbck= (LinearLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
        // btnJoineActivity= (Button) v.findViewById(R.id.button6);
         reporttext= (TextView) v.findViewById(R.id.reportactitytext);
         updatetext= (TextView) v.findViewById(R.id.updateactivitytext);
+        delete_text = (TextView) v.findViewById(R.id.delete_activitytext);
         acitvityname = (TextView) v.findViewById(R.id.acitvityname);
         distancefromnearby = (TextView) v.findViewById(R.id.distancefromnearby);
         owner_name1 = (TextView) v.findViewById(R.id.owner_name);
@@ -213,20 +217,19 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
             public void onClick(View v) {
                 if (Connectivity_Checking.isConnectingToInternet()) {
 
-                    fragmentManager=getFragmentManager();
-                    Update_Activity update_activity =new Update_Activity();
+                    fragmentManager = getFragmentManager();
+                    Update_Activity update_activity = new Update_Activity();
                     Bundle args = new Bundle();
                     args.putString("accountDetails", String.valueOf(obj));
-                    args.putString("userid",uid);
-                    args.putString("activityid",aid);
-                    args.putString("where",Where);
-                    args.putString("screen","screen17");
+                    args.putString("userid", uid);
+                    args.putString("activityid", aid);
+                    args.putString("where", Where);
+                    args.putString("screen", "screen17");
                     update_activity.setArguments(args);
                     fragmentManager.beginTransaction()
-                            .replace(R.id.flContent,update_activity)
+                            .replace(R.id.flContent, update_activity)
                             .addToBackStack(null)
                             .commit();
-
 
 
                 } else {
@@ -236,9 +239,75 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                 }
 
 
-
             }
 
+        });
+
+        delete_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                dialog.setContentView(R.layout.custom_delete_msg);
+                dialog.getWindow().setBackgroundDrawable(
+                        new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                Button yes = (Button) dialog.findViewById(R.id.yes);
+                Button no = (Button) dialog.findViewById(R.id.no);
+                yes.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // new Custom_Progress(getActivity());
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        client.get("http://52.37.136.238/JoinMe/Activity.svc/DeleteActivity/" + aid,
+                                new AsyncHttpResponseHandler() {
+                                    // When the response returned by REST has Http response code '200'
+
+                                    public void onSuccess(String response) {
+                                        // Hide Progress Dialog
+                                        //  prgDialog.hide();
+                                        try {
+                                            // Extract JSON Object from JSON returned by REST WS
+                                            JSONObject obj = new JSONObject(response);
+                                            String del_msg = obj.getString("message");
+                                            if (del_msg.equals("Deleted Successfully")) {
+                                                edit_activity_id.clear().commit();
+                                                fragmentManager = getFragmentManager();
+                                                Mygroup mygroup = new Mygroup();
+                                                fragmentManager.beginTransaction()
+                                                        .replace(R.id.flContent, mygroup)
+                                                        .addToBackStack(null)
+                                                        .commit();
+                                                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                                                //  new Custom_Progress(getActivity()).dismiss();
+                                                Toast.makeText(getActivity(), del_msg, Toast.LENGTH_SHORT).show();
+
+                                            } else {
+                                                Toast.makeText(getActivity(), del_msg, Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                        dialog.dismiss();
+                    }
+                });
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+            }
         });
 
 

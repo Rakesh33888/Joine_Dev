@@ -644,7 +644,7 @@ public void GetUserData()
             }
             try {
 
-                if (!json.equals("")) {
+               // if (!json.equals("")) {
 
                     JSONArray cast = json.getJSONArray("data");
                     if(!cast.equals("")) {
@@ -682,7 +682,7 @@ public void GetUserData()
                     else {
                         reloadactivity.setVisibility(View.VISIBLE);
                     }
-                }
+               // }
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -22,51 +22,69 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context="com.brahmasys.bts.joinme.Screen17"
         android:layout_gravity="center_horizontal">
-        <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="7dp"
-        android:id="@+id/frameLayoutbck"
-        android:layout_gravity="center_horizontal|left">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="7dp"
+            android:id="@+id/frameLayoutbck"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal|left">
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_gravity="left|center"
                 android:id="@+id/backlayoutscreen17">
-            <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/backbtnimage"
-            android:clickable="true"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/backbtn"
-            android:layout_gravity="left|center" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/backbtnimage"
+                    android:clickable="false"
+
+                    android:background="@drawable/backbtn"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="10dp" />
             </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/underlinedText"
-            android:id="@+id/reportactitytext"
-            android:textSize="20dp"
-            android:clickable="true"
-            android:textColor="#deffffff"
-            android:layout_marginLeft="160dp"
-            android:gravity="center" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/underlinedText"
+                    android:textColor="#ffffff"
+                    android:id="@+id/reportactitytext"
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/underlinedText1"
-            android:textSize="20dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:layout_marginLeft="320dp"
-            android:textColorLink="#de212121"
-            android:textColor="#deffffff"
-            android:id="@+id/updateactivitytext"/>
-         </FrameLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/underlinedText1"
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="10dp"
+                    android:textColorLink="#de212121"
+                    android:id="@+id/updateactivitytext"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/delete_activity_text"
+                    android:clickable="true"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
 
-   <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:textColorLink="#de212121"
+                    android:id="@+id/delete_activitytext"
+                    android:layout_marginRight="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical"
@@ -95,7 +113,7 @@
                     android:layout_width="match_parent"
                     custom:pager_animation="Accordion"
                     custom:auto_cycle="true"
-                    android:background="@drawable/butterfly"
+
                     custom:indicator_visibility="visible"
                     custom:pager_animation_span="1100"
                     android:layout_height="270dp"/>

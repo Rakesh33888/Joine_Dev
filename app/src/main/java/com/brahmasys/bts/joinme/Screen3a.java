@@ -181,7 +181,7 @@ public class Screen3a extends AppCompatActivity {
 
 
         List day_list = new ArrayList<Integer>();
-        day_list.add(0,"Date");
+        day_list.add(0,"");
         for (int i = 1; i <= 31; i++)
         {
             day_list.add(Integer.toString(i));
@@ -194,7 +194,7 @@ public class Screen3a extends AppCompatActivity {
         month.setAdapter(adapter1);
 
         List year_list = new ArrayList<Integer>();
-        year_list.add(0,"Year");
+        year_list.add(0,"");
         for (int i = 1910; i <= 2010; i++)
         {
             year_list.add(Integer.toString(i));
@@ -278,7 +278,7 @@ public class Screen3a extends AppCompatActivity {
                 if (Connectivity_Checking.isConnectingToInternet()) {
 
                     if (select_image == 1) {
-                        if (!String.valueOf(day.getSelectedItem()).equals("Date")&& !String.valueOf(month.getSelectedItem()).equals("Month")&& !String.valueOf(year.getSelectedItem()).equals("Year"))
+                        if (!String.valueOf(day.getSelectedItem()).equals("")&& !String.valueOf(month.getSelectedItem()).equals("")&& !String.valueOf(year.getSelectedItem()).equals(""))
                         {
                             if (firstname.getText().toString().length() >= 2) {
                                 if (share.getText().toString().length() >= 10) {

@@ -4,8 +4,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="Messages">Messages</string>
-    <string name="underlinedText"><u>Report Activity</u></string>
+    <string name="underlinedText"><u>Report </u></string>
     <string name="underlinedText1"><u>Update Activity</u></string>
+    <string name="delete_activity_text"><u>Delete Activity</u></string>
     <string name="did_not_go"><u> I "didn\'t" go</u></string>
     <string name="remind_later"><u>Remind me later</u></string>
     <string name="skip"><u>Skip</u></string>
@@ -24,7 +25,7 @@
     <string name="stack_empty">Card stack empty!</string>
     <string name="github">View on GitHub</string>
     <string-array name="month_names">
-        <item>"Month"</item>
+        <item>""</item>
         <item>Jan</item>
         <item>Feb</item>
         <item>Mar</item>
