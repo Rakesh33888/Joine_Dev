@@ -76,6 +76,12 @@
                         android:textColor="#ffffff"
                         android:layout_gravity="center"
                         android:id="@+id/name"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:scrollHorizontally="true"
+                        android:scrollbars = "horizontal"
+                        android:nestedScrollingEnabled="true"
+                        android:maxLines="1"
                         android:layout_marginLeft="3dp" />
                 </LinearLayout>
 
@@ -126,12 +132,11 @@
                     android:id="@+id/textView25"
                     android:layout_alignTop="@+id/createrimage1"
                     android:layout_toEndOf="@+id/createrimage1"
-                    android:singleLine="true"
                     android:ellipsize="marquee"
                     android:scrollHorizontally="true"
-                    android:scrollbars = "horizontal"
+                    android:scrollbars = "vertical"
                     android:nestedScrollingEnabled="true"
-                    android:maxLines="1" />
+                    android:maxLines="2" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -143,7 +148,7 @@
                     android:layout_alignStart="@+id/textView25"
                     android:layout_marginTop="5dp" />
 
-                <TextView
+               <!-- <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0Km away:0 avenue 0"
@@ -155,7 +160,7 @@
                     android:layout_below="@+id/textView26"
                     android:layout_alignStart="@+id/textView26"
                     android:layout_marginTop="5dp"
-                    android:maxLines="3" />
+                    android:maxLines="3" /> -->
             </LinearLayout>
 
             <LinearLayout
@@ -173,6 +178,12 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="23dp"
                     android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:scrollHorizontally="true"
+                    android:scrollbars = "vertical"
+                    android:nestedScrollingEnabled="true"
+                    android:maxLines="2"
                     android:layout_gravity="center_horizontal|left" />
             </LinearLayout>
         </LinearLayout>

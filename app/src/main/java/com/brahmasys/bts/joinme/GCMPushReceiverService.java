@@ -20,6 +20,8 @@ import com.google.android.gms.gcm.GcmListenerService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
+
 /**
  * Created by NgocTri on 4/9/2016.
  */
@@ -80,7 +82,10 @@ public class GCMPushReceiverService extends GcmListenerService {
                intent.putExtra("time",time);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         int requestCode = 0;//Your request code
+        Random random = new Random();
+        int m = random.nextInt(9999 - 1000) + 1000;
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT);
+     //   PendingIntent intent = PendingIntent.getActivity(context, nid,notificationIntent, 0);
         //Setup notification
         //Sound
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -98,6 +103,6 @@ public class GCMPushReceiverService extends GcmListenerService {
         Log.e("USERID",userId);
        // PendingIntent  pendingIntent1 =  PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, noBuilder.build()); //0 = ID of notification
+        notificationManager.notify(m, noBuilder.build()); //0 = ID of notification
     }
 }

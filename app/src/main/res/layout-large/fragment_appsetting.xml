@@ -178,12 +178,45 @@
                         app:kswBackMeasureRatio="2"
                         app:kswThumbDrawable="@drawable/miui_thumb_drawable" />
                 </RelativeLayout>
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Activity reminder off/on"
+                        android:layout_marginLeft="10dp"
+                        android:paddingTop="9dp"
+                        android:id="@+id/reminder1" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/reminder_switch"
+                        style="@style/SwitchButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        app:kswBackDrawable="@drawable/miui_back_drawable"
+                        app:kswBackMeasureRatio="2"
+                        app:kswThumbDrawable="@drawable/miui_thumb_drawable"
+                        app:kswBackColor="#CDCBCB"
+                        app:kswTintColor="#CDCBCB"
+
+                        android:checked="false"
+                        android:layout_gravity="center" />
+                </RelativeLayout>
                 <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/reminder_layout"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1.56">
 

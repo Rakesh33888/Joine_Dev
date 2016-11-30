@@ -181,7 +181,7 @@ public class Screen3a extends AppCompatActivity {
 
 
         List day_list = new ArrayList<Integer>();
-        day_list.add(0,"");
+        day_list.add(0,"dd");
         for (int i = 1; i <= 31; i++)
         {
             day_list.add(Integer.toString(i));
@@ -194,7 +194,7 @@ public class Screen3a extends AppCompatActivity {
         month.setAdapter(adapter1);
 
         List year_list = new ArrayList<Integer>();
-        year_list.add(0,"");
+        year_list.add(0,"yyyy");
         for (int i = 1910; i <= 2010; i++)
         {
             year_list.add(Integer.toString(i));

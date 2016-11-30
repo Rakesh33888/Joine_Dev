@@ -35,7 +35,7 @@ import java.util.List;
 public class Messagescreen extends Fragment{
     ListView groups_listView;
     ImageView back;
-    ImageView shareicon;
+    ImageView shareicon,msg,logo;
     LinearLayout backlayoutmessge;
     FragmentManager fragmentManager;
     public static final String USERID = "userid";
@@ -56,7 +56,24 @@ public class Messagescreen extends Fragment{
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
-
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.colourbubble);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog = ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
         progressDialog =ProgressDialog.show(getActivity(), null, null, true);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);

@@ -94,10 +94,10 @@ public class Single_group_Message extends Fragment    {
     HorizontalListView participants_list;
     Button yes,no;
     String act_id,userid,owner_id="0000";
-    ImageView shareicon;
+    ImageView shareicon,logo,msg;
     SharedPreferences user_id,activity_id,chat_room,server_connect;
     SharedPreferences.Editor edit_userid,edit_activity_id,edit_chat_room,edit_server_connect;
-    TextView tvActivityName,tvActivityTime,tvActivityAddress,tvHostedByName,tvleave_chat;
+    TextView tvActivityName,tvActivityTime,tvHostedByName,tvleave_chat;
     private String mParam1;
     private String mParam2;
     private ArrayList<Book> books;
@@ -201,7 +201,7 @@ public class Single_group_Message extends Fragment    {
         edit_chat_room.putString("chat_activity",act_id);
         edit_chat_room.commit();
 
-        server_connect = getActivity().getSharedPreferences(CONNECTED,getActivity().MODE_PRIVATE);
+        server_connect = getActivity().getSharedPreferences(CONNECTED, getActivity().MODE_PRIVATE);
         edit_server_connect = server_connect.edit();
 
         chat_username = getActivity().getSharedPreferences(CHAT_USER, getActivity().MODE_PRIVATE);
@@ -210,6 +210,24 @@ public class Single_group_Message extends Fragment    {
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.VISIBLE);
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.colourbubble);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog = ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
         other_user_id=new ArrayList<String>();
         createrimage.setClickable(true);
         send_btn = (ImageView) v.findViewById(R.id.send_button);
@@ -253,8 +271,8 @@ public class Single_group_Message extends Fragment    {
         tvActivityTime= (TextView) v.findViewById(R.id.textView26);
         tvleave_chat= (TextView) v.findViewById(R.id.leave_chat);
         listimage= (CircularImageView)v.findViewById(R.id.participants);
-        tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
-        tvActivityAddress.setMovementMethod(new ScrollingMovementMethod());
+        //tvActivityAddress = (TextView) v.findViewById(R.id.textView27);
+       // tvActivityAddress.setMovementMethod(new ScrollingMovementMethod());
         tvHostedByName = (TextView) v.findViewById(R.id.name);
         participants_list = (HorizontalListView) v. findViewById(R.id.participants_list);
 //        participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -277,6 +295,9 @@ public class Single_group_Message extends Fragment    {
 //
 //            }
 //        });
+
+
+
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         activity_id = getActivity().getSharedPreferences(ACTIVITYID, getActivity().MODE_PRIVATE);
@@ -399,7 +420,7 @@ public class Single_group_Message extends Fragment    {
                                         tvActivityTime.setText(String.valueOf(value));
 
 
-                                        tvActivityAddress.setText(txtAddress);
+                                        //tvActivityAddress.setText(txtAddress);
 
                                         for(int i=0; i<arrGroup.length(); i++) {
                                            JSONObject row = arrGroup.getJSONObject(i);
@@ -508,8 +529,8 @@ owner.setOnClickListener(new View.OnClickListener() {
  participants_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
      @Override
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-         edit_chat_room.putString("chat_room","close");
-         edit_chat_room.putString("chat_activity",act_id);
+         edit_chat_room.putString("chat_room", "close");
+         edit_chat_room.putString("chat_activity", act_id);
          edit_chat_room.commit();
          fragmentManager = getFragmentManager();
          Screen13 screen13 = new Screen13();
@@ -518,7 +539,7 @@ owner.setOnClickListener(new View.OnClickListener() {
          bundle.putString("userid", userid);
          bundle.putString("activityid", act_id);
          bundle.putString("where", "single_group_message");
-         bundle.putString("screen","single_group_message");
+         bundle.putString("screen", "single_group_message");
          screen13.setArguments(bundle);
          fragmentManager.beginTransaction()
                  .replace(R.id.flContent, screen13)
@@ -527,7 +548,38 @@ owner.setOnClickListener(new View.OnClickListener() {
      }
  });
 
-
+        tvActivityName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isowner.equals("true")) {
+                    Screen17 screen17 = new Screen17();
+                    FragmentManager fm = getFragmentManager();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid", userid);
+                    bundle.putString("activityid", act_id);
+                    bundle.putString("where", "single_group_message");
+                    bundle.putString("screen","other_user_details");
+                    screen17.setArguments(bundle);
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.flContent, screen17);
+                    transaction.commit();
+                }
+                else
+                {
+                    Other_User_Details screen17 = new Other_User_Details();
+                    FragmentManager fm = getFragmentManager();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid", userid);
+                    bundle.putString("activityid", act_id);
+                    bundle.putString("where", "single_group_message");
+                    bundle.putString("screen","other_user_details");
+                    screen17.setArguments(bundle);
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.flContent, screen17);
+                    transaction.commit();
+                }
+            }
+        });
         createrimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

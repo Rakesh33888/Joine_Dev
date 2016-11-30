@@ -61,7 +61,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
     ImageView imageViewbck,icon;
     CircularImageView createrimage;
 
-    ImageView shareicon;
+    ImageView shareicon,msg,logo;
     RatingBar myratingBar;
     LinearLayout backlayout_user_detail;
     Button btnJoineActivity;
@@ -118,7 +118,24 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.VISIBLE);
-
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.custo_msg);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog = ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
         icon = (ImageView) v.findViewById(R.id.imageViewrfting);
 
 
@@ -283,7 +300,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + longitude + "/" + latitude,
+            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + user_id.getString("userid","0") + "/" + aid + "/" + longitude + "/" + latitude,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -334,7 +351,16 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                     acitvityname.setText(activity_name);
                                     distancefromnearby.setText(distance+" at "+activity_address);
                                     owner_name1.setText("Created by " + owner_name);
-                                    uptopeoples.setText("Up to " + limit + " peoples:");
+                                    if (!limit.equals("0"))
+                                    {
+                                        uptopeoples.setText("Up to " + limit + " participants:");
+
+                                    }
+                                    else
+                                    {
+                                        uptopeoples.setText("No participants limitation:");
+                                    }
+                                   // uptopeoples.setText("Up to " + limit + " peoples:");
                                     currentpeoples.setText("Currently have " + joined);
                                     costtext.setText("Cost " + cost);
                                     timetext.setText("Description:  " + description);

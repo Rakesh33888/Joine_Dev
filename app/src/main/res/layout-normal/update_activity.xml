@@ -24,34 +24,35 @@
             android:focusableInTouchMode="true"
             android:id="@+id/touch_outside">
 
-
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/firstimage"
-                android:visibility="visible"
-                android:src="@drawable/picture"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/firstimage1"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="45dp"
-                android:layout_alignParentTop="true"/>
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/secondimage"
-                android:visibility="visible"
-                android:src="@drawable/picture"
-                android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"/>
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/thrdimage"
-                android:visibility="visible"
-                android:src="@drawable/picture"
-                android:layout_marginLeft="15dp"
-                android:layout_alignTop="@+id/secondimage"
-                android:layout_toEndOf="@+id/secondimage"/>
+                android:layout_centerHorizontal="true">
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:layout_width="80dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/firstimage"
+                    android:background="@drawable/picture"
+                    />
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:layout_width="80dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/secondimage"
+                    android:background="@drawable/picture"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"/>
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:layout_width="80dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/thrdimage"
+                    android:background="@drawable/picture"
+                    android:layout_marginLeft="15dp"
+                    />
+            </LinearLayout>
 
             <EditText
                 android:layout_width="match_parent"
@@ -68,12 +69,13 @@
                 android:paddingStart="13dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="25dp"
-                android:layout_below="@+id/firstimage"
+                android:layout_below="@+id/firstimage1"
                 android:layout_centerHorizontal="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:weightSum="1"
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/edittextactivityname"
                 android:layout_alignStart="@+id/edittextactivityname"
@@ -81,24 +83,24 @@
                 android:id="@+id/linearLayout_forIcon">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.75"
                     android:layout_height="match_parent"
                     android:id="@+id/icontype"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:textColor="#CFCFCF"
                     android:paddingStart="15dp"
-                    android:layout_gravity="center_vertical"
                     android:textSize="19dp"
                     android:text="Icon"
                     />
 
                 <Spinner
                     android:id="@+id/spinnericon"
-                    android:layout_width="60dp"
-                    android:layout_marginLeft="230dp"
+                    android:layout_width="0dp"
                     android:layout_gravity="right|center_vertical"
                     android:layout_height="match_parent"
-                    android:minWidth="60dp" />
+                    android:minWidth="60dp"
+                    android:layout_weight="0.2" />
             </LinearLayout>
 
             <LinearLayout
@@ -193,13 +195,14 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
                     <LinearLayout
-                        android:layout_width="fill_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_weight="0.5">
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -230,10 +233,12 @@
                             android:checked="false" />
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="210dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="0.5"
+                        android:paddingRight="8dp">
                         <EditText
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
@@ -474,6 +479,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/frameLayoutfor_availble"
                 android:layout_alignStart="@+id/frameLayoutfor_availble"
@@ -484,15 +490,17 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="15dp"
                     android:textSize="19dp"
+
                     android:id="@+id/textfor_participationcost"
                     android:textColor="#AFAFAF"
                     android:layout_gravity="center_vertical"
                     android:text="Participation cost"/>
                 <EditText
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:hint="0"
                     android:singleLine="true"
+
                     android:inputType="numberDecimal"
                     android:paddingStart="7dp"
                     android:background="@drawable/edittext_style"
@@ -507,8 +515,8 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
+
                     android:id="@+id/currency_symbol"
-                    android:layout_marginRight="20dp"
                     android:layout_gravity="center_vertical">
 
                 </Spinner>
@@ -521,23 +529,26 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:weightSum="1"
                 android:background="@drawable/smallbox"
                 android:layout_below="@+id/linearLayoutforparticipationcost"
                 android:layout_alignStart="@+id/linearLayoutforparticipationcost"
                 android:layout_alignEnd="@+id/linearLayoutforparticipationcost"
                 android:id="@+id/linearLayoutforlimit">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
                     android:paddingStart="15dp"
                     android:textSize="19dp"
                     android:textColor="#AFAFAF"
                     android:id="@+id/textforparticipantlimit"
                     android:layout_gravity="center_vertical"
-                    android:text="Participants number limit"/>
+                    android:text="Participants limit"/>
 
                 <EditText
-                    android:layout_width="90dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.35"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_style"
                     android:singleLine="true"
@@ -575,7 +586,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_margin="10dp"
-                android:layout_marginBottom="20dp"
+
                 android:layout_below="@+id/enter_discription">
 
 
@@ -601,6 +612,7 @@
                     android:textStyle="bold"
                     android:textColor="#ffffff"
                     android:background="@drawable/custom_button1"
+                    android:layout_marginBottom="50dp"
                     android:layout_alignParentEnd="false"
                     android:layout_centerHorizontal="true"
                     />

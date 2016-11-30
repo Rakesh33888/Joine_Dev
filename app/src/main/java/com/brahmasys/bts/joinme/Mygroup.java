@@ -13,8 +13,10 @@ import android.os.Looper;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -53,7 +56,7 @@ public class Mygroup extends Fragment{
     public static final String CHAT_ROOM_OPEN="chat_room_open";
     private static final String TAG = "GetMyGroupActivity";
     private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
-    ImageView shareicon;
+    ImageView shareicon,msg,logo;
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     Context context;
@@ -135,8 +138,24 @@ public class Mygroup extends Fragment{
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
-
-
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.custo_msg);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog =ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
         user_id =getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -148,6 +167,9 @@ public class Mygroup extends Fragment{
         groups_list =  (Expandable_GridView) v.findViewById(R.id.group_grid);
         groups_list.setExpanded(true);
         setListViewAdapter();
+
+
+
 
         backlayoutgroup= (LinearLayout) v.findViewById(R.id.backlayoutgroup);
         backlayoutgroup.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +200,23 @@ public class Mygroup extends Fragment{
 
             }
         });
+
+
         createalbum= (Button) v.findViewById(R.id.createnewactivity);
+//
+
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+       int stageWidth = display.getWidth();
+       int  stageHeight = display.getHeight();
+        Log.e("WIDTH",String.valueOf(stageWidth));
+        ViewGroup.LayoutParams params = null;
+
+        params =  createalbum .getLayoutParams();
+        params.height =(stageWidth/2)-21;
+        params.width = (stageWidth/2)-21;
+        createalbum .setLayoutParams(params);
+
         createalbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

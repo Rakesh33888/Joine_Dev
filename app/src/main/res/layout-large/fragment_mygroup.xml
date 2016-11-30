@@ -65,12 +65,12 @@
                 android:clickable="true"/>
 
             <Button
-                android:layout_width="172dp"
-                android:layout_height="160dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="left"
-                android:background="@drawable/createalbum"
+                android:background="@drawable/createalbum1"
                 android:id="@+id/createnewactivity"
                 />
 

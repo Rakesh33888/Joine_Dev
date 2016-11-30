@@ -1,6 +1,7 @@
 package com.brahmasys.bts.joinme;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -18,16 +19,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.StrictMode;
 
 
+import android.provider.Settings;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -112,8 +116,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     String userid,social_id=" ",login_type="regular",device_token;
     Double latitude=0.0,longitude=0.0;
     ProgressDialog progressDialog;
-
+    private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0;
     int refresh=0;
+
     @Override
     public void onCreate(Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
@@ -122,6 +127,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
         AppEventsLogger.activateApp(this);
        //  Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
         Marshmallow_Permissions.verifyStoragePermissions(MainActivity.this);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+                            MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                }
+            }
+        }
+
 
         facebook_btn = (Button) findViewById(R.id.facebook);
         mail = (Button) findViewById(R.id.mail);
@@ -162,12 +179,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
         already_member = (Button) findViewById(R.id.show);
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
-        deviceuid = android.provider.Settings.Secure.getString(MainActivity.this.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        deviceuid = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(MainActivity.this,Screen16.class);
@@ -262,6 +279,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(),"Permission Denied, You cannot access location data.",Toast.LENGTH_LONG).show();
                 }
                 break;
+            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE:
+                if (requestCode == MY_PERMISSIONS_REQUEST_READ_PHONE_STATE
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
         }
     }
 //    private void fetchLocationData() {
@@ -361,7 +383,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             JSONObject jsonObjSend = new JSONObject();
                             try {
                                 // Add key/value pairs
-                                jsonObjSend.put("device_token", token_id.getString("token", "null"));
+                                jsonObjSend.put("device_token", token_id.getString("token", "0"));
                                 jsonObjSend.put("device_type", device_type);
                                 jsonObjSend.put("deviceid", deviceuid);
                                 jsonObjSend.put("login_type", "fb");
@@ -1022,6 +1044,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
+
+
+
 }
 
 

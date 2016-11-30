@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -35,19 +36,27 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +79,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -108,6 +118,8 @@ public class Screen16 extends AppCompatActivity implements
     private static final String TAG1 = "GetUserActivity";
     private static final String URL1 = "http://52.37.136.238/JoinMe/Activity.svc/GetUserActivity";
 
+    private static final String TAG  = "UpdateUserDetail";
+    private static final String URL  = "http://52.37.136.238/JoinMe/User.svc/UpdateUserDetail";
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
@@ -121,7 +133,10 @@ public class Screen16 extends AppCompatActivity implements
     int pic_list_size = 0;
     String lat="0.0", lon="0.0";
     List<String> activity_url;
+    List<String> allurl;
     Screen19 screen19_fragment;
+    Update_Profile update_profile;
+    Appsetting appsettings;
     TextView name_activity, time_activity, distance_activity;
     List<String> activity_name, distance, time, activity_id, userid_other;
     ProgressDialog pd;
@@ -131,12 +146,13 @@ public class Screen16 extends AppCompatActivity implements
     List<String> allid;
     private CountDownTimer countDownTimer;
     private boolean timerHasStarted = false;
+    String firstname_user="",lastname_user="",gender="male",birth_day,description="",profile_url,profile_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen16);
 
-        chat_room = getSharedPreferences(CHAT_ROOM_OPEN,MODE_PRIVATE);
+        chat_room = getSharedPreferences(CHAT_ROOM_OPEN, MODE_PRIVATE);
         edit_chat_room = chat_room.edit();
 
         edit_chat_room.putString("chat_room","close");
@@ -297,6 +313,7 @@ public class Screen16 extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+//        GetUserData();
         userStatus(user_id.getString("userid", "0000"), "true");
     }
 
@@ -334,12 +351,17 @@ public void GetUserData()
 
                             try {
                                 //Getting information form the Json Response object
-                                String firstname_user = userdetails.getString("fname");
-                                String lastname_user = userdetails.getString("lname");
-
+                                  firstname_user = userdetails.getString("fname");
+                                  lastname_user = userdetails.getString("lname");
+                                  birth_day = userdetails.getString("dob");
+                                  description =userdetails.getString("about");
+                                  gender = userdetails.getString("gender");
                                 //Save the data in sharedPreference
                                 edit_user_detals.putString("firstname", firstname_user);
                                 edit_user_detals.putString("lastname", lastname_user);
+                                edit_user_detals.putString("dob", birth_day);
+                                edit_user_detals.putString("about", description);
+                                edit_user_detals.putString("gender", gender);
                                 edit_user_detals.commit();
 
 
@@ -387,6 +409,7 @@ public void GetUserData()
 }
 
     private void fillWithTestData() {
+//        GetUserData();
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
@@ -405,6 +428,7 @@ public void GetUserData()
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+//                GetUserData();
             }
 
         };
@@ -431,6 +455,30 @@ public void GetUserData()
         btninfo.setClickable(true);
         logo = (ImageView) findViewById(R.id.logo);
         create = (ImageView) findViewById(R.id.createnewactivity);
+
+
+        Display display = getWindowManager().getDefaultDisplay();
+        int stageWidth = display.getWidth();
+        int  stageHeight = display.getHeight();
+        Log.e("WIDTH",String.valueOf(stageWidth));
+        ViewGroup.LayoutParams params = null;
+        params =  like .getLayoutParams();
+        params.height =(stageWidth/4);
+        params.width = (stageWidth/4);
+        like .setLayoutParams(params);
+
+        ViewGroup.LayoutParams params1 = null;
+        params1 =  dislike .getLayoutParams();
+        params1.height =(stageWidth/4);
+        params1.width = (stageWidth/4);
+        dislike .setLayoutParams(params1);
+
+        ViewGroup.LayoutParams params2 = null;
+        params2 =  btninfo .getLayoutParams();
+        params2.height =(stageWidth/5);
+        params2.width = (stageWidth/5);
+        btninfo .setLayoutParams(params2);
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -460,51 +508,45 @@ public void GetUserData()
 
             }
         });
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setCancelable(false);
-                progressDialog.setContentView(R.layout.custom_progress);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        Intent Home = new Intent(Screen16.this,Screen16.class);
-                        startActivity(Home);
-                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-                        finish();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-
-                            }
-                        });
-
-                    }
-                }).start();
-
-
-            }
-        });
+//        logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
+//                progressDialog.setIndeterminate(true);
+//                progressDialog.setCancelable(false);
+//                progressDialog.setContentView(R.layout.custom_progress);
+//                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run()
+//                    {
+//                        Intent Home = new Intent(Screen16.this,Screen16.class);
+//                        startActivity(Home);
+//                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+//                        finish();
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                progressDialog.dismiss();
+//
+//                            }
+//                        });
+//
+//                    }
+//                }).start();
+//
+//
+//            }
+//        });
          navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         navimage = (ImageView) header.findViewById(R.id.imageViewab);
         navtextview = (TextView) header.findViewById(R.id.navtextview);
         back_nav = (ImageView) header.findViewById(R.id.back_nav);
         editbutton = (Button) header.findViewById(R.id.editbutton);
-        editbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Image_Choose();
 
-            }
-        });
         backlayoutdrawer = (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
         navtextview.setText(user_Details.getString("firstname", "") + "\t" + user_Details.getString("lastname", "null"));
         if (Build.VERSION.SDK_INT > 9) {
@@ -513,8 +555,8 @@ public void GetUserData()
         }
         pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size", "0"));
          allid = new ArrayList<String>();
-        List<String> allurl = new ArrayList<String>();
-        for (int j = 0; j < pic_list_size; j++) {
+          allurl = new ArrayList<String>();
+         for (int j = 0; j < pic_list_size; j++) {
             String id = user_pic.getString("id_" + j, "");
             String url = user_pic.getString("url_" + j, "");
 
@@ -530,7 +572,8 @@ public void GetUserData()
 //                        .placeholder(R.drawable.default_profile)
 //                        .into(navimage);
 
-
+                profile_url=allurl.get(i);
+                profile_id =allid.get(i);
                 Picasso.with(this)
                         .load("http://52.37.136.238/JoinMe/" + allurl.get(i)) // thumbnail url goes here
                         .placeholder(R.drawable.butterfly)
@@ -552,6 +595,32 @@ public void GetUserData()
 
             }
         }
+
+        editbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                drawerLayout.closeDrawers();
+                fragmentManager = getSupportFragmentManager();
+                Update_Profile other_user = new Update_Profile();
+                Bundle bundle = new Bundle();
+                bundle.putString("userid", user_id.getString("userid",""));
+                bundle.putString("firstname",user_Details.getString("firstname", ""));
+                bundle.putString("lastname",user_Details.getString("lastname", ""));
+                bundle.putString("dob",user_Details.getString("dob", ""));
+                bundle.putString("description",user_Details.getString("about", ""));
+                bundle.putString("gender", gender);
+                bundle.putString("profile_url", profile_url);
+                bundle.putString("profile_id", profile_id);
+                other_user.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.flContent, other_user)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(false);
         backlayoutdrawer.setOnClickListener(new View.OnClickListener() {
@@ -690,21 +759,21 @@ public void GetUserData()
         }
         }
 
-    public void Image_Choose()
-    {
-        Intent intent;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        } else {
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
-        }
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE1);
-    }
+//    public void Image_Choose()
+//    {
+//        Intent intent;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+//            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+//        } else {
+//            intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        }
+//        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+//        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        intent.setType("image/*");
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE1);
+//    }
     private void setListViewAdapter() {
         books = new ArrayList<Book>();
         adapter = new SwipeStackAdapter(this, R.layout.card, books);
@@ -837,7 +906,11 @@ public void GetUserData()
         if (screen19_fragment != null) {
             screen19_fragment.onActivityResult(requestCode, resultCode, data);
 
-        } else {
+        }else if(update_profile!=null)
+        {
+            update_profile.onActivityResult(requestCode, resultCode, data);
+        }
+        else {
 
 
             if (isKitKat && resultCode != Activity.RESULT_CANCELED) {
@@ -848,31 +921,10 @@ public void GetUserData()
                 if (requestCode == SELECT_FILE1) {
                    // pd.show();
 
-                    progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setCancelable(false);
-                    progressDialog.setContentView(R.layout.custom_progress);
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
-            selectedPath1 = uri;
+                 selectedPath1 = uri;
 
                 }
-                Thread thread = new Thread(new Runnable() {
-                    public void run() {
-                        doFileUpload();
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                               // fillWithTestData();
-                               GetUserData();
-                                navimage.setImageBitmap(new DecodeImage().decodeFile(selectedPath1));
 
-                            }
-                        });
-                    }
-                });
-                thread.start();
             }
 
         }
@@ -892,44 +944,44 @@ public void GetUserData()
         }
     }
 
-    private void doFileUpload() {
-
-        File file1 = new File(selectedPath1);
-
-        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserPic/" + user_id.getString("userid", "null")+"/"+allid.get(0);
-        try {
-            org.apache.http.client.HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(urlString);
-            FileBody bin1 = new FileBody(file1);
-
-            MultipartEntity reqEntity = new MultipartEntity();
-            reqEntity.addPart("uploadedfile1", bin1);
-
-            reqEntity.addPart("user", new StringBody("User"));
-            post.setEntity(reqEntity);
-            HttpResponse response = client.execute(post);
-            resEntity = response.getEntity();
-            final String response_str = EntityUtils.toString(resEntity);
-            if (resEntity != null) {
-                Log.i("RESPONSE", response_str);
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        try {
-
-                            progressDialog.dismiss();
-
-                            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        } catch (Exception ex) {
-            Log.e("Debug", "error: " + ex.getMessage(), ex);
-        }
-
-    }
+//    private void doFileUpload() {
+//
+//        File file1 = new File(selectedPath1);
+//
+//        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserPic/" + user_id.getString("userid", "null")+"/"+allid.get(0);
+//        try {
+//            org.apache.http.client.HttpClient client = new DefaultHttpClient();
+//            HttpPost post = new HttpPost(urlString);
+//            FileBody bin1 = new FileBody(file1);
+//
+//            MultipartEntity reqEntity = new MultipartEntity();
+//            reqEntity.addPart("uploadedfile1", bin1);
+//
+//            reqEntity.addPart("user", new StringBody("User"));
+//            post.setEntity(reqEntity);
+//            HttpResponse response = client.execute(post);
+//            resEntity = response.getEntity();
+//            final String response_str = EntityUtils.toString(resEntity);
+//            if (resEntity != null) {
+//                Log.i("RESPONSE", response_str);
+//                runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        try {
+//
+//                            progressDialog.dismiss();
+//
+//                            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
+//        } catch (Exception ex) {
+//            Log.e("Debug", "error: " + ex.getMessage(), ex);
+//        }
+//
+//    }
 
     public void userStatus(String userid,String status)
     {

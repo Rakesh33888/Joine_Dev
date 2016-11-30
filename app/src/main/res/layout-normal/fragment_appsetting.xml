@@ -44,23 +44,21 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="60dp"
-        >
+        android:layout_marginTop="60dp" >
 
 
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
     android:layout_marginBottom="60dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:background="@drawable/bigbox"
         android:layout_gravity="center_horizontal|top">
 
@@ -85,6 +83,7 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="right|center"
             android:orientation="horizontal"
+            android:layout_toEndOf="@+id/textView1"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true">
 
@@ -107,11 +106,11 @@
 
         </info.hoang8f.android.segmented.SegmentedGroup>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/bigbox"
         android:id="@+id/frameLayout_notification"
@@ -179,14 +178,47 @@
                 app:kswBackColor="#CDCBCB"
                 app:kswTintColor="#CDCBCB"
 
-                />
+                android:checked="false"
+                android:layout_gravity="center" />
         </RelativeLayout>
-
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activity reminder off/on "
+                android:layout_marginLeft="10dp"
+                android:paddingTop="9dp"
+                android:id="@+id/reminder1" />
+
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/reminder_switch"
+                style="@style/SwitchButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                app:kswBackDrawable="@drawable/miui_back_drawable"
+                app:kswBackMeasureRatio="2"
+                app:kswThumbDrawable="@drawable/miui_thumb_drawable"
+                app:kswBackColor="#CDCBCB"
+                app:kswTintColor="#CDCBCB"
+
+                android:checked="false"
+                android:layout_gravity="center" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/reminder_layout"
             android:layout_marginBottom="15dp"
             android:layout_weight="1.56">
 
@@ -205,6 +237,7 @@
                 android:orientation="horizontal"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+
                 android:layout_marginEnd="17dp">
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -280,7 +313,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical"
+                    >
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -358,7 +393,7 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="52dp"
+        android:layout_height="60dp"
         android:id="@+id/linearlayoutterm"
         android:background="@drawable/bigbox"  >
 
@@ -377,7 +412,7 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="52dp"
+        android:layout_height="60dp"
         android:id="@+id/logout"
         android:layout_marginTop="10dp"
         android:background="@drawable/bigbox">
@@ -407,7 +442,8 @@
         android:id="@+id/button12"
         android:background="@drawable/delete"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"  />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="60dp"/>
 
 </LinearLayout>
     </ScrollView>

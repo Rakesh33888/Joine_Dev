@@ -42,6 +42,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
 
         ViewHolder holder = null;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
         // If holder not exist then locate all view from UI file.
         if (convertView == null) {
             // inflate UI from XML file

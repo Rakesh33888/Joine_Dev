@@ -56,7 +56,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     LinearLayout linearLayout,layoutback;
     RelativeLayout relativeLayout1,relativeLayout2;
     ImageView back;
-    ImageView shareicon;
+    ImageView shareicon,msg,logo;
     private ActionBar toolbar;
     TextView mysearch,textView7,Maxdistance,distance,distance_type;
     CheckBox c1,c2,c3;
@@ -135,6 +135,10 @@ public class Mysearch extends android.support.v4.app.Fragment {
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.custo_msg);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+
 
         chat_room = getActivity().getSharedPreferences(CHAT_ROOM_OPEN, getActivity().MODE_PRIVATE);
         edit_chat_room = chat_room.edit();
@@ -180,6 +184,9 @@ public class Mysearch extends android.support.v4.app.Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+
+
 
         if(Connectivity_Checking.isConnectingToInternet()) {
             AsyncHttpClient client = new AsyncHttpClient();
@@ -439,7 +446,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                distance.setText(progress+"");
+                distance.setText(progress + "");
                 distance_type.setText(dist_type);
 
 
@@ -457,6 +464,26 @@ public class Mysearch extends android.support.v4.app.Fragment {
             }
         });
 
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!distanceStr.equals(distance.getText().toString()) || !date.equals(dateSelection)) {
+                    String seekBarValue = Integer.toString(seekBar.getProgress());
+                    FnPostRequest(seekBarValue, dateSelection, user_id.getString("userid", "null"));
+                    Intent i = new Intent(getContext(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                } else {
+                    Intent i = new Intent(getContext(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+
+                }
+
+            }
+        });
 
 
         return v;

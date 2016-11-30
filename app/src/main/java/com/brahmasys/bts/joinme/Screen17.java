@@ -39,6 +39,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.google.android.gms.vision.Frame;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Callback;
@@ -56,18 +57,18 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class Screen17 extends android.support.v4.app.Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener  {
-    FrameLayout frameLayoutacity;
+    FrameLayout frameLayoutacity ;
     ImageView imageView6;
-    ImageView imageViewbck,icon;
+    ImageView imageViewbck,icon,msg;
     CircularImageView createrimage;
   //  Button btnJoineActivity;
 
     LinearLayout backlayout_screen_17,frameLayoutbck;
-    ImageView shareicon;
+    ImageView shareicon,logo;
     RatingBar myratingBar;
     String activity_name,cost,distance,duration,limit,owner_name,owner_pic,rating,review,activity_address,time,joined,icon1,description;
     Button btnJoineActivity;
-    TextView reporttext,updatetext,delete_text;
+    TextView  updatetext,delete_text;
     TextView acitvityname,distancefromnearby,owner_name1,uptopeoples,currentpeoples,costtext,timetext,timetextview,reviews;
     FragmentManager fragmentManager;
     public static final String USERID = "userid";
@@ -95,12 +96,17 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
               progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
               progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+
+
+
+
+
         final View v=inflater.inflate(R.layout.screen17,container,false);
         frameLayoutbck= (LinearLayout) v.findViewById(R.id.frameLayoutbck);
         frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
        // btnJoineActivity= (Button) v.findViewById(R.id.button6);
-        reporttext= (TextView) v.findViewById(R.id.reportactitytext);
+      //  reporttext= (TextView) v.findViewById(R.id.reportactitytext);
         updatetext= (TextView) v.findViewById(R.id.updateactivitytext);
         delete_text = (TextView) v.findViewById(R.id.delete_activitytext);
         acitvityname = (TextView) v.findViewById(R.id.acitvityname);
@@ -116,7 +122,6 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         minimumRating = (RatingBar)v.findViewById(R.id.myRatingBar);
         icon = (ImageView) v.findViewById(R.id.imageViewrfting);
         backlayout_screen_17= (LinearLayout) v.findViewById(R.id.backlayoutscreen17);
-
 
 
 
@@ -173,33 +178,33 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
 
 
-        reporttext.setClickable(true);
-        reporttext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Connectivity_Checking.isConnectingToInternet()) {
-
-                    Fragment reportfrgmnt = new ReportFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("screen", "screen17");
-                    bundle.putString("userid", uid);
-                    bundle.putString("activityid",aid);
-                    bundle.putString("owner_id","null");
-                    bundle.putString("where",Where);
-                    reportfrgmnt.setArguments(bundle);
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.flContent, reportfrgmnt);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-                } else {
-                    Splashscreen dia = new Splashscreen();
-                    dia.Connectivity_Dialog_with_refresh(getActivity());
-                    progressDialog.dismiss();
-                }
-
-            }
-        });
+//        reporttext.setClickable(true);
+//        reporttext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (Connectivity_Checking.isConnectingToInternet()) {
+//
+//                    Fragment reportfrgmnt = new ReportFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("screen", "screen17");
+//                    bundle.putString("userid", uid);
+//                    bundle.putString("activityid",aid);
+//                    bundle.putString("owner_id","null");
+//                    bundle.putString("where",Where);
+//                    reportfrgmnt.setArguments(bundle);
+//                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.flContent, reportfrgmnt);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//
+//                } else {
+//                    Splashscreen dia = new Splashscreen();
+//                    dia.Connectivity_Dialog_with_refresh(getActivity());
+//                    progressDialog.dismiss();
+//                }
+//
+//            }
+//        });
 
 //    btnJoineActivity.setClickable(true);
 //       btnJoineActivity.setOnClickListener(new View.OnClickListener() {
@@ -348,7 +353,24 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.VISIBLE);
-
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.custo_msg);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog = ProgressDialog.show(getActivity(), null, null, true);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setContentView(R.layout.custom_progress);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -370,7 +392,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         if (Connectivity_Checking.isConnectingToInternet()) {
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + longitude + "/" +latitude,
+            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + longitude + "/" + latitude,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -416,7 +438,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     owner_pic = userdetails.getString("activity_owner_pic");
                                     rating = userdetails.getString("activity_rating");
                                     review = userdetails.getString("activity_review");
-                                    activity_address=userdetails.getString("activity_Adress");
+                                    activity_address = userdetails.getString("activity_Adress");
                                     time = userdetails.getString("activity_time");
                                     joined = userdetails.getString("participant_joined");
                                     icon1 = userdetails.getString("acitivity_icon");
@@ -425,91 +447,104 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     String activity_id = userdetails.getString("activity_id");
 
 
-
                                     acitvityname.setText(activity_name);
-                                    distancefromnearby.setText( distance+" at "+ activity_address);
+                                    distancefromnearby.setText(distance + " at " + activity_address);
                                     owner_name1.setText("Created by " + owner_name);
-                                    uptopeoples.setText("Up to " + limit + " peoples:");
-                                    currentpeoples.setText("Currently have " + joined);
-                                    costtext.setText("Cost " + cost);
-                                    timetext.setText("Description: " + description);
+                                    if (!limit.equals("0"))
+                                    {
+                                        uptopeoples.setText("Up to " + limit + " participants:");
 
-                                    //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
-                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
-                                    //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
-                                    Picasso.with(getActivity())
-                                            .load("http://52.37.136.238/JoinMe/" + owner_pic) // thumbnail url goes here
-                                            .placeholder(R.drawable.butterfly)
-                                            .resize(200,200)
-                                            .centerCrop()
-                                            .skipMemoryCache()
-                                            .into(createrimage, new Callback() {
-                                                @Override
-                                                public void onSuccess() {
-
-                                                }
-
-                                                @Override
-                                                public void onError() {
-                                                }
-                                            });
-
-
-                                    long unixSeconds = Long.parseLong(time);
-                                    Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
-                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                                    String value = sdf.format(date2);
-
-
-
-                                    timetextview.setText(value);
-                                    reviews.setText(review + " reviews");
-                                    minimumRating.setRating(Float.parseFloat(rating));
-
-
-                                    JSONArray cast = userdetails.getJSONArray("activity_pics");
-
-
-                                    //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                    List<String> allid = new ArrayList<String>();
-                                    List<String> allurl = new ArrayList<String>();
-
-                                    for (int i = 0; i < cast.length(); i++) {
-                                        JSONObject actor = cast.getJSONObject(i);
-                                        String id = actor.getString("id");
-                                        String url = actor.getString("url");
-                                        allid.add(id);
-                                        url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
-                                        //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-                                        Log.d("Type", cast.getString(i));
                                     }
-
-                                    for (String name : url_maps.keySet()) {
-                                        TextSliderView textSliderView = new TextSliderView(getActivity());
-                                        // initialize a SliderLayout
-                                        textSliderView.image(url_maps.get(name))
-                                                .setScaleType(BaseSliderView.ScaleType.CenterCrop)
-                                                .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                                                                              @Override
-                                                                              public void onSliderClick(BaseSliderView baseSliderView) {
-                                                                                  // some method
-                                                                              }
-                                                                          }
-                                                );
-                                        mDemoSlider.addSlider(textSliderView);
+                                    else
+                                    {
+                                        uptopeoples.setText("No participants limitation:");
                                     }
+                                currentpeoples.setText("Currently have " + joined);
+                                costtext.setText("Cost " + cost);
+                                timetext.setText("Description: " + description);
+
+                                //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
+                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
+                                //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
+                                Picasso.with(getActivity())
+                                        .load("http://52.37.136.238/JoinMe/" + owner_pic) // thumbnail url goes here
+                                        .placeholder(R.drawable.butterfly)
+                                        .resize(200, 200)
+                                        .centerCrop()
+                                        .skipMemoryCache()
+                                        .into(createrimage, new Callback() {
+                                            @Override
+                                            public void onSuccess() {
+
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                            }
+                                        });
 
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                long unixSeconds = Long.parseLong(time);
+                                Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                String value = sdf.format(date2);
+
+
+                                timetextview.setText(value);
+                                reviews.setText(review + " reviews");
+                                minimumRating.setRating(Float.parseFloat(rating));
+
+
+                                JSONArray cast = userdetails.getJSONArray("activity_pics");
+
+
+                                //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+                                List<String> allid = new ArrayList<String>();
+                                List<String> allurl = new ArrayList<String>();
+
+                                for (int i = 0; i < cast.length(); i++) {
+                                    JSONObject actor = cast.getJSONObject(i);
+                                    String id = actor.getString("id");
+                                    String url = actor.getString("url");
+                                    allid.add(id);
+                                    url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
+                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+                                    Log.d("Type", cast.getString(i));
                                 }
+
+                                for (String name : url_maps.keySet()) {
+                                    TextSliderView textSliderView = new TextSliderView(getActivity());
+                                    // initialize a SliderLayout
+                                    textSliderView.image(url_maps.get(name))
+                                            .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                                                          @Override
+                                                                          public void onSliderClick(BaseSliderView baseSliderView) {
+                                                                              // some method
+                                                                          }
+                                                                      }
+                                            );
+                                    mDemoSlider.addSlider(textSliderView);
+                                }
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            progressDialog.dismiss();
                         }
-                    });
+
+                        catch(
+                        JSONException e
+                        )
+
+                        {
+                            e.printStackTrace();
+                        }
+
+                        progressDialog.dismiss();
+                    }
+        });
 
 
         } else {

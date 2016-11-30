@@ -24,6 +24,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -57,7 +58,7 @@ public class Appsetting extends Fragment{
     int min_range1= 0;
     int initialvalues1 = 0;
 
-    RelativeLayout incButton11,incButton12,logout,linearLayoutterm;
+    RelativeLayout incButton11,incButton12,logout,linearLayoutterm,reminder_layout;
     LinearLayout decButton11,decButton12;
     private TextView hours,mins;
    // ProgressDialog pd;
@@ -70,11 +71,11 @@ public class Appsetting extends Fragment{
     ArrayList customarraylist;
     FragmentManager fragmentManager;
     LinearLayout backlayoutappsetting;
-    ImageView shareicon;
+    ImageView shareicon,msg,logo;
     SessionManager session;
     Button yes,no;
     String deviceuid;
-    SwitchButton switchNear;
+    SwitchButton switchNear,reminder_switch;
      ProgressDialog progressDialog;
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
@@ -151,7 +152,29 @@ public class Appsetting extends Fragment{
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.custo_msg);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Connectivity_Checking.isConnectingToInternet()) {
+                    FnSaveUserSettings();
+                    Intent i = new Intent(getActivity(), Screen16.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                    getActivity().finish();
+                }
+                else
+                {
+                    Splashscreen dia = new Splashscreen();
+                    dia.Connectivity_Dialog_with_refresh(getActivity());
+                    progressDialog.dismiss();
 
+
+                }
+            }
+        });
 
         incButton11 = (RelativeLayout) v.findViewById(R.id.incButton11);
         incButton12 = (RelativeLayout) v.findViewById(R.id.incButton12);
@@ -160,7 +183,22 @@ public class Appsetting extends Fragment{
         hours = (TextView) v.findViewById(R.id.numberEditText);
         mins = (TextView) v.findViewById(R.id.numberEditText1);
         switchNear = (SwitchButton)v.findViewById(R.id.near);
+        reminder_switch = (SwitchButton)v.findViewById(R.id.reminder_switch);
+        reminder_layout = (RelativeLayout) v.findViewById(R.id.reminder_layout);
 
+        reminder_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (reminder_switch.isChecked())
+                {
+                    reminder_layout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    reminder_layout.setVisibility(View.GONE);
+                }
+            }
+        });
 
         km = (RadioButton) v.findViewById(R.id.km);
         backlayoutappsetting= (LinearLayout) v.findViewById(R.id.backlayoutappsetting);
@@ -563,9 +601,19 @@ public class Appsetting extends Fragment{
                                 String new_level = dataObj.getString("new_level");
                                 String notification_by = dataObj.getString("notification_by");
                                 String userid = dataObj.getString("userid");
+                                String activity_reminder = dataObj.getString("reminder");
                                 String Message_list = dataObj.getString("message");
 
 
+                                if (activity_reminder.equals("true"))
+                                {
+                                    reminder_switch.setChecked(true);
+                                    reminder_layout.setVisibility(View.VISIBLE);
+                                }
+                                else
+                                {
+                                    reminder_switch.setChecked(false);
+                                }
                                 if (Message_list.equals("all messages"))
                                 {
                                     dropdown.setSelection(0);
@@ -629,7 +677,7 @@ public class Appsetting extends Fragment{
         //Here we are getting values from the UI elements
 
         Boolean activity_nearby = switchNear.isChecked();
-
+        Boolean activity_reminder = reminder_switch.isChecked();
         String activity_reminder_hours = hours.getText().toString();
         String activity_reminder_mins = mins.getText().toString();
 
@@ -669,10 +717,11 @@ public class Appsetting extends Fragment{
                 jsonObjSend.put("activity_reminder_mins", activity_reminder_mins);
                 jsonObjSend.put("distance_km", distance);
                 jsonObjSend.put("new_level", true);
-                jsonObjSend.put("notification_by", "");
+                jsonObjSend.put("notification_by", "true");
+                jsonObjSend.put("reminder",String.valueOf(activity_reminder));
                 jsonObjSend.put("userid",userid);
                 jsonObjSend.put("message",message_list);
-                Log.i("UserSettings_Request", jsonObjSend.toString(8));
+                Log.i("UserSettings_Request", jsonObjSend.toString(9));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -690,12 +739,12 @@ public class Appsetting extends Fragment{
                 e.printStackTrace();
             }
 
-            JSONObject json_LL = null;
-            try {
-                json_LL = json.getJSONObject("message");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            JSONObject json_LL = null;
+//            try {
+//                json_LL = json.getJSONObject("message");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
 
         //pd.hide();
 
@@ -750,16 +799,14 @@ public class Appsetting extends Fragment{
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    if(Connectivity_Checking.isConnectingToInternet()) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (Connectivity_Checking.isConnectingToInternet()) {
                         FnSaveUserSettings();
                         Intent i = new Intent(getActivity(), Screen16.class);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                         getActivity().finish();
-                    }
-                    else
-                    {
+                    } else {
                         Splashscreen dia = new Splashscreen();
                         dia.Connectivity_Dialog_with_refresh(getActivity());
                         progressDialog.dismiss();

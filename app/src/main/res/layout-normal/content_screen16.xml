@@ -135,33 +135,37 @@
             android:layout_gravity="right|center_vertical" /> -->
 
     </FrameLayout>
+   <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/frameLayout2"
+       android:id="@+id/buttons_layout">
+
 
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/dislike"
         android:background="@drawable/dislike"
-        android:layout_below="@+id/frameLayout2"
-        android:layout_marginTop="25dp" />
 
+        />
+       <ImageView
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height = "wrap_content"
+           android:background="@drawable/info"
+           android:id="@+id/infobutton"
+        android:layout_centerInParent="true"   />
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/message1"
         android:id="@+id/like"
         android:layout_alignTop="@+id/dislike"
-        android:layout_alignEnd="@+id/frameLayout2" />
+        android:layout_alignParentRight="true" />
 
-    <ImageView
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/info"
-        android:id="@+id/infobutton"
-        android:layout_alignTop="@+id/like"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
 
+</RelativeLayout>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -169,7 +173,7 @@
         android:id="@+id/createnewactivity"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="40dp"
-        android:layout_below="@+id/dislike"
+        android:layout_below="@+id/buttons_layout"
         android:layout_centerHorizontal="true" />
 
 

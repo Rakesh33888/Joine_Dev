@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center">
-                <TextView
+             <!--   <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/underlinedText"
@@ -57,7 +57,7 @@
                     android:id="@+id/reportactitytext"
                     android:clickable="true"
                     android:layout_weight="1"
-                    />
+                    /> -->
 
                 <TextView
                     android:layout_width="wrap_content"

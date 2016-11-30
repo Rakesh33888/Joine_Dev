@@ -1,8 +1,11 @@
 package com.brahmasys.bts.joinme;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,7 +37,7 @@ import java.util.ArrayList;
 public class ReportFragment extends android.support.v4.app.Fragment {
     TextView textproblm;
     EditText editTextproblem;
-    ImageView shareicon;
+    ImageView shareicon,msg,logo;
     Button buttoncncl,buttonsnd;
     FrameLayout reportlayout;
     public static final String ACTIVITYID = "activity_id";
@@ -67,6 +70,19 @@ public class ReportFragment extends android.support.v4.app.Fragment {
         Toolbar refTool = ((Screen16)getActivity()).toolbar;
         shareicon= (ImageView) refTool.findViewById(R.id.shareicon);
         shareicon.setVisibility(View.GONE);
+        msg = (ImageView) refTool.findViewById(R.id.msg);
+        msg.setBackgroundResource(R.drawable.custo_msg);
+        logo = (ImageView) refTool.findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getContext(), Screen16.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+                getActivity().finish();
+            }
+        });
 
         buttoncncl= (Button) v.findViewById(R.id.buttoncancel);
         buttoncncl.setOnClickListener(new View.OnClickListener() {

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F9F9F9"
+    tools:context="com.brahmasys.bts.joinme.Screen3a"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="#F9F9F9"
+        android:id="@+id/scrollView"
+        tools:context="com.brahmasys.bts.joinme.Screen3a">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#005F99"
+            android:id="@+id/header" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="#ffffff"
+                android:background="@null"
+                android:textStyle="bold"
+                android:id="@+id/cancel"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="5dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:id="@+id/update"
+                android:textColor="#ffffff"
+                android:background="@null"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp" />
+        </RelativeLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:background="#F9F9F9"
+        android:paddingTop="8dp"
+        android:layout_below="@+id/header"
+        android:weightSum="1"
+        tools:context="com.brahmasys.bts.joinme.Screen3a">
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:clickable="false"
+            android:id="@+id/profile"
+            android:background="@drawable/picture"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+           android:layout_gravity="center_horizontal"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:inputType="text|textNoSuggestions|textCapSentences"
+            android:hint="First Name"
+            android:ems="10"
+            android:layout_weight="0.3"
+            android:textColorHint="#C1C1C1"
+            android:textColor="#000"
+            android:maxLength="10"
+            android:textSize="16dp"
+            android:paddingLeft="15dp"
+            android:cursorVisible="true"
+            android:background="@drawable/smallbox"
+            android:id="@+id/firstname"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView0"
+            android:layout_marginTop="15dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:inputType="textPersonName|textCapSentences"
+            android:hint="Last Name"
+            android:minEms="2"
+            android:layout_weight="0.16"
+            android:maxLength="10"
+            android:textColorHint="#C1C1C1"
+            android:textColor="#000"
+            android:paddingLeft="15sp"
+            android:background="@drawable/smallbox"
+            android:cursorVisible="true"
+            android:textSize="16dp"
+            android:ems="10"
+            android:id="@+id/lastname"
+            android:layout_marginTop="1dp"
+            android:layout_below="@+id/firstname"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/smallbox"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/frameLayout3"
+            android:layout_below="@+id/lastname">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textColor="#C1C1C1"
+                android:gravity="left|center"
+                android:paddingLeft="15sp"
+                android:textSize="16dp"
+                android:backgroundTint="#ffffff"
+                android:id="@+id/textView4"
+                android:layout_above="@+id/textView5"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_vertical"></TextView>
+
+
+            <info.hoang8f.android.segmented.SegmentedGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:layout_weight="1"
+                    style="@style/RadioButton" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:layout_weight="1"
+                    style="@style/RadioButton" />
+
+
+            </info.hoang8f.android.segmented.SegmentedGroup>
+
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/frameLayout3"
+            android:layout_marginTop="1dp"
+            android:weightSum="1"
+            android:layout_weight="0.16"
+            android:background="@drawable/smallbox"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/frameLayout4">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:text="Birthday"
+                android:textSize="16dp"
+                android:layout_weight="0.3"
+                android:singleLine="true"
+                android:gravity="center|left"
+                android:textColor="#C1C1C1"
+                android:paddingLeft="15dp"
+                android:backgroundTint="#FFFFFF"
+                android:id="@+id/textView5"
+                android:layout_gravity="center" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="1"
+                >
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="0.3"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:layout_gravity="center"
+                    />
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:layout_weight="0.33"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:spinnerMode="dropdown"
+                    android:layout_gravity="center"
+                    />
+                <Spinner
+                    android:id="@+id/spinner3"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.37"
+                    android:layout_height="33dp"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:spinnerMode="dropdown"
+                    android:layout_gravity="center|right"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/about"
+            android:background="@drawable/bigbox"
+            android:gravity="center|left|top"
+            android:layout_weight="0.2"
+            android:padding="15dp"
+            android:cursorVisible="true"
+            android:textColorHint="#C1C1C1"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:maxLength="200"
+            android:maxLines="4"
+            android:hint="Some thing you want to share..."
+            android:layout_alignParentStart="true"
+            android:inputType="textCapSentences|textMultiLine"
+            android:layout_marginTop="1dp" />
+
+    </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
