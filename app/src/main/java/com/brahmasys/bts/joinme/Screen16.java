@@ -118,8 +118,6 @@ public class Screen16 extends AppCompatActivity implements
     private static final String TAG1 = "GetUserActivity";
     private static final String URL1 = "http://52.37.136.238/JoinMe/Activity.svc/GetUserActivity";
 
-    private static final String TAG  = "UpdateUserDetail";
-    private static final String URL  = "http://52.37.136.238/JoinMe/User.svc/UpdateUserDetail";
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
     public static final String USER_PIC = "user_pic";
@@ -147,8 +145,9 @@ public class Screen16 extends AppCompatActivity implements
     private CountDownTimer countDownTimer;
     private boolean timerHasStarted = false;
     String firstname_user="",lastname_user="",gender="male",birth_day,description="",profile_url,profile_id;
+    String refresh1="home";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen16);
 
@@ -158,6 +157,10 @@ public class Screen16 extends AppCompatActivity implements
         edit_chat_room.putString("chat_room","close");
         edit_chat_room.putString("chat_activity", "0");
         edit_chat_room.commit();
+
+
+
+
         /************* Notification Handling Start  *********************/
         String type = getIntent().getStringExtra("type");
         String notif_user_id = getIntent().getStringExtra("user_id");
@@ -211,11 +214,11 @@ public class Screen16 extends AppCompatActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
-        user_id = getSharedPreferences(USERID, MODE_PRIVATE);
+        user_id = getSharedPreferences(MainActivity.USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
-        user_Details = getSharedPreferences(DETAILS, MODE_PRIVATE);
+        user_Details = getSharedPreferences(MainActivity.DETAILS, MODE_PRIVATE);
         edit_user_detals = user_Details.edit();
-        user_pic = getSharedPreferences(USER_PIC, MODE_PRIVATE);
+        user_pic = getSharedPreferences(MainActivity.USER_PIC, MODE_PRIVATE);
         edit_user_pic = user_pic.edit();
         lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
@@ -236,7 +239,7 @@ public class Screen16 extends AppCompatActivity implements
         setListViewAdapter();
         Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
      //   LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
+        GetUserData();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -268,36 +271,36 @@ public class Screen16 extends AppCompatActivity implements
         }
         lat = lat_lng.getString("lat", "0.0");
         lon = lat_lng.getString("lng", "0.0");
-        GetUserData();
+
         userStatus(user_id.getString("userid","000"),"true");
          reloadactivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setCancelable(false);
-                progressDialog.setContentView(R.layout.custom_progress);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        Getting_Activities();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
+             @Override
+             public void onClick(View v) {
+                 progressDialog = ProgressDialog.show(Screen16.this, null, null, true);
+                 progressDialog.setIndeterminate(true);
+                 progressDialog.setCancelable(false);
+                 progressDialog.setContentView(R.layout.custom_progress);
+                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                 new Thread(new Runnable() {
+                     @Override
+                     public void run() {
+                         Getting_Activities();
+                         runOnUiThread(new Runnable() {
+                             @Override
+                             public void run() {
+                                 progressDialog.dismiss();
 
-                            }
-                        });
+                             }
+                         });
 
-                    }
-                }).start();
+                     }
+                 }).start();
 
 
-            }
-        });
+             }
+         });
+
         fillWithTestData();
     }
     @Override
@@ -308,16 +311,17 @@ public class Screen16 extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+        //GetUserData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        GetUserData();
+
         userStatus(user_id.getString("userid", "0000"), "true");
     }
 
-public void GetUserData()
+private void GetUserData()
 {
     if (Connectivity_Checking.isConnectingToInternet()) {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -370,30 +374,40 @@ public void GetUserData()
                             }
 
                             JSONArray cast = userdetails.getJSONArray("user_pic");
+                            JSONObject actor = cast.getJSONObject(0);
+                            String id = actor.getString("id");
+                            String url = actor.getString("url");
                             edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                            edit_user_pic.putString("id" , id);
+                            edit_user_pic.putString("url"  , url);
                             edit_user_pic.commit();
 
-                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                            List<String> allid = new ArrayList<String>();
-                            List<String> allurl = new ArrayList<String>();
+//                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+//                            edit_user_pic.commit();
+//                            JSONObject actor1 = cast.getJSONObject(0);
+//
+//                           String Image_Url = actor1.getString("url");
+//                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+//                            List<String> allid = new ArrayList<String>();
+//                            List<String> allurl = new ArrayList<String>();
+//
+//                            for (int i = 0; i < cast.length(); i++) {
+//                                JSONObject actor = cast.getJSONObject(i);
+//                                String id = actor.getString("id");
+//                                String url = actor.getString("url");
+//                                allid.add(id);
+//                                allurl.add(url);
+//                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+//
+//                                Log.d("Type", cast.getString(i));
+//                            }
+//                            for (int j = 0; j < allid.size(); j++) {
+//                                edit_user_pic.putString("id_" + j, allid.get(j));
+//                                edit_user_pic.putString("url_" + j, allurl.get(j));
+//
+//                            }
+//                            edit_user_pic.commit();
 
-                            for (int i = 0; i < cast.length(); i++) {
-                                JSONObject actor = cast.getJSONObject(i);
-                                String id = actor.getString("id");
-                                String url = actor.getString("url");
-                                allid.add(id);
-                                allurl.add(url);
-                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                Log.d("Type", cast.getString(i));
-                            }
-                            for (int j = 0; j < allid.size(); j++) {
-                                edit_user_pic.putString("id_" + j, allid.get(j));
-                                edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                            }
-                            edit_user_pic.commit();
-                            edit_user_pic.commit();
 
 
                         } catch (JSONException e) {
@@ -408,9 +422,34 @@ public void GetUserData()
     }
 }
 
-    private void fillWithTestData() {
-//        GetUserData();
+    public void fillWithTestData() {
+        GetUserData();
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        like = (ImageView) findViewById(R.id.like);
+        dislike = (ImageView) findViewById(R.id.dislike);
+        btninfo = (ImageView) findViewById(R.id.infobutton);
+        btninfo.setClickable(true);
+        logo = (ImageView) findViewById(R.id.logo);
+        create = (ImageView) findViewById(R.id.createnewactivity);
+        relativeLayout_share_icon = (RelativeLayout) toolbar.findViewById(R.id.Relativelayout_share_icon);
+        shareicon = (ImageView) toolbar.findViewById(R.id.shareicon);
+        reltivelayoutlogo = (RelativeLayout) findViewById(R.id.custmtool);
+        relativeLayoutmsg = (RelativeLayout) findViewById(R.id.msssg);
+        msg = (ImageView) findViewById(R.id.msg);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        navimage = (ImageView) header.findViewById(R.id.imageViewab);
+        navtextview = (TextView) header.findViewById(R.id.navtextview);
+        back_nav = (ImageView) header.findViewById(R.id.back_nav);
+        editbutton = (Button) header.findViewById(R.id.editbutton);
+        backlayoutdrawer = (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
+
+        if (Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -428,14 +467,35 @@ public void GetUserData()
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-//                GetUserData();
+//             GetUserData();
+
+                navtextview.setText(user_Details.getString("firstname", "") + "\t" + user_Details.getString("lastname", ""));
+                pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size", "0"));
+
+                profile_id = user_pic.getString("id", "0");
+                profile_url = user_pic.getString("url", "0");
+                Picasso.with(Screen16.this)
+                        .load("http://52.37.136.238/JoinMe/" + profile_url) // thumbnail url goes here
+                        .placeholder(R.drawable.butterfly)
+                        .resize(200,200)
+                        .noFade()
+                        .into(navimage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
             }
 
         };
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        relativeLayout_share_icon = (RelativeLayout) toolbar.findViewById(R.id.Relativelayout_share_icon);
-        shareicon = (ImageView) toolbar.findViewById(R.id.shareicon);
+
         shareicon.setVisibility(View.VISIBLE);
         shareicon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,18 +509,10 @@ public void GetUserData()
         });
 
 
-        like = (ImageView) findViewById(R.id.like);
-        dislike = (ImageView) findViewById(R.id.dislike);
-        btninfo = (ImageView) findViewById(R.id.infobutton);
-        btninfo.setClickable(true);
-        logo = (ImageView) findViewById(R.id.logo);
-        create = (ImageView) findViewById(R.id.createnewactivity);
-
-
         Display display = getWindowManager().getDefaultDisplay();
         int stageWidth = display.getWidth();
         int  stageHeight = display.getHeight();
-        Log.e("WIDTH",String.valueOf(stageWidth));
+        Log.e("WIDTH", String.valueOf(stageWidth));
         ViewGroup.LayoutParams params = null;
         params =  like .getLayoutParams();
         params.height =(stageWidth/4);
@@ -490,9 +542,7 @@ public void GetUserData()
                         .commit();
             }
         });
-        reltivelayoutlogo = (RelativeLayout) findViewById(R.id.custmtool);
-        relativeLayoutmsg = (RelativeLayout) findViewById(R.id.msssg);
-        msg = (ImageView) findViewById(R.id.msg);
+
         msg.setClickable(true);
         msg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -508,93 +558,53 @@ public void GetUserData()
 
             }
         });
-//        logo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+
+
+
+
+
+
+//         allid = new ArrayList<String>();
+//          allurl = new ArrayList<String>();
+//         for (int j = 0; j < pic_list_size; j++) {
+//            String id = user_pic.getString("id_" + j, "");
+//            String url = user_pic.getString("url_" + j, "");
 //
-//                progressDialog= ProgressDialog.show(Screen16.this, null,null, true);
-//                progressDialog.setIndeterminate(true);
-//                progressDialog.setCancelable(false);
-//                progressDialog.setContentView(R.layout.custom_progress);
-//                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run()
-//                    {
-//                        Intent Home = new Intent(Screen16.this,Screen16.class);
-//                        startActivity(Home);
-//                        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
-//                        finish();
-//                        runOnUiThread(new Runnable() {
+//            allid.add(id);
+//            allurl.add(url);
+//        }
+//        for (int i = 0; i < allid.size(); i++) {
+//            if (i == allurl.size() - 1) {
+//                //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
+//                //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
+////                Picasso.with(this)
+////                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
+////                        .placeholder(R.drawable.default_profile)
+////                        .into(navimage);
+//
+//                profile_url=allurl.get(i);
+//                profile_id =allid.get(i);
+//                Picasso.with(this)
+//                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i)) // thumbnail url goes here
+//                        .placeholder(R.drawable.butterfly)
+//                        .resize(200,200)
+//                        .noFade()
+//                        .into(navimage, new Callback() {
 //                            @Override
-//                            public void run() {
-//                                progressDialog.dismiss();
+//                            public void onSuccess() {
 //
+//
+//                            }
+//
+//                            @Override
+//                            public void onError() {
 //                            }
 //                        });
 //
-//                    }
-//                }).start();
-//
+//                // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
 //
 //            }
-//        });
-         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
-        navimage = (ImageView) header.findViewById(R.id.imageViewab);
-        navtextview = (TextView) header.findViewById(R.id.navtextview);
-        back_nav = (ImageView) header.findViewById(R.id.back_nav);
-        editbutton = (Button) header.findViewById(R.id.editbutton);
-
-        backlayoutdrawer = (LinearLayout) header.findViewById(R.id.backlayoutdrawer);
-        navtextview.setText(user_Details.getString("firstname", "") + "\t" + user_Details.getString("lastname", "null"));
-        if (Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        pic_list_size = Integer.parseInt(user_pic.getString("pic_list_size", "0"));
-         allid = new ArrayList<String>();
-          allurl = new ArrayList<String>();
-         for (int j = 0; j < pic_list_size; j++) {
-            String id = user_pic.getString("id_" + j, "");
-            String url = user_pic.getString("url_" + j, "");
-
-            allid.add(id);
-            allurl.add(url);
-        }
-        for (int i = 0; i < allid.size(); i++) {
-            if (i == allurl.size() - 1) {
-                //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
-                //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
-//                Picasso.with(this)
-//                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
-//                        .placeholder(R.drawable.default_profile)
-//                        .into(navimage);
-
-                profile_url=allurl.get(i);
-                profile_id =allid.get(i);
-                Picasso.with(this)
-                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i)) // thumbnail url goes here
-                        .placeholder(R.drawable.butterfly)
-                        .resize(200,200)
-                        .noFade()
-                        .into(navimage, new Callback() {
-                            @Override
-                            public void onSuccess() {
-
-
-                            }
-
-                            @Override
-                            public void onError() {
-                            }
-                        });
-
-                // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
-
-            }
-        }
+//        }
 
         editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -734,7 +744,7 @@ public void GetUserData()
                                 book.setIcon_image(actor.getString("acitivity_icon"));
                                 long unixSeconds = Long.parseLong(actor.getString("activity_time"));
                                 Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
                                 sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
                                 String value = sdf.format(date2);
                                 book.setTime(value);
@@ -833,6 +843,7 @@ public void GetUserData()
     }
     @Override
     public void onViewSwipedToLeft(int position) {
+
     }
     @Override
     public void onStackEmpty() {

@@ -27,14 +27,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
-                <TextView
+              <!--  <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25dp"
                     android:gravity="center"
                     android:id="@+id/activityreview"
                     android:textColor="#acacac"
-                    android:text="How was the activty "/>
+                    android:text="How was the activty "/> -->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -45,13 +45,13 @@
                     android:textColor="#acacac"
                     android:id="@+id/activity_name" />
 
-                <TextView
+               <!-- <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" ?"
                     android:textSize="25dp"
                     android:textColor="#acacac"
-                    android:id="@+id/textView31" />
+                    android:id="@+id/textView31" /> -->
 
             </LinearLayout>
 

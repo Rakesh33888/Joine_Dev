@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    android:scrollIndicators="none">
     <LinearLayout
         android:layout_width="match_parent"
         android:background="@mipmap/screenbg"
@@ -142,85 +143,84 @@
         </android.support.v7.widget.CardView>
 
 
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="90dp"
-        android:id="@+id/frameLayoutactity"
-        android:background="@drawable/smallbox1"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.06"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/frameLayout5"
-        android:layout_centerHorizontal="true"
-        android:layout_alignStart="@+id/frameLayout5">
-
-        <ImageView
-            android:layout_width="47dp"
-            android:layout_height="36dp"
-            android:id="@+id/imageViewrfting"
-            android:foregroundGravity="center|left"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="left|center_vertical" />
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/acitvityname"
-                android:layout_gravity="center_vertical"
-                android:textSize="16dp"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:textColor="#FFFBFB"
-                android:text=""/>
+                android:id="@+id/frameLayoutactity"
+                android:background="@drawable/smallbox1"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_below="@+id/frameLayout5"
+                android:layout_centerHorizontal="true"
+                android:layout_alignStart="@+id/frameLayout5"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_width="47dp"
+                    android:layout_height="36dp"
+                    android:id="@+id/imageViewrfting"
+                    android:foregroundGravity="center|left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="left|center_vertical" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/acitvityname"
+                        android:singleLine="false"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:layout_weight="1"
+                        android:textColor="#FFFBFB"
+                        android:text=""/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:singleLine="true"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginRight="7dp"
+                        android:id="@+id/timetextview"
+                        android:textColor="#FFFBFB"
+                        android:layout_gravity="right|center_vertical"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/distancefromnearby"
+                        android:textSize="12dp"
+                        android:textColor="#FFFBFB"
+                        android:minLines="1"
+                        android:maxLines="2"
+                        android:text=""
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="15dp" />
+                </LinearLayout>
 
 
 
-        </FrameLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="13dp"
-            android:singleLine="true"
-            android:layout_marginBottom="7dp"
-            android:layout_marginRight="7dp"
-            android:id="@+id/timetextview"
-            android:textColor="#FFFBFB"
-            android:layout_gravity="right|center_vertical" />
 
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/distancefromnearby"
-            android:layout_marginTop="50dp"
-            android:textSize="11dp"
-            android:layout_marginRight="7dp"
-            android:minLines="1"
-            android:maxLines="2"
-            android:layout_marginBottom="9dp"
-            android:textColor="#FFFBFB"
-            android:layout_marginLeft="80dp"
-            android:text=""
-            android:layout_gravity="left" />
-
-            </FrameLayout>
-            <FrameLayout
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="#24ededed"
                 android:id="@+id/createrprlfram"
                 android:layout_gravity="center"
                 android:layout_weight="0.06"
+                android:orientation="horizontal"
                 android:layout_below="@+id/frameLayoutactity"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp">
+                android:layout_alignParentStart="false">
 
                 <com.github.siyamed.shapeimageview.CircularImageView
                     android:layout_width="55dp"
@@ -232,26 +232,33 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="12dp"
                     android:src="@drawable/butterfly"/>
-
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:paddingLeft="10dp"
+                   android:layout_gravity="center_vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Created by "
-                    android:layout_marginLeft="79dp"
-                    android:layout_marginTop="15dp"
+
                     android:textColor="#FFFBFB"
                     android:singleLine="true"
                     android:textSize="16dp"
                     android:id="@+id/owner_name"
                     android:layout_gravity="left|top" />
-
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
                 <RatingBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/myRatingBar"
-                    android:layout_marginLeft="78dp"
+
                     android:progressTint="@color/ratingbar"
-                    android:layout_marginTop="20dp"
                     android:stepSize="0.5"
 
                     android:isIndicator="true"
@@ -263,15 +270,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"
                     android:singleLine="true"
                     android:textColor="#FFFBFB"
                     android:id="@+id/reviews"
-                    android:layout_gravity="center" />
-
-
-            </FrameLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp" />
+    </LinearLayout>
+               </LinearLayout>
+            </LinearLayout>
 
         <FrameLayout
             android:layout_width="fill_parent"

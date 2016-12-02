@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -95,6 +96,7 @@ public class Screen3a extends AppCompatActivity {
     private static final String TAG = "UserRegister";
     private static final String URL = "http://52.37.136.238/JoinMe/User.svc/UserRegister";
     String userid;
+    int additionalPadding = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +146,15 @@ public class Screen3a extends AppCompatActivity {
                 hideKeyboard(v);
             }
         });
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Resources resources = getResources();
+            int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                additionalPadding = resources.getDimensionPixelSize(resourceId);
+            }
+        }
         Bundle extras = getIntent().getExtras();
         final String mailId = extras.getString("mailId");
         resend.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +192,7 @@ public class Screen3a extends AppCompatActivity {
 
 
         List day_list = new ArrayList<Integer>();
-        day_list.add(0,"dd");
+        day_list.add(0,"");
         for (int i = 1; i <= 31; i++)
         {
             day_list.add(Integer.toString(i));
@@ -194,7 +205,7 @@ public class Screen3a extends AppCompatActivity {
         month.setAdapter(adapter1);
 
         List year_list = new ArrayList<Integer>();
-        year_list.add(0,"yyyy");
+        year_list.add(0,"");
         for (int i = 1910; i <= 2010; i++)
         {
             year_list.add(Integer.toString(i));

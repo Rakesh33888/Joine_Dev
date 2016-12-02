@@ -2,7 +2,7 @@
 <ScrollView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
+    android:scrollbars="none"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +16,8 @@
     android:background="#F9F9F9"
     android:paddingTop="8dp"
     android:id="@+id/scrollView"
-    tools:context="com.brahmasys.bts.joinme.Screen3a">
+    tools:context="com.brahmasys.bts.joinme.Screen3a"
+    android:scrollIndicators="none">
     <com.github.siyamed.shapeimageview.CircularImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -193,29 +194,36 @@
         android:id="@+id/spinner1"
         android:layout_width="0dp"
         android:layout_height="33dp"
-        android:spinnerMode="dropdown"
+        android:spinnerMode="dialog"
         android:layout_weight="0.3"
         style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
         android:layout_gravity="center"
-         />
+        android:scrollIndicators="none"
+        android:layoutMode="opticalBounds"
+        android:textAlignment="center"
+        android:prompt="@string/day"/>
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="0dp"
         android:layout_height="33dp"
         android:layout_weight="0.32"
         style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
-        android:spinnerMode="dropdown"
+        android:spinnerMode="dialog"
         android:layout_gravity="center"
-         />
+        android:scrollIndicators="none"
+        android:prompt="@string/month"
+        android:textAlignment="center" />
     <Spinner
         android:id="@+id/spinner3"
         android:layout_width="0dp"
         android:layout_weight="0.37"
         android:layout_height="33dp"
         style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
-        android:spinnerMode="dropdown"
+        android:spinnerMode="dialog"
+        android:prompt="@string/year"
         android:layout_gravity="center|right"
-         />
+        android:scrollIndicators="none"
+        android:textAlignment="center" />
 </LinearLayout>
 
     </LinearLayout>

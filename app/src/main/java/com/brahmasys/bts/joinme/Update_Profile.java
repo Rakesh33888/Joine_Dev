@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -79,6 +80,7 @@ public class Update_Profile extends Fragment {
     String uid;
     HttpEntity resEntity;
     ProgressDialog progressDialog;
+    int additionalPadding = 0;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,14 +108,18 @@ public class Update_Profile extends Fragment {
             }
         });
 
-        user_id = getActivity().getSharedPreferences(USERID, getActivity().MODE_PRIVATE);
+        user_id = getActivity().getSharedPreferences(MainActivity.USERID, getActivity().MODE_PRIVATE);
         edit_userid = user_id.edit();
-        user_Details = getActivity().getSharedPreferences(DETAILS, getActivity().MODE_PRIVATE);
+
+        user_Details = getActivity().getSharedPreferences(MainActivity.DETAILS, getActivity().MODE_PRIVATE);
         edit_user_detals = user_Details.edit();
+
         profile_url_home = getActivity().getSharedPreferences(PROFILE_URL, getActivity().MODE_PRIVATE);
         edit_profile_url_home = profile_url_home.edit();
-        user_pic = getActivity().getSharedPreferences(USER_PIC, getActivity().MODE_PRIVATE);
+
+        user_pic = getActivity().getSharedPreferences(MainActivity.USER_PIC, getActivity().MODE_PRIVATE);
         edit_user_pic = user_pic.edit();
+
           update_btn = (Button)v.findViewById(R.id.update);
           cancel  = (Button) v.findViewById(R.id.cancel);
           profile_img = (CircularImageView)v.findViewById(R.id.profile);
@@ -126,7 +132,13 @@ public class Update_Profile extends Fragment {
           male = (RadioButton)v.findViewById(R.id.male);
           female = (RadioButton)v.findViewById(R.id.female);
         touch_event = (RelativeLayout)v.findViewById(R.id.scrollView);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Resources resources = getResources();
+            int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                additionalPadding = resources.getDimensionPixelSize(resourceId);
+            }
+        }
 
         Bundle bundle = this.getArguments();
         uid = bundle.getString("userid", "0");
@@ -173,7 +185,7 @@ public class Update_Profile extends Fragment {
         Log.e("DAY", birth_day + "\n" + day1);
 
         List day_list = new ArrayList<Integer>();
-        day_list.add(0,"dd");
+        day_list.add(0," ");
         for (int i = 1; i <= 31; i++)
         {
             day_list.add(Integer.toString(i));
@@ -186,7 +198,7 @@ public class Update_Profile extends Fragment {
         month.setAdapter(adapter1);
 
         List year_list = new ArrayList<Integer>();
-        year_list.add(0,"yyyy");
+        year_list.add(0,"");
         for (int i = 1910; i <= 2010; i++)
         {
             year_list.add(Integer.toString(i));
@@ -216,6 +228,7 @@ public class Update_Profile extends Fragment {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 Intent home = new Intent(getActivity(),Screen16.class);
+                home.putExtra("refresh","update_profile");
                 startActivity(home);
                 getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 getActivity().finish();
@@ -269,18 +282,13 @@ public class Update_Profile extends Fragment {
                 try {
                     json = new JSONObject(String.valueOf(jsonObjRecv));
                     JSONObject resp = new JSONObject(json.getString("response"));
-                     String message = resp.getString("message");
+                     final String message = resp.getString("message");
                     if (message.equals("Updated Successfully")) {
 
-//                        progressDialog= ProgressDialog.show(getActivity(), null,null, true);
-//                        progressDialog.setIndeterminate(true);
-//                        progressDialog.setCancelable(false);
-//                        progressDialog.setContentView(R.layout.custom_progress);
-//                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        Thread thread = new Thread(new Runnable() {
+                       Thread thread = new Thread(new Runnable() {
                             public void run() {
                                 doFileUpload();
+                                GetUserData();
                                 edit_profile_url_home.putString("profile_url", selectedImagePath);
                                 edit_profile_url_home.commit();
                                 if (getActivity() != null) {
@@ -288,15 +296,14 @@ public class Update_Profile extends Fragment {
                                         public void run() {
 
 
-                                            edit_user_detals.clear();
-                                            edit_user_detals.commit();
-                                            GetUserData();
+
+
                                             progressDialog.dismiss();
                                             Intent home = new Intent(getActivity(),Screen16.class);
                                             startActivity(home);
                                             getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                                             getActivity().finish();
-
+                                            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
@@ -305,7 +312,7 @@ public class Update_Profile extends Fragment {
                             }
                         });
                         thread.start();
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+
 
                     } else {
                         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
@@ -400,21 +407,21 @@ public class Update_Profile extends Fragment {
             final String response_str = EntityUtils.toString(resEntity);
             if (resEntity != null) {
                 Log.i("RESPONSE", response_str);
-//                if (getActivity() == null) {
-//                    getActivity().runOnUiThread(new Runnable() {
-//                        public void run() {
-//                            try {
+                if (getActivity() == null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            try {
+
+//                            progressDialog.dismiss();
 //
-////                            progressDialog.dismiss();
-////
-////                            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//                    return;
-//                }
+//                            Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    return;
+                }
 
             }
         } catch (Exception ex) {
@@ -456,17 +463,17 @@ public class Update_Profile extends Fragment {
 
                                 try {
                                     //Getting information form the Json Response object
-                                    firstname_user = userdetails.getString("fname");
-                                    lastname_user = userdetails.getString("lname");
-                                    birth_day = userdetails.getString("dob");
-                                    description =userdetails.getString("about");
-                                    gender = userdetails.getString("gender");
+//                                    firstname_user = userdetails.getString("fname");
+//                                    lastname_user = userdetails.getString("lname");
+//                                    birth_day = userdetails.getString("dob");
+//                                    description =userdetails.getString("about");
+//                                    gender = userdetails.getString("gender");
                                     //Save the data in sharedPreference
-                                    edit_user_detals.putString("firstname", firstname_user);
-                                    edit_user_detals.putString("lastname", lastname_user);
-                                    edit_user_detals.putString("dob", birth_day);
-                                    edit_user_detals.putString("about", description);
-                                    edit_user_detals.putString("gender", gender);
+                                    edit_user_detals.putString("firstname", userdetails.getString("fname"));
+                                    edit_user_detals.putString("lastname", userdetails.getString("lname"));
+                                    edit_user_detals.putString("dob", userdetails.getString("dob"));
+                                    edit_user_detals.putString("about", userdetails.getString("about"));
+                                    edit_user_detals.putString("gender", userdetails.getString("gender"));
                                     edit_user_detals.commit();
 
 
@@ -475,30 +482,36 @@ public class Update_Profile extends Fragment {
                                 }
 
                                 JSONArray cast = userdetails.getJSONArray("user_pic");
+
+                                JSONObject actor = cast.getJSONObject(0);
+                                String id = actor.getString("id");
+                                String url = actor.getString("url");
                                 edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                                edit_user_pic.putString("id" , id);
+                                edit_user_pic.putString("url"  , url);
                                 edit_user_pic.commit();
 
                                 //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                                List<String> allid = new ArrayList<String>();
-                                List<String> allurl = new ArrayList<String>();
+//                                List<String> allid = new ArrayList<String>();
+//                                List<String> allurl = new ArrayList<String>();
+//
+//                                for (int i = 0; i < cast.length(); i++) {
+//                                    JSONObject actor = cast.getJSONObject(i);
+//                                    String id = actor.getString("id");
+//                                    String url = actor.getString("url");
+//                                    allid.add(id);
+//                                    allurl.add(url);
+//                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+//
+//                                    Log.d("Type", cast.getString(i));
+//                                }
+//                                for (int j = 0; j < allid.size(); j++) {
+//                                    edit_user_pic.putString("id_" + j, allid.get(j));
+//                                    edit_user_pic.putString("url_" + j, allurl.get(j));
+//
+//                                }
+//                                edit_user_pic.commit();
 
-                                for (int i = 0; i < cast.length(); i++) {
-                                    JSONObject actor = cast.getJSONObject(i);
-                                    String id = actor.getString("id");
-                                    String url = actor.getString("url");
-                                    allid.add(id);
-                                    allurl.add(url);
-                                    //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-
-                                    Log.d("Type", cast.getString(i));
-                                }
-                                for (int j = 0; j < allid.size(); j++) {
-                                    edit_user_pic.putString("id_" + j, allid.get(j));
-                                    edit_user_pic.putString("url_" + j, allurl.get(j));
-
-                                }
-                                edit_user_pic.commit();
-                                edit_user_pic.commit();
 
 
                             } catch (JSONException e) {

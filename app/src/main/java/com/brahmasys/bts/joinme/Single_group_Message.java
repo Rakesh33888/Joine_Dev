@@ -412,7 +412,7 @@ public class Single_group_Message extends Fragment    {
 
                                         long unixSeconds = Long.parseLong(String.valueOf(txtActivityTime));
                                         Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-                                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
                                         sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
                                         String value = sdf.format(date2);
 

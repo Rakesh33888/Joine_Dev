@@ -103,7 +103,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
         final View v=inflater.inflate(R.layout.screen17,container,false);
         frameLayoutbck= (LinearLayout) v.findViewById(R.id.frameLayoutbck);
-        frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
+//        frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
        // btnJoineActivity= (Button) v.findViewById(R.id.button6);
       //  reporttext= (TextView) v.findViewById(R.id.reportactitytext);
@@ -457,7 +457,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     }
                                     else
                                     {
-                                        uptopeoples.setText("No participants limitation:");
+                                        uptopeoples.setText("No limitation:");
                                     }
                                 currentpeoples.setText("Currently have " + joined);
                                 costtext.setText("Cost " + cost);
@@ -486,7 +486,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
 
                                 long unixSeconds = Long.parseLong(time);
                                 Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
                                 sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
                                 String value = sdf.format(date2);
 

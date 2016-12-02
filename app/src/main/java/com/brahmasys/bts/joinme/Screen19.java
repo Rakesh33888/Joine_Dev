@@ -115,14 +115,14 @@ public class Screen19 extends Fragment {
     Button create;
     ImageView shareicon,msg,logo;
     FrameLayout address_search;
-    Spinner spinnericon,currency_symbol, spinnerforhour;//, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour;
+    Spinner spinnericon,currency_symbol, spinnerforhour,spinnerformin;//, spinnerforday, spinnerformonth, spinnerforyear, spinnerforhour;
     LinearLayout not_everyone;
     CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
     private ContentResolver contentResolver;
     TextView age1,age2,text_search_address;
     String[] currency = new String[]{"€", "$"};
-    String year="0",month="0",day="0",hour="0",minute;
+    String year="0",month="0",day="0",hour="0",minute ="0";
     String availability="public";
     String gender="";
     String duration="0",icon ="null",title,address,age_start="0",age_end="100",cost="0",limit="0",description;
@@ -185,6 +185,7 @@ public class Screen19 extends Fragment {
 //        spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
 //        spinnerforyear = (Spinner) v.findViewById(R.id.spinner_year);
        spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
+        spinnerformin = (Spinner) v.findViewById(R.id.spinner_min);
         dateTextView = (TextView)v.findViewById(R.id.date_textview);
         dateButton = (ImageView)v.findViewById(R.id.date_button);
 
@@ -699,11 +700,19 @@ public class Screen19 extends Fragment {
                                     hour = String.valueOf(spinnerforhour.getSelectedItemPosition() - 1);
 
                                 }
+                                if (!String.valueOf(spinnerformin.getSelectedItem()).equals("0"))
+                                {
+                                    minute = String.valueOf(spinnerformin.getSelectedItem());
+                                }
+                                else
+                                {
+                                    minute = "00";
+                                }
 
-
+                                Log.e("Min",minute);
                                 /*************** Time Stamp Start********************/
 
-                                String dateString = dateTextView.getText().toString() + " " + hour + ":00" + ":00" + " " + "GMT";
+                                String dateString = dateTextView.getText().toString() + " " + hour + ":"+minute + ":00" + " " + "GMT";
                                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
 
                                 Date date1 = dateFormat.parse(dateString);
@@ -1180,7 +1189,7 @@ public class Screen19 extends Fragment {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
             String time = simpleDateFormat.format(calander.getTime());
 
-            String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+            String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
 
             List hours =  new ArrayList<String>();;
             if (date.equals(current_date))
@@ -1192,14 +1201,14 @@ public class Screen19 extends Fragment {
                 for (int i =0; i <=23; i++) {
                  if (i>Integer.parseInt(time))
                  {
-                     hours.add(i + ":00");
+                     hours.add(i );
                  }
                }
             }
             else {
                 hours.add(0, "");
                 for (int i =0; i <=23; i++) {
-                        hours.add(i + ":00");
+                        hours.add(i );
 
                 }
             }
@@ -1207,6 +1216,9 @@ public class Screen19 extends Fragment {
             spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerArrayAdapter4.notifyDataSetChanged();
             spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.min));
+            spinnerformin.setAdapter(adapter1);
             dateTextView.setText(date);
         }
     }

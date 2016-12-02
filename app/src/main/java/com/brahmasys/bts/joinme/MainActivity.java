@@ -982,6 +982,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 //Save the data in sharedPreference
                                 edit_user_detals.putString("firstname", firstname_user);
                                 edit_user_detals.putString("lastname", lastname_user);
+
                                 edit_user_detals.commit();
 
                             } catch (JSONException e) {
@@ -989,26 +990,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             }
 
                             JSONArray cast = userdetails.getJSONArray("user_pic");
-                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                            edit_user_pic.commit();
-                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-                            List<String> allid = new ArrayList<String>();
-                            List<String> allurl = new ArrayList<String>();
-                            for (int i = 0; i < cast.length(); i++) {
-                                JSONObject actor = cast.getJSONObject(i);
+
+                            JSONObject actor = cast.getJSONObject(0);
                                 String id = actor.getString("id");
                                 String url = actor.getString("url");
-                                allid.add(id);
-                                allurl.add(url);
-                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-                                Log.d("Type", cast.getString(i));
-                            }
-                            for (int j = 0; j < allid.size(); j++) {
-                                edit_user_pic.putString("id_" + j, allid.get(j));
-                                edit_user_pic.putString("url_" + j, allurl.get(j));
-                            }
+                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
+                            edit_user_pic.putString("id" , id);
+                            edit_user_pic.putString("url"  , url);
                             edit_user_pic.commit();
-                            edit_user_pic.commit();
+
+                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
+//                            List<String> allid = new ArrayList<String>();
+//                            List<String> allurl = new ArrayList<String>();
+//                            for (int i = 0; i < cast.length(); i++) {
+//                                JSONObject actor = cast.getJSONObject(i);
+//                                String id = actor.getString("id");
+//                                String url = actor.getString("url");
+//                                allid.add(id);
+//                                allurl.add(url);
+//                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
+//                                Log.d("Type", cast.getString(i));
+//                            }
+//                            for (int j = 0; j < allid.size(); j++) {
+//                                edit_user_pic.putString("id_" + j, allid.get(j));
+//                                edit_user_pic.putString("url_" + j, allurl.get(j));
+//                            }
+//                            edit_user_pic.commit();
+//                            edit_user_pic.commit();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

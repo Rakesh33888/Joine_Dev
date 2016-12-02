@@ -336,7 +336,7 @@ public class Mygroup extends Fragment{
 
                     long unixSeconds = Long.parseLong(actor.getString("activity_time"));
                     Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
                     sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
                     String formattedDate = sdf.format(date2);
                     Log.e("Timestamp527", String.valueOf(formattedDate));

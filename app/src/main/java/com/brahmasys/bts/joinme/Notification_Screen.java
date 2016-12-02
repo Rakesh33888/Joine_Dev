@@ -155,22 +155,22 @@ public class Notification_Screen extends Fragment {
                                         remind_later.setVisibility(View.GONE);
                                     }
 
-                                    activity_name1.setText(activity_name);
-                                    //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
-                                    Picasso.with(getActivity())
-                                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
-                                            .placeholder(R.drawable.butterfly)
-                                            .resize(200,200)
-                                            .into(activity_image, new Callback() {
-                                                @Override
-                                                public void onSuccess() {
+                                    activity_name1.setText("How was the activty "+activity_name +"?");
+                                            //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
+                                            Picasso.with(getActivity())
+                                                    .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                                                    .placeholder(R.drawable.butterfly)
+                                                    .resize(200, 200)
+                                                    .into(activity_image, new Callback() {
+                                                        @Override
+                                                        public void onSuccess() {
 
-                                                }
+                                                        }
 
-                                                @Override
-                                                public void onError() {
-                                                }
-                                            });
+                                                        @Override
+                                                        public void onError() {
+                                                        }
+                                                    });
 
                                     did_not_go.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -312,7 +312,7 @@ public class Notification_Screen extends Fragment {
                                         review_remind_later.setVisibility(View.GONE);
                                     }
 
-                                    review_activity_name.setText(activity_name);
+                                    review_activity_name.setText(activity_name+ " activity review ? ");
                                   //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(review_activity_image);
                                     Picasso.with(getActivity())
                                             .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here

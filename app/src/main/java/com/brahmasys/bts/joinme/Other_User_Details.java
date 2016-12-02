@@ -95,7 +95,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final View v=inflater.inflate(R.layout.other_user_details,container,false);
         frameLayoutbck= (FrameLayout) v.findViewById(R.id.frameLayoutbck);
-        frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
+        //frameLayoutacity= (FrameLayout) v.findViewById(R.id.frameLayoutactity);
         imageViewbck= (ImageView) v.findViewById(R.id.backbtnimage);
         btnJoineActivity= (Button) v.findViewById(R.id.button6);
         reporttext= (TextView) v.findViewById(R.id.reportactitytext);
@@ -358,7 +358,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                     }
                                     else
                                     {
-                                        uptopeoples.setText("No participants limitation:");
+                                        uptopeoples.setText("No limitation:");
                                     }
                                    // uptopeoples.setText("Up to " + limit + " peoples:");
                                     currentpeoples.setText("Currently have " + joined);
@@ -388,7 +388,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
                                     long unixSeconds = Long.parseLong(time);
                                     Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh aa "); // the format of your date
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
                                     sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
                                     String value = sdf.format(date2);
 

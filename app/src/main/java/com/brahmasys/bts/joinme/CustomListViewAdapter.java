@@ -51,6 +51,8 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
             holder = new ViewHolder(convertView);
             // set tag for holder
             convertView.setTag(holder);
+
+
         } else {
             // if holder created, get tag from view
             holder = (ViewHolder) convertView.getTag();

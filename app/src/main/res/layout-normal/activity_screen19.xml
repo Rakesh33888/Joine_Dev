@@ -11,7 +11,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ScrollViewscreen19"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:scrollbars="none"
+        android:layout_height="match_parent"
+        android:scrollIndicators="none">
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -62,7 +64,7 @@
                 android:textColorHint="#CFCFCF"
                 android:textSize="19dp"
                 android:singleLine="true"
-                android:maxLength="50"
+                android:maxLength="25"
                 android:paddingEnd="7dp"
                 android:inputType="textCapSentences"
                 android:paddingStart="13dp"
@@ -99,16 +101,20 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.2"
                     android:dropDownWidth="100dp"
-                    android:spinnerMode="dropdown"
+                    android:spinnerMode="dialog"
                     android:minWidth="100dp"
                     android:layout_gravity="right|center_vertical"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
-                    android:paddingBottom="10dp" />
+                    android:paddingBottom="10dp"
+                    android:scrollIndicators="none"
+                    android:textAlignment="center"
+                    android:prompt="@string/Activity_icons"
+                    android:layoutMode="opticalBounds" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@+id/linearLayout_forIcon"
@@ -119,25 +125,28 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:id="@+id/timetext"
-                    android:text="Time"
+                    android:id="@+id/datetext"
+                    android:text="Date"
                     android:textColor="#CFCFCF"
                     android:gravity="center"
                     android:paddingStart="15dp"
                     android:textSize="19dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true" />
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    >
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp">
 
                     <RelativeLayout
-                        android:layout_width="140dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/relativeLayout"
-                        android:layout_centerVertical="true">
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -156,23 +165,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true" />
                     </RelativeLayout>
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/spinner_hour"
-                        android:layout_marginStart="21dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/relativeLayout"
-                        android:layout_centerVertical="true" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="hr"
-                        android:textSize="20dp"
-                        android:textColor="#CFCFCF"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/spinner_hour"
-                        android:layout_marginStart="10dp" />
+
                 </RelativeLayout>
                    <!-- <Spinner
                         android:layout_width="50dp"
@@ -223,12 +216,61 @@
 
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_below="@+id/linearLayoutfor_time"
+                android:background="@drawable/smallbox"
+                android:orientation="horizontal"
+                android:layout_alignStart="@+id/linearLayout_forIcon"
+                android:layout_alignEnd="@+id/linearLayout_forIcon"
+                android:id="@+id/linearLayoutfor_date"
+                android:weightSum="1">
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/timetext"
+                    android:text="Time"
+                    android:textColor="#CFCFCF"
+                   android:gravity="center_vertical"
+                    android:paddingStart="15dp"
+                    android:textSize="19dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical" />
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/spinner_hour"
+                    android:layout_weight="0.34"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:scrollIndicators="none"
+                    android:layoutMode="opticalBounds"
+                    android:textAlignment="center"
+                    android:spinnerMode="dialog"
+                    android:prompt="@string/hours" />
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/spinner_min"
+                    android:layout_weight="0.34"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:scrollIndicators="none"
+                    android:layoutMode="opticalBounds"
+                    android:textAlignment="center"
+                    android:spinnerMode="dialog"
+                    android:prompt="@string/minutes"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayoutfor_date"
                 android:id="@+id/framelayoutfor_location"
                 android:background="@drawable/bigbox"
                 android:orientation="vertical"
@@ -566,7 +608,8 @@
                         android:spinnerMode="dropdown"
                         android:id="@+id/currency_symbol"
                          android:layout_marginRight="20dp"
-                        android:layout_gravity="center_vertical">
+                        android:layout_gravity="center_vertical"
+                        android:scrollIndicators="none">
 
                     </Spinner>
 

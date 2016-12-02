@@ -78,6 +78,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -90,7 +91,7 @@ public class Update_Activity extends Fragment  {
     CircularImageView firstimage, secondimage, thirdimage;
     EditText edittextactivityname, enterdiscription, edit_cost, edit_limit,current_address;
     Button update_activity, delet_activity;
-    Spinner spinnericon,spinnerforhour, currency_symbol;
+    Spinner spinnericon,spinnerforhour, currency_symbol,spinnerformin;
     LinearLayout not_everyone;
     CheckBox checkboxcurrent, checkBoxaddress, checkBoxforeveryone, checkBoxnotforeveryone, checkBoxformen, checkBoxforwomen;
     CrystalRangeSeekbar seekBarforage;
@@ -159,6 +160,7 @@ public class Update_Activity extends Fragment  {
         dateTextView = (TextView)v.findViewById(R.id.date_textview);
         dateButton = (ImageView)v.findViewById(R.id.date_button);
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
+        spinnerformin = (Spinner) v.findViewById(R.id.spinner_min);
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
         text_search_address = (TextView)v.findViewById(R.id.search_address);
@@ -373,7 +375,7 @@ public class Update_Activity extends Fragment  {
             long unixSeconds = Long.parseLong(userdetails.getString("activity_time"));
             Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // the format of your date
-            SimpleDateFormat sdf1 = new SimpleDateFormat("HH");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
             sdf1.setTimeZone(TimeZone.getTimeZone("GMT"));
             sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
             String formattedDate = sdf.format(date2);
@@ -397,14 +399,14 @@ public class Update_Activity extends Fragment  {
                 for (int i =0; i <=23; i++) {
                     if (i>Integer.parseInt(time))
                     {
-                        hours.add(i + ":00");
+                        hours.add(i );
                     }
                 }
             }
             else {
                 hours.add(0, "");
                 for (int i =0; i <=23; i++) {
-                    hours.add(i + ":00");
+                    hours.add(i );
 
                 }
             }
@@ -412,16 +414,26 @@ public class Update_Activity extends Fragment  {
             spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerArrayAdapter4.notifyDataSetChanged();
             spinnerforhour.setAdapter(spinnerArrayAdapter4);
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.min));
+            spinnerformin.setAdapter(adapter1);
+            String string = formattedDate1;
+            String[] parts = string.split(":");
+            String hr = parts[0];
+            String mi = parts[1];
 
             if (formattedDate.equals(current_date))
             {
-                spinnerforhour.setSelection(Integer.parseInt(formattedDate1)-Integer.parseInt(time));
+                spinnerforhour.setSelection(Integer.parseInt(hr)-Integer.parseInt(time));
 
             }
             else {
-                spinnerforhour.setSelection(Integer.parseInt(formattedDate1)+1);
+                spinnerforhour.setSelection(Integer.parseInt(hr)+1);
             }
 
+            if (!mi.equals("00"))
+            {
+            spinnerformin.setSelection(Arrays.asList(getResources().getStringArray(R.array.min)).indexOf(mi));
+            }
 
             Icon_url = userdetails.getString("acitivity_icon");
 
@@ -922,9 +934,16 @@ public class Update_Activity extends Fragment  {
                     hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
 
                 }
-
+                if (!String.valueOf(spinnerformin.getSelectedItem()).equals("0"))
+                {
+                    minute = String.valueOf(spinnerformin.getSelectedItem());
+                }
+                else
+                {
+                    minute = "00";
+                }
                 /*************** Time Stamp Start********************/
-                String dateString = dateTextView.getText().toString()+" "+hour+":00"+":00"+" "+"GMT";
+                String dateString = dateTextView.getText().toString()+" "+hour+":"+minute+":00"+" "+"GMT";
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
                 Date date1 = dateFormat.parse(dateString );
                 unixTime = (long) date1.getTime()/1000;
@@ -1261,7 +1280,8 @@ public class Update_Activity extends Fragment  {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 if (!geo_autocomplete.getText().toString().equals(""))
                 {
                     emailDialog.dismiss();
@@ -1273,6 +1293,8 @@ public class Update_Activity extends Fragment  {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 emailDialog.dismiss();
             }
         });
@@ -1357,7 +1379,7 @@ private void doFileUpload(){
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
             String time = simpleDateFormat.format(calander.getTime());
 
-            String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+            String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
 
             List hours =  new ArrayList<String>();;
             if (date.equals(current_date))
@@ -1369,14 +1391,14 @@ private void doFileUpload(){
                 for (int i =0; i <=23; i++) {
                     if (i>Integer.parseInt(time))
                     {
-                        hours.add(i + ":00");
+                        hours.add(i);
                     }
                 }
             }
             else {
                 hours.add(0, "");
                 for (int i =0; i <=23; i++) {
-                    hours.add(i + ":00");
+                    hours.add(i);
 
                 }
             }
@@ -1384,6 +1406,9 @@ private void doFileUpload(){
             spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerArrayAdapter4.notifyDataSetChanged();
             spinnerforhour.setAdapter(spinnerArrayAdapter4);
+
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.min));
+            spinnerformin.setAdapter(adapter1);
             dateTextView.setText(date);
 
         }
