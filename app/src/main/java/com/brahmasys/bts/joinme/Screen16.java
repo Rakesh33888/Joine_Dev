@@ -123,8 +123,9 @@ public class Screen16 extends AppCompatActivity implements
     public static final String USER_PIC = "user_pic";
     private static final String LAT_LNG = "lat_lng";
     public static final String CHAT_ROOM_OPEN="chat_room_open";
-    SharedPreferences user_id, user_Details, user_pic, lat_lng,chat_room;
-    SharedPreferences.Editor edit_userid, edit_user_detals, edit_user_pic, edit_lat_lng,edit_chat_room;
+    public static final String SKIP_ACTIVITY = "skip_activity";
+    SharedPreferences user_id, user_Details, user_pic, lat_lng,chat_room,skip_activity;
+    SharedPreferences.Editor edit_userid, edit_user_detals, edit_user_pic, edit_lat_lng,edit_chat_room,edit_skip_activity;
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
@@ -222,6 +223,9 @@ public class Screen16 extends AppCompatActivity implements
         edit_user_pic = user_pic.edit();
         lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
+        skip_activity = getSharedPreferences(SKIP_ACTIVITY,MODE_PRIVATE);
+        edit_skip_activity = skip_activity.edit();
+
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
         distance_activity = (TextView) findViewById(R.id.textView16);
@@ -450,7 +454,7 @@ private void GetUserData()
         }
 
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
@@ -645,6 +649,7 @@ private void GetUserData()
                 public void onClick(View v) {
                     mSwipeStack.swipeTopViewToLeft();
                     mSwipeStack.setRotation(View.DRAWING_CACHE_QUALITY_AUTO);
+                    //Skip_Activity(activity_id.get(mSwipeStack.getCurrentPosition()),mSwipeStack.getCurrentPosition());
                     if (mSwipeStack.getCurrentPosition() >= activity_name.size())
                     {
                         Toast.makeText(Screen16.this, "There is no activity...!", Toast.LENGTH_SHORT).show();
@@ -728,6 +733,7 @@ private void GetUserData()
                     JSONArray cast = json.getJSONArray("data");
                     if(!cast.equals("")) {
                         if (cast.length() != 0) {
+
                             for (int i = 0; i < cast.length(); i++) {
                                 JSONObject actor = cast.getJSONObject(i);
                                 String id = actor.getString("activity_url");
@@ -738,17 +744,43 @@ private void GetUserData()
                                 userid_other.add(actor.getString("userid"));
                                 activity_url.add(id);
                                 Book book = new Book();
-                                book.setName(actor.getString("activity_name"));
-                                book.setImageUrl(actor.getString("activity_url"));
-                                book.setAuthorName(actor.getString("activity_distance"));
-                                book.setIcon_image(actor.getString("acitivity_icon"));
-                                long unixSeconds = Long.parseLong(actor.getString("activity_time"));
-                                Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
-                                sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                                String value = sdf.format(date2);
-                                book.setTime(value);
-                                books.add(book);
+//                               if (skip_activity.getString("id_" + i, "0").equals(actor.getString("activity_id")))
+//                               {
+//
+//                               }
+//                               else
+//                                   {
+                                            book.setName(actor.getString("activity_name"));
+                                            book.setImageUrl(actor.getString("activity_url"));
+                                            book.setAuthorName(actor.getString("activity_distance"));
+                                            book.setIcon_image(actor.getString("acitivity_icon"));
+                                            long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                                            Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
+                                            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                            String value = sdf.format(date2);
+                                            book.setTime(value);
+                                            books.add(book);
+                                  // }
+
+
+//                                else {
+//                                    book.setName(actor.getString("activity_name"));
+//                                    book.setImageUrl(actor.getString("activity_url"));
+//                                    book.setAuthorName(actor.getString("activity_distance"));
+//                                    book.setIcon_image(actor.getString("acitivity_icon"));
+//                                    long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+//                                    Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+//                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
+//                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+//                                    String value = sdf.format(date2);
+//                                    book.setTime(value);
+//                                    books.add(book);
+//
+//                                }
+
+
+
 
                             }
                             adapter.notifyDataSetChanged();
@@ -843,7 +875,7 @@ private void GetUserData()
     }
     @Override
     public void onViewSwipedToLeft(int position) {
-
+        Skip_Activity(activity_id.get(mSwipeStack.getCurrentPosition()),mSwipeStack.getCurrentPosition());
     }
     @Override
     public void onStackEmpty() {
@@ -854,6 +886,8 @@ private void GetUserData()
                // mSwipeStack.resetStack();
                 Getting_Activities();
                 reloadactivity.setVisibility(View.GONE);
+                edit_skip_activity.clear();
+                edit_skip_activity.commit();
             }
         });
 
@@ -1026,6 +1060,12 @@ private void GetUserData()
 
     }
 
+    public void Skip_Activity(String id,int position)
+    {
+
+        edit_skip_activity.putString("id_"+position,id);
+        edit_skip_activity.commit();
+    }
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {   }
     @Override

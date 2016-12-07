@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_gravity="center"
+    android:layout_height="match_parent">
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:background="#fff"
+    android:padding="8dp"
     android:layout_gravity="center"
-    android:layout_height="500dp">
+    android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,13 +21,13 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="85dp"
+            android:layout_height="wrap_content"
             android:textSize="24dp"
             android:id="@+id/congatulaton_text"
             android:gravity="center"
             android:textColor="#f4717171"
             android:text="Congratulation,you have completed an activity - "
-            />
+            android:padding="5dp" />
 
     </RelativeLayout>
     <FrameLayout
@@ -59,7 +67,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
 
-        android:layout_above="@+id/linearLayout" />
+        android:layout_above="@+id/linearLayout"
+        android:paddingLeft="10dp" />
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -94,13 +103,13 @@
             android:id="@+id/skip_congatulation"
             android:gravity="center"
             android:text="@string/text3"
-            />
+            android:layout_marginLeft="5dp" />
         <Button
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="submit"
             android:textSize="18dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:textColor="#fff"
             android:background="@drawable/custom_button1"
             android:id="@+id/submitte_congratulation"
@@ -111,3 +120,4 @@
 
 
 </LinearLayout>
+</ScrollView>

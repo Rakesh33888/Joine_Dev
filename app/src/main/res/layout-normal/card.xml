@@ -54,7 +54,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         android:background="#bfcacaca"
         android:orientation="horizontal"
         android:layout_below="@+id/swipeStack"
@@ -74,25 +74,26 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Rafting"
             android:ellipsize="marquee"
             android:scrollHorizontally="true"
             android:scrollbars = "horizontal"
             android:nestedScrollingEnabled="true"
-            android:maxLines="2"
             android:id="@+id/textView14"
             android:layout_weight="0.69"
             android:textSize="16dp"
             android:textColor="#FFF"
-            android:layout_gravity="left|center" />
+            android:layout_gravity="left|center"
+            android:gravity="center_vertical"
+            />
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="0.3"
-            >
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,8 +101,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text1"
                 android:textSize="13dp"
-
-
                 android:paddingTop="7dp"
                 android:textColor="#FFF"
                 android:id="@+id/textView16"
@@ -110,12 +109,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="15dp"
+
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
             android:textSize="13dp"
-
-
             android:textColor="#FFF"
             android:id="@+id/textView15"
             android:layout_marginTop="9dp"

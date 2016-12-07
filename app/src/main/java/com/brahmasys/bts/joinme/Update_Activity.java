@@ -11,12 +11,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -72,8 +74,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -100,7 +105,7 @@ public class Update_Activity extends Fragment  {
     TextView age1, age2,text_search_address;
     ProgressDialog progressDialog;
     String[] currency = new String[]{"€", "$"};
-    String year = "0", month = "0", day = "0", hour = "0", minute;
+    String year = "0", month = "0", day = "0", hour = "0", minute="0";
     String availability;
     ImageView shareicon,msg,logo;
     ArrayList<String> data;
@@ -919,7 +924,7 @@ public class Update_Activity extends Fragment  {
 
               //  hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
 
-                String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
 
                 Calendar calander = Calendar.getInstance();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
@@ -934,7 +939,7 @@ public class Update_Activity extends Fragment  {
                     hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
 
                 }
-                if (!String.valueOf(spinnerformin.getSelectedItem()).equals("0"))
+                if (!String.valueOf(spinnerformin.getSelectedItem()).equals(""))
                 {
                     minute = String.valueOf(spinnerformin.getSelectedItem());
                 }
@@ -944,7 +949,7 @@ public class Update_Activity extends Fragment  {
                 }
                 /*************** Time Stamp Start********************/
                 String dateString = dateTextView.getText().toString()+" "+hour+":"+minute+":00"+" "+"GMT";
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss z");
                 Date date1 = dateFormat.parse(dateString );
                 unixTime = (long) date1.getTime()/1000;
                 Log.e("Timestamp527", String.valueOf(unixTime));
@@ -1163,7 +1168,48 @@ public class Update_Activity extends Fragment  {
 
 
         }
-    }
+
+        else {
+            // firstimage.setImageBitmap(null);
+            Uri mediaUri = data.getData();
+            String mediaPath = mediaUri.getPath();
+            Bitmap bm = null;
+            try {
+                InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
+                bm = BitmapFactory.decodeStream(inputStream);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                byte[] byteArray = stream.toByteArray();
+
+                //  firstimage.setImageBitmap(bm);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+            if (requestCode == PICK_IMAGE1) {
+                pick1 = "1";
+                selectedImagePath = mediaUri.getPath();
+                //firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
+                firstimage.setImageBitmap(bm);
+
+            }
+            if (requestCode == PICK_IMAGE2) {
+                pick2 = "2";
+                selectedImagePath2 = mediaUri.getPath();
+                // secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
+                secondimage.setImageBitmap(bm);
+            }
+            if (requestCode == PICK_IMAGE3) {
+                pick3 = "3";
+                selectedImagePath3 = mediaUri.getPath();
+                // thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
+                thirdimage.setImageBitmap(bm);
+            }
+        }
+
+        }
 
     public void Address_search_Dialog() {
 

@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
 
     android:layout_gravity="center"
     android:layout_height="wrap_content"
@@ -10,8 +10,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="320dp"
+    android:layout_width="fill_parent"
     android:background="#fff"
+    android:padding="5dp"
+    android:layout_margin="15dp"
     android:layout_gravity="center"
     android:layout_height="wrap_content"
     android:weightSum="1">
@@ -43,7 +45,8 @@
                 android:text="name"
                 android:textSize="20dp"
                 android:textColor="#acacac"
-                android:id="@+id/activity_name" />
+                android:id="@+id/activity_name"
+                android:padding="5dp" />
 
           <!--  <TextView
                 android:layout_width="wrap_content"
@@ -92,29 +95,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/rating_action"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:padding="5dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/did_not_go"
             android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/did_not_go" />
+            android:id="@+id/did_not_go"
+            android:layout_alignParentLeft="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/remind_later"
             android:layout_weight="1"
-            android:id="@+id/remind_later" />
+            android:id="@+id/remind_later"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/skip"
             android:layout_weight="1"
-            android:id="@+id/skip" />
+            android:id="@+id/skip"
+            android:layout_alignParentRight="true" />
     </LinearLayout>
 
     <LinearLayout

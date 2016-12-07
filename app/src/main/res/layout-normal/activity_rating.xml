@@ -2,10 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="320dp"
+    android:layout_width="fill_parent"
     android:layout_gravity="center"
-    android:background="#fff"
-    android:layout_height="240dp">
+    android:background="@null"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +20,7 @@
             android:maxLines="2"
             android:id="@+id/activityreview_text"
             android:textColor="#acacac"
+            android:layout_marginLeft="5dp"
             android:text="How was the activty Rafting ?"
             android:layout_centerInParent="true" />
 
@@ -61,7 +62,7 @@
 
 
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
@@ -73,7 +74,8 @@
             android:layout_marginLeft="15sp"
             android:id="@+id/i_dont_go_text"
             android:gravity="center"
-            android:text="@string/text1"/>
+            android:text="@string/text1"
+            android:layout_alignParentLeft="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -82,7 +84,8 @@
             android:id="@+id/remind_me_later"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/text2"/>
+            android:text="@string/text2"
+            android:layout_centerHorizontal="true" />
         <TextView
             android:layout_width="45dp"
             android:layout_height="30dp"
@@ -91,9 +94,10 @@
             android:layout_marginRight="30dp"
             android:layout_gravity="right"
             android:gravity="center"
-            android:text="@string/text3"/>
+            android:text="@string/text3"
+            android:layout_alignParentRight="true" />
 
-    </FrameLayout>
+    </RelativeLayout>
 
 
 

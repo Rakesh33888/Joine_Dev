@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,7 +49,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -369,7 +375,27 @@ public class Update_Profile extends Fragment {
 
 
         }
-    }
+        else {
+            // firstimage.setImageBitmap(null);
+            Uri mediaUri = data.getData();
+            String mediaPath = mediaUri.getPath();
+            selectedImagePath = mediaUri.getPath();
+            Bitmap bm = null;
+            try {
+                InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
+                bm = BitmapFactory.decodeStream(inputStream);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                byte[] byteArray = stream.toByteArray();
+
+                profile_img.setImageBitmap(bm);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        }
 
     public void Image_Choose()
     {

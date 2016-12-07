@@ -12,6 +12,8 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -90,8 +92,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -518,7 +523,7 @@ public class Screen19 extends Fragment {
                 Intent intent;
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
                     intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                 }else{
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -536,7 +541,7 @@ public class Screen19 extends Fragment {
                 Intent intent;
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
                     intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                 }else{
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -555,7 +560,7 @@ public class Screen19 extends Fragment {
                 Intent intent;
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
                     intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
                     intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                 }else{
                     intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -673,7 +678,7 @@ public class Screen19 extends Fragment {
     public void CreateActivity() throws ParseException {
         if (Connectivity_Checking.isConnectingToInternet()) {
             Log.e("Position", String.valueOf(spinnerforhour.getSelectedItemPosition()));
-            if (pick1.equals("1") && pick2.equals("2") && pick3.equals("3")) {
+            if (pick1.equals("1")|| pick2.equals("2") || pick3.equals("3")) {
                 if (!edittextactivityname.getText().toString().equals("") && !enterdiscription.getText().toString().equals("") && !dateTextView.getText().toString().equals("Select date")
                         && spinnerforhour.getSelectedItemPosition() - 1 >= 0) {
                     if (!edit_limit.getText().toString().equals("0")) {
@@ -687,7 +692,7 @@ public class Screen19 extends Fragment {
 //                day = spinnerforday.getSelectedItem().toString();
 
 
-                                String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                                String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
 
                                 Calendar calander = Calendar.getInstance();
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
@@ -700,7 +705,7 @@ public class Screen19 extends Fragment {
                                     hour = String.valueOf(spinnerforhour.getSelectedItemPosition() - 1);
 
                                 }
-                                if (!String.valueOf(spinnerformin.getSelectedItem()).equals("0"))
+                                if (!String.valueOf(spinnerformin.getSelectedItem()).equals(""))
                                 {
                                     minute = String.valueOf(spinnerformin.getSelectedItem());
                                 }
@@ -713,7 +718,7 @@ public class Screen19 extends Fragment {
                                 /*************** Time Stamp Start********************/
 
                                 String dateString = dateTextView.getText().toString() + " " + hour + ":"+minute + ":00" + " " + "GMT";
-                                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss z");
+                                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss z");
 
                                 Date date1 = dateFormat.parse(dateString);
                                 unixTime = (long) date1.getTime() / 1000;
@@ -947,6 +952,50 @@ public class Screen19 extends Fragment {
             } else {
                 super.onActivityResult(requestCode, resultCode, data);
             }
+
+
+        }
+        else
+        {
+           // firstimage.setImageBitmap(null);
+            Uri mediaUri = data.getData();
+            String mediaPath = mediaUri.getPath();
+            Bitmap bm = null;
+            try {
+                InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
+                  bm = BitmapFactory.decodeStream(inputStream);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                byte[] byteArray = stream.toByteArray();
+
+              //  firstimage.setImageBitmap(bm);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+            if (requestCode == PICK_IMAGE1) {
+                pick1 = "1";
+                selectedImagePath = mediaUri.getPath();
+                //firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
+                firstimage.setImageBitmap(bm);
+
+            }
+            if (requestCode == PICK_IMAGE2) {
+                pick2="2";
+                selectedImagePath2 = mediaUri.getPath();
+               // secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
+                secondimage.setImageBitmap(bm);
+            }
+            if (requestCode == PICK_IMAGE3) {
+                pick3 = "3";
+                selectedImagePath3 = mediaUri.getPath();
+               // thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
+                thirdimage.setImageBitmap(bm);
+            }
+
+
 
 
         }

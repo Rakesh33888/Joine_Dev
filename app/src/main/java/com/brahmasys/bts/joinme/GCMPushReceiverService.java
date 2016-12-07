@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ import java.util.Random;
  * Created by NgocTri on 4/9/2016.
  */
 public class GCMPushReceiverService extends GcmListenerService {
-    String type,userId,activity_id,time,title="joinme";
+    String type,userId,activity_id,time,title1;
     public static final String CHAT_ROOM_OPEN="chat_room_open";
     public static final String USERID = "userid";
     SharedPreferences chat_room,user_id;
@@ -48,8 +49,9 @@ public class GCMPushReceiverService extends GcmListenerService {
             activity_id = json.getString("activtyid");
             userId = json.getString("userid");
             type = json.getString("type");
+            title1 = json.getString("title");
             time = json.getString("time");
-            title = json.getString("title");
+
             Log.e("ID's",activity_id+"\t"+userId+"\t"+type);
             Log.e("Notification Response",String.valueOf(json));
         } catch (JSONException e) {
@@ -62,21 +64,21 @@ public class GCMPushReceiverService extends GcmListenerService {
             if (chat_room.getString("chat_room","null").equals("open"))
             {
                 if (!chat_room.getString("chat_activity","null").equals(activity_id)) {
-                    sendNotification(message);
+                    sendNotification(message,title1);
                 }
 
             }else {
-                sendNotification(message);
+                sendNotification(message,title1);
             }
         }
         else
         {
-            sendNotification(message);
+            sendNotification(message,title1);
         }
 
 
     }
-    private void sendNotification(String message) {
+    private void sendNotification(String message,String title) {
         Intent intent = new Intent(this, Screen16.class);
                intent.putExtra("type", type);
                intent.putExtra("activity_id",activity_id);
@@ -92,15 +94,18 @@ public class GCMPushReceiverService extends GcmListenerService {
         //Sound
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         //Build notification
-        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.mse_mult_line);
-        contentView.setImageViewResource(R.id.icon, R.mipmap.icon_web);
-        contentView.setTextViewText(R.id.title, title);
-        contentView.setTextViewText(R.id.multi_line, message);
+//        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.mse_mult_line);
+//        contentView.setImageViewResource(R.id.icon, R.mipmap.icon_web);
+//        contentView.setTextViewText(R.id.title, title);
+//        contentView.setTextViewText(R.id.multi_line, message);
+
 
         NotificationCompat.Builder noBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.icon_web)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_web))
-                .setContent(contentView)
+                .setContentTitle(title)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(sound)
                 .setWhen(System.currentTimeMillis())
