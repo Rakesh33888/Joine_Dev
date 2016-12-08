@@ -147,6 +147,8 @@ public class Screen16 extends AppCompatActivity implements
     private boolean timerHasStarted = false;
     String firstname_user="",lastname_user="",gender="male",birth_day,description="",profile_url,profile_id;
     String refresh1="home";
+    String scheme="null",host="null",first="null",second="0",third="0";
+    String Playstore_link;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,7 +162,26 @@ public class Screen16 extends AppCompatActivity implements
         edit_chat_room.commit();
 
 
-
+//        Uri data = getIntent().getData();
+//
+//            scheme = data.getScheme(); // "http"
+//            host = data.getHost(); // "twitter.com"
+//            List<String> params = data.getPathSegments();
+//            first = params.get(0); // "status"
+//            second = params.get(1);
+//            third = params.get(2);
+//            if (first.equals("joinme")) {
+//                Other_User_Details screen17 = new Other_User_Details();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("userid", second);
+//                bundle.putString("activityid", third);
+//                screen17.setArguments(bundle);
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.flContent, screen17)
+//                        .addToBackStack(null)
+//                        .commit();
+//
+//        }
 
         /************* Notification Handling Start  *********************/
         String type = getIntent().getStringExtra("type");
@@ -504,11 +525,44 @@ private void GetUserData()
         shareicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
+
+
+                if (Connectivity_Checking.isConnectingToInternet()) {
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get("http://52.37.136.238/JoinMe/Setting.svc/GetPlayStoreLink",
+                            new AsyncHttpResponseHandler() {
+                                public void onSuccess(String response) {
+                                    try {
+                                        // Extract JSON Object from JSON returned by REST WS
+                                        JSONObject obj = new JSONObject(response);
+                                        JSONObject json = null;
+                                        try {
+                                            json = new JSONObject(String.valueOf(obj));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        JSONObject Link = null;
+                                        try {
+                                            Link = json.getJSONObject("data");
+                                            Playstore_link = Link.getString("playStoreLink");
+                                            Intent sendIntent = new Intent();
+                                            sendIntent.setAction(Intent.ACTION_SEND);
+                                            sendIntent.putExtra(Intent.EXTRA_TEXT, Playstore_link);
+                                            sendIntent.setType("text/plain");
+                                            startActivity(sendIntent);
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
+                }
+
             }
         });
 
@@ -728,7 +782,7 @@ private void GetUserData()
             }
             try {
 
-               // if (!json.equals("")) {
+               if (!json.equals("")) {
 
                     JSONArray cast = json.getJSONArray("data");
                     if(!cast.equals("")) {
@@ -793,7 +847,10 @@ private void GetUserData()
                     else {
                         reloadactivity.setVisibility(View.VISIBLE);
                     }
-               // }
+               }
+               else {
+                   reloadactivity.setVisibility(View.VISIBLE);
+               }
 
             } catch (JSONException e) {
                 e.printStackTrace();

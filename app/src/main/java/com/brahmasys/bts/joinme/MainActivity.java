@@ -133,8 +133,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
                     != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
-                            MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
                 }
             }
         }
@@ -279,11 +278,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(),"Permission Denied, You cannot access location data.",Toast.LENGTH_LONG).show();
                 }
                 break;
-            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE:
-                if (requestCode == MY_PERMISSIONS_REQUEST_READ_PHONE_STATE
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                }
+//            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE:
+//                if (requestCode == MY_PERMISSIONS_REQUEST_READ_PHONE_STATE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//
+//                }
         }
     }
 //    private void fetchLocationData() {
