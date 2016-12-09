@@ -74,7 +74,7 @@ public class Custom_WhoShowedUp extends ArrayAdapter<Book>  {
 
            holder.name.setText(book.getName());
         //  holder.authorName.setText(book.getAuthorName());
-        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).placeholder(R.drawable.butterfly)
+        Picasso.with(getContext()).load(Constant.BASE_URL + book.getImageUrl()).placeholder(R.drawable.butterfly)
                 .into(holder.image);
         //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
 

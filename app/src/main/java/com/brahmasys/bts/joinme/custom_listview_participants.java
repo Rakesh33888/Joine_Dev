@@ -57,7 +57,7 @@ public class custom_listview_participants extends ArrayAdapter<Book> {
 //                .into(holder.image);
 
         Picasso.with(getContext())
-                .load("http://52.37.136.238/JoinMe/" + book.getImageUrl()) // thumbnail url goes here
+                .load(Constant.BASE_URL + book.getImageUrl()) // thumbnail url goes here
                 .placeholder(R.drawable.butterfly)
                 .resize(50,50)
                 .centerCrop()

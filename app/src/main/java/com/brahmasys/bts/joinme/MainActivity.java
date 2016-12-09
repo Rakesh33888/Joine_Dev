@@ -98,11 +98,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     String email_json,username_json, socialId_json;
     private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
     private static final String TAG = "SignUp";
-    private static final String URL = "http://52.37.136.238/JoinMe/User.svc/SignUp";
+    private static final String URL = Constant.SignUp;
     private static final String TAG1 = "Login";
-    private static final String URL1 = "http://52.37.136.238/JoinMe/User.svc/Login";
+    private static final String URL1 = Constant.Login;
     private static final String TAG2 = "ResgisterSocialMedia";
-    private static final String URL2 = "http://52.37.136.238/JoinMe/User.svc/ResgisterwithSocialMedia";
+    private static final String URL2 = Constant.ResgisterwithSocialMedia;
+
+
    public  static final String TOKEN_ID = "token";
     String deviceuid,device_type="android";
     public static final String USERID = "userid";
@@ -577,7 +579,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                                 AsyncHttpClient client = new AsyncHttpClient();
-                                                client.get("http://52.37.136.238/JoinMe/User.svc/ForgotPassword/" +user_email.getText().toString(),
+                                                client.get(Constant.FORGOT_PASSWORD +user_email.getText().toString(),
                                                         new AsyncHttpResponseHandler() {
                                                             // When the response returned by REST has Http response code '200'
 
@@ -800,7 +802,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
                                         AsyncHttpClient client = new AsyncHttpClient();
-                                        client.get("http://52.37.136.238/JoinMe/User.svc/CheckUserEmailAvailability/" + email.getText().toString(),
+                                        client.get(Constant.CheckUserEmailAvailability + email.getText().toString(),
                                                 new AsyncHttpResponseHandler() {
                                                     // When the response returned by REST has Http response code '200'
 
@@ -950,7 +952,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+        client.get(Constant.GetUserDetails + userid,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
                     public void onSuccess(String response) {

@@ -134,7 +134,7 @@ public class Screen19 extends Fragment {
     double latitude=0.0,longitude=0.0,latitude1,longitude1,latitude2,longitude2;
     String complete_address,city,state,zip,country,total_address="0",checked_current_address;
     private static final String TAG = "CreateActivity";
-    private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/CreateActivity";
+    private static final String URL = Constant.CreateActivity;
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
     private static final String LAT_LNG = "lat_lng";
@@ -160,7 +160,7 @@ public class Screen19 extends Fragment {
     String pick1="null",pick2="null",pick3="null";
     String imgPath;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
+    boolean isBelowKitKat = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
     String colors[] = {"Red","Blue","White","Yellow","Black", "Green","Purple","Orange","Grey"};
     @Nullable
     @Override
@@ -272,7 +272,7 @@ public class Screen19 extends Fragment {
         });
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetActivityIconList/" + user_id.getString("userid", "null"),
+        client.get(Constant.GetActivityIconList + user_id.getString("userid", "null"),
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -955,48 +955,48 @@ public class Screen19 extends Fragment {
 
 
         }
-        else
-        {
-           // firstimage.setImageBitmap(null);
-            Uri mediaUri = data.getData();
-            String mediaPath = mediaUri.getPath();
-            Bitmap bm = null;
-            try {
-                InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
-                  bm = BitmapFactory.decodeStream(inputStream);
+        else if(isBelowKitKat && resultCode != Activity.RESULT_CANCELED) {
+            {
+                // firstimage.setImageBitmap(null);
+                Uri mediaUri = data.getData();
+                String mediaPath = mediaUri.getPath();
+                Bitmap bm = null;
+                try {
+                    InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
+                    bm = BitmapFactory.decodeStream(inputStream);
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                byte[] byteArray = stream.toByteArray();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    byte[] byteArray = stream.toByteArray();
 
-              //  firstimage.setImageBitmap(bm);
+                    //  firstimage.setImageBitmap(bm);
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
+                if (requestCode == PICK_IMAGE1) {
+                    pick1 = "1";
+                    selectedImagePath = mediaUri.getPath();
+                    //firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
+                    firstimage.setImageBitmap(bm);
+
+                }
+                if (requestCode == PICK_IMAGE2) {
+                    pick2 = "2";
+                    selectedImagePath2 = mediaUri.getPath();
+                    // secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
+                    secondimage.setImageBitmap(bm);
+                }
+                if (requestCode == PICK_IMAGE3) {
+                    pick3 = "3";
+                    selectedImagePath3 = mediaUri.getPath();
+                    // thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
+                    thirdimage.setImageBitmap(bm);
+                }
+
+
             }
-
-
-            if (requestCode == PICK_IMAGE1) {
-                pick1 = "1";
-                selectedImagePath = mediaUri.getPath();
-                //firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
-                firstimage.setImageBitmap(bm);
-
-            }
-            if (requestCode == PICK_IMAGE2) {
-                pick2="2";
-                selectedImagePath2 = mediaUri.getPath();
-               // secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
-                secondimage.setImageBitmap(bm);
-            }
-            if (requestCode == PICK_IMAGE3) {
-                pick3 = "3";
-                selectedImagePath3 = mediaUri.getPath();
-               // thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
-                thirdimage.setImageBitmap(bm);
-            }
-
-
-
 
         }
     }
@@ -1163,7 +1163,7 @@ public class Screen19 extends Fragment {
 
         String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
         for (int i=0;i<3;i++) {
-            String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UploadActivityPic/" + activity_id1;
+            String urlString = Constant.UploadActivityPic + activity_id1;
             try {
                 org.apache.http.client.HttpClient client = new DefaultHttpClient();
                 HttpPost post = new HttpPost(urlString);

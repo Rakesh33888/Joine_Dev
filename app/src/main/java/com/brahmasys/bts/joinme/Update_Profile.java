@@ -66,6 +66,7 @@ public class Update_Profile extends Fragment {
     String firstname_user="",lastname_user="",gender="true",birth_day,description="",profile_url,profile_id;
     private static final int SELECT_FILE1 = 1;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    boolean isBelowKitKat = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
     private String selectedImagePath = "";
     String pick1="null";
     EditText firstname,lastname,description1;
@@ -82,7 +83,7 @@ public class Update_Profile extends Fragment {
     SharedPreferences.Editor edit_userid,edit_profile_url_home,edit_user_detals,edit_user_pic;
     List<String> allurl;
     private static final String TAG  = "UpdateUserDetail";
-    private static final String URL  = "http://52.37.136.238/JoinMe/User.svc/UpdateUserDetail";
+    private static final String URL  = Constant.UpdateUserDetail;
     String uid;
     HttpEntity resEntity;
     ProgressDialog progressDialog;
@@ -159,7 +160,7 @@ public class Update_Profile extends Fragment {
         lastname.setText(lastname_user);
         description1.setText(description);
         Picasso.with(getActivity())
-                        .load("http://52.37.136.238/JoinMe/" + profile_url) // thumbnail url goes here
+                        .load(Constant.BASE_URL + profile_url) // thumbnail url goes here
                         .placeholder(R.drawable.butterfly)
                         .resize(200,200)
                         .noFade()
@@ -375,25 +376,27 @@ public class Update_Profile extends Fragment {
 
 
         }
-        else {
+        else if(isBelowKitKat && resultCode != Activity.RESULT_CANCELED) {
             // firstimage.setImageBitmap(null);
-            Uri mediaUri = data.getData();
-            String mediaPath = mediaUri.getPath();
-            selectedImagePath = mediaUri.getPath();
-            Bitmap bm = null;
-            try {
-                InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
-                bm = BitmapFactory.decodeStream(inputStream);
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                byte[] byteArray = stream.toByteArray();
+                Uri  mediaUri = data.getData();
+                String mediaPath = mediaUri.getPath();
+                selectedImagePath = mediaUri.getPath();
+                Bitmap bm = null;
+                try {
+                    InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
+                    bm = BitmapFactory.decodeStream(inputStream);
 
-                profile_img.setImageBitmap(bm);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    byte[] byteArray = stream.toByteArray();
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                    profile_img.setImageBitmap(bm);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+
 
         }
 
@@ -417,7 +420,7 @@ public class Update_Profile extends Fragment {
 
         File file1 = new File(selectedImagePath);
 
-        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserPic/" + uid+"/"+profile_id;
+        String urlString = Constant.UpdateUserPic + uid+"/"+profile_id;
         try {
             org.apache.http.client.HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urlString);
@@ -459,7 +462,7 @@ public class Update_Profile extends Fragment {
     {
         if (Connectivity_Checking.isConnectingToInternet()) {
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + user_id.getString("userid", ""),
+            client.get(Constant.GetUserDetails  + user_id.getString("userid", ""),
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 

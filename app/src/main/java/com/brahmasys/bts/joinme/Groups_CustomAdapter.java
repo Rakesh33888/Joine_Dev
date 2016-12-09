@@ -51,7 +51,7 @@ public class Groups_CustomAdapter extends ArrayAdapter<Book> {
 
 
         Picasso.with(getContext())
-                .load("http://52.37.136.238/JoinMe/" + book.getImageUrl()) // thumbnail url goes here
+                .load(Constant.BASE_URL + book.getImageUrl()) // thumbnail url goes here
                 .placeholder(R.drawable.butterfly)
                 .resize(100, 100)
                 .into(holder.image, new Callback() {

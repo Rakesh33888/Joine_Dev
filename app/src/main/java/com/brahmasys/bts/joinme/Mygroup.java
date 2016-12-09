@@ -55,7 +55,7 @@ public class Mygroup extends Fragment{
     LinearLayout backlayoutgroup;
     public static final String CHAT_ROOM_OPEN="chat_room_open";
     private static final String TAG = "GetMyGroupActivity";
-    private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/GetMyGroupActivity";
+    private static final String URL = Constant.GetMyGroupActivity;
     ImageView shareicon,msg,logo;
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;

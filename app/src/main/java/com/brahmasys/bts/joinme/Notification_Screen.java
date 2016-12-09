@@ -65,11 +65,11 @@ public class Notification_Screen extends Fragment {
     String user_id,activity_id,type,activity_name="null",url="null",time;
     CircularImageView activity_image,review_activity_image,whoshowed_activity_image;
     private static final String TAG = "SendFeedBack";
-    private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/Feedback";
+    private static final String URL = Constant.Feedback;
     private static final String REVIEW_TAG = "ReviewActivity";
-    private static final String REVIEW_URL = "http://52.37.136.238/JoinMe/Activity.svc/ReviewActivity";
+    private static final String REVIEW_URL = Constant.ReviewActivity;
     private static final String WHOSHOWED_TAG = "WhoShowedUp";
-    private static final String WHOSHOWED_URL = "http://52.37.136.238/JoinMe/Activity.svc/WhoShowedUp";
+    private static final String WHOSHOWED_URL = Constant.WhoShowedUp;
     private ArrayList<Book> books;
     private ArrayAdapter<Book> adapter;
     List<String> allid;
@@ -86,7 +86,7 @@ public class Notification_Screen extends Fragment {
         type         = bundle.getString("type","null");
         time         = bundle.getString("time","null");
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + user_id + "/" + activity_id + "/" + 0 + "/" +0,
+        client.get(Constant.GetUserActivityDetails + user_id + "/" + activity_id + "/" + 0 + "/" +0,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -176,7 +176,7 @@ public class Notification_Screen extends Fragment {
                                         @Override
                                         public void onClick(View v) {
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/JoinActivity/" + user_id + "/" + activity_id+ "/" +"false",
+                                            client.get(Constant.JoinActivity + user_id + "/" + activity_id+ "/" +"false",
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
 
@@ -205,7 +205,7 @@ public class Notification_Screen extends Fragment {
                                         public void onClick(View v) {
 
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterRating/" + user_id + "/" + activity_id,
+                                            client.get(Constant.RemindMeLaterRating + user_id + "/" + activity_id,
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
 
@@ -237,7 +237,7 @@ public class Notification_Screen extends Fragment {
 
                                             Log.e("Rating", String.valueOf(stars));
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RateActivity/" + user_id + "/" + activity_id + "/" + stars,
+                                            client.get(Constant.RateActivity + user_id + "/" + activity_id + "/" + stars,
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
                                                         public void onSuccess(String response) {
@@ -315,7 +315,7 @@ public class Notification_Screen extends Fragment {
                                     review_activity_name.setText(activity_name+ " activity review ? ");
                                   //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(review_activity_image);
                                     Picasso.with(getActivity())
-                                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                                            .load(Constant.BASE_URL + url) // thumbnail url goes here
                                             .placeholder(R.drawable.butterfly)
                                             .resize(200,200)
                                             .into(review_activity_image, new Callback() {
@@ -332,7 +332,7 @@ public class Notification_Screen extends Fragment {
                                         @Override
                                         public void onClick(View v) {
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/JoinActivity/" + user_id + "/" + activity_id + "/" + "false",
+                                            client.get(Constant.JoinActivity+ user_id + "/" + activity_id + "/" + "false",
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
 
@@ -361,7 +361,7 @@ public class Notification_Screen extends Fragment {
                                         public void onClick(View v) {
 
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterReview/" + user_id + "/" + activity_id,
+                                            client.get(Constant.RemindMeLaterReview + user_id + "/" + activity_id,
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
 
@@ -448,7 +448,7 @@ public class Notification_Screen extends Fragment {
                                   //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(whoshowed_activity_image);
 
                                     Picasso.with(getActivity())
-                                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                                            .load(Constant.BASE_URL + url) // thumbnail url goes here
                                             .placeholder(R.drawable.butterfly)
                                             .resize(200,200)
                                             .into(whoshowed_activity_image, new Callback() {
@@ -475,7 +475,7 @@ public class Notification_Screen extends Fragment {
                                         public void onClick(View v) {
 
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/Activity.svc/RemindMeLaterWhoShowedUp/" + user_id + "/" + activity_id,
+                                            client.get(Constant.RemindMeLaterWhoShowedUp + user_id + "/" + activity_id,
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
 
@@ -496,7 +496,7 @@ public class Notification_Screen extends Fragment {
 
 
                                     AsyncHttpClient client = new AsyncHttpClient();
-                                    client.get("http://52.37.136.238/JoinMe/User.svc/GetActivityMambers/" + user_id + "/" + activity_id,
+                                    client.get(Constant.GetActivityMambers + user_id + "/" + activity_id,
                                             new AsyncHttpResponseHandler() {
                                                 // When the response returned by REST has Http response code '200'
                                                 public void onSuccess(String response) {

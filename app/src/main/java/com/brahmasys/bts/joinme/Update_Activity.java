@@ -116,7 +116,7 @@ public class Update_Activity extends Fragment  {
     double latitude = 0.0, longitude = 0.0, latitude1, longitude1, latitude2, longitude2;
     String complete_address, city, state, zip, country, total_address;
     private static final String TAG = "UpdateActivityDetails";
-    private static final String URL = "http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityDetails";
+    private static final String URL = Constant.UpdateActivityDetails;
     public static final String USERID = "userid";
     public static final String ACTIVITYID = "activity_id";
     private static final String LAT_LNG = "lat_lng";
@@ -140,6 +140,7 @@ public class Update_Activity extends Fragment  {
     List<String> allurl;
     FragmentManager fragmentManager;
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    boolean isBelowKitKat = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
     Bundle bundle;
     int Pic_length=0;
     List<String> allid;
@@ -274,7 +275,7 @@ public class Update_Activity extends Fragment  {
 
 
                     Picasso.with(context)
-                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                            .load(Constant.BASE_URL + url) // thumbnail url goes here
                             .placeholder(R.drawable.butterfly)
                             .resize(75, 75)
                             .into(firstimage, new Callback() {
@@ -294,7 +295,7 @@ public class Update_Activity extends Fragment  {
 //                            .centerCrop().into(secondimage);
 
                     Picasso.with(context)
-                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                            .load(Constant.BASE_URL + url) // thumbnail url goes here
                             .placeholder(R.drawable.butterfly)
                             .resize(75, 75)
 
@@ -315,7 +316,7 @@ public class Update_Activity extends Fragment  {
 //                    Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + url).resize(75, 75)
 //                            .centerCrop().into(thirdimage);
                     Picasso.with(context)
-                            .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                            .load(Constant.BASE_URL + url) // thumbnail url goes here
                             .placeholder(R.drawable.butterfly)
                             .resize(75, 75)
 
@@ -527,7 +528,7 @@ public class Update_Activity extends Fragment  {
         });
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/Activity.svc/GetActivityIconList/" + user_id.getString("userid", "null"),
+        client.get(Constant.GetActivityIconList + user_id.getString("userid", "null"),
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -854,7 +855,7 @@ public class Update_Activity extends Fragment  {
                     public void onClick(View v) {
                        // new Custom_Progress(getActivity());
                         AsyncHttpClient client = new AsyncHttpClient();
-                        client.get("http://52.37.136.238/JoinMe/Activity.svc/DeleteActivity/" + activity_id.getString("activity_id", ""),
+                        client.get(Constant.DeleteActivity + activity_id.getString("activity_id", ""),
                                 new AsyncHttpResponseHandler() {
                                     // When the response returned by REST has Http response code '200'
 
@@ -924,7 +925,7 @@ public class Update_Activity extends Fragment  {
 
               //  hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
 
-                String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
+                String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
                 Calendar calander = Calendar.getInstance();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
@@ -1169,44 +1170,45 @@ public class Update_Activity extends Fragment  {
 
         }
 
-        else {
+        else if(isBelowKitKat && resultCode != Activity.RESULT_CANCELED) {
             // firstimage.setImageBitmap(null);
-            Uri mediaUri = data.getData();
-            String mediaPath = mediaUri.getPath();
-            Bitmap bm = null;
-            try {
-                InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
-                bm = BitmapFactory.decodeStream(inputStream);
+            Uri  mediaUri = data.getData();
+                String mediaPath = mediaUri.getPath();
+                Bitmap bm = null;
+                try {
+                    InputStream inputStream = getContext().getContentResolver().openInputStream(mediaUri);
+                    bm = BitmapFactory.decodeStream(inputStream);
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                byte[] byteArray = stream.toByteArray();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    byte[] byteArray = stream.toByteArray();
 
-                //  firstimage.setImageBitmap(bm);
+                    //  firstimage.setImageBitmap(bm);
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
 
-            if (requestCode == PICK_IMAGE1) {
-                pick1 = "1";
-                selectedImagePath = mediaUri.getPath();
-                //firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
-                firstimage.setImageBitmap(bm);
+                if (requestCode == PICK_IMAGE1) {
+                    pick1 = "1";
+                    selectedImagePath = mediaUri.getPath();
+                    //firstimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath));
+                    firstimage.setImageBitmap(bm);
 
-            }
-            if (requestCode == PICK_IMAGE2) {
-                pick2 = "2";
-                selectedImagePath2 = mediaUri.getPath();
-                // secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
-                secondimage.setImageBitmap(bm);
-            }
-            if (requestCode == PICK_IMAGE3) {
-                pick3 = "3";
-                selectedImagePath3 = mediaUri.getPath();
-                // thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
-                thirdimage.setImageBitmap(bm);
-            }
+                }
+                if (requestCode == PICK_IMAGE2) {
+                    pick2 = "2";
+                    selectedImagePath2 = mediaUri.getPath();
+                    // secondimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath2));
+                    secondimage.setImageBitmap(bm);
+                }
+                if (requestCode == PICK_IMAGE3) {
+                    pick3 = "3";
+                    selectedImagePath3 = mediaUri.getPath();
+                    // thirdimage.setImageBitmap(new DecodeImage().decodeFile(selectedImagePath3));
+                    thirdimage.setImageBitmap(bm);
+                }
+
         }
 
         }
@@ -1353,7 +1355,7 @@ private void doFileUpload(){
 
     String [] paths = {selectedImagePath,selectedImagePath2,selectedImagePath3};
     for (int i=0;i<Pic_length;i++) {
-        String urlString = "http://52.37.136.238/JoinMe/Activity.svc/UpdateActivityPic/" + activity_id.getString("activity_id","")+"/"+allid.get(i);
+        String urlString = Constant.UpdateActivityPic + activity_id.getString("activity_id","")+"/"+allid.get(i);
         try {
             org.apache.http.client.HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urlString);

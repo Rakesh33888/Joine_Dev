@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.brahmasys.bts.joinme.Constant;
 import com.brahmasys.bts.joinme.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Callback;
@@ -129,7 +130,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 //                    .into(profile_url);
 
             Picasso.with(context)
-                    .load("http://52.37.136.238/JoinMe/" + profileUrl) // thumbnail url goes here
+                    .load(Constant.BASE_URL + profileUrl) // thumbnail url goes here
                     .placeholder(R.drawable.butterfly)
                     .resize(90, 90)
                     .noFade().centerCrop()

@@ -91,8 +91,8 @@ public class Appsetting extends Fragment{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public  static  final  String URL_GetUserSettings ="http://52.37.136.238/JoinMe/User.svc/GetUserSettings/";
-    public  static  final  String URL_UpdateSettings ="http://52.37.136.238/JoinMe/User.svc/UpdateSettings";
+    public  static  final  String URL_GetUserSettings =Constant.GetUserSettings;
+    public  static  final  String URL_UpdateSettings =Constant.UpdateSettings;
 
 
     // TODO: Rename and change types of parameters

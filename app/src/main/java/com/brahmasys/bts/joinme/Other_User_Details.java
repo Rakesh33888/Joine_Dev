@@ -300,7 +300,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + user_id.getString("userid","0") + "/" + aid + "/" + longitude + "/" + latitude,
+            client.get(Constant.GetUserActivityDetails + user_id.getString("userid","0") + "/" + aid + "/" + longitude + "/" + latitude,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -366,11 +366,11 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                     timetext.setText("Description:  " + description);
 
                                     //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
-                                    Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
+                                    Picasso.with(getActivity()).load(Constant.BASE_URL + icon1).placeholder(R.drawable.butterfly).into(icon);
                                   //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
 
                                     Picasso.with(getActivity())
-                                            .load("http://52.37.136.238/JoinMe/" + owner_pic) // thumbnail url goes here
+                                            .load(Constant.BASE_URL + owner_pic) // thumbnail url goes here
                                             .placeholder(R.drawable.butterfly)
                                             .resize(100,100)
                                             .centerCrop()
@@ -411,7 +411,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                         String id = actor.getString("id");
                                         String url = actor.getString("url");
                                         allid.add(id);
-                                        url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
+                                        url_maps.put("image" + i, Constant.BASE_URL + url);
                                         //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
                                         Log.d("Type", cast.getString(i));
                                     }
@@ -488,7 +488,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
 
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/" +userid + "/" + aid,
+        client.get(Constant.AddMemberToGroup +userid + "/" + aid,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 

@@ -164,7 +164,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
         if (Connectivity_Checking.isConnectingToInternet()) {
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + owner_id,
+            client.get(Constant.GetUserDetails + owner_id,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -211,7 +211,7 @@ public class Screen13 extends android.support.v4.app.Fragment implements BaseSli
 
                                     String url = actor.getString("url");
 
-                                    url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
+                                    url_maps.put("image" + i, Constant.BASE_URL + url);
                                     //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
 
                                     Log.d("Type", cast.getString(i));

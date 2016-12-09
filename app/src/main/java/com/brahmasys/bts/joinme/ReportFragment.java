@@ -45,7 +45,7 @@ public class ReportFragment extends android.support.v4.app.Fragment {
     SharedPreferences user_id,activity_id;
     SharedPreferences.Editor edit_userid,edit_activity_id;
     private static final String TAG1 = "Feedback";
-    private static final String URL1 = "http://52.37.136.238/JoinMe/Activity.svc/Feedback";
+    private static final String URL1 = Constant.Feedback;
     String screen="null",userid,activityid,ownerid,where;
     Bundle bundle;
     @Nullable

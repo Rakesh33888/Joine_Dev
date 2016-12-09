@@ -269,7 +269,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                     public void onClick(View v) {
                         // new Custom_Progress(getActivity());
                         AsyncHttpClient client = new AsyncHttpClient();
-                        client.get("http://52.37.136.238/JoinMe/Activity.svc/DeleteActivity/" + aid,
+                        client.get(Constant.DeleteActivity + aid,
                                 new AsyncHttpResponseHandler() {
                                     // When the response returned by REST has Http response code '200'
 
@@ -392,7 +392,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
         if (Connectivity_Checking.isConnectingToInternet()) {
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/Activity.svc/GetUserActivityDetails/" + uid + "/" + aid + "/" + longitude + "/" + latitude,
+            client.get(Constant.GetUserActivityDetails  + uid + "/" + aid + "/" + longitude + "/" + latitude,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -464,10 +464,10 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 timetext.setText("Description: " + description);
 
                                 //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
-                                Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + icon1).placeholder(R.drawable.butterfly).into(icon);
+                                Picasso.with(getActivity()).load(Constant.BASE_URL + icon1).placeholder(R.drawable.butterfly).into(icon);
                                 //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);
                                 Picasso.with(getActivity())
-                                        .load("http://52.37.136.238/JoinMe/" + owner_pic) // thumbnail url goes here
+                                        .load(Constant.BASE_URL + owner_pic) // thumbnail url goes here
                                         .placeholder(R.drawable.butterfly)
                                         .resize(200, 200)
                                         .centerCrop()
@@ -508,7 +508,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     String id = actor.getString("id");
                                     String url = actor.getString("url");
                                     allid.add(id);
-                                    url_maps.put("image" + i, "http://52.37.136.238/JoinMe/" + url);
+                                    url_maps.put("image" + i, Constant.BASE_URL + url);
                                     //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
                                     Log.d("Type", cast.getString(i));
                                 }

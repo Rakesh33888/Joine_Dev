@@ -52,12 +52,12 @@ public class SwipeStackAdapter extends ArrayAdapter<Book> {
         holder.name.setText(book.getName());
         holder.authorName.setText(book.getAuthorName());
         holder.time.setText(book.getTime());
-        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getIcon_image()).into(holder.icon);
+        Picasso.with(getContext()).load(Constant.BASE_URL + book.getIcon_image()).into(holder.icon);
 //        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).fit().noFade().centerCrop()
 //                .into(holder.image);
 
         Picasso.with(getContext())
-                .load("http://52.37.136.238/JoinMe/" + book.getImageUrl()) // thumbnail url goes here
+                .load(Constant.BASE_URL + book.getImageUrl()) // thumbnail url goes here
                 .placeholder(R.drawable.butterfly)
                 .fit().noFade().centerCrop()
                 .into(holder.image, new Callback() {

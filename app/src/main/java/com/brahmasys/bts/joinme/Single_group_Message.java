@@ -84,12 +84,12 @@ public class Single_group_Message extends Fragment    {
     public static final String ACTIVITYID = "activity_id";
     public static final String CHAT_ROOM_OPEN="chat_room_open";
     public static final String CONNECTED="isconnected";
-    private static final String URL_RemoveMemberToGroup = "http://52.37.136.238/JoinMe/Activity.svc/RemoveMemberToGroup/";
-    private static final String URL_GetActivityDetailsForChat = "http://52.37.136.238/JoinMe/Activity.svc/GetActivityDetailsForChat/";
+    private static final String URL_RemoveMemberToGroup = Constant.RemoveMemberToGroup;
+    private static final String URL_GetActivityDetailsForChat = Constant.GetActivityDetailsForChat;
     ProgressDialog progressDialog;
     private  CircularImageView listimage;
     FragmentManager fragmentManager;
-    private static final String IMAGE_BASE_URL = "http://52.37.136.238/JoinMe/";
+    private static final String IMAGE_BASE_URL = Constant.BASE_URL;
     CircularImageView createrimage,owner;
     HorizontalListView participants_list;
     Button yes,no;

@@ -84,6 +84,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import link.fls.swipestack.SwipeStack;
@@ -116,7 +117,7 @@ public class Screen16 extends AppCompatActivity implements
     RelativeLayout reltivelayoutlogo, relativeLayoutmsg;
     FragmentManager fragmentManager;
     private static final String TAG1 = "GetUserActivity";
-    private static final String URL1 = "http://52.37.136.238/JoinMe/Activity.svc/GetUserActivity";
+    private static final String URL1 = Constant.GetUserActivity;
 
     public static final String USERID = "userid";
     public static final String DETAILS = "user_details";
@@ -149,6 +150,7 @@ public class Screen16 extends AppCompatActivity implements
     String refresh1="home";
     String scheme="null",host="null",first="null",second="0",third="0";
     String Playstore_link;
+    ArrayList<String> Skip_Activity_ID_List;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,8 +246,9 @@ public class Screen16 extends AppCompatActivity implements
         edit_user_pic = user_pic.edit();
         lat_lng = getSharedPreferences(LAT_LNG, MODE_PRIVATE);
         edit_lat_lng = lat_lng.edit();
-        skip_activity = getSharedPreferences(SKIP_ACTIVITY,MODE_PRIVATE);
+        skip_activity = getSharedPreferences(SKIP_ACTIVITY, MODE_PRIVATE);
         edit_skip_activity = skip_activity.edit();
+        Skip_Activity_ID_List =new ArrayList<String>();
 
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
@@ -310,6 +313,10 @@ public class Screen16 extends AppCompatActivity implements
                  new Thread(new Runnable() {
                      @Override
                      public void run() {
+
+                         edit_skip_activity.clear();
+                         edit_skip_activity.commit();
+                         Skip_Activity_ID_List.clear();
                          Getting_Activities();
                          runOnUiThread(new Runnable() {
                              @Override
@@ -350,7 +357,7 @@ private void GetUserData()
 {
     if (Connectivity_Checking.isConnectingToInternet()) {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + user_id.getString("userid", ""),
+        client.get(Constant.GetUserDetails + user_id.getString("userid", ""),
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -500,7 +507,7 @@ private void GetUserData()
                 profile_id = user_pic.getString("id", "0");
                 profile_url = user_pic.getString("url", "0");
                 Picasso.with(Screen16.this)
-                        .load("http://52.37.136.238/JoinMe/" + profile_url) // thumbnail url goes here
+                        .load(Constant.BASE_URL + profile_url) // thumbnail url goes here
                         .placeholder(R.drawable.butterfly)
                         .resize(200,200)
                         .noFade()
@@ -529,7 +536,7 @@ private void GetUserData()
 
                 if (Connectivity_Checking.isConnectingToInternet()) {
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://52.37.136.238/JoinMe/Setting.svc/GetPlayStoreLink",
+                    client.get(Constant.GetPlayStoreLink,
                             new AsyncHttpResponseHandler() {
                                 public void onSuccess(String response) {
                                     try {
@@ -702,11 +709,13 @@ private void GetUserData()
                 @Override
                 public void onClick(View v) {
                     mSwipeStack.swipeTopViewToLeft();
+                  //  Skip_Activity(activity_id.get(mSwipeStack.getCurrentPosition()), mSwipeStack.getCurrentPosition());
                     mSwipeStack.setRotation(View.DRAWING_CACHE_QUALITY_AUTO);
                     //Skip_Activity(activity_id.get(mSwipeStack.getCurrentPosition()),mSwipeStack.getCurrentPosition());
                     if (mSwipeStack.getCurrentPosition() >= activity_name.size())
                     {
                         Toast.makeText(Screen16.this, "There is no activity...!", Toast.LENGTH_SHORT).show();
+                        reloadactivity.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -740,6 +749,7 @@ private void GetUserData()
         if (mSwipeStack.getCurrentPosition() >= activity_name.size())
         {
             Toast.makeText(Screen16.this, "There is no activity...!", Toast.LENGTH_SHORT).show();
+            reloadactivity.setVisibility(View.VISIBLE);
         }
         else {
             fragmentManager = getSupportFragmentManager();
@@ -788,8 +798,44 @@ private void GetUserData()
                     if(!cast.equals("")) {
                         if (cast.length() != 0) {
 
+
+                            Map<String, ?> allEntries = skip_activity.getAll();
+                            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                                Log.e("map values", entry.getKey() + ": " + entry.getValue().toString());
+
+                                Skip_Activity_ID_List.add(entry.getValue().toString());
+                            }
+
                             for (int i = 0; i < cast.length(); i++) {
                                 JSONObject actor = cast.getJSONObject(i);
+
+
+
+                                if (Skip_Activity_ID_List.contains(actor.getString("activity_id"))) {
+                                    continue;
+                                } else {
+                                    reloadactivity.setVisibility(View.VISIBLE);
+                                }
+
+//                               if (skip_activity.getString("id_" + i, "0").equals(actor.getString("activity_id")))
+//                               {
+//
+//                               }
+//                               else
+//                                   {
+//                                            book.setName(actor.getString("activity_name"));
+//                                            book.setImageUrl(actor.getString("activity_url"));
+//                                            book.setAuthorName(actor.getString("activity_distance"));
+//                                            book.setIcon_image(actor.getString("acitivity_icon"));
+//                                            long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+//                                            Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+//                                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
+//                                            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+//                                            String value = sdf.format(date2);
+//                                            book.setTime(value);
+//                                            books.add(book);
+//                                   }
+
                                 String id = actor.getString("activity_url");
                                 activity_name.add(actor.getString("activity_name"));
                                 distance.add(actor.getString("activity_distance"));
@@ -797,48 +843,33 @@ private void GetUserData()
                                 activity_id.add(actor.getString("activity_id"));
                                 userid_other.add(actor.getString("userid"));
                                 activity_url.add(id);
-                                Book book = new Book();
-//                               if (skip_activity.getString("id_" + i, "0").equals(actor.getString("activity_id")))
-//                               {
-//
-//                               }
-//                               else
-//                                   {
-                                            book.setName(actor.getString("activity_name"));
-                                            book.setImageUrl(actor.getString("activity_url"));
-                                            book.setAuthorName(actor.getString("activity_distance"));
-                                            book.setIcon_image(actor.getString("acitivity_icon"));
-                                            long unixSeconds = Long.parseLong(actor.getString("activity_time"));
-                                            Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
-                                            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                                            String value = sdf.format(date2);
-                                            book.setTime(value);
-                                            books.add(book);
-                                  // }
-
-
-//                                else {
-//                                    book.setName(actor.getString("activity_name"));
-//                                    book.setImageUrl(actor.getString("activity_url"));
-//                                    book.setAuthorName(actor.getString("activity_distance"));
-//                                    book.setIcon_image(actor.getString("acitivity_icon"));
-//                                    long unixSeconds = Long.parseLong(actor.getString("activity_time"));
-//                                    Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-//                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
-//                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-//                                    String value = sdf.format(date2);
-//                                    book.setTime(value);
-//                                    books.add(book);
-//
-//                                }
-
-
+                                    Book book = new Book();
+                                    book.setName(actor.getString("activity_name"));
+                                    book.setImageUrl(actor.getString("activity_url"));
+                                    book.setAuthorName(actor.getString("activity_distance"));
+                                    book.setIcon_image(actor.getString("acitivity_icon"));
+                                    long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                                    Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
+                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                                    String value = sdf.format(date2);
+                                    book.setTime(value);
+                                    books.add(book);
 
 
                             }
-                            adapter.notifyDataSetChanged();
-                            reloadactivity.setVisibility(View.GONE);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    adapter.notifyDataSetChanged();
+                                    reloadactivity.setVisibility(View.GONE);
+                                }
+                            });
+
+
+
 
                         } else {
                             reloadactivity.setVisibility(View.VISIBLE);
@@ -941,10 +972,12 @@ private void GetUserData()
             @Override
             public void onClick(View v) {
                // mSwipeStack.resetStack();
-                Getting_Activities();
-                reloadactivity.setVisibility(View.GONE);
                 edit_skip_activity.clear();
                 edit_skip_activity.commit();
+                Skip_Activity_ID_List.clear();
+                Getting_Activities();
+                reloadactivity.setVisibility(View.GONE);
+
             }
         });
 
@@ -962,7 +995,7 @@ private void GetUserData()
         else {
 
             AsyncHttpClient client = new AsyncHttpClient();
-            client.get("http://52.37.136.238/JoinMe/Activity.svc/AddMemberToGroup/" + user_id.getString("userid", "000") + "/" + activity_id.get(mSwipeStack.getCurrentPosition()),
+            client.get(Constant.AddMemberToGroup + user_id.getString("userid", "000") + "/" + activity_id.get(mSwipeStack.getCurrentPosition()),
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -1089,7 +1122,7 @@ private void GetUserData()
     {
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/Setting.svc/UserOnline/" + userid + "/" + status,
+        client.get(Constant.UserOnline + userid + "/" + status,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -1117,10 +1150,10 @@ private void GetUserData()
 
     }
 
-    public void Skip_Activity(String id,int position)
+    public void Skip_Activity(String activity_id,int position)
     {
 
-        edit_skip_activity.putString("id_"+position,id);
+        edit_skip_activity.putString(activity_id,activity_id);
         edit_skip_activity.commit();
     }
     @Override

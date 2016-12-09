@@ -64,7 +64,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
         holder.authorName.setText(book.getAuthorName());
         final ViewHolder finalHolder = holder;
         Picasso.with(getContext())
-                .load("http://52.37.136.238/JoinMe/" + book.getImageUrl()) // thumbnail url goes here
+                .load(Constant.BASE_URL + book.getImageUrl()) // thumbnail url goes here
                 .placeholder(R.drawable.butterfly)
                 .resize(200,200)
                 .into(holder.image, new Callback() {

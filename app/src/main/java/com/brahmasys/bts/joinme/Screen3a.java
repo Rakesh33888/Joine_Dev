@@ -94,7 +94,7 @@ public class Screen3a extends AppCompatActivity {
     SharedPreferences.Editor edit_userid,edit_user_detals,edit_user_pic,edit_token_id;
 
     private static final String TAG = "UserRegister";
-    private static final String URL = "http://52.37.136.238/JoinMe/User.svc/UserRegister";
+    private static final String URL = Constant.UserRegister;
     String userid;
     int additionalPadding = 0;
     @Override
@@ -162,7 +162,7 @@ public class Screen3a extends AppCompatActivity {
             public void onClick(View v) {
                 resend.setClickable(false);
                AsyncHttpClient client = new AsyncHttpClient();
-                client.get("http://52.37.136.238/JoinMe/User.svc/ResendVerificationCode/" + mailId,
+                client.get(Constant.ResendVerificationCode + mailId,
                         new AsyncHttpResponseHandler() {
                             // When the response returned by REST has Http response code '200'
 
@@ -367,7 +367,7 @@ public class Screen3a extends AppCompatActivity {
                                             edit_userid.commit();
 
                                             AsyncHttpClient client = new AsyncHttpClient();
-                                            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserDetails/" + userid,
+                                            client.get(Constant.GetUserDetails  + userid,
                                                     new AsyncHttpResponseHandler() {
                                                         // When the response returned by REST has Http response code '200'
 
@@ -599,7 +599,7 @@ public class Screen3a extends AppCompatActivity {
 
         File file1 = new File(selectedPath1);
 
-        String urlString = "http://52.37.136.238/JoinMe/User.svc/UpdateUserProfilePicture/"+user_id.getString("userid","null");
+        String urlString = Constant.UpdateUserProfilePicture+user_id.getString("userid","null");
         try
         {
             HttpClient client = new DefaultHttpClient();

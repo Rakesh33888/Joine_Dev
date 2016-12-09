@@ -50,7 +50,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
     String distanceStr="null",date="null";
     private static final String TAG = "SaveUserPreference";
     public static final String CHAT_ROOM_OPEN="chat_room_open";
-    public  static final String URL_SaveUserPreference ="http://52.37.136.238/JoinMe/User.svc/SaveUserPreference";
+    public  static final String URL_SaveUserPreference =Constant.SaveUserPreference;
  //   ProgressDialog pd;
 
     LinearLayout linearLayout,layoutback;
@@ -191,7 +191,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
         if(Connectivity_Checking.isConnectingToInternet()) {
             AsyncHttpClient client = new AsyncHttpClient();
             String id = user_id.getString("userid", "");
-            client.get("http://52.37.136.238/JoinMe/User.svc/GetUserSettings/" + id,
+            client.get(Constant.GetUserSettings + id,
                     new AsyncHttpResponseHandler() {
                         // When the response returned by REST has Http response code '200'
 
@@ -213,7 +213,7 @@ public class Mysearch extends android.support.v4.app.Fragment {
                                 }
 
                                 AsyncHttpClient client = new AsyncHttpClient();
-                                client.get("http://52.37.136.238/JoinMe/User.svc/GetUserPreference/"+ user_id.getString("userid",""),
+                                client.get(Constant.GetUserPreference+ user_id.getString("userid",""),
                                         new AsyncHttpResponseHandler() {
                                             // When the response returned by REST has Http response code '200'
 
