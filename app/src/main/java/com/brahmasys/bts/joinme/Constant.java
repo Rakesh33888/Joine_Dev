@@ -4,7 +4,7 @@ package com.brahmasys.bts.joinme;
  * Created by apple on 09/12/16.
  */
 public class Constant {
-
+    /*     test instance */
 /*
     public static String BASE_URL ="http://52.37.136.238/JoinMe/";
     public static final String SignUp = "http://52.37.136.238/JoinMe/User.svc/SignUp";
@@ -47,8 +47,10 @@ public class Constant {
     public static final String UpdateUserPic= "http://52.37.136.238/JoinMe/User.svc/UpdateUserPic/";
    // public static final String GetUserSettings ="http://52.37.136.238/JoinMe/User.svc/GetUserSettings/";
     public static final String UpdateSettings ="http://52.37.136.238/JoinMe/User.svc/UpdateSettings";
+    public static final String LogOut = "http://52.37.136.238/JoinMe/User.svc/LogOut/";
+    public static final String DeleteUser = "http://52.37.136.238/JoinMe/User.svc/DeleteUser/";
 */
-
+    /*      Demo instance*/
     public static String BASE_URL ="http://52.37.136.238/DemoJoinMe/";
     public static final String SignUp = "http://52.37.136.238/DemoJoinMe/User.svc/SignUp";
     public static final String Login = "http://52.37.136.238/DemoJoinMe/User.svc/Login";
@@ -89,5 +91,9 @@ public class Constant {
     public static final String GetActivityDetailsForChat = "http://52.37.136.238/DemoJoinMe/Activity.svc/GetActivityDetailsForChat/";
     public static final String UpdateUserPic= "http://52.37.136.238/DemoJoinMe/User.svc/UpdateUserPic/";
     public static final String UpdateSettings ="http://52.37.136.238/DemoJoinMe/User.svc/UpdateSettings";
+    public static final String LogOut = "http://52.37.136.238/DemoJoinMe/User.svc/LogOut/";
+    public static final String DeleteUser = "http://52.37.136.238/DemoJoinMe/User.svc/DeleteUser/";
+
+
 
 }

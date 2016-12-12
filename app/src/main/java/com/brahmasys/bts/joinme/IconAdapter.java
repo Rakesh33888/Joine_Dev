@@ -82,7 +82,7 @@ public class IconAdapter extends ArrayAdapter<Book> {
 
         Book book = getItem(position);
 
-        Picasso.with(getContext()).load(Constant.BASE_URL + book.getImageUrl()).into(holder.image);
+        Picasso.with(getContext()).load(Constant.BASE_URL + book.getImageUrl()).resize(50,50).into(holder.image);
 
         //new DownloadImageTask(holder.image).execute("http://52.37.136.238/JoinMe/" + book.getImageUrl());
 

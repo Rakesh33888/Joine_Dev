@@ -185,7 +185,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
             StrictMode.setThreadPolicy(policy);
         }
 
-        deviceuid = Settings.Secure.getString(MainActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (mTelephony.getDeviceId() != null) {
+            deviceuid = mTelephony.getDeviceId();
+        }
+        else {
+
+            deviceuid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
+
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(MainActivity.this,Screen16.class);
@@ -445,7 +453,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                         jsonObjSend1.put("deviceid", deviceuid);
                                         jsonObjSend1.put("email", email);
                                         jsonObjSend1.put("firstname", firstname);
-                                        jsonObjSend1.put("dob","10/Jun/1994");
+                                        jsonObjSend1.put("dob","10/Jun/1999");
                                         jsonObjSend1.put("gender",gender);
                                         jsonObjSend1.put("lastname",lastname);
                                         jsonObjSend1.put("lat", String.valueOf(latitude));
@@ -634,7 +642,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                             hideKeyboard(v);
 
-                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
+                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("") && !token_id.getString("token", "null").equals("null") && !deviceuid.equals("0")) {
 
                                 //Progress Dialog
 
@@ -796,7 +804,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                             Matcher matcher = pattern.matcher(inputStr);
 
-                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("")) {
+                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("") && !token_id.getString("token", "0").equals("null") && !deviceuid.equals("null")) {
                                 if (matcher.matches()) {
                                     if (pass.getText().toString().trim().length() >= 4) {
 

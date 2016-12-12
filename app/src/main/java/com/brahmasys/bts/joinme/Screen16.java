@@ -528,50 +528,6 @@ private void GetUserData()
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        shareicon.setVisibility(View.VISIBLE);
-        shareicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (Connectivity_Checking.isConnectingToInternet()) {
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.get(Constant.GetPlayStoreLink,
-                            new AsyncHttpResponseHandler() {
-                                public void onSuccess(String response) {
-                                    try {
-                                        // Extract JSON Object from JSON returned by REST WS
-                                        JSONObject obj = new JSONObject(response);
-                                        JSONObject json = null;
-                                        try {
-                                            json = new JSONObject(String.valueOf(obj));
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        JSONObject Link = null;
-                                        try {
-                                            Link = json.getJSONObject("data");
-                                            Playstore_link = Link.getString("playStoreLink");
-                                            Intent sendIntent = new Intent();
-                                            sendIntent.setAction(Intent.ACTION_SEND);
-                                            sendIntent.putExtra(Intent.EXTRA_TEXT, Playstore_link);
-                                            sendIntent.setType("text/plain");
-                                            startActivity(sendIntent);
-
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            });
-                }
-
-            }
-        });
 
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -624,6 +580,51 @@ private void GetUserData()
             }
         });
 
+        shareicon.setVisibility(View.VISIBLE);
+        shareicon.setClickable(true);
+        shareicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (Connectivity_Checking.isConnectingToInternet()) {
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get(Constant.GetPlayStoreLink,
+                            new AsyncHttpResponseHandler() {
+                                public void onSuccess(String response) {
+                                    try {
+                                        // Extract JSON Object from JSON returned by REST WS
+                                        JSONObject obj = new JSONObject(response);
+                                        JSONObject json = null;
+                                        try {
+                                            json = new JSONObject(String.valueOf(obj));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        JSONObject Link = null;
+                                        try {
+                                            Link = json.getJSONObject("data");
+                                            Playstore_link = Link.getString("playStoreLink");
+                                            Intent sendIntent = new Intent();
+                                            sendIntent.setAction(Intent.ACTION_SEND);
+                                            sendIntent.putExtra(Intent.EXTRA_TEXT, Playstore_link);
+                                            sendIntent.setType("text/plain");
+                                            startActivity(sendIntent);
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
+                }
+
+            }
+        });
 
 
 

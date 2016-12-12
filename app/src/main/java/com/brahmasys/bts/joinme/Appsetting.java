@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -241,9 +242,17 @@ public class Appsetting extends Fragment{
         }
 
 
+        final TelephonyManager mTelephony = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        if (mTelephony.getDeviceId() != null) {
+            deviceuid = mTelephony.getDeviceId();
+        }
+        else {
+
+            deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
 
 
-        deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+      //  deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -478,7 +487,7 @@ public class Appsetting extends Fragment{
     {
         new Custom_Progress(getActivity());
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/DeleteUser/" +user_id.getString("userid",""),
+        client.get(Constant.DeleteUser +user_id.getString("userid",""),
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -516,7 +525,7 @@ public class Appsetting extends Fragment{
 
          new Custom_Progress(getActivity());
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://52.37.136.238/JoinMe/User.svc/LogOut/" + user_id.getString("userid", "") + "/" + deviceuid,
+        client.get(Constant.LogOut + user_id.getString("userid", "") + "/" + deviceuid,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 
@@ -555,7 +564,7 @@ public class Appsetting extends Fragment{
                 });
 
         AsyncHttpClient client1 = new AsyncHttpClient();
-        client1.get("http://52.37.136.238/JoinMe/Setting.svc/UserOnline/" + user_id.getString("userid", "") + "/" + "false",
+        client1.get(Constant.UserOnline + user_id.getString("userid", "") + "/" + "false",
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http response code '200'
 

@@ -190,7 +190,7 @@ public class Single_group_Message extends Fragment    {
       //  Log.e("Join Group", group_id + "\n" + sender_id);
 
         /**************Join Group ****************/
-       mSocket.emit("joingroup", sender_id, group_id);
+        mSocket.emit("joingroup", sender_id, group_id);
         mSocket.emit("connectagain", sender_id, group_id);
        // mSocket.emit("disconnect", userid);
         /**************Join Group ****************/

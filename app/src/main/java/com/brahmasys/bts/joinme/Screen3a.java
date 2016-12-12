@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -22,6 +24,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -55,7 +58,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +84,7 @@ public class Screen3a extends AppCompatActivity {
     Context context;
     String deviceuid,device_type="android",registration_type="normal",device_token="";
     boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    boolean isBelowKitKat = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
     ProgressDialog progressDialog;
     SessionManager session;
     private static final int SELECT_FILE1 = 1;
@@ -111,7 +118,16 @@ public class Screen3a extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        deviceuid = Settings.Secure.getString(Screen3a.this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (mTelephony.getDeviceId() != null) {
+            deviceuid = mTelephony.getDeviceId();
+        }
+        else {
+
+            deviceuid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
+       // deviceuid = Settings.Secure.getString(Screen3a.this.getContentResolver(), Settings.Secure.ANDROID_ID);
         session = new SessionManager(getApplicationContext());
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
         edit_userid = user_id.edit();
@@ -548,7 +564,39 @@ public class Screen3a extends AppCompatActivity {
             });
             thread.start();
         }
+        else if(isBelowKitKat && resultCode != Activity.RESULT_CANCELED) {
+            // firstimage.setImageBitmap(null);
 
+            Uri  mediaUri = data.getData();
+            String mediaPath = mediaUri.getPath();
+            selectedPath1 = mediaUri.getPath();
+            Bitmap bm = null;
+            try {
+                InputStream inputStream = Screen3a.this.getContentResolver().openInputStream(mediaUri);
+                bm = BitmapFactory.decodeStream(inputStream);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                byte[] byteArray = stream.toByteArray();
+
+                circle_image.setImageBitmap(bm);
+                select_image =1;
+
+                Thread thread = new Thread(new Runnable() {
+                    public void run() {
+                        doFileUpload();
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+
+                            }
+                        });
+                    }
+                });
+                thread.start();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
 
 
 
