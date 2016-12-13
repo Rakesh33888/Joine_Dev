@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:text="Message"
         android:id="@+id/message"
+        android:singleLine="true"
         android:layout_below="@+id/textView1"
         android:layout_alignStart="@+id/textView1" />
 

@@ -793,11 +793,11 @@ private void GetUserData()
             }
             try {
 
-               if (!json.equals("")) {
+//               if (!json.equals("")) {
 
                     JSONArray cast = json.getJSONArray("data");
-                    if(!cast.equals("")) {
-                        if (cast.length() != 0) {
+//                    if(!cast.equals("")) {
+                        if (cast.length() > 0) {
 
 
                             Map<String, ?> allEntries = skip_activity.getAll();
@@ -875,14 +875,14 @@ private void GetUserData()
                         } else {
                             reloadactivity.setVisibility(View.VISIBLE);
                         }
-                    }
-                    else {
-                        reloadactivity.setVisibility(View.VISIBLE);
-                    }
-               }
-               else {
-                   reloadactivity.setVisibility(View.VISIBLE);
-               }
+//                    }
+//                    else {
+//                        reloadactivity.setVisibility(View.VISIBLE);
+//                    }
+//               }
+//               else {
+//                   reloadactivity.setVisibility(View.VISIBLE);
+//               }
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -158,7 +158,7 @@ public class Notification_Screen extends Fragment {
                                     activity_name1.setText("How was the activty "+activity_name +"?");
                                             //Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + url).placeholder(R.drawable.butterfly).into(activity_image);
                                             Picasso.with(getActivity())
-                                                    .load("http://52.37.136.238/JoinMe/" + url) // thumbnail url goes here
+                                                    .load(Constant.BASE_URL + url) // thumbnail url goes here
                                                     .placeholder(R.drawable.butterfly)
                                                     .resize(200, 200)
                                                     .into(activity_image, new Callback() {

@@ -318,10 +318,9 @@ public class Mygroup extends Fragment{
             JSONArray userdetails = null;
 
 
-
             try {
                 userdetails = json.getJSONArray("data");
-
+                if (userdetails.length()>0) {
 
                 for (int i = 0; i < userdetails.length(); i++) {
                     JSONObject actor = userdetails.getJSONObject(i);
@@ -335,7 +334,7 @@ public class Mygroup extends Fragment{
                     book.setImageUrl(actor.getString("activity_url"));
 
                     long unixSeconds = Long.parseLong(actor.getString("activity_time"));
-                    Date date2 = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
+                    Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
                     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
                     sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
                     String formattedDate = sdf.format(date2);
@@ -350,15 +349,16 @@ public class Mygroup extends Fragment{
                     books.add(book);
 
                 }
-               // adapter.notifyDataSetChanged();
+                // adapter.notifyDataSetChanged();
 
-               getActivity().runOnUiThread(new Runnable() {
-                   public void run() {
-                       adapter.notifyDataSetChanged();
-                   }
-               });
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
                 //Log.w("details",String.valueOf(userdetails));
-            } catch (JSONException e) {
+            }
+            }catch (JSONException e) {
                 e.printStackTrace();
             }
 

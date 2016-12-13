@@ -396,25 +396,34 @@ public class Update_Activity extends Fragment  {
             String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
             List hours =  new ArrayList<String>();;
-            if (formattedDate.equals(current_date))
+
+            if (current_date.compareTo(formattedDate) <= 0)
+
             {
+                if (formattedDate.equals(current_date))
+                {
 
-                Log.e("Current time", time);
+                    Log.e("Current time", time);
 
-                hours.add(0, "");
-                for (int i =0; i <=23; i++) {
-                    if (i>Integer.parseInt(time))
-                    {
+                    hours.add(0, "");
+                    for (int i =0; i <=23; i++) {
+                        if (i>Integer.parseInt(time))
+                        {
+                            hours.add(i );
+                        }
+                    }
+                }
+                else {
+                    hours.add(0, "");
+                    for (int i =0; i <=23; i++) {
                         hours.add(i );
+
                     }
                 }
             }
-            else {
-                hours.add(0, "");
-                for (int i =0; i <=23; i++) {
-                    hours.add(i );
-
-                }
+            else
+            {
+               // Log.e("Return", "getMyTime older than getCurrentDateTime ");
             }
             ArrayAdapter<String> spinnerArrayAdapter4 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, hours);
             spinnerArrayAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

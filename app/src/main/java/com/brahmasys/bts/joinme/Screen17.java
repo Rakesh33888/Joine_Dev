@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -51,6 +52,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -173,6 +175,10 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                 }
             }
         });
+
+
+
+
 //        edit_userid.putString("userid", uid);
 //        edit_userid.commit();
 
@@ -457,7 +463,7 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     }
                                     else
                                     {
-                                        uptopeoples.setText("No limitation:");
+                                        uptopeoples.setText("No participants limitation:");
                                     }
                                 currentpeoples.setText("Currently have " + joined);
                                 costtext.setText("Cost " + cost);
@@ -496,9 +502,31 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                 minimumRating.setRating(Float.parseFloat(rating));
 
 
+                                    Calendar c = Calendar.getInstance();
+                                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa ");
+                                    String getCurrentDateTime = sdf1.format(c.getTime());
+                                    String getMyTime=value;
+                                    Log.d("getCurrentDateTime",getCurrentDateTime);
+                                    // getCurrentDateTime: 05/23/2016 18:49 PM
+
+                                    if (getCurrentDateTime.compareTo(getMyTime) < 0)
+
+                                    {
+                                        Log.e("Return", "getMyTime newer than getCurrentDateTime ");
+                                    }
+                                    else
+                                    {
+                                        updatetext.setTextColor(Color.parseColor("#b2b1b4"));
+                                        delete_text.setTextColor(Color.parseColor("#b2b1b4"));
+                                        updatetext.setEnabled(false);
+                                        updatetext.setClickable(false);
+                                        delete_text.setEnabled(false);
+                                        delete_text.setClickable(false);
+
+                                        Log.e("Return", "getMyTime older than getCurrentDateTime ");
+                                    }
+
                                 JSONArray cast = userdetails.getJSONArray("activity_pics");
-
-
                                 //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
                                 List<String> allid = new ArrayList<String>();
                                 List<String> allurl = new ArrayList<String>();

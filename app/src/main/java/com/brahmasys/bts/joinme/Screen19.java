@@ -375,13 +375,19 @@ public class Screen19 extends Fragment {
                         state = addresses.get(0).getAdminArea();
                       //  zip = addresses.get(0).getPostalCode();
                         country = addresses.get(0).getCountryName();
+
+                        if (!complete_address.equals("null")) {
+                            checked_current_address = complete_address + "," + city + "," + state + "," + country;
+                            current_address.setText(checked_current_address);
+                        }
                     }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            checked_current_address = complete_address + "," + city + "," + state + "," + country;
-            current_address.setText(checked_current_address);
+            if (!complete_address.equals("null")) {
+                checked_current_address = complete_address + "," + city + "," + state + "," + country;
+                current_address.setText(checked_current_address);
+            }
 
         }else{
 
@@ -479,7 +485,7 @@ public class Screen19 extends Fragment {
 
         checkBoxforwomen.setChecked(true);
         checkBoxformen.setChecked(true);
-        checkBoxforwomen.setEnabled(false);
+      //  checkBoxforwomen.setEnabled(false);
         //checkBoxforwomen.setClickable(false);
         checkBoxforwomen.setOnClickListener(new View.OnClickListener() {
             @Override

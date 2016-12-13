@@ -286,9 +286,9 @@
                             android:singleLine="true"
                             android:textSize="14dp"
                             android:textColor="#FFFBFB"
-
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:layout_marginLeft="40dp"
-                            android:layout_gravity="center_vertical" />
+                             />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -296,10 +296,13 @@
                             android:text="Currently have 0"
                             android:textColor="#FFFBFB"
                             android:textSize="14dp"
-                            android:singleLine="true"
+                            android:maxLines="2"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:layout_marginLeft="5dp"
                             android:id="@+id/currentpeoples"
-                            android:layout_gravity="center_vertical|right" />
+                            android:layout_gravity="right" />
+
+
                     </LinearLayout>
                     <ImageView
                         android:layout_width="wrap_content"
@@ -337,7 +340,7 @@
                         android:text="Description"
                         android:id="@+id/timetext"
                         android:textSize="14dp"
-                        android:singleLine="true"
+
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="70dp"
                         android:textColor="#FFFBFB"

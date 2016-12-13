@@ -345,6 +345,7 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                     String activity_address=userdetails.getString("activity_Adress");
                                     String joined = userdetails.getString("participant_joined");
                                     String icon1 = userdetails.getString("acitivity_icon");
+                                    String join  = userdetails.getString("join");
                                     owner_id = userdetails.getString("activity_owner_id");
                                     String activity_id = userdetails.getString("activity_id");
                                     description = userdetails.getString("activity_Description");
@@ -358,13 +359,20 @@ public class Other_User_Details extends android.support.v4.app.Fragment implemen
                                     }
                                     else
                                     {
-                                        uptopeoples.setText("No limitation:");
+                                        uptopeoples.setText("No participants limitation:");
                                     }
                                    // uptopeoples.setText("Up to " + limit + " peoples:");
                                     currentpeoples.setText("Currently have " + joined);
                                     costtext.setText("Cost " + cost);
                                     timetext.setText("Description:  " + description);
 
+                                    if (join.equals("false"))
+                                    {
+                                        btnJoineActivity.setVisibility(View.VISIBLE);
+                                    }
+                                    else {
+                                        btnJoineActivity.setVisibility(View.GONE);
+                                    }
                                     //  new DownloadImageTask(createrimage).execute("http://52.37.136.238/JoinMe/" + owner_pic);
                                     Picasso.with(getActivity()).load(Constant.BASE_URL + icon1).placeholder(R.drawable.butterfly).into(icon);
                                   //  Picasso.with(getActivity()).load("http://52.37.136.238/JoinMe/" + owner_pic).placeholder(R.drawable.butterfly).into(createrimage);

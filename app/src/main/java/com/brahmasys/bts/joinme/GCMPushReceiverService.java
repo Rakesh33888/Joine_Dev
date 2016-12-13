@@ -88,8 +88,8 @@ public class GCMPushReceiverService extends GcmListenerService {
         int requestCode = 0;//Your request code
         Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT);
-     //   PendingIntent intent = PendingIntent.getActivity(context, nid,notificationIntent, 0);
+      //  PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+         PendingIntent pendingIntent = PendingIntent.getActivity(this, m,intent, PendingIntent.FLAG_CANCEL_CURRENT);
         //Setup notification
         //Sound
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

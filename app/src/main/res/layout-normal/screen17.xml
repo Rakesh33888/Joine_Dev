@@ -311,9 +311,10 @@
                 android:id="@+id/uptopeoples"
                 android:textSize="14dp"
                 android:textColor="#FFFBFB"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:singleLine="true"
                 android:layout_marginLeft="40dp"
-                android:layout_gravity="center_vertical" />
+                 />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -322,8 +323,9 @@
                 android:textColor="#FFFBFB"
                 android:textSize="14dp"
                  android:layout_marginLeft="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/currentpeoples"
-                android:layout_gravity="center_vertical|right" />
+                android:layout_gravity="right" />
             </LinearLayout>
             <ImageView
                 android:layout_width="wrap_content"
