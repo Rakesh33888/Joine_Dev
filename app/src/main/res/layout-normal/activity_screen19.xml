@@ -236,7 +236,7 @@
                    android:gravity="center_vertical"
                     android:paddingStart="15dp"
                     android:textSize="19dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.25"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical" />
 
@@ -244,25 +244,25 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/spinner_hour"
-                    android:layout_weight="0.34"
+                    android:layout_weight="0.35"
                     android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
                     android:scrollIndicators="none"
                     android:layoutMode="opticalBounds"
                     android:textAlignment="center"
-                    android:spinnerMode="dialog"
+                    android:spinnerMode="dropdown"
                     android:prompt="@string/hours" />
                 <Spinner
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/spinner_min"
-                    android:layout_weight="0.34"
+                    android:layout_weight="0.39"
                     android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
                     android:scrollIndicators="none"
                     android:layoutMode="opticalBounds"
                     android:textAlignment="center"
-                    android:spinnerMode="dialog"
+                    android:spinnerMode="dropdown"
                     android:prompt="@string/minutes"/>
 
 

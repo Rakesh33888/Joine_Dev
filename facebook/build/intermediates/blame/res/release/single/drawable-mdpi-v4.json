@@ -28,12 +28,12 @@
         "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/src/main/res/drawable-mdpi/com_facebook_tooltip_black_topnub.png"
     },
     {
-        "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable-mdpi-v4/messenger_bubble_small_white.png",
-        "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/src/main/res/drawable-mdpi/messenger_bubble_small_white.png"
-    },
-    {
         "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable-mdpi-v4/abc_btn_check_to_on_mtrl_000.png",
         "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable-mdpi-v4/abc_btn_check_to_on_mtrl_000.png"
+    },
+    {
+        "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable-mdpi-v4/messenger_bubble_small_white.png",
+        "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/src/main/res/drawable-mdpi/messenger_bubble_small_white.png"
     },
     {
         "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/release/drawable-mdpi-v4/com_facebook_tooltip_blue_topnub.png",

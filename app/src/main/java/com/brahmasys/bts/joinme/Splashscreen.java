@@ -1,14 +1,18 @@
 package com.brahmasys.bts.joinme;
 
+import android.*;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +31,7 @@ public class Splashscreen extends Activity {
     RelativeLayout refresh;
     final static private String PREF_KEY_SHORTCUT_ADDED = "PREF_KEY_SHORTCUT_ADDED";
     SharedPreferences sharedPreferences;
+    private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -69,6 +74,13 @@ public class Splashscreen extends Activity {
 
         session = new SessionManager(getApplicationContext());
         refresh = (RelativeLayout) findViewById(R.id.refresh);
+        int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE);
+
+//        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+//        } else {
+//            //TODO
+//        }
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,4 +250,18 @@ public class Splashscreen extends Activity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE:
+//                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+//                    //TODO
+//                }
+//                break;
+//
+//            default:
+//                break;
+//        }
+//    }
+
 }

@@ -152,6 +152,7 @@ public class Screen19 extends Fragment {
     private ArrayAdapter<Book> adapter;
     Context context;
     List<String> allurl;
+
     String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"};
     private String selectedImagePath = "",selectedImagePath2 = "",selectedImagePath3 = "";
     public static final int PICK_IMAGE1 = 1;
@@ -189,8 +190,10 @@ public class Screen19 extends Fragment {
 //        spinnerforday = (Spinner) v.findViewById(R.id.spinner_day);
 //        spinnerformonth = (Spinner) v.findViewById(R.id.spinner_month);
 //        spinnerforyear = (Spinner) v.findViewById(R.id.spinner_year);
-       spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
+        spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
         spinnerformin = (Spinner) v.findViewById(R.id.spinner_min);
+        spinnerforhour.setSelection(0);
+        spinnerformin.setSelection(0);
         dateTextView = (TextView)v.findViewById(R.id.date_textview);
         dateButton = (ImageView)v.findViewById(R.id.date_button);
 
@@ -228,6 +231,9 @@ public class Screen19 extends Fragment {
                 getActivity().finish();
             }
         });
+
+
+
         seekBarforage = (CrystalRangeSeekbar) v.findViewById(R.id.rangeSeekbar);
         firstimage =(CircularImageView) v.findViewById(R.id.firstimage);
         secondimage = (CircularImageView) v.findViewById(R.id.secondimage);
@@ -376,18 +382,18 @@ public class Screen19 extends Fragment {
                       //  zip = addresses.get(0).getPostalCode();
                         country = addresses.get(0).getCountryName();
 
-                        if (!complete_address.equals("null")) {
+                    //    if (!complete_address.equals("null")) {
                             checked_current_address = complete_address + "," + city + "," + state + "," + country;
                             current_address.setText(checked_current_address);
-                        }
+                  //      }
                     }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (!complete_address.equals("null")) {
+//            if (!complete_address.equals("null")) {
                 checked_current_address = complete_address + "," + city + "," + state + "," + country;
                 current_address.setText(checked_current_address);
-            }
+        //    }
 
         }else{
 
@@ -698,19 +704,45 @@ public class Screen19 extends Fragment {
 //                day = spinnerforday.getSelectedItem().toString();
 
 
-                                String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
+                                String current_date = new SimpleDateFormat("d/M/yyyy").format(new Date());
 
                                 Calendar calander = Calendar.getInstance();
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
                                 String time = simpleDateFormat.format(calander.getTime());
 
-                                if (dateTextView.getText().toString().equals(current_date)) {
-                                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition() + Integer.parseInt(time));
+                                Calendar c = Calendar.getInstance();
+                                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+                                String getCurrentDateTime = sdf1.format(c.getTime());
 
-                                } else {
-                                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition() - 1);
 
+                                try {
+                                    Date date1 = sdf1.parse(current_date);
+                                    Date date3 = sdf1.parse(dateTextView.getText().toString());
+
+                                    if (date1.compareTo(date3) == 0)
+
+                                    {
+                                        hour = String.valueOf(spinnerforhour.getSelectedItemPosition()+Integer.parseInt(time));
+                                        Log.e("Return", "getMyTime newer than getCurrentDateTime ");
+                                    }
+                                    else
+                                    {
+                                        hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
+
+                                        Log.e("Return", "getMyTime older than getCurrentDateTime ");
+                                    }
+
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
                                 }
+
+//                                if (dateTextView.getText().toString().equals(current_date)) {
+//                                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition() + Integer.parseInt(time));
+//
+//                                } else {
+//                                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition() - 1);
+//
+//                                }
                                 if (!String.valueOf(spinnerformin.getSelectedItem()).equals(""))
                                 {
                                     minute = String.valueOf(spinnerformin.getSelectedItem());
@@ -1244,15 +1276,15 @@ public class Screen19 extends Fragment {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
             String time = simpleDateFormat.format(calander.getTime());
 
-            String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
+            String current_date = new SimpleDateFormat("d/M/yyyy").format(new Date());
 
-            List hours =  new ArrayList<String>();;
+            List  hours  =  new ArrayList<String>();
             if (date.equals(current_date))
             {
 
                 Log.e("Current time", time);
 
-                hours.add(0, "");
+                hours.add(0, "Hours");
                 for (int i =0; i <=23; i++) {
                  if (i>Integer.parseInt(time))
                  {
@@ -1261,7 +1293,7 @@ public class Screen19 extends Fragment {
                }
             }
             else {
-                hours.add(0, "");
+                hours.add(0, "Hours");
                 for (int i =0; i <=23; i++) {
                         hours.add(i );
 

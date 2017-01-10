@@ -120,13 +120,13 @@ public class Screen16 extends AppCompatActivity implements
     private static final String URL1 = Constant.GetUserActivity;
 
     public static final String USERID = "userid";
-    public static final String DETAILS = "user_details";
-    public static final String USER_PIC = "user_pic";
+    private SessionManager session;
     private static final String LAT_LNG = "lat_lng";
     public static final String CHAT_ROOM_OPEN="chat_room_open";
     public static final String SKIP_ACTIVITY = "skip_activity";
     SharedPreferences user_id, user_Details, user_pic, lat_lng,chat_room,skip_activity;
     SharedPreferences.Editor edit_userid, edit_user_detals, edit_user_pic, edit_lat_lng,edit_chat_room,edit_skip_activity;
+
     private static final int SELECT_FILE1 = 1;
     String selectedPath1 = "NONE";
     HttpEntity resEntity;
@@ -138,7 +138,8 @@ public class Screen16 extends AppCompatActivity implements
     Update_Profile update_profile;
     Appsetting appsettings;
     TextView name_activity, time_activity, distance_activity;
-    List<String> activity_name, distance, time, activity_id, userid_other;
+    List<String> activity_name, distance, time, activity_id, userid_other,icon_url;
+    List<String> activity_name1, distance1, time1,icon_url1;
     ProgressDialog pd;
     Double latitude=0.0,longitude=0.0;
     TextView whoshowed_skip,whoshowed_remind_later,whoshowed_activityname;
@@ -150,7 +151,10 @@ public class Screen16 extends AppCompatActivity implements
     String refresh1="home";
     String scheme="null",host="null",first="null",second="0",third="0";
     String Playstore_link;
-    ArrayList<String> Skip_Activity_ID_List;
+    ArrayList<String> Skip_Activity_ID_List,Skip_name_list,Skip_time_list,Skip_distance_list,Skip_icon_list;
+    private TextView dash_name,dash_time;
+    private TextView dash_distance;
+    private ImageView dash_icon;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,7 +166,7 @@ public class Screen16 extends AppCompatActivity implements
         edit_chat_room.putString("chat_room","close");
         edit_chat_room.putString("chat_activity", "0");
         edit_chat_room.commit();
-
+        session = new SessionManager(getApplicationContext());
 
 //        Uri data = getIntent().getData();
 //
@@ -192,47 +196,58 @@ public class Screen16 extends AppCompatActivity implements
         String notif_time   = getIntent().getStringExtra("time");
         FragmentManager fragmentManager = getSupportFragmentManager();
       //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-           if (type != null)
-           {
-            if(type.equals("activity")||type.equals("has been updated")||type.equals("reminder"))
+        if (session.isLoggedIn()) {
+            if (type != null)
             {
-                Other_User_Details screen17 = new Other_User_Details();
-                Bundle bundle = new Bundle();
-                bundle.putString("userid",notif_user_id);
-                bundle.putString("activityid",notif_activity_id);
-                screen17.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, screen17)
-                        .addToBackStack(null)
-                        .commit();
+                if(type.equals("activity")||type.equals("has been updated")||type.equals("reminder"))
+                {
+                    Other_User_Details screen17 = new Other_User_Details();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid",notif_user_id);
+                    bundle.putString("activityid",notif_activity_id);
+                    screen17.setArguments(bundle);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.flContent, screen17)
+                            .addToBackStack(null)
+                            .commit();
 
+                }
+                else if (type.equals("chat"))
+                {
+                    Single_group_Message single_group_message = new Single_group_Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid",notif_user_id);
+                    bundle.putString("activityid",notif_activity_id);
+                    single_group_message.setArguments(bundle);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.flContent, single_group_message)
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else // if (type.equals("rating")||type.equals("review"))
+                {
+                    Notification_Screen favoritesFragment = new Notification_Screen();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userid",notif_user_id);
+                    bundle.putString("activityid",notif_activity_id);
+                    bundle.putString("type",type);
+                    bundle.putString("time",notif_time);
+                    favoritesFragment.setArguments(bundle);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.flContent, favoritesFragment)
+                            .addToBackStack(null).commit();
+                }
             }
-            else if (type.equals("chat"))
-            {
-                Single_group_Message single_group_message = new Single_group_Message();
-                Bundle bundle = new Bundle();
-                bundle.putString("userid",notif_user_id);
-                bundle.putString("activityid",notif_activity_id);
-                single_group_message.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, single_group_message)
-                        .addToBackStack(null)
-                        .commit();
-            }
-            else // if (type.equals("rating")||type.equals("review"))
-            {
-                Notification_Screen favoritesFragment = new Notification_Screen();
-                Bundle bundle = new Bundle();
-                bundle.putString("userid",notif_user_id);
-                bundle.putString("activityid",notif_activity_id);
-                bundle.putString("type",type);
-                bundle.putString("time",notif_time);
-                favoritesFragment.setArguments(bundle);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.flContent, favoritesFragment)
-                        .addToBackStack(null).commit();
-            }
-           }
+
+
+        } else {
+
+
+            Intent intent = new Intent(Screen16.this, MainActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+            finish();
+        }
 
         /************* Notification Handling End  *********************/
 
@@ -248,7 +263,14 @@ public class Screen16 extends AppCompatActivity implements
         edit_lat_lng = lat_lng.edit();
         skip_activity = getSharedPreferences(SKIP_ACTIVITY, MODE_PRIVATE);
         edit_skip_activity = skip_activity.edit();
+
+
+
         Skip_Activity_ID_List =new ArrayList<String>();
+        Skip_name_list = new ArrayList<String>();
+        Skip_time_list =new ArrayList<String>();
+        Skip_distance_list = new ArrayList<String>();
+        Skip_icon_list =new ArrayList<String>();
 
         name_activity = (TextView) findViewById(R.id.textView14);
         time_activity = (TextView) findViewById(R.id.textView15);
@@ -263,7 +285,19 @@ public class Screen16 extends AppCompatActivity implements
         time = new ArrayList<String>();
         activity_id = new ArrayList<String>();
         userid_other = new ArrayList<String>();
+        icon_url     = new ArrayList<String>();
+
+        activity_name1 = new ArrayList<String>();
+        distance1 = new ArrayList<String>();
+        time1 = new ArrayList<String>();
+        icon_url1     = new ArrayList<String>();
+
         context = this;
+        dash_name = (TextView) findViewById(R.id.textView14);
+        dash_distance = (TextView) findViewById(R.id.textView15);
+        dash_time = (TextView) findViewById(R.id.textView16);
+        dash_icon = (ImageView) findViewById(R.id.imageView4);
+
         setListViewAdapter();
         Marshmallow_Permissions.verifyStoragePermissions(Screen16.this);
      //   LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -310,13 +344,29 @@ public class Screen16 extends AppCompatActivity implements
                  progressDialog.setContentView(R.layout.custom_progress);
                  progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                  progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+
+                 Screen16.this.runOnUiThread(new Runnable() {
+                     @Override
+                     public void run() {
+                         if (activity_name1.size()!=0) {
+                             dash_name.setText(activity_name1.get(0));
+                             dash_time.setText(time1.get(0));
+                             dash_distance.setText(distance1.get(0));
+                             Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + icon_url1.get(0)).fit().noFade().centerCrop()
+                                     .into(dash_icon);
+                         }
+                     }
+                 });
                  new Thread(new Runnable() {
                      @Override
                      public void run() {
 
-                         edit_skip_activity.clear();
-                         edit_skip_activity.commit();
+
+                         edit_skip_activity.clear().commit();
                          Skip_Activity_ID_List.clear();
+
                          Getting_Activities();
                          runOnUiThread(new Runnable() {
                              @Override
@@ -334,6 +384,9 @@ public class Screen16 extends AppCompatActivity implements
          });
 
         fillWithTestData();
+
+
+
     }
     @Override
     protected void attachBaseContext(Context base) {
@@ -414,31 +467,6 @@ private void GetUserData()
                             edit_user_pic.putString("url"  , url);
                             edit_user_pic.commit();
 
-//                            edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-//                            edit_user_pic.commit();
-//                            JSONObject actor1 = cast.getJSONObject(0);
-//
-//                           String Image_Url = actor1.getString("url");
-//                            //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
-//                            List<String> allid = new ArrayList<String>();
-//                            List<String> allurl = new ArrayList<String>();
-//
-//                            for (int i = 0; i < cast.length(); i++) {
-//                                JSONObject actor = cast.getJSONObject(i);
-//                                String id = actor.getString("id");
-//                                String url = actor.getString("url");
-//                                allid.add(id);
-//                                allurl.add(url);
-//                                //   Toast.makeText(Login_Activity.this, pet_id, Toast.LENGTH_SHORT).show();
-//
-//                                Log.d("Type", cast.getString(i));
-//                            }
-//                            for (int j = 0; j < allid.size(); j++) {
-//                                edit_user_pic.putString("id_" + j, allid.get(j));
-//                                edit_user_pic.putString("url_" + j, allurl.get(j));
-//
-//                            }
-//                            edit_user_pic.commit();
 
 
 
@@ -627,51 +655,6 @@ private void GetUserData()
         });
 
 
-
-
-
-//         allid = new ArrayList<String>();
-//          allurl = new ArrayList<String>();
-//         for (int j = 0; j < pic_list_size; j++) {
-//            String id = user_pic.getString("id_" + j, "");
-//            String url = user_pic.getString("url_" + j, "");
-//
-//            allid.add(id);
-//            allurl.add(url);
-//        }
-//        for (int i = 0; i < allid.size(); i++) {
-//            if (i == allurl.size() - 1) {
-//                //Toast.makeText(Screen16.this,  allurl.get(i), Toast.LENGTH_SHORT).show();
-//                //  Picasso.with(this).load("http://52.37.136.238/JoinMe/" + allurl.get(i)).into(navimage);
-////                Picasso.with(this)
-////                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i))
-////                        .placeholder(R.drawable.default_profile)
-////                        .into(navimage);
-//
-//                profile_url=allurl.get(i);
-//                profile_id =allid.get(i);
-//                Picasso.with(this)
-//                        .load("http://52.37.136.238/JoinMe/" + allurl.get(i)) // thumbnail url goes here
-//                        .placeholder(R.drawable.butterfly)
-//                        .resize(200,200)
-//                        .noFade()
-//                        .into(navimage, new Callback() {
-//                            @Override
-//                            public void onSuccess() {
-//
-//
-//                            }
-//
-//                            @Override
-//                            public void onError() {
-//                            }
-//                        });
-//
-//                // new DownloadImageTask(navimage).execute("http://52.37.136.238/JoinMe/" + allurl.get(i));
-//
-//            }
-//        }
-
         editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -706,7 +689,22 @@ private void GetUserData()
             }
         });
         Getting_Activities();
-            dislike.setOnClickListener(new View.OnClickListener() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (activity_name.size()!=0) {
+                    dash_name.setText(activity_name.get(mSwipeStack.getCurrentPosition()));
+                    dash_time.setText(time.get(mSwipeStack.getCurrentPosition()));
+                    dash_distance.setText(distance.get(mSwipeStack.getCurrentPosition()));
+                    Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + icon_url.get(mSwipeStack.getCurrentPosition())).fit().noFade().centerCrop()
+                            .into(dash_icon);
+                }
+
+            }
+        });
+
+        dislike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mSwipeStack.swipeTopViewToLeft();
@@ -730,19 +728,20 @@ private void GetUserData()
                 }
             });
 
-            btninfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Activity_Info();
-                }
+        btninfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity_Info();
+            }
             });
-            swipestack_image.setClickable(true);
+        swipestack_image.setClickable(true);
             swipestack_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Activity_Info();
                 }
             });
+
 
     }
     public void Activity_Info()
@@ -788,35 +787,43 @@ private void GetUserData()
             JSONObject json = null;
             try {
                 json = new JSONObject(String.valueOf(jsonObjRecv));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-
-//               if (!json.equals("")) {
+                if (!json.equals("null") || json!=null || json.length()>0||!json.equals("")) {
 
                     JSONArray cast = json.getJSONArray("data");
 //                    if(!cast.equals("")) {
-                        if (cast.length() > 0) {
+                    if (cast.length() > 0) {
 
 
-                            Map<String, ?> allEntries = skip_activity.getAll();
-                            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-                                Log.e("map values", entry.getKey() + ": " + entry.getValue().toString());
+                        for (int i = 0; i < cast.length(); i++) {
+                            JSONObject actor = cast.getJSONObject(i);
+                            activity_name1.add(actor.getString("activity_name"));
+                            distance1.add(actor.getString("activity_distance"));
+                            long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                            Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
+                            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                            String value = sdf.format(date2);
+                            time1.add(value);
+                            icon_url1.add(actor.getString("acitivity_icon"));
 
-                                Skip_Activity_ID_List.add(entry.getValue().toString());
+                        }
+                        Map<String, ?> allEntries = skip_activity.getAll();
+                        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                            Log.e("map values", entry.getKey() + ": " + entry.getValue().toString());
+
+                            Skip_Activity_ID_List.add(entry.getValue().toString());
+                        }
+
+                        for (int i = 0; i < cast.length(); i++) {
+                            JSONObject actor = cast.getJSONObject(i);
+
+
+
+                            if (Skip_Activity_ID_List.contains(actor.getString("activity_id"))) {
+                                continue;
+                            } else {
+                                reloadactivity.setVisibility(View.VISIBLE);
                             }
-
-                            for (int i = 0; i < cast.length(); i++) {
-                                JSONObject actor = cast.getJSONObject(i);
-
-
-
-                                if (Skip_Activity_ID_List.contains(actor.getString("activity_id"))) {
-                                    continue;
-                                } else {
-                                    reloadactivity.setVisibility(View.VISIBLE);
-                                }
 
 //                               if (skip_activity.getString("id_" + i, "0").equals(actor.getString("activity_id")))
 //                               {
@@ -837,56 +844,64 @@ private void GetUserData()
 //                                            books.add(book);
 //                                   }
 
-                                String id = actor.getString("activity_url");
-                                activity_name.add(actor.getString("activity_name"));
-                                distance.add(actor.getString("activity_distance"));
-                                time.add(actor.getString("activity_time"));
-                                activity_id.add(actor.getString("activity_id"));
-                                userid_other.add(actor.getString("userid"));
-                                activity_url.add(id);
-                                    Book book = new Book();
-                                    book.setName(actor.getString("activity_name"));
-                                    book.setImageUrl(actor.getString("activity_url"));
-                                    book.setAuthorName(actor.getString("activity_distance"));
-                                    book.setIcon_image(actor.getString("acitivity_icon"));
-                                    long unixSeconds = Long.parseLong(actor.getString("activity_time"));
-                                    Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
-                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
-                                    String value = sdf.format(date2);
-                                    book.setTime(value);
-                                    books.add(book);
+                            String id = actor.getString("activity_url");
+                            activity_name.add(actor.getString("activity_name"));
+                            distance.add(actor.getString("activity_distance"));
+                            long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+                            Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
+                            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+                            String value = sdf.format(date2);
+                            time.add(value);
+                            activity_id.add(actor.getString("activity_id"));
+                            userid_other.add(actor.getString("userid"));
+                            activity_url.add(id);
+                            icon_url.add(actor.getString("acitivity_icon"));
+                            Book book = new Book();
+                            // book.setName(actor.getString("activity_name"));
+                            book.setImageUrl(actor.getString("activity_url"));
+                            // book.setAuthorName(actor.getString("activity_distance"));
+                            // book.setIcon_image(actor.getString("acitivity_icon"));
+//                                    long unixSeconds = Long.parseLong(actor.getString("activity_time"));
+//                                    Date date2 = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+//                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa "); // the format of your date
+//                                    sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // give a timezone reference for formating (see comment at the bottom
+//                                    String value = sdf.format(date2);
+                            // book.setTime(value);
+                            books.add(book);
 
 
-                            }
-
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    adapter.notifyDataSetChanged();
-                                    reloadactivity.setVisibility(View.GONE);
-                                }
-                            });
-
-
-
-
-                        } else {
-                            reloadactivity.setVisibility(View.VISIBLE);
                         }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                adapter.notifyDataSetChanged();
+                                reloadactivity.setVisibility(View.GONE);
+                            }
+                        });
+
+
+
+
+                    } else {
+                        reloadactivity.setVisibility(View.VISIBLE);
+                    }
 //                    }
 //                    else {
 //                        reloadactivity.setVisibility(View.VISIBLE);
 //                    }
-//               }
-//               else {
-//                   reloadactivity.setVisibility(View.VISIBLE);
-//               }
+                }
+                else
+                {
+                    reloadactivity.setVisibility(View.VISIBLE);
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }
         }
 
@@ -961,10 +976,50 @@ private void GetUserData()
    @Override
     public void onViewSwipedToRight(int position) {
         Member_add_to_Group();
-    }
+       runOnUiThread(new Runnable() {
+           @Override
+           public void run() {
+               if (mSwipeStack.getCurrentPosition() >= activity_name.size()-1) {
+                   dash_name.setText("");
+                   dash_time.setText("");
+                   dash_distance.setText("");
+                   Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + "joinme").fit().noFade().centerCrop()
+                           .into(dash_icon);
+               }
+               else {
+                   dash_name.setText(activity_name.get(mSwipeStack.getCurrentPosition()+1));
+                   dash_time.setText(time.get(mSwipeStack.getCurrentPosition()+1));
+                   dash_distance.setText(distance.get(mSwipeStack.getCurrentPosition()+1));
+                   Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + icon_url.get(mSwipeStack.getCurrentPosition())).fit().noFade().centerCrop()
+                           .into(dash_icon);
+               }
+           }
+       });
+
+   }
     @Override
     public void onViewSwipedToLeft(int position) {
-        Skip_Activity(activity_id.get(mSwipeStack.getCurrentPosition()),mSwipeStack.getCurrentPosition());
+        Skip_Activity(activity_id.get(mSwipeStack.getCurrentPosition()), mSwipeStack.getCurrentPosition());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mSwipeStack.getCurrentPosition() >= activity_name.size()-1) {
+                    dash_name.setText("");
+                    dash_time.setText("");
+                    dash_distance.setText("");
+                    Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + "joinme").fit().noFade().centerCrop()
+                            .into(dash_icon);
+                }
+                else {
+                    dash_name.setText(activity_name.get(mSwipeStack.getCurrentPosition()+1));
+                    dash_time.setText(time.get(mSwipeStack.getCurrentPosition()+1));
+                    dash_distance.setText(distance.get(mSwipeStack.getCurrentPosition()+1));
+                    Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + icon_url.get(mSwipeStack.getCurrentPosition())).fit().noFade().centerCrop()
+                            .into(dash_icon);
+                }
+            }
+        });
+
     }
     @Override
     public void onStackEmpty() {
@@ -972,12 +1027,25 @@ private void GetUserData()
         reloadactivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // mSwipeStack.resetStack();
-                edit_skip_activity.clear();
-                edit_skip_activity.commit();
+                // mSwipeStack.resetStack();
+
+                if (activity_name1.size()!=0) {
+                    dash_name.setText(activity_name1.get(0));
+                    dash_time.setText(time1.get(0));
+                    dash_distance.setText(distance1.get(0));
+                    Picasso.with(Screen16.this).load("http://52.37.136.238/JoinMe/" + icon_url1.get(0)).fit().noFade().centerCrop()
+                            .into(dash_icon);
+                }
+
+                edit_skip_activity.clear().commit();
                 Skip_Activity_ID_List.clear();
+
+
+
                 Getting_Activities();
+
                 reloadactivity.setVisibility(View.GONE);
+
 
             }
         });
@@ -1119,8 +1187,7 @@ private void GetUserData()
 //
 //    }
 
-    public void userStatus(String userid,String status)
-    {
+    public void userStatus(String userid, String status) {
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(Constant.UserOnline + userid + "/" + status,
@@ -1156,7 +1223,18 @@ private void GetUserData()
 
         edit_skip_activity.putString(activity_id,activity_id);
         edit_skip_activity.commit();
+
+//        edit_skip_name.putString("name"+position, name);
+//        edit_skip_name.commit();
+//        edit_skip_time.putString("time"+position, time);
+//        edit_skip_time.commit();
+//        edit_skip_distance.putString("distance"+position, distance);
+//        edit_skip_distance.commit();
+//        edit_skip_icon.putString("icon_url"+position,icon_url);
+//        edit_skip_icon.commit();
+
     }
+
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {   }
     @Override

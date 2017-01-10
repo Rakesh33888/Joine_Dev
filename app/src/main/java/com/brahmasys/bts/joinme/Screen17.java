@@ -50,6 +50,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -506,25 +507,38 @@ public class Screen17 extends android.support.v4.app.Fragment implements BaseSli
                                     SimpleDateFormat sdf1 = new SimpleDateFormat("dd.MM.yyyy 'at' hh:mm aa ");
                                     String getCurrentDateTime = sdf1.format(c.getTime());
                                     String getMyTime=value;
-                                    Log.d("getCurrentDateTime",getCurrentDateTime);
+                                    Log.e("getCurrentDateTime",getCurrentDateTime);
                                     // getCurrentDateTime: 05/23/2016 18:49 PM
+                                    try {
+                                        Date date1 = sdf1.parse(getCurrentDateTime);
+                                        Date date3 = sdf1.parse(value);
 
-                                    if (getCurrentDateTime.compareTo(getMyTime) < 0)
+                                        if (date1.compareTo(date3) < 0)
 
-                                    {
-                                        Log.e("Return", "getMyTime newer than getCurrentDateTime ");
+                                        {
+                                            updatetext.setEnabled(true);
+                                            updatetext.setClickable(true);
+                                            delete_text.setEnabled(true);
+                                            delete_text.setClickable(true);
+
+                                            Log.e("Return", "getMyTime newer than getCurrentDateTime ");
+                                        }
+                                        else
+                                        {
+                                            updatetext.setTextColor(Color.parseColor("#b2b1b4"));
+                                            delete_text.setTextColor(Color.parseColor("#b2b1b4"));
+                                            updatetext.setEnabled(false);
+                                            updatetext.setClickable(false);
+                                            delete_text.setEnabled(false);
+                                            delete_text.setClickable(false);
+
+                                            Log.e("Return", "getMyTime older than getCurrentDateTime ");
+                                        }
+
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
                                     }
-                                    else
-                                    {
-                                        updatetext.setTextColor(Color.parseColor("#b2b1b4"));
-                                        delete_text.setTextColor(Color.parseColor("#b2b1b4"));
-                                        updatetext.setEnabled(false);
-                                        updatetext.setClickable(false);
-                                        delete_text.setEnabled(false);
-                                        delete_text.setClickable(false);
 
-                                        Log.e("Return", "getMyTime older than getCurrentDateTime ");
-                                    }
 
                                 JSONArray cast = userdetails.getJSONArray("activity_pics");
                                 //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();

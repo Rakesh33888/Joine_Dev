@@ -120,6 +120,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     ProgressDialog progressDialog;
     private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0;
     int refresh=0;
+    static final Integer LOCATION = 0x1;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState ) {
@@ -128,18 +135,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         AppEventsLogger.activateApp(this);
        //  Marshmallow_Permissions.Calender_Permissions(MainActivity.this);
-        Marshmallow_Permissions.verifyStoragePermissions(MainActivity.this);
+       // Marshmallow_Permissions.verifyStoragePermissions(MainActivity.this);
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
-                }
-            }
-        }
-
+   //     askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, LOCATION);
 
         facebook_btn = (Button) findViewById(R.id.facebook);
         mail = (Button) findViewById(R.id.mail);
@@ -185,14 +183,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             StrictMode.setThreadPolicy(policy);
         }
 
-        final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (mTelephony.getDeviceId() != null) {
-            deviceuid = mTelephony.getDeviceId();
-        }
-        else {
 
-            deviceuid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        }
 
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
@@ -209,7 +200,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         {
             requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, PERMISSION_REQUEST_CODE_LOCATION, getApplicationContext(), MainActivity.this);
         }
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                }
+            }
+        }
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -246,6 +244,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Intent itent = new Intent(this, GCMRegistrationIntentService.class);
             startService(itent);
         }
+
+        final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (mTelephony.getDeviceId() != null) {
+//            deviceuid = mTelephony.getDeviceId();
+//        }
+//        else {
+
+            deviceuid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        //}
     }
 
     @Override
@@ -642,7 +649,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                             hideKeyboard(v);
 
-                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("") && !token_id.getString("token", "null").equals("null") && !deviceuid.equals("0")) {
+                            if (!email.getText().toString().trim().equals("") && !pass.getText().toString().trim().equals("") ) {
 
                                 //Progress Dialog
 
@@ -1000,11 +1007,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             JSONArray cast = userdetails.getJSONArray("user_pic");
 
                             JSONObject actor = cast.getJSONObject(0);
-                                String id = actor.getString("id");
-                                String url = actor.getString("url");
+                            String id = actor.getString("id");
+                            String url = actor.getString("url");
                             edit_user_pic.putString("pic_list_size", String.valueOf(cast.length()));
-                            edit_user_pic.putString("id" , id);
-                            edit_user_pic.putString("url"  , url);
+                            edit_user_pic.putString("id", id);
+                            edit_user_pic.putString("url", url);
                             edit_user_pic.commit();
 
                             //  Toast.makeText(Login_Activity.this, String.valueOf(cast.length()), Toast.LENGTH_SHORT).show();
@@ -1061,7 +1068,24 @@ public class MainActivity extends Activity implements View.OnClickListener {
         startActivity(intent);
     }
 
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
 
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+            }
+        } else {
+            //Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
 

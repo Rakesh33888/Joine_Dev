@@ -28,12 +28,15 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -71,14 +74,15 @@ public class Screen3a extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView imageView;
     Button continue_btn;
-    RelativeLayout touch;
+    LinearLayout touch;
     CircularImageView circle_image;
     EditText firstname, lastname, conformation_code,share;
     android.support.v7.app.ActionBar actionBar;
     SegmentedGroup  rgroup;
     RadioButton male,female;
      TextView resend;
-    Spinner day,month,year;
+  //  Spinner day,month,year;
+    Button day,month,year;
     String gender;
     int select_image;
     Context context;
@@ -107,7 +111,7 @@ public class Screen3a extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_screen3aa);
+        setContentView(R.layout.activity_screen3aa1);
 
         Marshmallow_Permissions.verifyStoragePermissions(Screen3a.this);
 
@@ -119,14 +123,14 @@ public class Screen3a extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (mTelephony.getDeviceId() != null) {
-            deviceuid = mTelephony.getDeviceId();
-        }
-        else {
+//        final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (mTelephony.getDeviceId() != null) {
+//            deviceuid = mTelephony.getDeviceId();
+//        }
+//        else {
 
             deviceuid = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        }
+      //  }
        // deviceuid = Settings.Secure.getString(Screen3a.this.getContentResolver(), Settings.Secure.ANDROID_ID);
         session = new SessionManager(getApplicationContext());
         user_id =getSharedPreferences(USERID, MODE_PRIVATE);
@@ -152,10 +156,86 @@ public class Screen3a extends AppCompatActivity {
         circle_image = (CircularImageView) findViewById(R.id.imageView0);
         male.setChecked(true);
 
-        day = (Spinner) findViewById(R.id.spinner1);
-        month = (Spinner) findViewById(R.id.spinner2);
-        year = (Spinner) findViewById(R.id.spinner3);
-        touch = (RelativeLayout) findViewById(R.id.scrollView);
+//        day = (Spinner) findViewById(R.id.spinner1);
+//        month = (Spinner) findViewById(R.id.spinner2);
+//        year = (Spinner) findViewById(R.id.spinner3);
+
+        day = (Button) findViewById(R.id.day);
+        month = (Button) findViewById(R.id.month);
+        year = (Button) findViewById(R.id.year);
+
+        day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu menu = new PopupMenu(Screen3a.this, v);
+                for (int i=1;i<=31;i++)
+                {
+                    menu.getMenu().add(String.valueOf(i));
+                }
+                menu.show();
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        //  Toast.makeText(anchor.getContext(), item.getTitle() + "clicked", Toast.LENGTH_SHORT).show();
+
+                        day.setText(item.getTitle());
+                        return true;
+                    }
+                });
+            }
+        });
+        month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final PopupMenu menu = new PopupMenu(Screen3a.this, v);
+                    menu.getMenu().add("Jan");
+                    menu.getMenu().add("Feb");
+                    menu.getMenu().add("Mar");
+                    menu.getMenu().add("Apr");
+                    menu.getMenu().add("May");
+                    menu.getMenu().add("Jun");
+                    menu.getMenu().add("Jul");
+                    menu.getMenu().add("Aug");
+                    menu.getMenu().add("Sep");
+                    menu.getMenu().add("Oct");
+                    menu.getMenu().add("Nov");
+                    menu.getMenu().add("Dec");
+                    menu.show();
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        //  Toast.makeText(anchor.getContext(), item.getTitle() + "clicked", Toast.LENGTH_SHORT).show();
+
+                        month.setText(item.getTitle());
+                        return true;
+                    }
+                });
+
+            }
+        });
+
+        year.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu menu = new PopupMenu(Screen3a.this, v);
+                for (int i=1910;i<=2010;i++)
+                {
+                    menu.getMenu().add(String.valueOf(i));
+                }
+                menu.show();
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        //  Toast.makeText(anchor.getContext(), item.getTitle() + "clicked", Toast.LENGTH_SHORT).show();
+
+                        year.setText(item.getTitle());
+                        return true;
+                    }
+                });
+            }
+        });
+        touch = (LinearLayout) findViewById(R.id.scrollView1);
         touch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,27 +288,27 @@ public class Screen3a extends AppCompatActivity {
 
 
         List day_list = new ArrayList<Integer>();
-        day_list.add(0,"");
-        for (int i = 1; i <= 31; i++)
-        {
-            day_list.add(Integer.toString(i));
-        }
-        ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, day_list);
-        spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-       day.setAdapter(spinnerArrayAdapter);
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.month_names));
-        month.setAdapter(adapter1);
-
-        List year_list = new ArrayList<Integer>();
-        year_list.add(0,"");
-        for (int i = 1910; i <= 2010; i++)
-        {
-            year_list.add(Integer.toString(i));
-        }
-        ArrayAdapter<Integer> spinnerArrayAdapter1 = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, year_list);
-        spinnerArrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        year.setAdapter(spinnerArrayAdapter1);
+//        day_list.add(0,"D");
+//        for (int i = 1; i <= 31; i++)
+//        {
+//            day_list.add(Integer.toString(i));
+//        }
+//        ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, day_list);
+//        spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+//       day.setAdapter(spinnerArrayAdapter);
+//
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.month_names));
+//        month.setAdapter(adapter1);
+//
+//        List year_list = new ArrayList<Integer>();
+//        year_list.add(0,"YY");
+//        for (int i = 1910; i <= 2010; i++)
+//        {
+//            year_list.add(Integer.toString(i));
+//        }
+//        ArrayAdapter<Integer> spinnerArrayAdapter1 = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, year_list);
+//        spinnerArrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        year.setAdapter(spinnerArrayAdapter1);
 
 
 //        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -305,10 +385,10 @@ public class Screen3a extends AppCompatActivity {
                 if (Connectivity_Checking.isConnectingToInternet()) {
 
                     if (select_image == 1) {
-                        if (!String.valueOf(day.getSelectedItem()).equals("")&& !String.valueOf(month.getSelectedItem()).equals("")&& !String.valueOf(year.getSelectedItem()).equals(""))
+                        if (!year.getText().toString().trim().equals("YY")&& !month.getText().toString().trim().equals("MM")&& !day.getText().toString().trim().equals("DD"))
                         {
                             if (firstname.getText().toString().length() >= 2) {
-                                if (share.getText().toString().length() >= 10) {
+//                                if (share.getText().toString().length() >= 10) {
 
                                     progressDialog = ProgressDialog.show(Screen3a.this, null, null, true);
                                     progressDialog.setIndeterminate(true);
@@ -321,9 +401,12 @@ public class Screen3a extends AppCompatActivity {
                                     } else {
                                         gender = "female";
                                     }
-                                    String ye = (String) year.getSelectedItem();
-                                    String mon = (String) month.getSelectedItem();
-                                    String da = (String) day.getSelectedItem();
+//                                    String ye = (String) year.getSelectedItem();
+//                                    String mon = (String) month.getSelectedItem();
+//                                    String da = (String) day.getSelectedItem();
+                                String ye = year.getText().toString().trim();
+                                String mon = month.getText().toString().trim();
+                                String da  = day.getText().toString().trim();
                                     String birth = da + "/" + mon + "/" + ye;
 
                                     if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -477,15 +560,15 @@ public class Screen3a extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
-                                } else {
-                                    Toast toast = Toast.makeText(Screen3a.this, "Description must be having at least 10 characters...!", Toast.LENGTH_SHORT);
-                                    View view = toast.getView();
-
-                                    view.setBackgroundResource(R.drawable.smallbox1);
-                                    TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
-                                    col.setTextColor(Color.RED);
-                                    toast.show();
-                                }
+//                                } else {
+//                                    Toast toast = Toast.makeText(Screen3a.this, "Description must be having at least 10 characters...!", Toast.LENGTH_SHORT);
+//                                    View view = toast.getView();
+//
+//                                    view.setBackgroundResource(R.drawable.smallbox1);
+//                                    TextView col = (TextView) toast.getView().findViewById(android.R.id.message);
+//                                    col.setTextColor(Color.RED);
+//                                    toast.show();
+//                                }
                             } else {
                                 Toast toast = Toast.makeText(Screen3a.this, "Firstname must be having at least 2 letters...!", Toast.LENGTH_SHORT);
                                 View view = toast.getView();

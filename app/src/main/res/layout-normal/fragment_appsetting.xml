@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#DAD7D7"
     tools:context="com.brahmasys.bts.joinme.Appsetting">
@@ -44,7 +45,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         android:scrollbars="none"
         android:scrollIndicators="none">
 
@@ -55,6 +56,7 @@
     android:orientation="vertical"
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
+    android:weightSum="1"
     android:layout_marginBottom="60dp">
 
     <LinearLayout
@@ -394,7 +396,7 @@
 
     <RelativeLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/linearlayoutterm"
         android:background="@drawable/bigbox"  >
@@ -413,7 +415,7 @@
 
     <RelativeLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/logout"
         android:layout_marginTop="10dp"
@@ -466,4 +468,4 @@
             android:layout_gravity="center"
             android:layout_centerInParent="true" />
     </RelativeLayout> -->
-</FrameLayout>
+</LinearLayout>

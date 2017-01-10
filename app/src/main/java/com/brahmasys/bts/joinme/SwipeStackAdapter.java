@@ -49,10 +49,10 @@ public class SwipeStackAdapter extends ArrayAdapter<Book> {
 
         Book book = getItem(position);
 
-        holder.name.setText(book.getName());
-        holder.authorName.setText(book.getAuthorName());
-        holder.time.setText(book.getTime());
-        Picasso.with(getContext()).load(Constant.BASE_URL + book.getIcon_image()).into(holder.icon);
+//        holder.name.setText(book.getName());
+//        holder.authorName.setText(book.getAuthorName());
+//        holder.time.setText(book.getTime());
+//        Picasso.with(getContext()).load(Constant.BASE_URL + book.getIcon_image()).into(holder.icon);
 //        Picasso.with(getContext()).load("http://52.37.136.238/JoinMe/" + book.getImageUrl()).fit().noFade().centerCrop()
 //                .into(holder.image);
 
@@ -80,11 +80,11 @@ public class SwipeStackAdapter extends ArrayAdapter<Book> {
         private ImageView image,icon;
 
         public ViewHolder(View v) {
-             name = (TextView) v.findViewById(R.id.textView14);
+        //     name = (TextView) v.findViewById(R.id.textView14);
             image = (ImageView) v.findViewById(R.id.textViewCard);
-            authorName = (TextView) v.findViewById(R.id.textView15);
-            time = (TextView) v.findViewById(R.id.textView16);
-            icon = (ImageView) v.findViewById(R.id.imageView4);
+//            authorName = (TextView) v.findViewById(R.id.textView15);
+//            time = (TextView) v.findViewById(R.id.textView16);
+//            icon = (ImageView) v.findViewById(R.id.imageView4);
 
         }
     }

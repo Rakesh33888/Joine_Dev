@@ -30,7 +30,7 @@
     <string name="stack_empty">Card stack empty!</string>
     <string name="github">View on GitHub</string>
     <string-array name="month_names">
-        <item> </item>
+        <item>M</item>
         <item>Jan</item>
         <item>Feb</item>
         <item>Mar</item>
@@ -45,7 +45,7 @@
         <item>Dec</item>
     </string-array>
     <string-array name="times_format">
-        <item> </item>
+
         <item>0</item><item>1</item>
         <item>2</item><item>3</item>
         <item>4</item><item>5</item>
@@ -60,6 +60,7 @@
         <item>22</item><item>23</item>
     </string-array>
     <string-array name="min">
+        <item>Minutes</item>
         <item>00</item>
         <item>15</item>
         <item>30</item>

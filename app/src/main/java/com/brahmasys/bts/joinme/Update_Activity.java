@@ -167,6 +167,8 @@ public class Update_Activity extends Fragment  {
         dateButton = (ImageView)v.findViewById(R.id.date_button);
         spinnerforhour = (Spinner) v.findViewById(R.id.spinner_hour);
         spinnerformin = (Spinner) v.findViewById(R.id.spinner_min);
+        spinnerforhour.setSelection(0);
+        spinnerformin.setSelection(0);
         currency_symbol = (Spinner) v.findViewById(R.id.currency_symbol);
         not_everyone = (LinearLayout) v.findViewById(R.id.not_everyone);
         text_search_address = (TextView)v.findViewById(R.id.search_address);
@@ -934,21 +936,49 @@ public class Update_Activity extends Fragment  {
 
               //  hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
 
-                String current_date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                String current_date = new SimpleDateFormat("d/M/yyyy").format(new Date());
 
                 Calendar calander = Calendar.getInstance();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
                 String time = simpleDateFormat.format(calander.getTime());
 
-                if (dateTextView.getText().toString().equals(current_date))
-                {
-                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition()+Integer.parseInt(time));
 
-                }
-                else {
-                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+                String getCurrentDateTime = sdf1.format(c.getTime());
 
+
+                try {
+                    Date date1 = sdf1.parse(current_date);
+                    Date date3 = sdf1.parse(dateTextView.getText().toString());
+
+                    if (date1.compareTo(date3) == 0)
+
+                    {
+                        hour = String.valueOf(spinnerforhour.getSelectedItemPosition()+Integer.parseInt(time));
+                        Log.e("Return", "getMyTime newer than getCurrentDateTime ");
+                    }
+                    else
+                    {
+                        hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
+
+                        Log.e("Return", "getMyTime older than getCurrentDateTime ");
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+
+
+//                if (dateTextView.getText().toString().equals(current_date))
+//                {
+//                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition()+Integer.parseInt(time));
+//
+//                }
+//                else {
+//                    hour = String.valueOf(spinnerforhour.getSelectedItemPosition()-1);
+//
+//                }
                 if (!String.valueOf(spinnerformin.getSelectedItem()).equals(""))
                 {
                     minute = String.valueOf(spinnerformin.getSelectedItem());
@@ -1436,7 +1466,7 @@ private void doFileUpload(){
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
             String time = simpleDateFormat.format(calander.getTime());
 
-            String current_date = new SimpleDateFormat("d/MM/yyyy").format(new Date());
+            String current_date = new SimpleDateFormat("d/M/yyyy").format(new Date());
 
             List hours =  new ArrayList<String>();;
             if (date.equals(current_date))
@@ -1444,7 +1474,7 @@ private void doFileUpload(){
 
                 Log.e("Current time", time);
 
-                hours.add(0, "");
+                hours.add(0, "Hours");
                 for (int i =0; i <=23; i++) {
                     if (i>Integer.parseInt(time))
                     {
@@ -1453,7 +1483,7 @@ private void doFileUpload(){
                 }
             }
             else {
-                hours.add(0, "");
+                hours.add(0, "Hours");
                 for (int i =0; i <=23; i++) {
                     hours.add(i);
 

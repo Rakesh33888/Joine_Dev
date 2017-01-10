@@ -246,7 +246,7 @@
                     android:layout_centerVertical="true"
                     android:scrollIndicators="none"
                     android:textAlignment="center"
-                    android:spinnerMode="dialog"
+                    android:spinnerMode="dropdown"
                     android:prompt="@string/hours"/>
                 <Spinner
                     android:layout_width="0dp"
@@ -257,7 +257,7 @@
                     android:layout_centerVertical="true"
                     android:scrollIndicators="none"
                     android:textAlignment="center"
-                    android:spinnerMode="dialog"
+                    android:spinnerMode="dropdown"
                     android:prompt="@string/minutes"/>
 
 

@@ -56,12 +56,12 @@
         "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable-xhdpi-v4/abc_cab_background_top_mtrl_alpha.9.png"
     },
     {
-        "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/debug/drawable-xhdpi-v4/com_facebook_tooltip_blue_topnub.png",
-        "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/src/main/res/drawable-xhdpi/com_facebook_tooltip_blue_topnub.png"
-    },
-    {
         "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/debug/drawable-xhdpi-v4/abc_ic_star_black_16dp.png",
         "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable-xhdpi-v4/abc_ic_star_black_16dp.png"
+    },
+    {
+        "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/debug/drawable-xhdpi-v4/com_facebook_tooltip_blue_topnub.png",
+        "source": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/src/main/res/drawable-xhdpi/com_facebook_tooltip_blue_topnub.png"
     },
     {
         "merged": "/Users/apple/Desktop/BrahmasysAndroid/joinme/new/Joine_Dev/facebook/build/intermediates/res/merged/debug/drawable-xhdpi-v4/messenger_button_send_round_shadow.png",

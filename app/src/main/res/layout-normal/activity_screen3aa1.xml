@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/scrollView1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:id="@+id/imageView0"
+            android:background="@drawable/picture"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.83"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:weightSum="1"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:text="In few moments you'll recive a conformation code on your mail."
+            android:id="@+id/textView3"
+            android:layout_below="@+id/imageView0"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.11"
+            android:inputType="text|textNoSuggestions|textCapSentences"
+            android:hint="First Name"
+            android:ems="10"
+            android:textColorHint="#C1C1C1"
+            android:maxLength="10"
+            android:textSize="16dp"
+            android:paddingLeft="15dp"
+            android:cursorVisible="true"
+            android:background="@drawable/smallbox"
+            android:id="@+id/firstname"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.11"
+            android:inputType="textPersonName|textCapSentences"
+            android:hint="Last Name"
+            android:minEms="2"
+            android:maxLength="10"
+            android:textColorHint="#C1C1C1"
+            android:paddingLeft="15sp"
+            android:background="@drawable/smallbox"
+            android:cursorVisible="true"
+            android:textSize="16dp"
+            android:ems="10"
+            android:id="@+id/lastname"
+            android:layout_marginTop="1dp"
+            android:layout_below="@+id/firstname"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.11"
+            android:paddingLeft="15sp"
+            android:background="@drawable/smallbox"
+            android:layout_marginTop="1dp"
+            android:layout_below="@+id/lastname"
+            android:layout_alignStart="@+id/lastname"
+            android:layout_alignEnd="@+id/lastname"
+            android:orientation="horizontal"
+            android:id="@+id/conformation_code_layout">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:inputType="number"
+                android:cursorVisible="true"
+                android:textColorHint="#C1C1C1"
+                android:maxLength="4"
+                android:hint="Conformation code"
+                android:textSize="16dp"
+                android:numeric="integer"
+                android:id="@+id/conformation_code"
+                android:background="@null"  />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resend"
+                android:id="@+id/resend_code"
+                android:textColor="#C1C1C1"
+                android:textSize="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.11"
+            android:layout_below="@+id/conformation_code_layout"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/smallbox"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/frameLayout3">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="Gender"
+                android:textColor="#C1C1C1"
+                android:gravity="left|center"
+                android:paddingLeft="15sp"
+                android:textSize="16dp"
+                android:backgroundTint="#ffffff"
+                android:id="@+id/textView4"
+                android:layout_above="@+id/textView5"
+                android:layout_alignParentStart="true"></TextView>
+
+
+            <info.hoang8f.android.segmented.SegmentedGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="right|center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:layout_weight="1"
+                    style="@style/RadioButton" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:layout_weight="1"
+                    style="@style/RadioButton" />
+
+
+            </info.hoang8f.android.segmented.SegmentedGroup>
+
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.11"
+            android:orientation="horizontal"
+            android:layout_below="@+id/frameLayout3"
+            android:layout_marginTop="1dp"
+            android:weightSum="1"
+            android:background="@drawable/smallbox"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/frameLayout4">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:text="Birthday"
+                android:textSize="16dp"
+                android:layout_weight="0.3"
+                android:singleLine="true"
+                android:gravity="center|left"
+                android:textColor="#C1C1C1"
+                android:paddingLeft="15dp"
+                android:backgroundTint="#FFFFFF"
+                android:id="@+id/textView5"
+                android:layout_gravity="center" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:weightSum="1" >
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content"
+                    android:text="DD"
+                    android:id="@+id/day"
+                    android:gravity="center_vertical|right"
+                    style="?android:attr/spinnerStyle" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="0.32"
+                    android:layout_height="wrap_content"
+                    android:text="MM"
+                    android:gravity="center_vertical|right"
+                    android:id="@+id/month"
+                    style="?android:attr/spinnerStyle" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="0.37"
+                    android:layout_height="wrap_content"
+                    android:text="YY"
+                    android:gravity="center_vertical|right"
+                    android:id="@+id/year"
+                    style="?android:attr/spinnerStyle" />
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner1"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="33dp"-->
+                    <!--android:spinnerMode="dropdown"-->
+                    <!--android:layout_weight="0.3"-->
+                    <!--style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:scrollIndicators="none"-->
+                    <!--android:layoutMode="opticalBounds"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:prompt="@string/day"-->
+                    <!--android:gravity="left" />-->
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner2"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="33dp"-->
+                    <!--android:layout_weight="0.32"-->
+                    <!--style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"-->
+                    <!--android:spinnerMode="dropdown"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:scrollIndicators="none"-->
+                    <!--android:prompt="@string/month"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:gravity="left" />-->
+                <!--<Spinner-->
+                    <!--android:id="@+id/spinner3"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_weight="0.37"-->
+                    <!--android:layout_height="33dp"-->
+                    <!--style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"-->
+                    <!--android:spinnerMode="dropdown"-->
+                    <!--android:prompt="@string/year"-->
+                    <!--android:layout_gravity="center|right"-->
+                    <!--android:scrollIndicators="none"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:gravity="left" />-->
+            </LinearLayout>
+            </LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:id="@+id/share"
+            android:background="@drawable/bigbox"
+            android:gravity="center|left|top"
+            android:padding="15dp"
+            android:cursorVisible="true"
+            android:textColorHint="#C1C1C1"
+            android:textSize="16dp"
+            android:maxLength="200"
+            android:maxLines="4"
+            android:hint="Some thing you want to share..."
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/frameLayout4"
+            android:inputType="textCapSentences|textMultiLine"
+            android:layout_below="@+id/frameLayout4"
+            android:layout_marginTop="10dp"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:id="@+id/continue_btn"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/continuebtn"
+            android:layout_below="@+id/share"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</LinearLayout>
+    </ScrollView>

@@ -242,14 +242,14 @@ public class Appsetting extends Fragment{
         }
 
 
-        final TelephonyManager mTelephony = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-        if (mTelephony.getDeviceId() != null) {
-            deviceuid = mTelephony.getDeviceId();
-        }
-        else {
+//        final TelephonyManager mTelephony = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+//        if (mTelephony.getDeviceId() != null) {
+//            deviceuid = mTelephony.getDeviceId();
+//        }
+//        else {
 
             deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
-        }
+//        }
 
 
       //  deviceuid = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
