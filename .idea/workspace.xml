@@ -1,12 +1,379 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cea7e50a-0bb3-4e0c-a38d-42cf44b5424a" name="Default" comment="initial code">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Joine_Dev.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="cea7e50a-0bb3-4e0c-a38d-42cf44b5424a" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugAndroidTestJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugAndroidTestJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/accessibility_test_framework_1_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/ant_1_8_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/ant_launcher_1_8_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/asm_5_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/asm_analysis_5_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/asm_commons_5_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/asm_tree_5_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/asm_util_5_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/bcprov_jdk16_1_46.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/hamcrest_core_1_3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/icu4j_53_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/javassist_3_18_2_GA.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/junit_4_12.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/maven_ant_tasks_2_1_3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/mockito_all_1_10_8.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_api_mockito_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_api_support_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_classloading_base_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_classloading_xstream_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_core_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_module_junit4_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_module_junit4_common_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_module_junit4_rule_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/powermock_reflect_1_6_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/robolectric_3_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/robolectric_annotations_3_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/robolectric_resources_3_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/robolectric_utils_3_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/shadows_core_3_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/shadows_support_v4_3_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/sqlite4java_0_282.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/vtd_xml_2_11.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/xmlpull_1_1_3_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/xpp3_min_1_1_4c.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/xstream_1_4_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/compile-file-map.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-af/values-af.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-am/values-am.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ar/values-ar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-az-rAZ/values-az-rAZ.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-bg/values-bg.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-bn-rBD/values-bn-rBD.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-bn/values-bn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ca/values-ca.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-cs/values-cs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-da/values-da.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-de/values-de.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-el/values-el.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-en-rAU/values-en-rAU.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-en-rGB/values-en-rGB.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-en-rIN/values-en-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-es-rES/values-es-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-es-rUS/values-es-rUS.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-es/values-es.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-et-rEE/values-et-rEE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-eu-rES/values-eu-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-fa/values-fa.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-fi/values-fi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-fr-rCA/values-fr-rCA.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-fr/values-fr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-gl-rES/values-gl-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-gu-rIN/values-gu-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-gu/values-gu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-h320dp-v13/values-h320dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-h720dp-v13/values-h720dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-hi/values-hi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-hr/values-hr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-hu/values-hu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-hy-rAM/values-hy-rAM.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-id/values-id.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-in/values-in.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-is-rIS/values-is-rIS.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-it/values-it.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-iw/values-iw.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ja/values-ja.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ka-rGE/values-ka-rGE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-kk-rKZ/values-kk-rKZ.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-km-rKH/values-km-rKH.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-kn-rIN/values-kn-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-kn/values-kn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ko/values-ko.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ky-rKG/values-ky-rKG.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-land/values-land.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-large-v4/values-large-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ldltr-v21/values-ldltr-v21.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-lo-rLA/values-lo-rLA.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-lt/values-lt.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-lv/values-lv.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-mk-rMK/values-mk-rMK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ml-rIN/values-ml-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ml/values-ml.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-mn-rMN/values-mn-rMN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-mr-rIN/values-mr-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-mr/values-mr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ms-rMY/values-ms-rMY.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ms/values-ms.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-my-rMM/values-my-rMM.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-nb/values-nb.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ne-rNP/values-ne-rNP.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-night-v8/values-night-v8.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-nl/values-nl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-pa-rIN/values-pa-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-pa/values-pa.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-pl/values-pl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-port/values-port.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-pt-rBR/values-pt-rBR.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-pt-rPT/values-pt-rPT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-pt/values-pt.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ro/values-ro.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ru/values-ru.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-si-rLK/values-si-rLK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-sk/values-sk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-sl/values-sl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-sq-rAL/values-sq-rAL.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-sr/values-sr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-sv/values-sv.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-sw/values-sw.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ta-rIN/values-ta-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ta/values-ta.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-te-rIN/values-te-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-te/values-te.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-th/values-th.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-tl/values-tl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-tr/values-tr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-uk/values-uk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-ur-rPK/values-ur-rPK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-uz-rUZ/values-uz-rUZ.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v11/values-v11.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v12/values-v12.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v13/values-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v14/values-v14.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v17/values-v17.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v18/values-v18.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v21/values-v21.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v22/values-v22.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v23/values-v23.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-vi/values-vi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-w360dp-v13/values-w360dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-w480dp-v13/values-w480dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-w500dp-v13/values-w500dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-w600dp-v13/values-w600dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-w720dp-v13/values-w720dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-xlarge-land-v4/values-xlarge-land-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-xlarge-v4/values-xlarge-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-zh-rCN/values-zh-rCN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-zh-rHK/values-zh-rHK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-zh-rTW/values-zh-rTW.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-zu/values-zu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-af/values-af.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-am/values-am.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ar/values-ar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-az-rAZ/values-az-rAZ.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-bg/values-bg.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-bn-rBD/values-bn-rBD.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-bn/values-bn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ca/values-ca.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-cs/values-cs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-da/values-da.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-el/values-el.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rAU/values-en-rAU.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rGB/values-en-rGB.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rIN/values-en-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-es-rES/values-es-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-es-rUS/values-es-rUS.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-es/values-es.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-et-rEE/values-et-rEE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-eu-rES/values-eu-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fa/values-fa.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fi/values-fi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fr-rCA/values-fr-rCA.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fr/values-fr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-gl-rES/values-gl-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-gu-rIN/values-gu-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-gu/values-gu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h320dp-v13/values-h320dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h720dp-v13/values-h720dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hi/values-hi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hr/values-hr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hu/values-hu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hy-rAM/values-hy-rAM.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-id/values-id.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-in/values-in.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-is-rIS/values-is-rIS.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-it/values-it.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-iw/values-iw.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ja/values-ja.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ka-rGE/values-ka-rGE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-kk-rKZ/values-kk-rKZ.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-km-rKH/values-km-rKH.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-kn-rIN/values-kn-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-kn/values-kn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ko/values-ko.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ky-rKG/values-ky-rKG.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-large-v4/values-large-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ldltr-v21/values-ldltr-v21.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-lo-rLA/values-lo-rLA.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-lt/values-lt.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-lv/values-lv.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mk-rMK/values-mk-rMK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ml-rIN/values-ml-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ml/values-ml.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mn-rMN/values-mn-rMN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mr-rIN/values-mr-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mr/values-mr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ms-rMY/values-ms-rMY.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ms/values-ms.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-my-rMM/values-my-rMM.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-nb/values-nb.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ne-rNP/values-ne-rNP.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-nl/values-nl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pa-rIN/values-pa-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pa/values-pa.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pl/values-pl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pt-rBR/values-pt-rBR.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pt-rPT/values-pt-rPT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pt/values-pt.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ro/values-ro.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ru/values-ru.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-si-rLK/values-si-rLK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sk/values-sk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sl/values-sl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sq-rAL/values-sq-rAL.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sr/values-sr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sv/values-sv.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw/values-sw.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ta-rIN/values-ta-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ta/values-ta.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-te-rIN/values-te-rIN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-te/values-te.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-th/values-th.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tl/values-tl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tr/values-tr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uk/values-uk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ur-rPK/values-ur-rPK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz-rUZ/values-uz-rUZ.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v12/values-v12.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v13/values-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v17/values-v17.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v18/values-v18.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v21/values-v21.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v22/values-v22.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v23/values-v23.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-vi/values-vi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w360dp-v13/values-w360dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w480dp-v13/values-w480dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w500dp-v13/values-w500dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w600dp-v13/values-w600dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w720dp-v13/values-w720dp-v13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-xlarge-land-v4/values-xlarge-land-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-xlarge-v4/values-xlarge-v4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rCN/values-zh-rCN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rHK/values-zh-rHK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh-rTW/values-zh-rTW.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zu/values-zu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/compile-file-map.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-af/values-af.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-ar/values-ar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-bn/values-bn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-cs/values-cs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-da/values-da.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-de/values-de.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-el/values-el.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-es-rES/values-es-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-es/values-es.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-fi/values-fi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-fr/values-fr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-gu/values-gu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-hi/values-hi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-hr/values-hr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-hu/values-hu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-id/values-id.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-in/values-in.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-it/values-it.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-ja/values-ja.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-kn/values-kn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-ko/values-ko.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-ml/values-ml.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-mr/values-mr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-ms/values-ms.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-nb/values-nb.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-nl/values-nl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-pa/values-pa.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-pl/values-pl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-pt-rPT/values-pt-rPT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-pt/values-pt.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-ru/values-ru.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-sk/values-sk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-sv/values-sv.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-ta/values-ta.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-te/values-te.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-th/values-th.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-tl/values-tl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-tr/values-tr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-vi/values-vi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-zh-rCN/values-zh-rCN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-zh-rHK/values-zh-rHK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values-zh-rTW/values-zh-rTW.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageDebugResources/merged.dir/values/values.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-af/values-af.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-ar/values-ar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-bn/values-bn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-cs/values-cs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-da/values-da.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-de/values-de.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-el/values-el.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-es-rES/values-es-rES.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-es/values-es.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-fi/values-fi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-fr/values-fr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-gu/values-gu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-hi/values-hi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-hr/values-hr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-hu/values-hu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-id/values-id.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-in/values-in.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-it/values-it.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-ja/values-ja.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-kn/values-kn.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-ko/values-ko.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-ml/values-ml.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-mr/values-mr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-ms/values-ms.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-nb/values-nb.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-nl/values-nl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-pa/values-pa.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-pl/values-pl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-pt-rPT/values-pt-rPT.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-pt/values-pt.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-ru/values-ru.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-sk/values-sk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-sv/values-sv.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-ta/values-ta.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-te/values-te.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-th/values-th.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-tl/values-tl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-tr/values-tr.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-vi/values-vi.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-zh-rCN/values-zh-rCN.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-zh-rHK/values-zh-rHK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values-zh-rTW/values-zh-rTW.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental/packageReleaseResources/merged.dir/values/values.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/manifests/aapt/debug/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/manifests/aapt/release/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/src/androidTest/androidTest3.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/src/main/main.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/src/test/test.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/facebook.iml" afterPath="$PROJECT_DIR$/facebook/facebook.iml" />
     </list>
     <ignored path="Joine_Dev.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,18 +398,7 @@
     <system id="GRADLE">
       <state>
         <projects_view>
-          <tree_state>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Joine_Dev" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-            </PATH>
-          </tree_state>
+          <tree_state />
         </projects_view>
       </state>
     </system>
@@ -3339,7 +3695,14 @@
       <option name="project" value="LOCAL" />
       <updated>1484049448493</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="second">
+      <created>1484052747130</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1484052747130</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3356,14 +3719,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24980299" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24980299" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939324" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -3384,7 +3747,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial code" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial code" />
+    <MESSAGE value="second" />
+    <option name="LAST_COMMIT_MESSAGE" value="second" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
