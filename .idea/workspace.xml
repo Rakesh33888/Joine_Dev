@@ -177,137 +177,707 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="797ec21e-aa26-47f5-8af5-90ca391ec65e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/activity_screen3aa1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/android_async_http_1_4_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/android_segmented_1_0_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/android_shape_imageview_0_9_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/apache_mime4j_0_6.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/bolts_android_1_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/bolts_applinks_1_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/bolts_tasks_1_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/cardstack_0_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/cardview_v7_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/commons_collections4_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/crystalrangeseekbar_1_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/customtabs_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/design_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/devsmartlib.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/dexmaker_1_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/dexmaker_mockito_1_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/engine_io_client_0_8_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/hamcrest_core_1_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/httpmime_4_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/library_1_1_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/library_1_4_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/library_2_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/materialdatetimepicker_2_5_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/mediarouter_v7_22_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/mockito_core_1_10_19.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/multidex_1_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/multidex_instrumentation_1_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/objenesis_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_2_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_3_4_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_urlconnection_2_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okhttp_ws_3_4_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/okio_1_9_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_apache_http_legacy_android_23.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/picasso_2_5_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_ads_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_analytics_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_appindexing_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_appinvite_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_appstate_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_auth_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_base_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_basement_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_cast_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_drive_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_fitness_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_games_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_gcm_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_identity_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_location_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_maps_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_measurement_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_nearby_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_panorama_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_plus_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_safetynet_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_vision_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_wallet_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_wearable_8_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/socket_io_client_0_8_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_23_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/swipestack_0_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/testfairy_android_sdk_1_1_0.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/bundles/debug/classes.jar" afterPath="$PROJECT_DIR$/facebook/build/intermediates/bundles/debug/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/bundles/release/classes.jar" afterPath="$PROJECT_DIR$/facebook/build/intermediates/bundles/release/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/outputs/aar/facebook-debug.aar" afterPath="$PROJECT_DIR$/facebook/build/outputs/aar/facebook-debug.aar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/outputs/aar/facebook-release.aar" afterPath="$PROJECT_DIR$/facebook/build/outputs/aar/facebook-release.aar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileReleaseJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_facebook_compileReleaseJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/res/resources-debug-androidTest.ap_" afterPath="$PROJECT_DIR$/facebook/build/intermediates/res/resources-debug-androidTest.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Appsetting.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Constant.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Constant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Marshmallow_Permissions.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Marshmallow_Permissions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Notification_Screen.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Notification_Screen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen16.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen16.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen17.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen17.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen19.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen19.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen3a.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Screen3a.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Splashscreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Splashscreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/SwipeStackAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/SwipeStackAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Update_Activity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Update_Activity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/activity_screen19.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/activity_screen19.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/activity_screen3aa.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/activity_screen3aa.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/card.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/card.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/content_screen16.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/content_screen16.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/androidTest/debug/single/drawable-mdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/androidTest/debug/single/drawable-mdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable-mdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable-mdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-mdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-mdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-xhdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-xhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/androidTest/debug/single/drawable-xxhdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/androidTest/debug/single/drawable-xxhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable-xxhdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable-xxhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-xxhdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-xxhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-xxxhdpi-v4.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable-xxxhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/debug/single/drawable.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable.json" afterPath="$PROJECT_DIR$/facebook/build/intermediates/blame/res/release/single/drawable.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/fragment_appsetting.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/fragment_appsetting.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-large/rating_subscribe.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-large/rating_subscribe.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/rating_subscribe.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/rating_subscribe.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-normal/update_activity.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-normal/update_activity.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessToken$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessToken$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessToken$AccessTokenCreationCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessToken$AccessTokenRefreshCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessToken.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AccessTokenAppIdPair$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AccessTokenAppIdPair$SerializationProxyV1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AccessTokenAppIdPair.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenCache$SharedPreferencesTokenCachingStrategyFactory.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenCache.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenManager$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenManager$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenManager$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenManager$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenManager$RefreshResult.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenManager.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenSource.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenTracker$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenTracker$CurrentAccessTokenBroadcastReceiver.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/AccessTokenTracker.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/ActivityLifecycleTracker$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/ActivityLifecycleTracker$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/ActivityLifecycleTracker$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/ActivityLifecycleTracker$4$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/ActivityLifecycleTracker$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/ActivityLifecycleTracker.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AnalyticsEvents.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AppCall.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEvent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEvent$SerializationProxyV1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEvent$SerializationProxyV2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEvent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventCollection.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventQueue$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventQueue$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventQueue$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventQueue$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventQueue$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventQueue$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventQueue.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventStore$MovedClassObjectInputStream.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventStore.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/AppEventUtility.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsConstants.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsLogger$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsLogger$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsLogger$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsLogger$FlushBehavior.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsLogger$PersistedAppSessionInfo$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsLogger$PersistedAppSessionInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/AppEventsLogger.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/appevents/AppEventsLoggerTests$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/appevents/AppEventsLoggerTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AppEventsLoggerUtility$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AppEventsLoggerUtility$GraphAPIActivityType.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AppEventsLoggerUtility.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppGroupCreationContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppGroupCreationContent$AppGroupPrivacy.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppGroupCreationContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppGroupCreationContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppInviteContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppInviteContent$Builder$Destination.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppInviteContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/AppInviteContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/AppInviteDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/AppInviteDialog$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/AppInviteDialog$NativeHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/AppInviteDialog$NativeHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/AppInviteDialog$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/AppInviteDialog$WebFallbackHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/AppInviteDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/AppInviteDialogFeature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/applinks/AppLinkData$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/applinks/AppLinkData$CompletionHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/applinks/AppLinkData.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$1FriendsCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$1MeCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/AsyncRequestTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AttributionIdentifiers$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AttributionIdentifiers$GoogleAdInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AttributionIdentifiers$GoogleAdServiceConnection.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/AttributionIdentifiers.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/AutomaticAnalyticsLogger.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$10.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests$9.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/BatchRequestTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BoltsMeasurementEventListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/BuildConfig.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/BuildConfig.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter$Setter.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/BundleJSONConverter.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/CallbackManager$Factory.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/CallbackManager.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CallbackManagerImpl$Callback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CallbackManagerImpl$RequestCodeOffset.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CallbackManagerImpl.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper$Collection.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper$OnErrorListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper$OnMapValueCompleteListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper$OnMapperCompleteListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper$ValueMapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CollectionMapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/Constants.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/CreateAppGroupDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/CreateAppGroupDialog$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/CreateAppGroupDialog$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/CreateAppGroupDialog$WebHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/CreateAppGroupDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/CustomTab.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/CustomTabActivity$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/CustomTabActivity.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/CustomTabLoginMethodHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/CustomTabLoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/CustomTabMainActivity$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/CustomTabMainActivity.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DefaultAudience.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog$RequestState$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog$RequestState.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthMethodHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceAuthMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/DeviceLoginButton$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/DeviceLoginButton$DeviceLoginClickListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/DeviceLoginButton.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/DeviceLoginManager.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/DeviceShareButton$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/DeviceShareButton.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/DeviceShareDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/DeviceShareDialog$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/DeviceShareDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/DeviceShareDialogFragment$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/DeviceShareDialogFragment$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/DeviceShareDialogFragment$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/DeviceShareDialogFragment$RequestState$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/DeviceShareDialogFragment$RequestState.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/DeviceShareDialogFragment.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/DialogFeature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/DialogPresenter$ParameterProvider.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/DialogPresenter.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookActivity.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$ExpectFailureCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$ExpectSuccessCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$MockGraphRequest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$MockGraphRequestBatch.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$TestCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$TestGraphRequestAsyncTask$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$TestGraphRequestAsyncTask$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase$TestGraphRequestAsyncTask.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTestCase.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests$1$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests$2$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests$3$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests$FacebookTestActivity.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookActivityTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/applinks/FacebookAppLinkResolver$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/applinks/FacebookAppLinkResolver$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/applinks/FacebookAppLinkResolver.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookAppLinkResolverTests$1$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookAppLinkResolverTests$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookAppLinkResolverTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookAuthorizationException.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookBroadcastReceiver.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookButtonBase$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookButtonBase.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookContentProvider.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookDialogBase$ModeHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookDialogBase.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookDialogException.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookDialogFragment$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookDialogFragment$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookDialogFragment.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/widget/FacebookDialogTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookException.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookGraphResponseException.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/FacebookLiteLoginMethodHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/FacebookLiteLoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookOperationCanceledException.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookRequestError$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookRequestError$Category.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookRequestError$Range.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookRequestError.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookRequestErrorClassification$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookRequestErrorClassification$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookRequestErrorClassification$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookRequestErrorClassification.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdk$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdk$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdk$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdk$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdk$InitializeCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdk.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdkNotInitializedException.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookSdkVersion.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/FacebookServiceException.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookTestCase$FacebookTestActivity.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FacebookTestCase.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/FacebookTimeSpentData$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/FacebookTimeSpentData$SerializationProxyV1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/FacebookTimeSpentData$SerializationProxyV2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/FacebookTimeSpentData.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookWebFallbackDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FacebookWebFallbackDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$BufferFile$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$BufferFile$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$BufferFile.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$CloseCallbackOutputStream.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$CopyingInputStream.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$Limits.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$ModifiedFile.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$StreamCloseCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache$StreamHeader.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FileLruCache.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/FlushReason.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/FlushResult.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/FlushStatistics.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FragmentTestCase$TestFragmentActivity.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/FragmentTestCase.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/FragmentWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/GameRequestContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/GameRequestContent$ActionType.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/GameRequestContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/GameRequestContent$Filters.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/GameRequestContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/GameRequestDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/GameRequestDialog$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/GameRequestDialog$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/GameRequestDialog$WebHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/GameRequestDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/GameRequestValidation.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/GetTokenClient.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/GetTokenLoginMethodHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/GetTokenLoginMethodHandler$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/GetTokenLoginMethodHandler$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/GetTokenLoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$Attachment.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$Callback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$GraphJSONArrayCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$GraphJSONObjectCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$KeyValueSerializer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$OnProgressCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$ParcelableResourceWithMimeType$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$ParcelableResourceWithMimeType.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest$Serializer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequestAsyncTask.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequestBatch$Callback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequestBatch$OnProgressCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphRequestBatch.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/GraphRequestBatchBridge.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/GraphRequestTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphResponse$PagingDirection.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/GraphResponse.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/GraphResponseBridge.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/GraphUtil.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/GraphUtilTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/HttpMethod.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageDownloader$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageDownloader$CacheReadWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageDownloader$DownloadImageWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageDownloader$DownloaderContext.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageDownloader$RequestKey.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageDownloader.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageRequest$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageRequest$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageRequest$Callback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageRequest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageResponse.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageResponseCache$BufferedHttpInputStream.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ImageResponseCache.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/internal/ImageResponseCacheTest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/InternalAppEventsLogger.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/InternalSettings.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/JoinAppGroupDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/JoinAppGroupDialog$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/JoinAppGroupDialog$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/JoinAppGroupDialog$WebHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/JoinAppGroupDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/JsonUtil$JSONObjectEntry.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/JsonUtil.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/KatanaProxyLoginMethodHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/KatanaProxyLoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LegacyNativeDialogParameters.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/LegacyTokenHelper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$10.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$11.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$12.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$7$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$9$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$9.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$AbstractRequestWrapper$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$AbstractRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$CreateLikeActionControllerWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$CreationCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$GetEngagementRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$GetOGObjectIdRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$GetOGObjectLikesRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$GetPageIdRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$GetPageLikesRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$LikeRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$MRUCacheWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$PublishLikeRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$PublishUnlikeRequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$RequestCompletionCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$RequestWrapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController$SerializeToDiskWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeActionController.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeBoxCountView$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeBoxCountView$LikeBoxCountViewCaretPosition.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeBoxCountView.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeButton.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialog$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialog$NativeHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialog$NativeHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialog$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialog$WebFallbackHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeDialogFeature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/LikeStatusClient.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$AuxiliaryViewPosition.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$HorizontalAlignment.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$LikeActionControllerCreationCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$LikeControllerBroadcastReceiver.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$ObjectType.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$OnErrorListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView$Style.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/LikeView.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/LockOnGetVariable$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/LockOnGetVariable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Logger.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/LoggingBehavior.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/LoginAuthorizationType.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginBehavior.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$1$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$LoginButtonProperties.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$LoginClickListener$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$LoginClickListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton$ToolTipMode.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/LoginButton.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$BackgroundProcessingListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$OnCompletedListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$Request$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$Request.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$Result$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$Result$Code.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginClient.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/login/LoginClientTests$MockLoginClient.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/login/LoginClientTests$MockValidatingLoginClient.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/login/LoginClientTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginFragment$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginFragment$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginFragment.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginLogger.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginManager$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginManager$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginManager$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginManager$ActivityStartActivityDelegate.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginManager$FragmentStartActivityDelegate.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginManager$LoginLoggerHolder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginManager.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/LoginResult.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/MessageDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/MessageDialog$NativeHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/MessageDialog$NativeHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/MessageDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/MessageDialogFeature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/messenger/MessengerThreadParams$Origin.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/messenger/MessengerThreadParams.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/messenger/MessengerUtils.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Mutable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeAppCallAttachmentStore$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeAppCallAttachmentStore$Attachment.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeAppCallAttachmentStore.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/NativeAppLoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/NativeDialogParameters.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeProtocol$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeProtocol$FBLiteAppInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeProtocol$KatanaAppInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeProtocol$MessengerAppInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeProtocol$NativeAppInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeProtocol$WakizashiAppInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/NativeProtocol.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/OpenGraphActionDialogFeature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/OpenGraphJSONUtility$PhotoJSONProcessor.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/OpenGraphJSONUtility.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/OpenGraphMessageDialogFeature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/PermissionType.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/PersistedEvents$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/PersistedEvents$SerializationProxyV1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/PersistedEvents.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/PlatformServiceClient$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/PlatformServiceClient$CompletedListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/PlatformServiceClient.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/Profile$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/Profile$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/Profile.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProfileCache.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ProfileInformationCache.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProfileManager.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/ProfileManagerTest$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/ProfileManagerTest$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/ProfileManagerTest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ProfilePictureView$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ProfilePictureView$OnErrorListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ProfilePictureView.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProfileTracker$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProfileTracker$ProfileBroadcastReceiver.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProfileTracker.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProgressNoopOutputStream.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProgressOutputStream$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/ProgressOutputStream.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$anim.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$anim.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$anim.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$attr.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/cardview/R$attr.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$attr.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$attr.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$bool.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$bool.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$bool.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$color.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/cardview/R$color.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$color.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$color.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$dimen.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/cardview/R$dimen.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$dimen.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$dimen.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$drawable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$drawable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$drawable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$id.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$id.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$id.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$integer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$integer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$integer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$layout.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$layout.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$layout.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$string.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$string.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$string.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$style.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/cardview/R$style.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$style.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$style.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R$styleable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/cardview/R$styleable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R$styleable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R$styleable.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/appcompat/R.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/android/support/v7/cardview/R.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/R.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/test/R.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/RequestOutputStream.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/RequestProgress$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/RequestProgress.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$1$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$10.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$2$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$3$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$4$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$5$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests$9.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/RequestTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ResultProcessor.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/SendButton.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/ServerProtocol.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/SessionEventsState.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/SessionInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/SessionLogger.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$10.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$11.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$12.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$5$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi$9.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareApi.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/ShareBuilder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareButton.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareButtonBase$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareButtonBase.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareConstants.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareContentValidation$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareContentValidation$ApiValidator.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareContentValidation$Validator.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareContentValidation$WebShareValidator.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareContentValidation.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareDialog$FeedHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareDialog$Mode.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareDialog$NativeHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareDialog$NativeHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareDialog$WebShareHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/widget/ShareDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareDialogFeature.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareFeedContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareFeedContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareFeedContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareHashtag$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareHashtag$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareHashtag.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$5.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$6.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$7.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility$8.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/ShareInternalUtility.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareLinkContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareLinkContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareLinkContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareMedia$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareMedia$Type.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareMedia.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareMediaContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareMediaContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareMediaContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareModel.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareModelBuilder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphAction$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphAction$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphAction.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphObject$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphObject$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphObject.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphValueContainer$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareOpenGraphValueContainer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/SharePhoto$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/SharePhoto$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/SharePhoto.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/SharePhotoContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/SharePhotoContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/SharePhotoContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/messenger/ShareToMessengerParams.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/messenger/ShareToMessengerParamsBuilder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareVideo$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareVideo$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareVideo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareVideoContent$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareVideoContent$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/model/ShareVideoContent.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/Sharer$Result.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/Sharer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/SourceApplicationInfo$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/SourceApplicationInfo$Factory.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/appevents/internal/SourceApplicationInfo.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/StartActivityDelegate.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/TestBlocker.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/TestUserManager$Mode.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/TestUserManager.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/TestUserManagerTests.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/TestUtils$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/TestUtils.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ToolTipPopup$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ToolTipPopup$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ToolTipPopup$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ToolTipPopup$PopupContentView.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ToolTipPopup$Style.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/widget/ToolTipPopup.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/UrlRedirectCache.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$DialogFeatureConfig.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$FetchedAppSettings.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$GraphMeRequestWithCacheCallback.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$Mapper.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$PermissionsPair.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility$Predicate.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Utility.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/internal/UtilityTest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/Validate.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$FinishUploadWorkItem$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$FinishUploadWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$StartUploadWorkItem$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$StartUploadWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$TransferChunkWorkItem$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$TransferChunkWorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$UploadContext.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$UploadWorkItemBase$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$UploadWorkItemBase$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader$UploadWorkItemBase.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/VideoUploader.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/classes/androidTest/debug/com/facebook/WaitForBroadcastReceiver.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$3.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$4.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$Builder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$DialogWebViewClient.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$OnCompleteListener.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$UploadStagingResourcesTask$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog$UploadStagingResourcesTask.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WebDialog.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/WebDialogParameters$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/share/internal/WebDialogParameters.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/WebLoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/WebViewLoginMethodHandler$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/WebViewLoginMethodHandler$2.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/WebViewLoginMethodHandler$AuthDialogBuilder.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/login/WebViewLoginMethodHandler.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WorkQueue$1.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WorkQueue$WorkItem.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WorkQueue$WorkNode.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/tmp/expandedArchives/classes.jar_bb1q6fcgdlsbozwx7r98p9x7t/com/facebook/internal/WorkQueue.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook/build/intermediates/incremental-safeguard/androidTest/debug/tag.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
+    <list id="d7ee20e7-4a7e-4f34-84c3-7b5f3f0a9475" name="New changelist" comment="" />
     <ignored path="Joine_Dev.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -385,8 +955,8 @@
       <file leaf-file-name="Constant.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Constant.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27454242">
-              <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.093457945">
+              <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -417,7 +987,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -3761,10 +4333,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="39" />
-    <option name="y" value="23" />
+    <option name="x" value="53" />
+    <option name="y" value="33" />
     <option name="width" value="1327" />
-    <option name="height" value="745" />
+    <option name="height" value="636" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -4240,10 +4812,18 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="797ec21e-aa26-47f5-8af5-90ca391ec65e" name="Default" comment="" />
+      <changelist id="d7ee20e7-4a7e-4f34-84c3-7b5f3f0a9475" name="New changelist" comment="" />
       <created>1471847381570</created>
       <option name="number" value="Default" />
       <updated>1471847381570</updated>
     </task>
+    <task id="LOCAL-00001" summary="initial code">
+      <created>1484047833185</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1484047833185</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -4256,8 +4836,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="39" y="23" width="1327" height="745" extended-state="0" />
-    <editor active="true" />
+    <frame x="53" y="33" width="1327" height="636" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -4269,7 +4849,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750398" sideWeight="0.5230649" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32884616" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6709062" sideWeight="0.51681" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24102964" sideWeight="0.526738" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42130366" sideWeight="0.46957877" order="12" side_tool="false" content_ui="tabs" />
@@ -4335,6 +4915,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial code" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -4931,8 +5515,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/brahmasys/bts/joinme/Constant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27454242">
-          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.093457945">
+          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -4957,7 +5541,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
